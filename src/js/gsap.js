@@ -6,12 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mostrar navbar cuando la imagen principal ya no es visible
   ScrollTrigger.create({
     trigger: '.main-head-img',
-    start: () => {
-      // Calcula la altura real de la navbar + 20px
-      const navbar = document.querySelector('.navbar-custom');
-      const navHeight = navbar ? navbar.offsetHeight : 60;
-      return `bottom top-=${navHeight - 40}`;
-    },
+    start: 'bottom top',
     onEnter: () => {
       const navbar = document.getElementById('navbar-placeholder');
       navbar.classList.remove('hidden');

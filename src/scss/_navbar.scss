@@ -114,10 +114,14 @@
 .hidden {
   opacity: 0;
   pointer-events: none !important;
+  display: block !important;
+  visibility: hidden !important;
   transition: opacity 0.5s;
 }
 .visible {
   opacity: 1;
   pointer-events: auto !important;
+  display: block !important;
+  visibility: visible !important;
   transition: opacity 0.5s;
 }
