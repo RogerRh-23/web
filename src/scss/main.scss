@@ -1,0 +1,199 @@
+html, body {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE y Edge Legacy */
+  overflow: auto !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
+body {
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE y Edge Legacy
+}
+body::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera, Edge Chromium */
+}
+body::-ms-scrollbar {
+  display: none; /* Edge Legacy */
+}
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+// Archivo principal SCSS
+@import 'variables';
+@import 'base';
+@import 'mixins';
+@import 'navbar';
+@import 'head';
+@import 'footer';
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #f8f9fa;
+  color: #222;
+  min-height: 400vh;
+  overflow-y: scroll;
+  overflow-x: hidden; /* Evita scroll lateral */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+// Evita overflow horizontal en elementos de ancho completo
+.head-img-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  background: #000;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  max-width: 100vw;
+  overflow-x: hidden;
+  z-index: 0;
+}
+.main-head-img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  border-radius: 0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  object-fit: cover;
+  object-position: center center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  border-radius: 0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  object-fit: cover;
+  object-position: center center;
+  overflow-x: hidden;
+}
+.lacs-comp-overlay {
+  max-width: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+// Oculta la barra personalizada completamente
+.custom-scrollbar {
+  position: fixed;
+  right: 20px;
+  top: 40px; // 60px navbar + 10px sombra/margen visual
+  width: 6px;
+  height: calc(100vh - 70px - 20px); // 70px navbar+sombra, 20px margen inferior
+  background: transparent;
+  border-radius: 8px;
+  z-index: 9999;
+}
+.custom-scrollbar-thumb {
+  position: absolute;
+  left: 0;
+  width: 6px;
+  background: linear-gradient(180deg, $pantone-p120-5u 0%, $pantone-mix-1 33%, $pantone-p123-16u 66%, $pantone-b7693u 100%);
+  border-radius: 8px;
+  cursor: pointer;
+  top: 2px;
+  bottom: 2px;
+  max-height: calc(100% - 4px); // 2px arriba y abajo
+  transition: background 0.5s, box-shadow 0.3s, transform 0.2s;
+  box-shadow: 0 0 8px 0 rgba(51,145,170,0.15);
+  &:hover {
+    background: linear-gradient(180deg, $pantone-p123-16u 0%, $pantone-mix-2 50%, $pantone-b7693u 100%);
+    box-shadow: 0 0 16px 2px rgba(25,114,133,0.25);
+    transform: scaleY(1.2);
+  }
+}
+// GSAP scroll animation example
+.section-gsap {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: none;
+}
+
+// Agrega aquí tus estilos o imports adicionales
+
+.cards-section {
+  .row {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .card {
+    border-radius: 1.25rem;
+    border: none;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(51,145,170,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(51,145,170,0.18);
+    }
+    .card-title {
+      font-weight: 700;
+      color: $pantone-p120-5u;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+    .card-text {
+      color: #222;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
+}
