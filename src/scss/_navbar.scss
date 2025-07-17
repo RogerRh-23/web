@@ -1,14 +1,10 @@
 .navbar-custom .nav-link:hover {
-  color: rgb(0, 84, 97);
+  color: $pantone-mix-2;
   text-decoration: none;
-  background: #29546b;
-  border-radius: 6px;
-  box-shadow: none;
-  padding: 0.25em 1em;
-  transition: background 0.2s;
 }
 // Estilos personalizados para la barra de navegación
  .navbar-custom {
+  z-index: 5000;
   .collapse.navbar-collapse {
     display: flex;
     align-items: center;
@@ -65,9 +61,9 @@
     text-decoration: none;
     margin: 20px;
     &:hover {
-      background: $pantone-b7693u;
-      color: $pantone-p123-16u;
-      border-color: $pantone-p123-16u;
+      background: $pantone-p120-5u;
+      color: $color-white;
+      border-color: $pantone-p120-5u;
       text-decoration: none;
     }
   }

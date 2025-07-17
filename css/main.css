@@ -258,9 +258,9 @@ body {
   margin: 20px;
 }
 .navbar-custom .btn-outline-light:hover {
-  background: rgb(20, 50, 63);
-  color: rgb(0, 84, 97);
-  border-color: rgb(0, 84, 97);
+  background: rgb(51, 145, 170);
+  color: #e1dfea;
+  border-color: rgb(51, 145, 170);
   text-decoration: none;
 }
 

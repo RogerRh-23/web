@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Timeline con pin para la imagen del head
   gsap.timeline({
     scrollTrigger: {
+      id: 'hero-reveal-timeline',
       trigger: '.hero-reveal',
       start: 'top top',
       end: '+=100vh',
@@ -60,13 +61,29 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     arrow.addEventListener('click', () => {
       hideArrow();
-      gsap.to(logo, { y: '-120vh', ease: 'power2.inOut', duration: logoDuration });
+      gsap.to(logo, {
+        y: '-120vh',
+        ease: 'power2.inOut',
+        duration: logoDuration,
+        onComplete: () => {
+          logo.style.opacity = '0';
+          logo.style.pointerEvents = 'none';
+        }
+      });
       gsap.to(rects, {
         y: (i) => i % 2 === 0 ? '-120vh' : '-100vh',
         stagger: { each: 0.05, from: 'edges', ease: 'power2.inOut' },
         ease: 'power2.inOut',
         duration: rectDuration,
-        delay: logoDuration
+        delay: logoDuration,
+        onStart: () => {
+          // Solo elimina el ScrollTrigger del hero reveal y refresca los triggers
+          if (window.ScrollTrigger) {
+            const st = ScrollTrigger.getById && ScrollTrigger.getById('hero-reveal-timeline');
+            if (st) st.kill();
+            if (ScrollTrigger.refresh) ScrollTrigger.refresh();
+          }
+        }
       });
     });
     // Ocultar el botón si el usuario hace scroll hacia abajo
@@ -74,12 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.scrollY > 10) {
         hideArrow();
       } else {
-        // Mostrar el botón si los rectángulos y logo están en posición inicial
+        // Mostrar el botón y el logo si los rectángulos y logo están en posición inicial
         const rectsAtTop = rects.every(rect => Math.abs(gsap.getProperty(rect, 'y')) < 1);
         const logoAtTop = logo && Math.abs(gsap.getProperty(logo, 'y')) < 1;
         if (rectsAtTop && logoAtTop) {
           arrow.style.opacity = '1';
           arrow.style.pointerEvents = 'auto';
+          logo.style.opacity = '1';
+          logo.style.pointerEvents = 'auto';
         }
       }
     });
