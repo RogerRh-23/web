@@ -11,8 +11,8 @@
 // Dropdown animado con GSAP
 // Dropdown GSAP flotante
 .dropdown-gsap {
-  background: $pantone-b7693u;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  background: $color-white;
+  box-shadow: $shadow-4layer;
   border-radius: 0 0 12px 12px;
   margin: 0;
   padding: 0.5rem 0 0.5rem 0;
@@ -25,10 +25,10 @@
     width: 100%;
     a {
       display: block;
-      color: $color-white;
+      color: $pantone-b7693u;
       padding: 0.7rem 1.5rem;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
       &:hover {
         background: $pantone-p120-5u;
         color: $color-white;
@@ -113,11 +113,11 @@
 
 .hidden {
   opacity: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   transition: opacity 0.5s;
 }
 .visible {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: auto !important;
   transition: opacity 0.5s;
 }

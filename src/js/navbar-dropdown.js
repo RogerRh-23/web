@@ -51,18 +51,37 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       open = !open;
       if (open) {
-        // Calcula la posición del enlace Servicios
+        // Calcula la posición del enlace Servicios y la navbar
         const rect = serviciosItem.getBoundingClientRect();
+        const navbar = document.querySelector('.navbar-custom');
+        let top = rect.bottom + 2;
+        if (navbar) {
+          const navbarRect = navbar.getBoundingClientRect();
+          top = navbarRect.bottom;
+        }
         dropdownContainer.style.position = 'fixed';
         dropdownContainer.style.left = rect.left + 'px';
-        dropdownContainer.style.top = (rect.bottom + 2) + 'px';
+        dropdownContainer.style.top = top + 'px';
         dropdownContainer.style.minWidth = rect.width + 'px';
         dropdownContainer.style.display = 'block';
-        gsap.to(dropdownContainer, { height: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out' });
+        gsap.fromTo(
+          dropdownContainer,
+          { x: -40, opacity: 0, rotateY: -70, height: 0 },
+          { x: 0, opacity: 1, rotateY: 0, height: 'auto', duration: 0.48, ease: 'power2.out', transformOrigin: 'left center' }
+        );
       } else {
-        gsap.to(dropdownContainer, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => {
-          dropdownContainer.style.display = 'none';
-        }});
+        gsap.to(dropdownContainer, {
+          x: -40,
+          opacity: 0,
+          rotateY: -70,
+          height: 0,
+          duration: 0.32,
+          ease: 'power2.in',
+          transformOrigin: 'left center',
+          onComplete: () => {
+            dropdownContainer.style.display = 'none';
+          }
+        });
       }
     });
     // Evita que el click en el dropdown cierre el menú inmediatamente
@@ -74,10 +93,38 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!serviciosItem.contains(e.target) && !dropdownContainer.contains(e.target)) {
         if (open) {
           open = false;
-          gsap.to(dropdownContainer, { height: 0, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => {
-            dropdownContainer.style.display = 'none';
-          }});
+          gsap.to(dropdownContainer, {
+            x: -40,
+            opacity: 0,
+            rotateY: -70,
+            height: 0,
+            duration: 0.32,
+            ease: 'power2.in',
+            transformOrigin: 'left center',
+            onComplete: () => {
+              dropdownContainer.style.display = 'none';
+            }
+          });
         }
+      }
+    });
+
+    // Cierra el dropdown si el usuario interactúa con la scrollbar (scroll)
+    window.addEventListener('scroll', function() {
+      if (open) {
+        open = false;
+        gsap.to(dropdownContainer, {
+          x: -40,
+          opacity: 0,
+          rotateY: -70,
+          height: 0,
+          duration: 0.32,
+          ease: 'power2.in',
+          transformOrigin: 'left center',
+          onComplete: () => {
+            dropdownContainer.style.display = 'none';
+          }
+        });
       }
     });
   }
