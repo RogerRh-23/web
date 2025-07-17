@@ -9,12 +9,58 @@
 </head>
 <body>
 
+  <!-- Hero Reveal Overlay -->
+  <div class="hero-reveal">
+    <div class="hero-reveal-rects">
+      <div class="hero-rect" style="left:calc(0 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:1"></div>
+      <div class="hero-rect" style="left:calc(1 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:2"></div>
+      <div class="hero-rect" style="left:calc(2 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:3"></div>
+      <div class="hero-rect" style="left:calc(3 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:4"></div>
+      <div class="hero-rect" style="left:calc(4 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:5"></div>
+      <div class="hero-rect" style="left:calc(5 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:6"></div>
+      <div class="hero-rect" style="left:calc(6 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:7"></div>
+      <div class="hero-rect" style="left:calc(7 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:8"></div>
+      <div class="hero-rect" style="left:calc(8 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:9"></div>
+    </div>
+    <div class="hero-reveal-logo-fixed">
+      <img class="hero-logo-img" src="./assets/LACS-Comp.png" alt="logo" />
+    </div>
+    <button class="hero-reveal-arrow" id="hero-reveal-arrow" aria-label="Scroll">
+      <svg viewBox="0 0 24 24"><path d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z"/></svg>
+    </button>
+  </div>
+
   <div id="navbar-placeholder" class="hidden"></div>
   <main>
     <div class="head-img-container">
       <img class="main-head-img" src="./assets/img1.jpg" alt="img1.jpg" />
       <div class="lacs-mask"></div>
       <img class="lacs-logo-overlay" src="./assets/LACS-Comp.png" alt="LACS-Comp.png" />
+    </div>
+    <div class="animated-line-container">
+      <svg class="animated-path" width="100%" height="100%" viewBox="0 0 1000 400" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="line-gradient" x1="1" y1="0.5" x2="0" y2="0.5">
+            <stop offset="0%" stop-color="#000" stop-opacity="0.2"/>
+            <stop offset="20%" stop-color="#000" stop-opacity="0.7"/>
+            <stop offset="80%" stop-color="#000" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+          </linearGradient>
+          <filter id="blur-line" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="1.2"/>
+          </filter>
+        </defs>
+        <path d="M1000,200 C900,100 700,300 600,200 S400,100 300,200 S100,300 200,350 Q300,400 400,300 Q500,200 600,350 Q700,500 800,350 Q900,200 700,200 M790,200 a90,50 0 1,0 180,0 a90,50 0 1,0 -180,0" stroke="url(#line-gradient)" stroke-width="2" fill="none" stroke-dasharray="3400" stroke-dashoffset="3400" filter="url(#blur-line)"/>
+        <!-- Möbius band cross (simulated) -->
+        <defs>
+          <linearGradient id="mobius-gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#000" stop-opacity="0.1"/>
+            <stop offset="50%" stop-color="#000" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      </svg>
     </div>
     <div id="cards" class="section-gsap"></div>
   </main>
@@ -25,6 +71,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <!-- JS principales del proyecto -->
   <script src="./js/gsap.js"></script>
+  <script src="./js/hero-reveal.js"></script>
+  <script src="./js/hero-reveal-fix.js"></script>
   <script>
     // Cargar dinámicamente la navbar
     fetch('./components/navbar.html')

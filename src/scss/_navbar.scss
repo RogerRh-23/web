@@ -1,3 +1,12 @@
+.navbar-custom .nav-link:hover {
+  color: rgb(0, 84, 97);
+  text-decoration: none;
+  background: #29546b;
+  border-radius: 6px;
+  box-shadow: none;
+  padding: 0.25em 1em;
+  transition: background 0.2s;
+}
 // Estilos personalizados para la barra de navegación
  .navbar-custom {
   .collapse.navbar-collapse {

@@ -145,4 +145,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: false });
   window.addEventListener('touchmove', customScroll, { passive: false });
+
+  // Animación de línea negra tipo solk.com
+  const path = document.getElementById('main-curve');
+  const mobiusRing = document.getElementById('mobius-ring');
+  const mobiusCross = document.getElementById('mobius-cross');
+  const svg = document.querySelector('.animated-path');
+  const navbar = document.getElementById('navbar-placeholder');
+  if (path && svg && navbar) {
+    gsap.set(path, { strokeDashoffset: 2500 });
+    gsap.set(svg, { scale: 1, filter: 'blur(0px)' });
+    if (mobiusRing) gsap.set(mobiusRing, { opacity: 0 });
+    if (mobiusCross) gsap.set(mobiusCross, { opacity: 0 });
+
+    let lineAnimationStarted = false;
+    function startLineAnimation() {
+      if (lineAnimationStarted) return;
+      lineAnimationStarted = true;
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: '.animated-line-container',
+          start: 'top top',
+          end: '+=2500', // Pin y duración igual al largo del path
+          scrub: true,
+          pin: true,
+          anticipatePin: 1
+        }
+      })
+      .fromTo(path, {
+        strokeDashoffset: 2500,
+        strokeWidth: 0.1
+      }, {
+        strokeDashoffset: 0,
+        strokeWidth: 1,
+        ease: 'none',
+        duration: 1
+      }, 0)
+      .to(mobiusRing, {
+        opacity: 1,
+        duration: 0.2,
+        ease: 'power1.inOut'
+      }, 0.95)
+      .to(mobiusCross, {
+        opacity: 0.45,
+        duration: 0.2,
+        ease: 'power1.inOut'
+      }, 0.97)
+      .fromTo(svg, {
+        scale: 1.7,
+        xPercent: 0,
+        yPercent: 0
+      }, {
+        scale: 1,
+        xPercent: -10,
+        yPercent: 0,
+        transformOrigin: '50% 50%',
+        ease: 'power1.inOut',
+        duration: 1
+      }, 0);
+    }
+
+    // Detectar cuando la navbar termina de desplegarse (visible)
+    const observer = new MutationObserver(() => {
+      if (navbar.classList.contains('visible')) {
+        setTimeout(startLineAnimation, 700);
+        observer.disconnect();
+      }
+    });
+    observer.observe(navbar, { attributes: true, attributeFilter: ['class'] });
+    if (navbar.classList.contains('visible')) {
+      setTimeout(startLineAnimation, 700);
+      observer.disconnect();
+    }
+  }
 });
