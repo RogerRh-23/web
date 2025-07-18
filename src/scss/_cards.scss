@@ -1,117 +1,121 @@
-// Estilos para cartas tipo baraja
-.playing-cards-row {
+.info-card.from-left,
+.info-card.from-right {
+  opacity: 0;
+  transform: translateX(-100vw);
+}
+.info-card.from-right {
+  transform: translateX(100vw);
+}
+// Estilos para las nuevas info-cards
+.new-cards {
+  width: 100vw;
+  padding: 0;
+  margin: 32px 0 0 0;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+}
+.info-card {
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 32px;
-  margin-top: 5rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100vw;
+  min-height: 340px;
+  margin: 0 0 48px 0;
+  box-shadow: 0 4px 24px -8px rgba(20,30,60,0.12);
+  border-radius: 0.8rem;
+  overflow: hidden;
 }
-
-.playing-card {
-  width: 290px;
-  height: 420px;
-  perspective: 1200px;
-  cursor: pointer;
-  position: relative;
-  flex: 0 1 290px;
-  transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s cubic-bezier(.4,2,.6,1);
-  box-shadow: 0 12px 36px -4px rgba(20,30,60,0.38), 0 2px 12px -2px rgba(20,30,60,0.22), 0 1px 3px 0 rgba(0,0,0,0.15);
-}
-.playing-card:hover {
-  transform: translateY(-32px) scale(1.12) rotateZ(-3deg);
-  box-shadow: 0 20px 48px -6px rgba(20,30,60,0.45), 0 4px 16px -2px rgba(20,30,60,0.25);
-  z-index: 10;
-}
-.card-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition: transform 0.7s cubic-bezier(.4,2,.6,1);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-.playing-card.flipped .card-inner {
-  transform: rotateY(180deg);
-}
-.card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  border-radius: 1.2rem;
+.info-card-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 3.2rem 2.8rem;
+  color: #fff;
+}
+.info-card-bar {
+  width: 84px;
+  min-width: 84px;
+  max-width: 84px;
+  display: flex;
   align-items: center;
-  background: #fff;
-  border: 2.5px solid #e6e6e6;
-  backface-visibility: hidden;
-  overflow: hidden;
+  justify-content: center;
+  background: $pantone-p120-5u-dark;
+  height: 100%;
 }
-.card-back {
-  background: linear-gradient(135deg, #e9f1f7 60%, #dbe6ee 100%);
-  color: #14323f;
-  z-index: 2;
-  transform: rotateY(0deg);
-  backface-visibility: hidden;
-}
-.card-front {
-  transform: rotateY(180deg);
-  background: #fff;
-  color: #14323f;
-  z-index: 1;
-  padding: 1.2rem 1rem;
-  backface-visibility: hidden;
-}
-.card-icon {
-  font-size: 2.8rem;
-  margin-bottom: 0.7rem;
-  color: #1a5a7a;
-}
-.card-label {
-  font-size: 1.1rem;
+.info-card-bar-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 2.1rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  color: #fff;
+  letter-spacing: 0.08em;
   text-align: center;
 }
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #14323f;
-  text-align: center;
+// Alternar barra a la izquierda/derecha
+.right-bar {
+  border-top-right-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
 }
-.card-text {
-  font-size: 1rem;
-  color: #444;
-  text-align: center;
+.left-bar {
+  border-top-left-radius: 0.8rem;
+  border-bottom-left-radius: 0.8rem;
+}
+// Colores de fondo para cada card
+.info-card:nth-child(1) .info-card-content {
+  background: $pantone-p120-5u;
+}
+.info-card:nth-child(2) .info-card-content {
+  background: $pantone-mix-1;
+}
+.info-card:nth-child(3) .info-card-content {
+  background: $pantone-p123-16u;
+}
+.info-card:nth-child(4) .info-card-content {
+  background: $pantone-mix-2;
+}
+// Colores de barra vertical
+.info-card:nth-child(1) .info-card-bar {
+  background: $pantone-p120-5u-dark;
+}
+.info-card:nth-child(2) .info-card-bar {
+  background: $pantone-mix-1-dark;
+}
+.info-card:nth-child(3) .info-card-bar {
+  background: $pantone-p123-16u-dark;
+}
+.info-card:nth-child(4) .info-card-bar {
+  background: $pantone-mix-2-dark;
 }
 @media (max-width: 991px) {
-  .playing-cards-row {
-    gap: 18px;
+  .info-card-content {
+    padding: 2rem 1.2rem;
+    font-size: 1rem;
   }
-  .playing-card {
-    width: 196px;
-    height: 276px;
-    flex-basis: 196px;
+  .info-card-bar {
+    width: 56px;
+    min-width: 56px;
+    max-width: 56px;
+  }
+  .info-card-bar-text {
+    font-size: 1.2rem;
   }
 }
 @media (max-width: 575px) {
-  .playing-cards-row {
-    gap: 8px;
+  .info-card {
+    min-height: 180px;
   }
-  .playing-card {
-    width: 138px;
-    height: 196px;
-    flex-basis: 138px;
-  }
-  .card-label, .card-title {
+  .info-card-content {
+    padding: 1.2rem 0.5rem;
     font-size: 0.95rem;
   }
-  .card-icon {
-    font-size: 1.5rem;
+  .info-card-bar {
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+  }
+  .info-card-bar-text {
+    font-size: 0.85rem;
   }
 }
