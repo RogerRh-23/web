@@ -13,13 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(document.getElementById('cards'), { childList: true, subtree: true });
 });
 
+
 function animateInfoCards(cards) {
   cards.forEach((card, i) => {
     let xFrom = card.classList.contains('from-left') ? '-100vw' : '100vw';
     gsap.set(card, { opacity: 0, x: xFrom });
     const content = card.querySelector('.info-card-content');
-    // Parallax para el contenido
-    gsap.set(content, { y: 60 });
+    // Parallax solo mueve el contenido verticalmente, no afecta layout ni border-radius
+    gsap.set(content, { y: 0 });
     ScrollTrigger.create({
       trigger: card,
       start: 'top 80%',
@@ -31,11 +32,6 @@ function animateInfoCards(cards) {
           duration: 0.8,
           ease: 'power3.out',
         });
-        gsap.to(content, {
-          y: 0,
-          duration: 1.2,
-          ease: 'power2.out',
-        });
       },
       onLeave: () => {
         gsap.to(card, {
@@ -44,18 +40,8 @@ function animateInfoCards(cards) {
           duration: 0.7,
           ease: 'power2.in',
         });
-        gsap.to(content, {
-          y: 60,
-          duration: 0.7,
-          ease: 'power2.in',
-        });
       },
       onEnterBack: () => {
-        gsap.to(content, {
-          y: 0,
-          duration: 1.2,
-          ease: 'power2.out',
-        });
         gsap.to(card, {
           opacity: 1,
           x: 0,
@@ -64,11 +50,6 @@ function animateInfoCards(cards) {
         });
       },
       onLeaveBack: () => {
-        gsap.to(content, {
-          y: 60,
-          duration: 0.7,
-          ease: 'power2.in',
-        });
         gsap.to(card, {
           opacity: 0,
           x: xFrom,
@@ -77,17 +58,6 @@ function animateInfoCards(cards) {
         });
       },
       scrub: false
-    });
-    // Parallax suave al hacer scroll
-    gsap.to(content, {
-      y: -40,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: card,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 0.6
-      }
     });
   });
 }

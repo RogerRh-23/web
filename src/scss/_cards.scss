@@ -1,48 +1,55 @@
-.info-card.from-left,
-.info-card.from-right {
+.info-card.from-left {
   opacity: 0;
   transform: translateX(-100vw);
 }
 .info-card.from-right {
+  opacity: 0;
   transform: translateX(100vw);
 }
 // Estilos para las nuevas info-cards
 .new-cards {
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   padding: 0;
   margin: 32px 0 0 0;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  transform: translateX(-50%);
+  overflow-x: hidden;
 }
 .info-card {
   display: flex;
   align-items: stretch;
-  width: 100vw;
-  min-height: 340px;
-  margin: 0 0 48px 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 120px;
+  margin: 0 0 32px 0;
   box-shadow: 0 4px 24px -8px rgba(20,30,60,0.12);
   border-radius: 0.8rem;
   overflow: hidden;
+  position: relative;
+  min-width: 0;
 }
 .info-card-content {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 3.2rem 2.8rem;
+  padding: 1rem 1.5rem;
   color: #fff;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 .info-card-bar {
   width: 84px;
-  min-width: 84px;
+  min-width: 0;
   max-width: 84px;
+  height: 380px;
+  flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   background: $pantone-p120-5u-dark;
-  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .info-card-bar-text {
   writing-mode: vertical-rl;
@@ -52,8 +59,12 @@
   color: #fff;
   letter-spacing: 0.08em;
   text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-// Alternar barra a la izquierda/derecha
+// El border-radius solo en la card, no en la barra vertical
 .right-bar {
   border-top-right-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem;
@@ -89,14 +100,20 @@
   background: $pantone-mix-2-dark;
 }
 @media (max-width: 991px) {
+  .info-card {
+    min-width: 0;
+  }
   .info-card-content {
     padding: 2rem 1.2rem;
     font-size: 1rem;
+    min-width: 0;
   }
   .info-card-bar {
     width: 56px;
-    min-width: 56px;
+    min-width: 0;
     max-width: 56px;
+    height: 100%;
+    flex-shrink: 0;
   }
   .info-card-bar-text {
     font-size: 1.2rem;
@@ -105,15 +122,19 @@
 @media (max-width: 575px) {
   .info-card {
     min-height: 180px;
+    min-width: 0;
   }
   .info-card-content {
     padding: 1.2rem 0.5rem;
     font-size: 0.95rem;
+    min-width: 0;
   }
   .info-card-bar {
     width: 38px;
-    min-width: 38px;
+    min-width: 0;
     max-width: 38px;
+    height: 100%;
+    flex-shrink: 0;
   }
   .info-card-bar-text {
     font-size: 0.85rem;
