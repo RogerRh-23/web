@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarDropdown();
 
   function inicializarDropdown() {
-
     // Crear el contenedor y el dropdown como elemento flotante fuera de la navbar
     let dropdownContainer = document.createElement('div');
     dropdownContainer.className = 'dropdown-gsap-container';
@@ -46,11 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
 
     let open = false;
-    serviciosItem.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      open = !open;
-      if (open) {
+    // Mejorar área de hover: mostrar dropdown si el mouse está sobre el enlace o el dropdown
+    function isHovering(e) {
+      return serviciosItem.matches(':hover') || dropdownContainer.matches(':hover');
+    }
+    let hoverTimeout;
+    function showDropdown() {
+      if (!open) {
+        open = true;
         // Calcula la posición del enlace Servicios y la navbar
         const rect = serviciosItem.getBoundingClientRect();
         const navbar = document.querySelector('.navbar-custom');
@@ -69,48 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
           { x: -40, opacity: 0, rotateY: -70, height: 0 },
           { x: 0, opacity: 1, rotateY: 0, height: 'auto', duration: 0.48, ease: 'power2.out', transformOrigin: 'left center' }
         );
-      } else {
-        gsap.to(dropdownContainer, {
-          x: -40,
-          opacity: 0,
-          rotateY: -70,
-          height: 0,
-          duration: 0.32,
-          ease: 'power2.in',
-          transformOrigin: 'left center',
-          onComplete: () => {
-            dropdownContainer.style.display = 'none';
-          }
-        });
       }
-    });
-    // Evita que el click en el dropdown cierre el menú inmediatamente
-    dropdownContainer.addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-    // Cierra el dropdown si se hace click fuera
-    document.addEventListener('click', function(e) {
-      if (!serviciosItem.contains(e.target) && !dropdownContainer.contains(e.target)) {
-        if (open) {
-          open = false;
-          gsap.to(dropdownContainer, {
-            x: -40,
-            opacity: 0,
-            rotateY: -70,
-            height: 0,
-            duration: 0.32,
-            ease: 'power2.in',
-            transformOrigin: 'left center',
-            onComplete: () => {
-              dropdownContainer.style.display = 'none';
-            }
-          });
-        }
-      }
-    });
-
-    // Cierra el dropdown si el usuario interactúa con la scrollbar (scroll)
-    window.addEventListener('scroll', function() {
+    }
+    function closeDropdown() {
       if (open) {
         open = false;
         gsap.to(dropdownContainer, {
@@ -126,6 +89,22 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       }
+    }
+    // Mostrar dropdown al entrar el mouse en el enlace o el dropdown
+    serviciosItem.addEventListener('mouseenter', showDropdown);
+    dropdownContainer.addEventListener('mouseenter', showDropdown);
+    // Ocultar dropdown solo si el mouse no está sobre el enlace ni el dropdown (con pequeño delay para evitar parpadeo)
+    serviciosItem.addEventListener('mouseleave', function() {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(() => {
+        if (!isHovering()) closeDropdown();
+      }, 100);
+    });
+    dropdownContainer.addEventListener('mouseleave', function() {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(() => {
+        if (!isHovering()) closeDropdown();
+      }, 100);
     });
   }
 });

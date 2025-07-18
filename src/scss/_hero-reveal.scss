@@ -62,7 +62,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 .hero-reveal-rects {
   position: absolute;
   top: 0;
-  left: 2.5px;
+  left: 0;
   width: calc(100vw - 10px);
   height: 100vh;
   pointer-events: none;

@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const rectDuration = 1;
   const logoDuration = rectDuration * 0.9;
 
+  let heroRevealHidden = false;
+
   // Timeline con pin para la imagen del head
   gsap.timeline({
     scrollTrigger: {
@@ -31,9 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
       pinSpacing: true,
       onUpdate: self => {
         if (self.progress > 0.05 && arrow) arrow.style.opacity = '0';
+        if (self.progress > 0.95 && overlay && !heroRevealHidden) {
+          overlay.style.pointerEvents = 'none';
+          overlay.style.opacity = '0';
+          heroRevealHidden = true;
+        }
       },
       onLeave: () => {
-        if (overlay) overlay.style.pointerEvents = 'none';
+        if (overlay) {
+          overlay.style.pointerEvents = 'none';
+          overlay.style.opacity = '0';
+          heroRevealHidden = true;
+        }
+      },
+      onEnterBack: () => {
+        // Ya no mostrar el hero-reveal si el usuario sube
+        if (overlay && heroRevealHidden) {
+          overlay.style.pointerEvents = 'none';
+          overlay.style.opacity = '0';
+        }
       }
     }
   })

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .hero-reveal-arrow,
 .hero-reveal-arrow:focus,
 .hero-reveal-arrow:active,
@@ -65,7 +64,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 .hero-reveal-rects {
   position: absolute;
   top: 0;
-  left: 2.5px;
+  left: 0;
   width: calc(100vw - 10px);
   height: 100vh;
   pointer-events: none;
@@ -535,66 +534,6 @@ body {
   width: 100%;
 }
 
-/* Animaciones personalizadas: línea negra tipo solk.com */
-.animated-line-container {
-  position: relative;
-  width: 100vw;
-  height: 400px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1002;
-  overflow: visible;
-}
-
-.animated-path {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 900;
-  pointer-events: none;
-  filter: blur(0px);
-  will-change: transform, filter;
-}
-
-.animated-path {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 1000px;
-  height: 600px;
-  z-index: 900;
-  pointer-events: none;
-  filter: blur(0px);
-  will-change: transform, filter;
-}
-
-.animated-line-left, .animated-line-right {
-  position: absolute;
-  top: 50%;
-  height: 4px;
-  background: #111;
-  border-radius: 2px;
-  width: 45vw;
-  max-width: 600px;
-  transform: translateY(-50%);
-}
-
-.animated-line-left {
-  left: 0;
-  right: 50%;
-  margin-right: 8px;
-}
-
-.animated-line-right {
-  right: 0;
-  left: 50%;
-  margin-left: 8px;
-}
-
 .hero-reveal-arrow,
 .hero-reveal-arrow:focus,
 .hero-reveal-arrow:active,
@@ -661,7 +600,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 .hero-reveal-rects {
   position: absolute;
   top: 0;
-  left: 2.5px;
+  left: 0;
   width: calc(100vw - 10px);
   height: 100vh;
   pointer-events: none;

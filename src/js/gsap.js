@@ -2,7 +2,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
   let lastTouchY = 0;
-
+  let navbarShown = false;
   // Mostrar navbar cuando la imagen principal ya no es visible
   ScrollTrigger.create({
     trigger: '.main-head-img',
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
       navbar.classList.remove('preload');
       navbar.classList.remove('hidden');
       navbar.classList.add('visible');
+      navbarShown = true;
       // Animar el background de la navbar
       const navBg = navbar.querySelector('.navbar-custom');
       if (navBg) {
@@ -35,35 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.fromTo(navContent, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.7 });
       }
     },
+    onLeave: () => {
+      // Ocultar navbar al salir hacia abajo SOLO si no se ha mostrado antes
+      if (!navbarShown) {
+        const navbar = document.getElementById('navbar-placeholder');
+        navbar.classList.remove('visible');
+        navbar.classList.add('hidden');
+      }
+    },
     onLeaveBack: () => {
-      const navbar = document.getElementById('navbar-placeholder');
-      const navBg = navbar.querySelector('.navbar-custom');
-      const logo = navbar.querySelector('.navbar-brand');
-      const navContent = navbar.querySelectorAll('.nav-item, .nav-link, .collapse, .container-fluid, .navbar-nav, .btn-outline-light');
-      // Animar salida de background, logo y contenido
-      const tl = gsap.timeline({
-        onComplete: () => {
-          navbar.classList.remove('visible');
-          navbar.classList.add('hidden');
-        }
-      });
-      if (navBg) {
-        tl.to(
-          navBg,
-          {
-            backgroundColor: 'rgba(20,50,63,0)',
-            duration: 0.6,
-            ease: 'power2.in'
-          },
-          0
-        );
-      }
-      if (logo) {
-        tl.to(logo, { opacity: 0, y: -40, duration: 0.6 }, 0);
-      }
-      if (navContent.length) {
-        tl.to(navContent, { opacity: 0, y: -20, duration: 0.5, stagger: 0.08 }, 0.1);
-      }
+      // Ya no ocultar la navbar al regresar a la altura
+      // (No hacer nada)
     }
   });
 
