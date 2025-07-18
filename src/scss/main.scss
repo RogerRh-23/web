@@ -57,6 +57,8 @@ html, body {
 @import 'head';
 @import 'footer';
 @import 'animations';
+@import 'hero-reveal';
+@import 'cards';
 
 body {
   font-family: "Montserrat", sans-serif;
@@ -128,45 +130,7 @@ body::-webkit-scrollbar {
   width: 100vw;
   overflow-x: hidden;
 }
-
-// Oculta la barra personalizada completamente
-.custom-scrollbar {
-  position: fixed;
-  right: 20px;
-  top: 40px; // 60px navbar + 10px sombra/margen visual
-  width: 6px;
-  height: calc(100vh - 70px - 20px); // 70px navbar+sombra, 20px margen inferior
-  background: transparent;
-  border-radius: 8px;
-  z-index: 9999;
-}
-.custom-scrollbar-thumb {
-  position: absolute;
-  left: 0;
-  width: 6px;
-  background: linear-gradient(180deg, $pantone-p120-5u 0%, $pantone-mix-1 33%, $pantone-p123-16u 66%, $pantone-b7693u 100%);
-  border-radius: 8px;
-  cursor: pointer;
-  top: 2px;
-  bottom: 2px;
-  max-height: calc(100% - 4px); // 2px arriba y abajo
-  transition: background 0.5s, box-shadow 0.3s, transform 0.2s;
-  box-shadow: 0 0 8px 0 rgba(51,145,170,0.15);
-  &:hover {
-    background: linear-gradient(180deg, $pantone-p123-16u 0%, $pantone-mix-2 50%, $pantone-b7693u 100%);
-    box-shadow: 0 0 16px 2px rgba(25,114,133,0.25);
-    transform: scaleY(1.2);
-  }
-}
-// GSAP scroll animation example
-.section-gsap {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: none;
-}
-
 // Agrega aquí tus estilos o imports adicionales
-
 .cards-section {
   .row {
     margin-top: 0;

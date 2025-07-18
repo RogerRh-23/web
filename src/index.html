@@ -30,38 +30,14 @@
     </button>
   </div>
 
-  <div id="navbar-placeholder" class="hidden"></div>
+  <div id="navbar-placeholder" class="preload"></div>
   <main>
     <div class="head-img-container">
-      <img class="main-head-img" src="./assets/img1.jpg" alt="img1.jpg" />
+      <img class="main-head-img" src="./assets/img1.png" alt="img1.png" />
       <div class="lacs-mask"></div>
       <img class="lacs-logo-overlay" src="./assets/LACS-Comp.png" alt="LACS-Comp.png" />
     </div>
-    <div class="animated-line-container">
-      <svg class="animated-path" width="100%" height="100%" viewBox="0 0 1000 400" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="line-gradient" x1="1" y1="0.5" x2="0" y2="0.5">
-            <stop offset="0%" stop-color="#000" stop-opacity="0.2"/>
-            <stop offset="20%" stop-color="#000" stop-opacity="0.7"/>
-            <stop offset="80%" stop-color="#000" stop-opacity="0.7"/>
-            <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
-          </linearGradient>
-          <filter id="blur-line" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="1.2"/>
-          </filter>
-        </defs>
-        <path d="M1000,200 C900,100 700,300 600,200 S400,100 300,200 S100,300 200,350 Q300,400 400,300 Q500,200 600,350 Q700,500 800,350 Q900,200 700,200 M790,200 a90,50 0 1,0 180,0 a90,50 0 1,0 -180,0" stroke="url(#line-gradient)" stroke-width="2" fill="none" stroke-dasharray="3400" stroke-dashoffset="3400" filter="url(#blur-line)"/>
-        <!-- Möbius band cross (simulated) -->
-        <defs>
-          <linearGradient id="mobius-gradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#000" stop-opacity="0.1"/>
-            <stop offset="50%" stop-color="#000" stop-opacity="0.5"/>
-            <stop offset="100%" stop-color="#000" stop-opacity="0.1"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      </svg>
-    </div>
+    <!-- SVG animado y contenedor eliminados -->
     <div id="cards" class="section-gsap"></div>
   </main>
   <div id="footer"></div>
@@ -80,8 +56,21 @@
       .then(html => {
         document.getElementById('navbar-placeholder').innerHTML = html;
       });
+    // Cargar dinámicamente las cards
+    fetch('./components/cards.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('cards').innerHTML = html;
+      });
+    // Cargar dinámicamente el footer
+    fetch('./components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
   </script>
   <script src="./js/navbar-dropdown.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/cards-anim.js"></script>
 </body>
 </html>

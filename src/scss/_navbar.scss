@@ -3,7 +3,7 @@
   position: fixed;
   z-index: 9999;
   min-width: 180px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  // box-shadow eliminado
   border-radius: 0 0 12px 12px;
   background: transparent;
   overflow: visible;
@@ -12,7 +12,7 @@
 // Dropdown GSAP flotante
 .dropdown-gsap {
   background: $color-white;
-  box-shadow: $shadow-4layer;
+  // box-shadow eliminado
   border-radius: 0 0 12px 12px;
   margin: 0;
   padding: 0.5rem 0 0.5rem 0;
@@ -60,7 +60,6 @@
     justify-content: space-between;
   }
   background: $pantone-b7693u;
-  box-shadow: $shadow-4layer;
   width: 100vw;
   left: 0;
   position: fixed;
@@ -68,7 +67,6 @@
   z-index: 1000;
   .navbar-brand img {
     border-radius: 8px;
-    transition: box-shadow 0.3s;
     filter: brightness(0) invert(1);
     width: calc(10rem + 40px); // 20px más grande
     margin: 5px;
@@ -103,14 +101,19 @@
     text-decoration: none;
     margin: 20px;
     &:hover {
-      background: $pantone-p120-5u;
-      color: $color-white;
+      color: $pantone-mix-2;
       border-color: $pantone-p120-5u;
       text-decoration: none;
     }
   }
 }
 
+.preload {
+  opacity: 0;
+  pointer-events: none !important;
+  display: block !important;
+  visibility: hidden !important;
+}
 .hidden {
   opacity: 0;
   pointer-events: none !important;
