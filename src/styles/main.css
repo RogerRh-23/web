@@ -193,41 +193,6 @@ body {
   color: #222;
 }
 
-.dropdown-gsap-container {
-  position: fixed;
-  z-index: 9999;
-  min-width: 180px;
-  border-radius: 0 0 12px 12px;
-  background: transparent;
-  overflow: visible;
-}
-
-.dropdown-gsap {
-  background: #e1dfea;
-  border-radius: 0 0 12px 12px;
-  margin: 0;
-  padding: 0.5rem 0 0.5rem 0;
-  position: fixed;
-  min-width: 180px;
-  z-index: 9999;
-  list-style: none;
-  overflow: hidden;
-}
-.dropdown-gsap li {
-  width: 100%;
-}
-.dropdown-gsap li a {
-  display: block;
-  color: rgb(20, 50, 63);
-  padding: 0.7rem 1.5rem;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-.dropdown-gsap li a:hover {
-  background: rgb(51, 145, 170);
-  color: #e1dfea;
-}
-
 .navbar-nav .nav-item {
   position: relative;
 }
@@ -245,6 +210,7 @@ body {
   position: fixed;
   top: 0;
   z-index: 1000;
+  cursor: default;
 }
 .navbar-custom .collapse.navbar-collapse {
   display: flex;
@@ -283,9 +249,10 @@ body {
   gap: 6px;
   font-size: 1rem;
   text-decoration: none;
+  cursor: pointer;
 }
 .navbar-custom .nav-link:hover {
-  color: rgb(0, 84, 97);
+  color: rgb(51, 145, 170);
   text-decoration: none;
 }
 .navbar-custom .btn-outline-light {
@@ -820,6 +787,57 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
     font-size: 0.85rem;
   }
 }
+.dropdown-gsap-container {
+  z-index: 9999;
+  position: fixed;
+  pointer-events: auto;
+}
+
+.dropdown-gsap {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  background: #e1dfea;
+  border-radius: 0.7rem;
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.18);
+  min-width: 180px;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+.dropdown-gsap li {
+  width: 100%;
+}
+
+.dropdown-gsap a {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 1.2rem;
+  color: #222;
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+}
+
+.dropdown-gsap a:hover,
+.dropdown-gsap a:focus {
+  background: #1877f3;
+  color: #e1dfea;
+}
+
+.dropdown-gsap {
+  will-change: opacity, transform, height;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
   background: #f8f9fa;

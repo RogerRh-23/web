@@ -1,60 +1,60 @@
-// Dropdown animado con GSAP para la opción "Servicios"
-document.addEventListener('DOMContentLoaded', () => {
-  // Buscar el enlace de Servicios por texto
-  // Espera a que la navbar esté en el DOM si se carga dinámicamente
-  function getServiciosLink() {
+// Dropdown animado con GSAP para la navbar
+// Estructura y lógica de los dropdowns
+
+// Dropdown animado con GSAP para la navbar
+// Estructura y lógica de los dropdowns
+
+function initDropdowns() {
+  // Utilidad para obtener el enlace de la navbar por texto
+  function getDropdownLink(texto) {
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     for (let link of navLinks) {
-      if (link.textContent.trim().includes('Servicios')) {
-        // Cambia el href para evitar navegación
+      if (link.textContent.trim().includes(texto)) {
         link.setAttribute('href', 'javascript:void(0)');
         return link;
       }
     }
     return null;
   }
-  let serviciosItem = getServiciosLink();
-  if (!serviciosItem) {
-    // Si no está, espera a que se cargue la navbar
-    const observer = new MutationObserver(() => {
-      serviciosItem = getServiciosLink();
-      if (serviciosItem) {
-        observer.disconnect();
-        inicializarDropdown();
-      }
-    });
-    observer.observe(document.getElementById('navbar-placeholder'), { childList: true, subtree: true });
-    return;
-  }
 
-  inicializarDropdown();
+  // Estructura de los dropdowns
+  const dropdowns = [
+    {
+      label: 'Servicios',
+      items: ['Consultoría', 'Capacitación', 'Soporte']
+    },
+    {
+      label: 'Procesos',
+      items: ['Gestión de procesos', 'Optimización', 'Automatización']
+    },
+    {
+      label: 'Centro de formación',
+      items: ['Cursos', 'Diplomados', 'Webinars']
+    }
+  ];
 
-  function inicializarDropdown() {
-    // Crear el contenedor y el dropdown como elemento flotante fuera de la navbar
+  // Lógica para crear y animar los dropdowns
+  dropdowns.forEach(drop => {
+    const navItem = getDropdownLink(drop.label);
+    if (!navItem) return;
     let dropdownContainer = document.createElement('div');
     dropdownContainer.className = 'dropdown-gsap-container';
     let dropdown = document.createElement('ul');
     dropdown.className = 'dropdown-gsap';
-    dropdown.innerHTML = `
-      <li><a href="#">Consultoría</a></li>
-      <li><a href="#">Capacitación</a></li>
-      <li><a href="#">Soporte</a></li>
-    `;
+    dropdown.innerHTML = drop.items.map(item => `<li><a href="#">${item}</a></li>`).join('');
     dropdownContainer.appendChild(dropdown);
     document.body.appendChild(dropdownContainer);
     gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
 
     let open = false;
-    // Mejorar área de hover: mostrar dropdown si el mouse está sobre el enlace o el dropdown
-    function isHovering(e) {
-      return serviciosItem.matches(':hover') || dropdownContainer.matches(':hover');
+    function isHovering() {
+      return navItem.matches(':hover') || dropdownContainer.matches(':hover');
     }
     let hoverTimeout;
     function showDropdown() {
       if (!open) {
         open = true;
-        // Calcula la posición del enlace Servicios y la navbar
-        const rect = serviciosItem.getBoundingClientRect();
+        const rect = navItem.getBoundingClientRect();
         const navbar = document.querySelector('.navbar-custom');
         let top = rect.bottom + 2;
         if (navbar) {
@@ -90,21 +90,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     }
-    // Mostrar dropdown al entrar el mouse en el enlace o el dropdown
-    serviciosItem.addEventListener('mouseenter', showDropdown);
+    // Eventos para mostrar y ocultar el dropdown
+    navItem.addEventListener('mouseenter', showDropdown);
+    navItem.addEventListener('focus', showDropdown);
     dropdownContainer.addEventListener('mouseenter', showDropdown);
-    // Ocultar dropdown solo si el mouse no está sobre el enlace ni el dropdown (con pequeño delay para evitar parpadeo)
-    serviciosItem.addEventListener('mouseleave', function() {
+    dropdownContainer.addEventListener('focus', showDropdown);
+    function handleMouseLeave() {
       clearTimeout(hoverTimeout);
       hoverTimeout = setTimeout(() => {
         if (!isHovering()) closeDropdown();
       }, 100);
-    });
-    dropdownContainer.addEventListener('mouseleave', function() {
-      clearTimeout(hoverTimeout);
-      hoverTimeout = setTimeout(() => {
-        if (!isHovering()) closeDropdown();
-      }, 100);
-    });
-  }
-});
+    }
+    navItem.addEventListener('mouseleave', handleMouseLeave);
+    navItem.addEventListener('blur', handleMouseLeave);
+    dropdownContainer.addEventListener('mouseleave', handleMouseLeave);
+    dropdownContainer.addEventListener('blur', handleMouseLeave);
+  });
+}
+
+// Esperar a que la navbar esté en el DOM
+const navbarPlaceholder = document.getElementById('navbar-placeholder');
+if (navbarPlaceholder) {
+  const observer = new MutationObserver((mutations, obs) => {
+    if (navbarPlaceholder.querySelector('.navbar-nav')) {
+      initDropdowns();
+      obs.disconnect();
+    }
+  });
+  observer.observe(navbarPlaceholder, { childList: true, subtree: true });
+}
+// ...estilos y animaciones en CSS/scss para .dropdown-gsap-container y .dropdown-gsap...

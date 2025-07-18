@@ -40,6 +40,7 @@
     </div>
     <!-- SVG animado y contenedor eliminados -->
     <div id="cards" class="section-gsap"></div>
+    <div id="dynamic-content"></div>
   </main>
   <div id="footer"></div>
 
@@ -51,11 +52,19 @@
   <script src="./js/hero-reveal.js"></script>
   <script src="./js/hero-reveal-fix.js"></script>
   <script>
-    // Cargar dinámicamente la navbar
+    // Cargar dinámicamente la navbar y luego los scripts de lógica
     fetch('./components/navbar.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar-placeholder').innerHTML = html;
+        // Inicializar los dropdowns después de insertar la navbar
+        const scriptDropdown = document.createElement('script');
+        scriptDropdown.src = './js/navbar-dropdown.js';
+        document.body.appendChild(scriptDropdown);
+        // Importar la lógica de transición hero-navbar
+        const scriptTransition = document.createElement('script');
+        scriptTransition.src = './js/hero-navbar-transition.js';
+        document.body.appendChild(scriptTransition);
       });
     // Cargar dinámicamente las cards
     fetch('./components/cards.html')

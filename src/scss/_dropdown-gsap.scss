@@ -1,0 +1,53 @@
+// Estilos para los dropdown animados de la navbar
+.dropdown-gsap-container {
+  z-index: 9999;
+  position: fixed;
+  pointer-events: auto;
+}
+
+.dropdown-gsap {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  background: $color-white;
+  border-radius: 0.7rem;
+  box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
+  min-width: 180px;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+.dropdown-gsap li {
+  width: 100%;
+}
+
+.dropdown-gsap a {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 1.2rem;
+  color: $color-black;
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+}
+
+.dropdown-gsap a:hover,
+.dropdown-gsap a:focus {
+  background: #1877f3;
+  color: $color-white;
+}
+
+
+// Animación extra para el dropdown
+.dropdown-gsap {
+  will-change: opacity, transform, height;
+}

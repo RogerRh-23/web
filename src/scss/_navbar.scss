@@ -1,41 +1,3 @@
-// Contenedor flotante para el dropdown animado
-.dropdown-gsap-container {
-  position: fixed;
-  z-index: 9999;
-  min-width: 180px;
-  // box-shadow eliminado
-  border-radius: 0 0 12px 12px;
-  background: transparent;
-  overflow: visible;
-}
-// Dropdown animado con GSAP
-// Dropdown GSAP flotante
-.dropdown-gsap {
-  background: $color-white;
-  // box-shadow eliminado
-  border-radius: 0 0 12px 12px;
-  margin: 0;
-  padding: 0.5rem 0 0.5rem 0;
-  position: fixed;
-  min-width: 180px;
-  z-index: 9999;
-  list-style: none;
-  overflow: hidden;
-  li {
-    width: 100%;
-    a {
-      display: block;
-      color: $pantone-b7693u;
-      padding: 0.7rem 1.5rem;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      &:hover {
-        background: $pantone-p120-5u;
-        color: $color-white;
-      }
-    }
-  }
-}
 // Asegura que el nav-item de servicios tenga position: relative
 .navbar-nav .nav-item {
   position: relative;
@@ -68,7 +30,7 @@
   .navbar-brand img {
     border-radius: 8px;
     filter: brightness(0) invert(1);
-    width: calc(10rem + 40px); // 20px más grande
+    width: calc(10rem + 40px);
     margin: 5px;
   }
   .navbar-nav {
@@ -83,6 +45,7 @@
     align-items: center;
     margin: 0 2.8rem;
   }
+  cursor: default;
   .nav-link {
     color: $color-white;
     display: flex;
@@ -90,8 +53,9 @@
     gap: 6px;
     font-size: 1rem;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
-      color: $pantone-p123-16u;
+      color: $pantone-p120-5u;
       text-decoration: none;
     }
   }
