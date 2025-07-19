@@ -21,15 +21,15 @@ function initDropdowns() {
   const dropdowns = [
     {
       label: 'Servicios',
-      items: ['Consultoría', 'Capacitación', 'Soporte']
+      items: ['Certificación de Sistemas de Gestión', 'Capacitación', 'Sorteo y Retrabajo']
     },
     {
       label: 'Procesos',
-      items: ['Gestión de procesos', 'Optimización', 'Automatización']
+      items: ['Proceso de Certificación', 'Vigencia de la Certificación', 'Política de Imparcialidad']
     },
     {
       label: 'Centro de formación',
-      items: ['Cursos', 'Diplomados', 'Webinars']
+      items: ['Cursos', 'Webinars']
     }
   ];
 
@@ -41,10 +41,42 @@ function initDropdowns() {
     dropdownContainer.className = 'dropdown-gsap-container';
     let dropdown = document.createElement('ul');
     dropdown.className = 'dropdown-gsap';
-    dropdown.innerHTML = drop.items.map(item => `<li><a href="#">${item}</a></li>`).join('');
+    // Generar el href según el label y el nombre del item
+    dropdown.innerHTML = drop.items.map(item => {
+      // Carpeta y archivo: usar el nombre original tal como está en el sistema de archivos
+      const folder = drop.label;
+      const file = item;
+      const href = `./components/${folder}/${file}.html`;
+      return `<li><a href="#" data-href="${href}">${item}</a></li>`;
+    }).join('');
+
     dropdownContainer.appendChild(dropdown);
     document.body.appendChild(dropdownContainer);
     gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
+
+    // Delegación de eventos para cargar dinámicamente el contenido
+    dropdown.addEventListener('click', function(e) {
+      const target = e.target.closest('a[data-href]');
+      if (target) {
+        e.preventDefault();
+        const href = target.getAttribute('data-href');
+        // Ocultar secciones principales y mostrar el contenedor dinámico
+        const headImg = document.querySelector('.head-img-container');
+        const cards = document.getElementById('cards');
+        const dynamicContent = document.getElementById('dynamic-content');
+        if (headImg) headImg.style.display = 'none';
+        if (cards) cards.style.display = 'none';
+        if (dynamicContent) {
+          dynamicContent.style.display = 'block';
+          fetch(href)
+            .then(res => res.text())
+            .then(html => {
+              dynamicContent.innerHTML = html;
+            });
+        }
+        closeDropdown();
+      }
+    });
 
     let open = false;
     function isHovering() {

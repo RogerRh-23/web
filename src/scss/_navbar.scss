@@ -3,7 +3,7 @@
   position: relative;
 }
 .navbar-custom .nav-link:hover {
-  color: $pantone-mix-2;
+  color: $pantone-p120-5u;
   text-decoration: none;
 }
 // Estilos personalizados para la barra de navegación
@@ -65,7 +65,7 @@
     text-decoration: none;
     margin: 20px;
     &:hover {
-      color: $pantone-mix-2;
+      color: $pantone-p120-5u;
       border-color: $pantone-p120-5u;
       text-decoration: none;
     }

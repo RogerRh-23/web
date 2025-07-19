@@ -1,3 +1,42 @@
+// Opciones del footer
+.footer-options {
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2.5rem;
+  margin-left: auto;
+}
+.footer-options h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+.footer-options-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 180px;
+}
+.footer-options-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-options-list li {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.footer-options-list a {
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-options-list a:hover {
+  color: #25d366;
+}
 // Footer moderno con triángulo y textura
 .footer-section {
   position: relative;
@@ -31,9 +70,10 @@
   position: relative;
   z-index: 3;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-direction: row;
+  align-items: flex-start;
   width: 100%;
+  gap: 2.5rem;
 }
 .footer-content-top {
   display: flex;
@@ -49,6 +89,7 @@
   align-items: flex-start;
   margin-bottom: 1.5rem;
   margin-left: 3rem;
+  min-width: 220px;
 }
 .footer-logo-col {
   display: flex;
