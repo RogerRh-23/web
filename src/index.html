@@ -79,6 +79,13 @@
           .then(res => res.text())
           .then(html => {
             document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+            // Forzar inicialización de dropdowns móviles
+            if (typeof initDropdowns === 'function') {
+              initDropdowns();
+            } else {
+              // Si el script aún no está cargado, esperar y reintentar
+              setTimeout(() => { if (typeof initDropdowns === 'function') initDropdowns(); }, 200);
+            }
           });
       };
       const hideNavbarMobile = () => {

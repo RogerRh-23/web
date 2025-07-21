@@ -1,6 +1,3 @@
-// Animación de entrada y flip para cartas tipo baraja
-
-
 document.addEventListener('DOMContentLoaded', () => {
   // Esperar a que las nuevas cards se carguen dinámicamente
   const observer = new MutationObserver(() => {
@@ -15,11 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function animateInfoCards(cards) {
+  const isMobile = window.innerWidth <= 991;
   cards.forEach((card, i) => {
-    let xFrom = card.classList.contains('from-left') ? '-100vw' : '100vw';
-    gsap.set(card, { opacity: 0, x: xFrom });
+    let xFrom = card.classList.contains('from-left')
+      ? (isMobile ? '-60vw' : '-100vw')
+      : (isMobile ? '60vw' : '100vw');
+    let durationIn = isMobile ? 0.5 : 0.8;
+    let durationOut = isMobile ? 0.4 : 0.7;
+    gsap.set(card, { opacity: 0, x: xFrom, scale: isMobile ? 0.98 : 1 });
     const content = card.querySelector('.info-card-content');
-    // Parallax solo mueve el contenido verticalmente, no afecta layout ni border-radius
     gsap.set(content, { y: 0 });
     ScrollTrigger.create({
       trigger: card,
@@ -29,7 +30,8 @@ function animateInfoCards(cards) {
         gsap.to(card, {
           x: 0,
           opacity: 1,
-          duration: 0.8,
+          scale: 1,
+          duration: durationIn,
           ease: 'power3.out',
         });
       },
@@ -37,7 +39,8 @@ function animateInfoCards(cards) {
         gsap.to(card, {
           opacity: 0,
           x: xFrom,
-          duration: 0.7,
+          scale: isMobile ? 0.98 : 1,
+          duration: durationOut,
           ease: 'power2.in',
         });
       },
@@ -45,7 +48,8 @@ function animateInfoCards(cards) {
         gsap.to(card, {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          scale: 1,
+          duration: durationIn,
           ease: 'power3.out',
         });
       },
@@ -53,7 +57,8 @@ function animateInfoCards(cards) {
         gsap.to(card, {
           opacity: 0,
           x: xFrom,
-          duration: 0.7,
+          scale: isMobile ? 0.98 : 1,
+          duration: durationOut,
           ease: 'power2.in',
         });
       },

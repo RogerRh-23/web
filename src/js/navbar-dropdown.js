@@ -184,7 +184,7 @@ function initDropdowns() {
             gsap.fromTo(
               mobileDropdownContainer,
               { y: 60, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.48, ease: 'power2.out' }
+              { y: 0, opacity: 1, duration: 0.10, ease: 'power2.out' }
             );
           }, 0);
           // Cerrar si se hace click fuera
@@ -199,7 +199,7 @@ function initDropdowns() {
           gsap.to(mobileDropdownContainer, {
             y: 60,
             opacity: 0,
-            duration: 0.32,
+            duration: 0.16,
             ease: 'power2.in',
             onComplete: () => {
               mobileDropdownContainer.style.display = 'none';
