@@ -42,7 +42,9 @@
     <div id="cards" class="section-gsap"></div>
     <div id="dynamic-content"></div>
   </main>
+
   <div id="footer"></div>
+  <div id="navbar-mobile-placeholder"></div>
 
   <!-- GSAP core y plugins -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -66,6 +68,24 @@
         scriptTransition.src = './js/hero-navbar-transition.js';
         document.body.appendChild(scriptTransition);
       });
+
+    // Cargar navbar mobile solo en dispositivos pequeños
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbarMobile() {
+      if (isMobile()) {
+        fetch('./components/navbar-mobile.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+          });
+      } else {
+        document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+      }
+    }
+    window.addEventListener('resize', loadNavbarMobile);
+    window.addEventListener('DOMContentLoaded', loadNavbarMobile);
     // Cargar dinámicamente las cards
     fetch('./components/cards.html')
       .then(res => res.text())

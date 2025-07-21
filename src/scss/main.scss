@@ -55,11 +55,13 @@ html, body {
 @import 'base';
 @import 'mixins';
 @import 'navbar';
+@import 'login';
 @import 'head';
 @import 'footer';
 @import 'hero-reveal';
 @import 'cards';
 @import 'dropdown-gsap';
+@import 'animations';
 
 body {
   font-family: "Montserrat", sans-serif;
@@ -162,5 +164,11 @@ body::-webkit-scrollbar {
       font-size: 1rem;
       line-height: 1.5;
     }
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-custom {
+    display: none !important;
   }
 }

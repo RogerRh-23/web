@@ -1,3 +1,63 @@
+// Estilos para la navbar mobile solo con iconos
+.navbar-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 64px;
+  background: $pantone-b7693u;
+  z-index: 9999;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.12);
+}
+.navbar-mobile-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.navbar-mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: none;
+  color: #fff;
+  font-size: 1.7rem;
+  transition: background 0.18s, color 0.18s;
+  text-decoration: none;
+}
+.navbar-mobile-link:hover,
+.navbar-mobile-link:focus {
+  background: #fff1;
+  color: $pantone-p120-5u;
+}
+.navbar-mobile-logo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff1;
+  padding: 4px;
+  filter: brightness(0) invert(1);
+  &:hover {
+    background: $pantone-p120-5u33;
+    filter: none;  
+  }
+}
+@media (min-width: 992px) {
+  .navbar-mobile {
+    display: none !important;
+  }
+}
 // Asegura que el nav-item de servicios tenga position: relative
 .navbar-nav .nav-item {
   position: relative;

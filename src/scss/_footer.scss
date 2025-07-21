@@ -35,18 +35,18 @@
   transition: color 0.2s;
 }
 .footer-options-list a:hover {
-  color: #25d366;
+  color: $pantone-p120-5u;
 }
+
 // Footer moderno con triángulo y textura
 .footer-section {
   position: relative;
-  background: #181a1b; // gris muy oscuro
+  background: #181a1b;
   color: #f5f5f5;
   padding-top: 80px;
   padding-bottom: 32px;
   overflow: hidden;
 }
-
 .footer-triangle {
   position: absolute;
   top: -60px;
@@ -75,14 +75,6 @@
   width: 100%;
   gap: 2.5rem;
 }
-.footer-content-top {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
-}
-
 .footer-logo-social {
   display: flex;
   flex-direction: column;
@@ -90,12 +82,6 @@
   margin-bottom: 1.5rem;
   margin-left: 3rem;
   min-width: 220px;
-}
-.footer-logo-col {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.2rem;
 }
 .footer-logo {
   height: 15rem;
@@ -124,6 +110,7 @@
   background: #fff;
   transition: background 0.2s;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 1.5rem;
 }
 .footer-social-link i {
   color: #181a1b !important;
@@ -141,7 +128,7 @@
   color: #fff !important;
 }
 .footer-social .icon.X:hover {
-  background: $color-black;
+  background: #222;
 }
 .footer-social .icon.X:hover .footer-social-link i {
   color: #fff !important;
@@ -159,19 +146,31 @@
   color: #fff !important;
 }
 
+// Franja de textura: abarca todo el ancho y está por debajo del contenido principal
 .footer-texture {
-  width: 100%;
+  width: 100vw;
+  left: 0;
+  position: absolute;
+  bottom: 0;
   height: 48px;
-  margin: 24px 0 0 0;
-  background: url('https://www.transparenttextures.com/patterns/diagmonds-light.png');
-  opacity: 0.12;
-  clear: both;
+  background: #181a1b url('https://www.transparenttextures.com/patterns/diagmonds-light.png');
+  background-blend-mode: multiply;
+  opacity: 0.18;
+  z-index: 1;
+  pointer-events: none;
 }
 
+// Derechos reservados: debajo de la franja de textura
 .footer-copy {
-  margin-top: 1.5rem;
   font-size: 1rem;
   color: #bdbdbd;
   text-align: center;
-  width: 100%;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  z-index: 0;
+  background: transparent;
+  pointer-events: none;
 }

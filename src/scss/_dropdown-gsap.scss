@@ -51,3 +51,20 @@
 .dropdown-gsap {
   will-change: opacity, transform, height;
 }
+
+// Estilos y animación para dropdowns en mobile
+.dropdown-gsap-mobile {
+  z-index: 9999;
+  position: fixed;
+  pointer-events: auto;
+  box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
+  border-radius: 0.7rem;
+  background: $color-white;
+  min-width: 180px;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  will-change: opacity, transform, height;
+  transition: opacity 0.32s, transform 0.32s;
+}

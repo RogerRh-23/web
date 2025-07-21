@@ -1,17 +1,131 @@
-<!-- Login dinámico -->
-<div class="login-container">
-  <h2>Iniciar sesión</h2>
-  <form id="login-form">
-    <div class="form-group">
-      <label for="username">Usuario</label>
-      <input type="text" id="username" name="username" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    @media (max-width: 991px) {
+      #navbar-placeholder {
+        display: none !important;
+      }
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/login.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <!-- Login visual tipo card -->
+  <div class="login-bg">
+    <div class="login-card">
+      <!-- Logo superior para login exitoso -->
+      <div class="login-success-logo" style="display:none; justify-content: center; align-items: center; width: 100%; margin-bottom: 1rem;">
+        <img src="../assets/LACS.png" alt="LACS Logo" style="max-width: 120px; width: 40vw; min-width: 80px; display: block; margin: 0 auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08)); transition: transform 0.7s cubic-bezier(.68,-0.55,.27,1.55);"/>
+      </div>
+      <!-- Círculos animados para el efecto de bienvenida -->
+      <div class="login-success-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+      </div>
+      <div class="login-success-message" style="display:none;"></div>
+      <div class="login-header">
+        <h2 class="login-header-title">¡Bienvenido!</h2>
+        <p class="login-header-desc">Nos alegra verte de nuevo</p>
+      </div>
+      <form id="login-form">
+        <div class="login-field">
+          <span class="login-icon"><i class="bi bi-envelope"></i></span>
+          <div class="login-input-group">
+            <input type="text" id="username" name="username" required>
+            <label for="username" class="login-label">Usuario</label>
+          </div>
+        </div>
+        <div class="login-field">
+          <span class="login-icon"><i class="bi bi-lock"></i></span>
+          <div class="login-input-group">
+            <input type="password" id="password" name="password" required>
+            <label for="password" class="login-label">Contraseña</label>
+          </div>
+        </div>
+        <button type="submit" class="login-btn">Entrar</button>
+      </form>
+      <div id="login-message"></div>
     </div>
-    <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Entrar</button>
-  </form>
-  <div id="login-message"></div>
-</div>
+  </div>
+
+  <div id="navbar-mobile-placeholder"></div>
+
+  <!-- GSAP core y plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <!-- JS principales del proyecto -->
+  <script src="./js/gsap.js"></script>
+  <script src="./js/hero-reveal.js"></script>
+  <script src="./js/hero-reveal-fix.js"></script>
+
+  <script src="../js/login-success.js"></script>
+  <script>
+    // Lógica de login y animación
+    document.addEventListener('DOMContentLoaded', function() {
+      // Navbar desktop
+      fetch('../components/navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('navbar-placeholder').innerHTML = html;
+        });
+      // Navbar mobile
+      function isMobile() {
+        return window.innerWidth < 992;
+      }
+      function loadNavbarMobile() {
+        if (isMobile()) {
+          fetch('../components/navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+            });
+        } else {
+          document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+        }
+      }
+      window.addEventListener('resize', loadNavbarMobile);
+      loadNavbarMobile();
+
+      // Login submit
+      const form = document.getElementById('login-form');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const username = document.getElementById('username').value.trim();
+          const password = document.getElementById('password').value.trim();
+          // Validación simple (puedes reemplazar por tu lógica real)
+          if (username && password) {
+            animateLoginSuccess(username);
+            // Opcional: redirigir después de la animación
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 2500);
+          } else {
+            const msg = document.getElementById('login-message');
+            if (msg) {
+              msg.textContent = 'Por favor, ingresa usuario y contraseña.';
+              msg.style.color = 'red';
+            }
+          }
+        });
+      }
+    });
+  </script>
+  <script src="./js/navbar-dropdown.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/cards-anim.js"></script>
+</body>
+</html>
+
 
