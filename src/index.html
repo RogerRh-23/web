@@ -74,14 +74,30 @@
       return window.innerWidth < 992;
     }
     function loadNavbarMobile() {
-      if (isMobile()) {
+      const showNavbarMobile = () => {
         fetch('./components/navbar-mobile.html')
           .then(res => res.text())
           .then(html => {
             document.getElementById('navbar-mobile-placeholder').innerHTML = html;
           });
-      } else {
+      };
+      const hideNavbarMobile = () => {
         document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+      };
+      if (isMobile()) {
+        // Esperar a que el hero-reveal desaparezca
+        const checkHeroReveal = () => {
+          const hero = document.querySelector('.hero-reveal');
+          if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
+            showNavbarMobile();
+          } else {
+            hideNavbarMobile();
+            setTimeout(checkHeroReveal, 200);
+          }
+        };
+        checkHeroReveal();
+      } else {
+        hideNavbarMobile();
       }
     }
     window.addEventListener('resize', loadNavbarMobile);
