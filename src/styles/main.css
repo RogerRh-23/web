@@ -1206,6 +1206,53 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   transition: opacity 0.32s, transform 0.32s;
 }
 
+.dynamic-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 0;
+}
+
+.info-box {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(51, 145, 170, 0.08);
+  padding: 2rem 1.5rem;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(51, 145, 170);
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.section-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+@media (max-width: 600px) {
+  .info-box {
+    padding: 1.2rem 0.5rem;
+    min-width: 0;
+    max-width: 98vw;
+  }
+  .section-title {
+    font-size: 1.3rem;
+  }
+}
 body {
   font-family: "Montserrat", sans-serif;
   background: #f8f9fa;

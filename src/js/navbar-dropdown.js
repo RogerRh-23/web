@@ -35,7 +35,7 @@ function initDropdowns() {
     },
     {
       label: 'Procesos',
-      items: ['Proceso de Certificación', 'Vigencia de la Certificación', 'Procedimiento de atencion de quejas']
+      items: ['Proceso de Certificación', 'Vigencia de la Certificación', 'Procedimiento de atención de quejas']
     },
     {
       label: 'Centro de formación',
