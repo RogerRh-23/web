@@ -24,8 +24,8 @@ function animateInfoCards(cards) {
     gsap.set(content, { y: 0 });
     ScrollTrigger.create({
       trigger: card,
-      start: 'top 80%',
-      end: 'bottom 20%',
+      start: 'top 95%',
+      end: 'bottom 5%',
       onEnter: () => {
         gsap.to(card, {
           x: 0,

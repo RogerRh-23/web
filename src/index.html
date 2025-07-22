@@ -24,7 +24,7 @@
       <div class="hero-rect" style="left:calc(8 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:9"></div>
     </div>
     <div class="hero-reveal-logo-fixed">
-      <img class="hero-logo-img" src="./assets/LACS-Comp.png" alt="logo" />
+      <img class="hero-logo-img" src="./assets/img/LACS-Comp.png" alt="logo" />
     </div>
     <button class="hero-reveal-arrow" id="hero-reveal-arrow" aria-label="Scroll">
       <svg viewBox="0 0 24 24"><path d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z"/></svg>
@@ -33,14 +33,14 @@
 
   <div id="navbar-placeholder" class="preload"></div>
   <main>
+    <div id="dynamic-content"></div>
     <div class="head-img-container">
-      <img class="main-head-img" src="./assets/img2.png" alt="img1.png" />
+      <img class="main-head-img" src="./assets/img/img2.png" alt="img1.png" />
       <div class="lacs-mask"></div>
-      <img class="lacs-logo-overlay" src="./assets/LACS-Comp.png" alt="LACS-Comp.png" />
+      <img class="lacs-logo-overlay" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
     </div>
     <!-- SVG animado y contenedor eliminados -->
     <div id="cards" class="section-gsap"></div>
-    <div id="dynamic-content"></div>
   </main>
 
   <div id="footer"></div>
@@ -67,6 +67,8 @@
         const scriptTransition = document.createElement('script');
         scriptTransition.src = './js/hero-navbar-transition.js';
         document.body.appendChild(scriptTransition);
+        // Renderizar el dropdown de usuario después de cargar la navbar
+        setTimeout(renderUserDropdown, 100);
       });
 
     // Cargar navbar mobile solo en dispositivos pequeños
@@ -83,7 +85,6 @@
             if (typeof initDropdowns === 'function') {
               initDropdowns();
             } else {
-              // Si el script aún no está cargado, esperar y reintentar
               setTimeout(() => { if (typeof initDropdowns === 'function') initDropdowns(); }, 200);
             }
           });
@@ -92,17 +93,20 @@
         document.getElementById('navbar-mobile-placeholder').innerHTML = '';
       };
       if (isMobile()) {
-        // Esperar a que el hero-reveal desaparezca
-        const checkHeroReveal = () => {
-          const hero = document.querySelector('.hero-reveal');
-          if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
-            showNavbarMobile();
-          } else {
-            hideNavbarMobile();
-            setTimeout(checkHeroReveal, 200);
-          }
-        };
-        checkHeroReveal();
+        const hero = document.querySelector('.hero-reveal');
+        if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
+          showNavbarMobile();
+        } else {
+          hideNavbarMobile();
+          // Usar MutationObserver para detectar cuando el hero desaparece
+          const observer = new MutationObserver(() => {
+            if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
+              showNavbarMobile();
+              observer.disconnect();
+            }
+          });
+          observer.observe(hero, { attributes: true, attributeFilter: ['style', 'class'] });
+        }
       } else {
         hideNavbarMobile();
       }
@@ -115,6 +119,174 @@
       .then(html => {
         document.getElementById('cards').innerHTML = html;
       });
+
+    // Cargar el login dinámicamente bajo demanda
+    function showLogin() {
+      // Ocultar head, cards y footer, y ajustar altura del body/main
+      // Ocultar todo menos la navbar
+      const hero = document.querySelector('.hero-reveal');
+      const main = document.querySelector('main');
+      const footer = document.getElementById('footer');
+      const navbarMobile = document.getElementById('navbar-mobile-placeholder');
+      if (hero) hero.style.display = 'none';
+      if (main) main.style.display = 'none';
+      if (footer) footer.style.display = 'none';
+      if (navbarMobile) navbarMobile.style.display = 'none';
+      fetch('./components/login.html')
+        .then(res => res.text())
+        .then(html => {
+          // Asegura que el dynamic-content esté visible y sobre el resto
+          const dyn = document.getElementById('dynamic-content');
+          dyn.innerHTML = html;
+          dyn.style.display = 'block';
+          dyn.style.position = 'fixed';
+          dyn.style.top = '0';
+          dyn.style.left = '0';
+          dyn.style.width = '100vw';
+          dyn.style.height = '100vh';
+          dyn.style.zIndex = '2000';
+          dyn.style.pointerEvents = 'auto';
+          dyn.style.overflowY = 'auto';
+
+          // Forzar recarga de estilos visuales del login
+          let loginStyle = document.getElementById('login-style-dynamic');
+          if (loginStyle) loginStyle.remove();
+          const styleLink = document.createElement('link');
+          styleLink.rel = 'stylesheet';
+          styleLink.href = './styles/main.css';
+          styleLink.id = 'login-style-dynamic';
+          document.head.appendChild(styleLink);
+
+          // Forzar estilos para centrar y cubrir fondo del login, adaptado a mobile
+          const loginBg = document.querySelector('.login-bg');
+          if (loginBg) {
+            loginBg.style.position = 'relative';
+            loginBg.style.width = '100vw';
+            loginBg.style.height = '100vh';
+            loginBg.style.display = 'flex';
+            loginBg.style.alignItems = 'center';
+            loginBg.style.justifyContent = 'center';
+            loginBg.style.background = 'rgba(255,255,255,0.96)';
+            loginBg.style.zIndex = '1';
+            loginBg.style.overflowY = 'auto';
+            loginBg.style.padding = '0';
+          }
+          // Ajuste extra para mobile: si la pantalla es pequeña, centrar y permitir scroll
+          if (window.innerWidth < 600) {
+            if (loginBg) {
+              loginBg.style.alignItems = 'flex-start';
+              loginBg.style.justifyContent = 'center';
+              loginBg.style.paddingTop = '8vw';
+            }
+          }
+          // Aquí puedes inicializar la lógica JS del login si es necesario
+          if (typeof initLogin === 'function') {
+            initLogin();
+          }
+        });
+    }
+
+    function restoreMainView() {
+      // Restaurar todo el contenido
+      const hero = document.querySelector('.hero-reveal');
+      const main = document.querySelector('main');
+      const footer = document.getElementById('footer');
+      const navbarMobile = document.getElementById('navbar-mobile-placeholder');
+      if (hero) hero.style.display = '';
+      if (main) main.style.display = '';
+      if (footer) footer.style.display = '';
+      if (navbarMobile) navbarMobile.style.display = '';
+      const dyn = document.getElementById('dynamic-content');
+      dyn.innerHTML = '';
+      dyn.style.display = '';
+      dyn.style.position = '';
+      dyn.style.top = '';
+      dyn.style.left = '';
+      dyn.style.width = '';
+      dyn.style.height = '';
+      dyn.style.zIndex = '';
+      dyn.style.pointerEvents = '';
+    }
+
+    // Mostrar/ocultar dropdown de usuario con botón 'Cerrar sesión' según login
+    function renderUserDropdown() {
+      const navbar = document.querySelector('.navbar .navbar-nav');
+      if (!navbar) return;
+      // Eliminar cualquier dropdown de usuario existente
+      let userDropdown = document.getElementById('user-dropdown');
+      if (userDropdown) userDropdown.remove();
+      // No agregar ningún botón ni dropdown de usuario
+    }
+
+    // Enlazar el botón de 'Iniciar Sesión' de la navbar para mostrar el login sin recargar
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('a[href$="login.html"]');
+      if (btn && btn.closest('.navbar')) {
+        e.preventDefault();
+        showLogin();
+        return;
+      }
+
+      // Delegar clicks en enlaces de dropdown de la navbar para cargar contenido dinámico
+      const navLink = e.target.closest('.navbar .dropdown-menu a[href]');
+      if (navLink) {
+        const href = navLink.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+          e.preventDefault();
+          fetch(href)
+            .then(res => res.text())
+            .then(html => {
+              const dyn = document.getElementById('dynamic-content');
+              const cards = document.getElementById('cards');
+              const headImg = document.querySelector('.head-img-container');
+              const hero = document.querySelector('.hero-reveal');
+              // Ocultar solo las cards y la imagen de cabecera, no el main ni el footer ni el header
+              if (cards) cards.style.display = 'none';
+              if (headImg) headImg.style.display = 'none';
+              if (hero) hero.style.display = 'none';
+              if (dyn) {
+                dyn.innerHTML = html;
+                dyn.style.display = 'block';
+                dyn.style.position = '';
+                dyn.style.top = '';
+                dyn.style.left = '';
+                dyn.style.width = '';
+                dyn.style.height = '';
+                dyn.style.zIndex = '';
+                dyn.style.pointerEvents = '';
+                dyn.style.overflowY = '';
+                // Eliminar estilos de login si existen
+                let loginStyle = document.getElementById('login-style-dynamic');
+                if (loginStyle) loginStyle.remove();
+                // Limpiar clases y estilos de login-bg si quedaron
+                const loginBg = dyn.querySelector('.login-bg');
+                if (loginBg) {
+                  loginBg.removeAttribute('style');
+                }
+              }
+            });
+        }
+      }
+    });
+
+    // Simulación: cuando el login es exitoso, muestra el dropdown de usuario
+    window.initLogin = function() {
+      const form = document.getElementById('login-form');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          // ...validación real aquí...
+          window.isLoggedIn = true;
+          renderUserDropdown();
+          restoreMainView();
+        });
+      }
+    };
+
+    // Renderizar el dropdown de usuario al cargar si ya está logueado
+    document.addEventListener('DOMContentLoaded', renderUserDropdown);
+    // También re-renderizar después de cargar la navbar
+    document.addEventListener('navbar-loaded', renderUserDropdown);
     // Cargar dinámicamente el footer
     fetch('./components/footer.html')
       .then(res => res.text())

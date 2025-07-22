@@ -15,6 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
     lastScroll = y;
   });
 
+  // Mostrar navbar-mobile tras ocultar el hero
+  if (arrow && overlay) {
+    arrow.addEventListener('click', () => {
+      // Esperar a que el hero desaparezca (puedes ajustar el timeout según la animación)
+      setTimeout(() => {
+        if (typeof loadNavbarMobile === 'function') {
+          loadNavbarMobile();
+        } else if (window.loadNavbarMobile) {
+          window.loadNavbarMobile();
+        }
+      }, 600); // Ajusta el tiempo si tu animación dura más/menos
+    });
+  }
+
   // Ensure slices fill perfectly and logo is centered (force redraw)
   function fixSlices() {
     const logoSlices = Array.from(document.querySelectorAll('.hero-logo-slice'));
