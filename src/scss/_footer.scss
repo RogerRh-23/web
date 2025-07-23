@@ -82,7 +82,7 @@
   justify-content: flex-start;
   width: 100%;
   max-width: 15rem;
-  margin-left: -0.7rem;
+  margin-left: 1.5rem;
 }
 .footer-social .icon {
   display: flex;
@@ -110,9 +110,6 @@
 }
 .footer-social .icon.facebook:hover .footer-social-link i {
   color: #fff !important;
-}
-.footer-social .icon.X:hover {
-  background: #222;
 }
 .footer-social .icon.X:hover .footer-social-link i {
   color: #fff !important;

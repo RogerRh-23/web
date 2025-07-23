@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   observer.observe(document.getElementById('cards'), { childList: true, subtree: true });
 });
 
+// --- Animación SplitText para #chars ---
 
 function animateInfoCards(cards) {
   const isMobile = window.innerWidth <= 991;
@@ -103,14 +104,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (btn !== exceptBtn && btn.getAttribute('aria-expanded') === 'true') {
           btn.setAttribute('aria-expanded', 'false');
           // Icono gira a +
-          gsap.to(icon, {rotate: 0, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
+          gsap.to(icon, {rotate: 0, duration: 0.05, ease: 'power2.inOut', onComplete: () => {
             icon.className = 'bi bi-plus';
           }});
           // Oculta descripción con animación
           gsap.to(desc, {
             height: 0,
             opacity: 0,
-            duration: 0.35,
+            duration: 0.1,
             ease: 'power2.in',
             onComplete: () => {
               desc.style.display = 'none';
@@ -134,20 +135,41 @@ document.addEventListener('DOMContentLoaded', function () {
           gsap.to(icon, {rotate: 180, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
             icon.className = 'bi bi-dash';
           }});
-          // Mostrar descripción con animación de altura y text reveal
+          // Mostrar descripción con animación de altura y SplitText
           desc.style.display = 'block';
           desc.hidden = false;
           desc.style.height = 'auto';
           const h = desc.scrollHeight;
           desc.style.height = '0px';
+          // SplitText animación por letra
+          if (window.SplitText) {
+            // Limpia splits previos
+            if (desc._split) desc._split.revert();
+            desc._split = new SplitText(desc, { type: 'chars' });
+            // Corrige visualmente los spans para evitar cortes raros
+            desc._split.chars.forEach(span => {
+              span.style.display = 'inline';
+              span.style.wordBreak = 'break-word';
+              span.style.whiteSpace = 'normal';
+            });
+            gsap.set(desc._split.chars, { x: 60, opacity: 0 });
+          }
           gsap.to(desc, {
             height: h,
             opacity: 1,
             duration: 0.4,
             ease: 'power2.out',
             onStart: () => {
-              // Text reveal
               gsap.fromTo(desc, {clipPath: 'inset(0 0 100% 0)'}, {clipPath: 'inset(0 0 0% 0)', duration: 0.4, ease: 'power2.out'});
+              if (window.SplitText && desc._split) {
+                gsap.to(desc._split.chars, {
+                  x: 0,
+                  opacity: 1,
+                  duration: 0.7,
+                  ease: 'power4',
+                  stagger: 0.04
+                });
+              }
             },
             onComplete: () => {
               desc.style.height = 'auto';
