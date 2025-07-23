@@ -165,9 +165,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 gsap.to(desc._split.chars, {
                   x: 0,
                   opacity: 1,
-                  duration: 0.7,
+                  duration: 0.35, // más rápido
                   ease: 'power4',
-                  stagger: 0.04
+                  stagger: 0.015 // más rápido
                 });
               }
             },

@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto Base</title>
+  <title>Latin America Certification & Systems</title>
   <link rel="stylesheet" href="./styles/main.css">
+  <link rel="icon" type="image/png" href="./assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
@@ -31,8 +32,30 @@
     </button>
   </div>
 
-  <div id="navbar-placeholder" class="preload"></div>
-  <main>
+  <!-- INICIO NAVBAR FIJA -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow" id="main-navbar" style="display:none;">
+    <div class="navbar-content">
+      <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid">
+          <span class="navbar-brand">
+            <img src="./assets/img/LACS.png" alt="LACS Logo"/>
+          </span>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link active" aria-current="page" href="/src/index.html"><i class="bi bi-house-door"></i> Inicio</a></li>
+              <li class="nav-item"><a class="nav-link"><i class="bi bi-briefcase"></i> Servicios</a></li>
+              <li class="nav-item"><a class="nav-link"><i class="bi bi-diagram-3"></i> Procesos</a></li>
+              <li class="nav-item"><a class="nav-link"><i class="bi bi-mortarboard"></i> Centro de formación</a></li>
+              <li class="nav-item"><a class="nav-link" href="./components/certificados.html"><i class="bi bi-award"></i> Certificados</a></li>
+              <li class="nav-item"><a class="nav-link" href="./components/contacto.html"><i class="bi bi-envelope"></i> Contacto</a></li>
+            </ul>
+            <a class="btn btn-outline-light" href="./components/login.html"><i class="bi bi-person-circle"></i> Iniciar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </nav>
+  <main class="pt-5" style="min-height: 80vh;">
     <div id="dynamic-content"></div>
     <div class="head-img-container">
       <img class="main-head-img" src="./assets/img/img2.png" alt="img1.png" />
@@ -75,7 +98,72 @@
       </div>
   </main>
 
-  <div id="footer"></div>
+  <!-- INICIO FOOTER FIJO -->
+  <footer class="footer bg-dark text-light py-4 mt-5" id="footer">
+    <footer class="footer-section">
+  <div class="footer-triangle"></div>
+  <div class="footer-content container">
+    <div class="footer-logo-social">
+      <div class="footer-logo-col">
+        <img src="./assets/img/LACS-Comp.png" alt="LACS Logo" class="footer-logo" />
+        <ul class="footer-social">
+          <li class="icon facebook">
+            <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" aria-label="Facebook" class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></i></a>
+          </li>
+          <li class="icon instagram">
+            <a href="https://www.instagram.com/lacs.mx/#" target="_blank" aria-label="Instagram" class="footer-social-link"><i class="fa-brands fa-instagram"></i></i></a>
+          </li>
+          <li class="icon linkedin">
+            <a href="https://www.linkedin.com/company/latin-american-certification-systems" target="_blank" aria-label="LinkedIn" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></i></a>
+          </li>
+          <li class="icon tiktok">
+            <a href="https://www.tiktok.com/@lacs_mx" target="_blank" aria-label="TikTok" class="footer-social-link"><i class="fa-brands fa-tiktok"></i></i></a>
+          </li>
+          <li class="icon whatsapp">
+            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp" class="footer-social-link"><i class="fa-brands fa-whatsapp"></i></i></a>
+          </li>
+          <li class="icon google-maps">
+            <a href="https://maps.app.goo.gl/3KpCwUMfCdGTCgCE9" target="_blank" aria-label="Google Maps" class="footer-social-link"><i class="bi bi-geo-alt-fill"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-options">
+      <div class="footer-options-col">
+        <h3>Más sobre nosotros</h3>
+        <ul class="footer-options-list">
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Nuestras acreditaciones</a></li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3>Clientes</h3>
+        <ul class="footer-options-list">
+          <li><a href="#">Clientes certificados</a></li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3>Reglamentos</h3>
+        <ul class="footer-options-list">
+          <li><a href="#">Reglamento de uso de marca</a></li>
+          <li><a href="#">Reglamento de empresa certificada</a></li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3>Politicas</h3>
+        <ul class="footer-options-list">
+          <li><a href="#">Aviso de privacidad</a></li>
+          <li><a href="#">Política de confidencialidad</a></li>
+          <li><a href="#">Política de Imparcialidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <span>&copy; 2025 Latin America Certification & Systems. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+  </footer>
   <div id="navbar-mobile-placeholder"></div>
 
   <!-- GSAP core y plugins -->
@@ -94,22 +182,23 @@
     // ...
   </script>
   <script>
-    // Cargar dinámicamente la navbar y luego los scripts de lógica
-    fetch('./components/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-placeholder').innerHTML = html;
-        // Inicializar los dropdowns después de insertar la navbar
-        const scriptDropdown = document.createElement('script');
-        scriptDropdown.src = './js/navbar-dropdown.js';
-        document.body.appendChild(scriptDropdown);
-        // Importar la lógica de transición hero-navbar
-        const scriptTransition = document.createElement('script');
-        scriptTransition.src = './js/hero-navbar-transition.js';
-        document.body.appendChild(scriptTransition);
-        // Renderizar el dropdown de usuario después de cargar la navbar
-        setTimeout(renderUserDropdown, 100);
-      });
+    // Navbar y footer ahora son fijos en el HTML
+
+    // Mostrar la navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function() {
+      const navbar = document.getElementById('main-navbar');
+      const hero = document.querySelector('.hero-reveal');
+      if (navbar && hero) {
+        const observer = new IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting) {
+            navbar.style.display = 'none';
+          } else {
+            navbar.style.display = '';
+          }
+        }, { threshold: 0.1 });
+        observer.observe(hero);
+      }
+    });
 
     // Cargar navbar mobile solo en dispositivos pequeños
     function isMobile() {
@@ -127,25 +216,45 @@
             } else {
               setTimeout(() => { if (typeof initDropdowns === 'function') initDropdowns(); }, 200);
             }
+            // Ocultar la navbar mobile al cargar
+            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+            if (navMobile) {
+              navMobile.style.display = 'none';
+              navMobile.classList.remove('fixed-top');
+              navMobile.classList.add('fixed-bottom');
+              navMobile.style.top = 'auto';
+              navMobile.style.bottom = '0';
+              navMobile.style.width = '100%';
+              navMobile.style.zIndex = '1050';
+            }
           });
       };
       const hideNavbarMobile = () => {
         document.getElementById('navbar-mobile-placeholder').innerHTML = '';
       };
+      const hero = document.querySelector('.hero-reveal');
       if (isMobile()) {
-        const hero = document.querySelector('.hero-reveal');
         if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
           showNavbarMobile();
+          // Mostrar la navbar mobile si el hero ya no es visible
+          setTimeout(() => {
+            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+            if (navMobile) navMobile.style.display = '';
+          }, 300);
         } else {
           hideNavbarMobile();
-          // Usar MutationObserver para detectar cuando el hero desaparece
-          const observer = new MutationObserver(() => {
-            if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
+          // Usar IntersectionObserver para detectar cuando el hero desaparece
+          const observer = new IntersectionObserver(function(entries) {
+            if (!entries[0].isIntersecting) {
               showNavbarMobile();
+              setTimeout(() => {
+                const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+                if (navMobile) navMobile.style.display = '';
+              }, 300);
               observer.disconnect();
             }
-          });
-          observer.observe(hero, { attributes: true, attributeFilter: ['style', 'class'] });
+          }, { threshold: 0.1 });
+          observer.observe(hero);
         }
       } else {
         hideNavbarMobile();
@@ -160,104 +269,8 @@
         document.getElementById('cards').innerHTML = html;
       });
 
-    // Cargar el login dinámicamente bajo demanda
-    function showLogin() {
-      // Ocultar head, cards y footer, y ajustar altura del body/main
-      // Ocultar todo menos la navbar
-      const hero = document.querySelector('.hero-reveal');
-      const main = document.querySelector('main');
-      const footer = document.getElementById('footer');
-      const navbarMobile = document.getElementById('navbar-mobile-placeholder');
-      if (hero) hero.style.display = 'none';
-      if (main) main.style.display = 'none';
-      if (footer) footer.style.display = 'none';
-      if (navbarMobile) navbarMobile.style.display = 'none';
-      fetch('./components/login.html')
-        .then(res => res.text())
-        .then(html => {
-          // Asegura que el dynamic-content esté visible y sobre el resto
-          const dyn = document.getElementById('dynamic-content');
-          dyn.innerHTML = html;
-          dyn.style.display = 'block';
-          dyn.style.position = 'fixed';
-          dyn.style.top = '0';
-          dyn.style.left = '0';
-          dyn.style.width = '100vw';
-          dyn.style.height = '100vh';
-          dyn.style.zIndex = '2000';
-          dyn.style.pointerEvents = 'auto';
-          dyn.style.overflowY = 'auto';
-
-          // Forzar recarga de estilos visuales del login
-          let loginStyle = document.getElementById('login-style-dynamic');
-          if (loginStyle) loginStyle.remove();
-          const styleLink = document.createElement('link');
-          styleLink.rel = 'stylesheet';
-          styleLink.href = './styles/main.css';
-          styleLink.id = 'login-style-dynamic';
-          document.head.appendChild(styleLink);
-
-          // Forzar estilos para centrar y cubrir fondo del login, adaptado a mobile
-          const loginBg = document.querySelector('.login-bg');
-          if (loginBg) {
-            loginBg.style.position = 'relative';
-            loginBg.style.width = '100vw';
-            loginBg.style.height = '100vh';
-            loginBg.style.display = 'flex';
-            loginBg.style.alignItems = 'center';
-            loginBg.style.justifyContent = 'center';
-            loginBg.style.background = 'rgba(255,255,255,0.96)';
-            loginBg.style.zIndex = '1';
-            loginBg.style.overflowY = 'auto';
-            loginBg.style.padding = '0';
-          }
-          // Ajuste extra para mobile: si la pantalla es pequeña, centrar y permitir scroll
-          if (window.innerWidth < 600) {
-            if (loginBg) {
-              loginBg.style.alignItems = 'flex-start';
-              loginBg.style.justifyContent = 'center';
-              loginBg.style.paddingTop = '8vw';
-            }
-          }
-          // Aquí puedes inicializar la lógica JS del login si es necesario
-          if (typeof initLogin === 'function') {
-            initLogin();
-          }
-        });
-    }
-
-    function restoreMainView() {
-      // Restaurar todo el contenido
-      const hero = document.querySelector('.hero-reveal');
-      const main = document.querySelector('main');
-      const footer = document.getElementById('footer');
-      const navbarMobile = document.getElementById('navbar-mobile-placeholder');
-      if (hero) hero.style.display = '';
-      if (main) main.style.display = '';
-      if (footer) footer.style.display = '';
-      if (navbarMobile) navbarMobile.style.display = '';
-      const dyn = document.getElementById('dynamic-content');
-      dyn.innerHTML = '';
-      dyn.style.display = '';
-      dyn.style.position = '';
-      dyn.style.top = '';
-      dyn.style.left = '';
-      dyn.style.width = '';
-      dyn.style.height = '';
-      dyn.style.zIndex = '';
-      dyn.style.pointerEvents = '';
-    }
-
-    // Enlazar el botón de 'Iniciar Sesión' de la navbar para mostrar el login sin recargar
+    // Delegar clicks en enlaces de dropdown de la navbar para cargar contenido dinámico
     document.addEventListener('click', function(e) {
-      const btn = e.target.closest('a[href$="login.html"]');
-      if (btn && btn.closest('.navbar')) {
-        e.preventDefault();
-        showLogin();
-        return;
-      }
-
-      // Delegar clicks en enlaces de dropdown de la navbar para cargar contenido dinámico
       const navLink = e.target.closest('.navbar .dropdown-menu a[href]');
       if (navLink) {
         const href = navLink.getAttribute('href');
@@ -298,39 +311,78 @@
         }
       }
     });
-
-    // Simulación: cuando el login es exitoso, muestra el dropdown de usuario
-    window.initLogin = function() {
-      const form = document.getElementById('login-form');
-      if (form) {
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          // ...validación real aquí...
-          window.isLoggedIn = true;
-          renderUserDropdown();
-          restoreMainView();
+    // Inicializar dropdowns de Bootstrap en la navbar de escritorio
+    function initDropdowns() {
+      // Si Bootstrap 5 está disponible
+      if (window.bootstrap && window.bootstrap.Dropdown) {
+        document.querySelectorAll('.navbar .dropdown-toggle').forEach(function (dropdownToggleEl) {
+          new window.bootstrap.Dropdown(dropdownToggleEl);
         });
+      } else if (window.jQuery && window.jQuery.fn.dropdown) {
+        // Fallback para Bootstrap 4
+        window.jQuery('.navbar .dropdown-toggle').dropdown();
       }
-    };
-
-    // Renderizar el dropdown de usuario al cargar si ya está logueado
-    document.addEventListener('DOMContentLoaded', renderUserDropdown);
-    // También re-renderizar después de cargar la navbar
-    document.addEventListener('navbar-loaded', renderUserDropdown);
+    }
+    // Inicializar al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      initDropdowns();
+    });
+    // Re-inicializar después de cargar contenido dinámico
+    document.addEventListener('click', function(e) {
+      const navLink = e.target.closest('.navbar .dropdown-menu a[href]');
+      if (navLink) {
+        const href = navLink.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+          e.preventDefault();
+          fetch(href)
+            .then(res => res.text())
+            .then(html => {
+              const dyn = document.getElementById('dynamic-content');
+              const cards = document.getElementById('cards');
+              const headImg = document.querySelector('.head-img-container');
+              const hero = document.querySelector('.hero-reveal');
+              // Ocultar solo las cards y la imagen de cabecera, no el main ni el footer ni el header
+              if (cards) cards.style.display = 'none';
+              if (headImg) headImg.style.display = 'none';
+              if (hero) hero.style.display = 'none';
+              if (dyn) {
+                dyn.innerHTML = html;
+                dyn.style.display = 'block';
+                dyn.style.position = '';
+                dyn.style.top = '';
+                dyn.style.left = '';
+                dyn.style.width = '';
+                dyn.style.height = '';
+                dyn.style.zIndex = '';
+                dyn.style.pointerEvents = '';
+                dyn.style.overflowY = '';
+                // Eliminar estilos de login si existen
+                let loginStyle = document.getElementById('login-style-dynamic');
+                if (loginStyle) loginStyle.remove();
+                // Limpiar clases y estilos de login-bg si quedaron
+                const loginBg = dyn.querySelector('.login-bg');
+                if (loginBg) {
+                  loginBg.removeAttribute('style');
+                }
+                // Re-inicializar dropdowns después de cargar contenido
+                initDropdowns();
+              }
+            });
+        }
+      }
+    });
   </script>
   <script src="./js/navbar-dropdown.js"></script>
   <script src="./js/main.js"></script>
   <script src="./js/cards-anim.js"></script>
   <script src="./js/valores-toggle.js"></script>
+  <script src="./js/footer.js"></script>
 
-  <!-- Importar dinámicamente el footer al final para asegurar que el elemento existe -->
-  <script>
-    fetch('./components/footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
-        document.getElementById('footer').style.display = '';
-      });
-  </script>
+  <!-- El footer y la navbar ahora son fijos en el HTML -->
+  <style>
+    @media (max-width: 991.98px) {
+      #footer { margin-bottom: 50px !important; }
+    }
+  </style>
 </body>
 </html>

@@ -2,6 +2,82 @@
   .footer-section {
     padding-bottom: 96px; // Ajusta según el alto real de la navbar inferior
   }
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+  .footer-options {
+    order: 1;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 0.2rem 0;
+    gap: 0;
+    width: 100%;
+  }
+  .footer-logo-social {
+    order: 2;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    min-width: unset;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .footer-logo {
+    height: 7rem;
+    margin: 0 auto 1rem auto;
+    display: block;
+  }
+  .footer-social {
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    max-width: 100vw;
+    gap: 1rem;
+    margin-left: 0;
+  }
+  .footer-options-col {
+    margin-bottom: 0.2rem;
+    min-width: unset;
+    width: 100%;
+    border-bottom: 1px solid #333;
+    border-left: none;
+    border-right: none;
+    padding-bottom: 0.4rem;
+    padding-top: 0.4rem;
+    text-align: center;
+  }
+  .footer-options-col:last-child {
+    border-bottom: none;
+  }
+  .footer-options-list {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-options-col.active .footer-options-list {
+    display: flex;
+  }
+  .footer-options-col h3 {
+    cursor: pointer;
+    position: relative;
+    padding-right: 1.5rem;
+  }
+  .footer-options-col h3::after {
+    content: '\25BC';
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    font-size: 1rem;
+    transition: transform 0.2s;
+  }
+  .footer-options-col.active h3::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
 }
 // Opciones del footer
 .footer-options {
@@ -10,7 +86,8 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 2.5rem;
-  margin-left: auto;
+  margin-right: 3rem;
+  margin-top: 5rem
 }
 .footer-options h3 {
   color: $color-white;
@@ -42,13 +119,11 @@
 .footer-options-list a:hover {
   color: $pantone-p120-5u;
 }
-
-// Footer moderno con triángulo y textura
 .footer-section {
   position: relative;
   background: #181a1b;
   color: $color-white;
-  padding-top: 80px;
+  padding-top: 0;
   padding-bottom: 32px;
   overflow: hidden;
 }
@@ -70,19 +145,19 @@
   min-width: 220px;
 }
 .footer-logo {
-  height: 17rem;
+  height: 19rem;
   width: auto;
+  margin-left: 0.5rem;
   filter: brightness(0) invert(1);
-  padding: 6px 16px
 }
 .footer-social {
   display: flex;
-  gap: 1.2rem;
-  margin-top: 0;
+  gap: 1rem;
+  margin-top: -0.5rem;
   justify-content: flex-start;
   width: 100%;
-  max-width: 15rem;
-  margin-left: 1.5rem;
+  max-width: 25rem;
+  margin-left: -3.5rem;
 }
 .footer-social .icon {
   display: flex;
@@ -111,7 +186,22 @@
 .footer-social .icon.facebook:hover .footer-social-link i {
   color: #fff !important;
 }
-.footer-social .icon.X:hover .footer-social-link i {
+.footer-social .icon.instagram:hover {
+  background: #c13584;
+}
+.footer-social .icon.instagram:hover .footer-social-link i {
+  color: #fff !important;
+}
+.footer-social .icon.linkedin:hover {
+  background: #0077b5;
+}
+.footer-social .icon.linkedin:hover .footer-social-link i {
+  color: #fff !important;
+}
+.footer-social .icon.tiktok:hover {
+  background: #000;
+}
+.footer-social .icon.tiktok:hover .footer-social-link i {
   color: #fff !important;
 }
 .footer-social .icon.whatsapp:hover {
@@ -140,3 +230,5 @@
   background: transparent;
   pointer-events: none;
 }
+
+// Eliminadas reglas duplicadas para evitar sobrescribir el centrado

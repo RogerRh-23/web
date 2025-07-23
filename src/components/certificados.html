@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificados | LACS</title>
+  <title>Latin America Certification & Systems | Certificados</title>
   <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" type="image/png" href="/src/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
   <div id="navbar-container"></div>
-  <div id="navbar-mobile-container"></div>
-  <main>
+  <div id="navbar-mobile-placeholder"></div>
+  <main class="main-content-navbar-padding">
     <section class="dynamic-section certificados-section">
       <form class="certificados-search-form" autocomplete="off" style="margin-bottom: 2rem;">
         <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
@@ -23,10 +24,6 @@
             <label for="org-nombre">Nombre de la Organización</label>
             <input type="text" id="org-nombre" name="org-nombre" class="form-control" placeholder="Ej: LACS S.A. de C.V.">
           </div>
-          <div class="form-group">
-            <label for="cert-num">No. Certificado</label>
-            <input type="text" id="cert-num" name="cert-num" class="form-control" placeholder="Ej: 2025-00123">
-          </div>
           <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
       </form>
@@ -35,7 +32,7 @@
       </div>
     </section>
   </main>
-  <div id="footer-container"></div>
+  <div id="footer"></div>
   <!-- GSAP Core y Plugins -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
@@ -44,30 +41,72 @@
   <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/gsap.js"></script>
   <script>
-    // Navbar Desktop
-    fetch('navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        // Corrige rutas de imágenes en navbar.html
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-        document.getElementById('navbar-container').innerHTML = html;
-      });
-    // Navbar Mobile
+  // Navbar Desktop
+  fetch('navbar.html')
+    .then(res => res.text())
+    .then(html => {
+      html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+      document.getElementById('navbar-container').innerHTML = html;
+      initDropdowns();
+    });
+  // Navbar Mobile
+  function loadNavbarMobile() {
     fetch('navbar-mobile.html')
       .then(res => res.text())
       .then(html => {
-        // Corrige rutas de imágenes en navbar-mobile.html
         html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-        document.getElementById('navbar-mobile-container').innerHTML = html;
+        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+        const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+        if (navMobile) {
+          navMobile.classList.remove('fixed-top');
+          navMobile.classList.add('fixed-bottom');
+          navMobile.style.top = 'auto';
+          navMobile.style.bottom = '0';
+          navMobile.style.width = '100%';
+          navMobile.style.zIndex = '1050';
+        }
+        initDropdowns();
       });
-    // Footer
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(html => {
-        // Corrige rutas de imágenes en footer.html
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-        document.getElementById('footer-container').innerHTML = html;
+  }
+  function isMobile() {
+    return window.innerWidth < 992;
+  }
+  window.addEventListener('resize', function() {
+    if (isMobile()) loadNavbarMobile();
+    else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+  });
+  window.addEventListener('DOMContentLoaded', function() {
+    if (isMobile()) loadNavbarMobile();
+    initDropdowns();
+  });
+  // Footer
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(html => {
+      html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+      document.getElementById('footer').innerHTML = html;
+    });
+
+  // Inicializar dropdowns de Bootstrap
+  function initDropdowns() {
+    if (window.bootstrap && window.bootstrap.Dropdown) {
+      document.querySelectorAll('.navbar .dropdown-toggle').forEach(function (dropdownToggleEl) {
+        new window.bootstrap.Dropdown(dropdownToggleEl);
       });
+    } else if (window.jQuery && window.jQuery.fn.dropdown) {
+      window.jQuery('.navbar .dropdown-toggle').dropdown();
+    }
+  }
   </script>
+  <style>
+    @media (max-width: 991.98px) {
+      #footer { margin-bottom: 50px !important; }
+      .main-content-navbar-padding { padding-top: 0 !important; }
+    }
+    @media (min-width: 992px) {
+      .main-content-navbar-padding { padding-top: 70px; }
+    }
+</style>
+<script src="../js/footer.js"></script>
 </body>
 </html>
