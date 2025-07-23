@@ -39,7 +39,6 @@
   box-sizing: border-box;
   padding-top: 2rem;
 }
-// Bloques de acreditación con borde redondeado
 .ema-96-13, .ema-96-20, .ema-96-2IAF {
   background: $color-white;
   padding: 0.5rem 0.5rem;
@@ -80,4 +79,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: box-shadow 0.2s;
 }
+
+
+// Por defecto, sin blur
+.ema-logo, .ema-text {
+  filter: none;
+  transition: filter 0.25s;
+}
+
+// Cuando cualquier botón de certificación está en hover, aplica blur a los otros logos
+.section-content:hover .ema-logo {
+  filter: blur(3px);
+}
+.ema-96-13 button:hover .ema-logo,
+.ema-96-20 button:hover .ema-logo,
+.ema-96-2IAF button:hover .ema-logo{
+  filter: none;
+}
+
