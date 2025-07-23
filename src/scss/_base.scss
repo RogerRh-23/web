@@ -1,8 +1,8 @@
 // Estilos base
 body {
   font-family: "Montserrat", sans-serif;
-  background: #f8f9fa;
-  color: #222;
+  background: $color-white;
+  color: $color-black;
   height: auto;
   overflow-y: scroll;
   overflow-x: hidden; /* Evita scroll lateral */

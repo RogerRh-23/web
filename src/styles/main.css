@@ -58,7 +58,7 @@ html, body {
 
 body {
   font-family: "Montserrat", sans-serif;
-  background: #f8f9fa;
+  background: #e1dfea;
   color: #222;
   height: auto;
   overflow-y: scroll;
@@ -599,7 +599,7 @@ body {
 }
 
 .footer-logo {
-  height: 15rem;
+  height: 17rem;
   width: auto;
   filter: brightness(0) invert(1);
   padding: 6px 16px;
@@ -608,11 +608,11 @@ body {
 .footer-social {
   display: flex;
   gap: 1.2rem;
-  margin-top: 0.5rem;
+  margin-top: 0;
   justify-content: flex-start;
   width: 100%;
   max-width: 15rem;
-  margin-left: -1.5rem;
+  margin-left: -0.7rem;
 }
 
 .footer-social .icon {
@@ -874,7 +874,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 
 .valor-label {
   font-weight: 700;
-  color: #fff;
+  color: #e1dfea;
   font-size: 1.13rem;
   letter-spacing: 0.01em;
   line-height: 1.4;
@@ -882,7 +882,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 }
 
 .valor-desc {
-  color: #fff;
+  color: #e1dfea;
   font-size: 1.08rem;
   line-height: 1.5;
   text-align: left;
@@ -950,7 +950,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   flex-direction: column;
   justify-content: center;
   padding: 1rem 1.5rem;
-  color: #fff;
+  color: #e1dfea;
   box-sizing: border-box;
   overflow-wrap: break-word;
 }
@@ -973,7 +973,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   text-orientation: mixed;
   font-size: 2.1rem;
   font-weight: 700;
-  color: #fff;
+  color: #e1dfea;
   letter-spacing: 0.08em;
   text-align: center;
   height: 100%;
@@ -1288,6 +1288,93 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
     font-size: 1.3rem;
   }
 }
+.ema-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #e1dfea;
+}
+
+.ema-section {
+  width: 100%;
+  max-width: 100%;
+  background: #e1dfea;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a4c5a;
+  text-align: center;
+  margin-bottom: 0;
+  cursor: default;
+}
+
+.section-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 100%;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-top: 2rem;
+}
+
+.ema-96-13, .ema-96-20, .ema-96-2IAF {
+  background: #e1dfea;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 340px;
+  height: 250px;
+  box-sizing: border-box;
+  border-radius: 0.8rem;
+}
+.ema-96-13 .ema-logo, .ema-96-20 .ema-logo, .ema-96-2IAF .ema-logo {
+  width: 250px;
+  height: 100px;
+  max-width: 250px;
+  max-height: 100px;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.ema-96-13 .ema-text, .ema-96-20 .ema-text, .ema-96-2IAF .ema-text {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  font-size: 0.95rem;
+  color: rgb(51, 145, 170);
+  width: 100%;
+  cursor: default;
+}
+
+.ema-96-13 button, .ema-96-20 button, .ema-96-2IAF button {
+  background: #e1dfea;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }

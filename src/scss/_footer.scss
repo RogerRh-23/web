@@ -70,7 +70,7 @@
   min-width: 220px;
 }
 .footer-logo {
-  height: 15rem;
+  height: 17rem;
   width: auto;
   filter: brightness(0) invert(1);
   padding: 6px 16px
@@ -78,11 +78,11 @@
 .footer-social {
   display: flex;
   gap: 1.2rem;
-  margin-top: 0.5rem;
+  margin-top: 0;
   justify-content: flex-start;
   width: 100%;
   max-width: 15rem;
-  margin-left: -1.5rem;
+  margin-left: -0.7rem;
 }
 .footer-social .icon {
   display: flex;

@@ -24,7 +24,7 @@
       <div class="hero-rect" style="left:calc(8 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:9"></div>
     </div>
     <div class="hero-reveal-logo-fixed">
-      <img class="hero-logo-img" src="./assets/img/LACS-Comp.png" alt="logo" />
+      <img class="hero-logo-img" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
     </div>
     <button class="hero-reveal-arrow" id="hero-reveal-arrow" aria-label="Scroll">
       <svg viewBox="0 0 24 24"><path d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z"/></svg>
@@ -41,6 +41,38 @@
     </div>
     <!-- SVG animado y contenedor eliminados -->
     <div id="cards" class="section-gsap"></div>
+    <div id="ema" class="section-gsap">
+      <div class="ema-container">
+        <section class="ema-section">
+          <h1 class="section-title">Acreditaciones EMA</h1>
+          <div class="section-content">
+            <div class="ema-96-13">
+              <a href="./assets/docs/ACREDITACION ISO 9001  17021-1.pdf" target="_blank" rel="noopener">
+                <button>
+                  <img src="./assets/img/96-13.png" alt="EMA 96-13" class="ema-logo" />
+                </button>
+              </a>
+              <strong><span class="ema-text">Acreditación ISO 9001:2015 Sistemas de Gestion de Calidad</span></strong>
+            </div>
+            <div class="ema-96-20">
+              <a href="./assets/docs/ACREDITACION ISO 27001  17021-1.pdf" target="_blank" rel="noopener">
+                <button>
+                  <img src="./assets/img/96_20.png" alt="EMA 96-20" class="ema-logo" />
+                </button>
+              </a>
+              <strong><span class="ema-text">Acreditación ISO 27001:2013 Sistemas de Gestión de Seguridad de la Información</span></strong>
+            </div>
+            <div class="ema-96-2IAF">
+              <a href="./assets/docs/ACREDITACION ISO 37001.pdf" target="_blank" rel="noopener">
+                <button>
+                  <img src="./assets/img/96_20IAF.png" alt="EMA 96-20IAF" class="ema-logo" />
+                </button>
+              </a>
+              <strong><span class="ema-text">Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno</span></strong>
+            </div>
+          </div>
+        </section>
+      </div>
   </main>
 
   <div id="footer"></div>
@@ -48,11 +80,17 @@
 
   <!-- GSAP core y plugins -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <!-- JS principales del proyecto -->
   <script src="./js/gsap.js"></script>
   <script src="./js/hero-reveal.js"></script>
   <script src="./js/hero-reveal-fix.js"></script>
+  <script src="./js/ema-gsap.js"></script>
+  <script>
+    // ...
+  </script>
   <script>
     // Cargar dinámicamente la navbar y luego los scripts de lógica
     fetch('./components/navbar.html')
