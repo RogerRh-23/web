@@ -66,33 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   });
 
-
-  // Permitir scroll con rueda del ratón, touchpad y dispositivos móviles
-  function customScroll(e) {
-    // Solo si la scrollbar personalizada está visible
-    if (scrollbar.style.display !== 'block') return;
-    let delta = 0;
-    if (e.type === 'wheel') {
-      delta = e.deltaY;
-    } else if (e.type === 'touchmove') {
-      if (e.touches.length === 1) {
-        delta = lastTouchY - e.touches[0].clientY;
-        lastTouchY = e.touches[0].clientY;
-      }
-    }
-    window.scrollBy(0, delta);
-  }
-
   // Mouse wheel
-  window.addEventListener('wheel', customScroll, { passive: false });
-
   // Touchpad y dispositivos móviles
   window.addEventListener('touchstart', function(e) {
     if (e.touches.length === 1) {
       lastTouchY = e.touches[0].clientY;
     }
   }, { passive: false });
-  window.addEventListener('touchmove', customScroll, { passive: false });
-
   // Animación SVG y path eliminados
 });

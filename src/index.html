@@ -248,16 +248,6 @@
       dyn.style.pointerEvents = '';
     }
 
-    // Mostrar/ocultar dropdown de usuario con botón 'Cerrar sesión' según login
-    function renderUserDropdown() {
-      const navbar = document.querySelector('.navbar .navbar-nav');
-      if (!navbar) return;
-      // Eliminar cualquier dropdown de usuario existente
-      let userDropdown = document.getElementById('user-dropdown');
-      if (userDropdown) userDropdown.remove();
-      // No agregar ningún botón ni dropdown de usuario
-    }
-
     // Enlazar el botón de 'Iniciar Sesión' de la navbar para mostrar el login sin recargar
     document.addEventListener('click', function(e) {
       const btn = e.target.closest('a[href$="login.html"]');
@@ -327,16 +317,20 @@
     document.addEventListener('DOMContentLoaded', renderUserDropdown);
     // También re-renderizar después de cargar la navbar
     document.addEventListener('navbar-loaded', renderUserDropdown);
-    // Cargar dinámicamente el footer
-    fetch('./components/footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
-      });
   </script>
   <script src="./js/navbar-dropdown.js"></script>
   <script src="./js/main.js"></script>
   <script src="./js/cards-anim.js"></script>
   <script src="./js/valores-toggle.js"></script>
+
+  <!-- Importar dinámicamente el footer al final para asegurar que el elemento existe -->
+  <script>
+    fetch('./components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+        document.getElementById('footer').style.display = '';
+      });
+  </script>
 </body>
 </html>
