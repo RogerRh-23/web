@@ -1,3 +1,65 @@
+<!-- Modal para editar certificado -->
+<div class="certificados-modal" id="modalEditarCertificado" style="display:none;">
+  <div class="certificados-modal-content">
+    <button class="close-modal" id="cerrarModalEditar" title="Cerrar">&times;</button>
+    <h3>Editar certificado</h3>
+    <form id="formEditarCertificado">
+      <label for="edit-nombreOrg">Nombre de la organización</label>
+      <input type="text" id="edit-nombreOrg" name="nombreOrg" required>
+      <label for="edit-estandar">Estándar</label>
+      <input type="text" id="edit-estandar" name="estandar" required>
+      <label for="edit-estatus">Estatus</label>
+      <select id="edit-estatus" name="estatus" required>
+        <option value="Vigente">Vigente</option>
+        <option value="Vencido">Vencido</option>
+      </select>
+      <label for="edit-numeroCertificado">No. Certificado</label>
+      <input type="text" id="edit-numeroCertificado" name="numeroCertificado" required>
+      <label for="edit-fechaInicio">Fecha de inicio</label>
+      <input type="date" id="edit-fechaInicio" name="fechaInicio" required>
+      <label for="edit-fechaFin">Fecha de finalización</label>
+      <input type="date" id="edit-fechaFin" name="fechaFin" required>
+      <label for="edit-alcance">Alcance</label>
+      <input type="text" id="edit-alcance" name="alcance" required>
+      <label for="edit-sitio">Sitio</label>
+      <input type="text" id="edit-sitio" name="sitio" required>
+      <label for="edit-sectores">Sectores</label>
+      <input type="text" id="edit-sectores" name="sectores" required>
+      <button type="submit" class="btn btn-success">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+<!-- Modal para agregar certificado -->
+<div class="certificados-modal" id="modalAgregarCertificado" style="display:none;">
+  <div class="certificados-modal-content">
+    <button class="close-modal" id="cerrarModalCertificado" title="Cerrar">&times;</button>
+    <h3>Agregar nuevo certificado</h3>
+    <form id="formAgregarCertificado">
+      <label for="nombreOrg">Nombre de la organización</label>
+      <input type="text" id="nombreOrg" name="nombreOrg" required>
+      <label for="estandar">Estándar</label>
+      <input type="text" id="estandar" name="estandar" required>
+      <label for="estatus">Estatus</label>
+      <select id="estatus" name="estatus" required>
+        <option value="Vigente">Vigente</option>
+        <option value="Vencido">Vencido</option>
+      </select>
+      <label for="numeroCertificado">No. Certificado</label>
+      <input type="text" id="numeroCertificado" name="numeroCertificado" required>
+      <label for="fechaInicio">Fecha de inicio</label>
+      <input type="date" id="fechaInicio" name="fechaInicio" required>
+      <label for="fechaFin">Fecha de finalización</label>
+      <input type="date" id="fechaFin" name="fechaFin" required>
+      <label for="alcance">Alcance</label>
+      <input type="text" id="alcance" name="alcance" required>
+      <label for="sitio">Sitio</label>
+      <input type="text" id="sitio" name="sitio" required>
+      <label for="sectores">Sectores</label>
+      <input type="text" id="sectores" name="sectores" required>
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+  </div>
+</div>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,19 +78,30 @@
     <section class="dynamic-section certificados-section">
       <form class="certificados-search-form" autocomplete="off" style="margin-bottom: 2rem;">
         <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
-          <div class="form-group">
-            <label for="org-id">ID de la Organización</label>
-            <input type="text" id="org-id" name="org-id" class="form-control" placeholder="Ej: 12345">
-          </div>
-          <div class="form-group">
-            <label for="org-nombre">Nombre de la Organización</label>
-            <input type="text" id="org-nombre" name="org-nombre" class="form-control" placeholder="Ej: LACS S.A. de C.V.">
+          <div class="form-group" style="flex: 1 1 300px;">
+            <label for="search-cert">Buscar por Nombre de Organización o No. de Certificado</label>
+            <input type="text" id="search-cert" name="search-cert" class="form-control" placeholder="Ej: LACS S.A. de C.V. o 2024-00123">
           </div>
           <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
       </form>
+      <div class="admin-certificados-actions" style="margin-bottom:2rem; display:flex; gap:1rem;">
       <div class="info-box">
-        <!-- Aquí se cargará toda la información dinámica de certificados -->
+        <!-- Vista cliente: información del certificado -->
+        <div class="certificado-info">
+          <h2 class="certificado-titulo"><i class="bi bi-patch-check-fill" style="color:#1976a5"></i> Certificado</h2>
+          <div class="certificado-datos">
+            <div><strong>Nombre de la organización:</strong> <span id="cert-org">LACS S.A. de C.V.</span></div>
+            <div><strong>Estándar:</strong> <span id="cert-estandar">ISO 9001</span></div>
+            <div><strong>Estado/Estatus:</strong> <span id="cert-estado">Vigente</span></div>
+            <div><strong>No. de certificado:</strong> <span id="cert-num">2024-00123</span></div>
+            <div><strong>Fecha de inicio:</strong> <span id="cert-inicio">2024-01-01</span></div>
+            <div><strong>Fecha de finalización:</strong> <span id="cert-fin">2025-01-01</span></div>
+            <div><strong>Alcance:</strong> <span id="cert-alcance">Certificación de sistemas de gestión de calidad</span></div>
+            <div><strong>Sitio (ubicación):</strong> <span id="cert-sitio">CDMX, México</span></div>
+            <div><strong>Sectores:</strong> <span id="cert-sectores">Servicios, Manufactura</span></div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -40,6 +113,8 @@
   <!-- JS principales del proyecto (ajusta solo si existen en tu estructura) -->
   <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/gsap.js"></script>
+  <script src="../js/certificados-cliente.js"></script>
+  <script src="../js/certificados-admin.js"></script>
   <script>
   // Navbar Desktop
   fetch('navbar.html')

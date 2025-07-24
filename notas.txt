@@ -1,0 +1,3 @@
+nombre de organizacion, estandard, estado/estatus, No. certificado, historico(ciclo), alcance, sitio(ubicacion) y sectores 
+
+(link IAF)
