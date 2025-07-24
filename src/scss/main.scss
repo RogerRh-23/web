@@ -50,6 +50,17 @@ html, body {
   overflow-x: hidden;
 }
 // Archivo principal SCSS
+
+// Deshabilitar arrastre y clic derecho en todas las imágenes
+img {
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+// Deshabilitar menú contextual en imágenes
+img {
+  -webkit-touch-callout: none;
+}
 @import 'variables';
 @import 'base';
 @import 'mixins';
@@ -62,6 +73,7 @@ html, body {
 @import 'dropdown-gsap';
 @import 'dynamic-section';
 @import 'ema';
+@import 'nosotros';
 
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */

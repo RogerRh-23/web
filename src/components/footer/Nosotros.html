@@ -6,8 +6,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Más sobre nosotros</title>
   <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="icon" type="image/png" href="/src/assets/img/LACS-V.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @media (max-width: 991.98px) {
+      #footer { margin-bottom: 90px !important; }
+      .main-content-navbar-padding { padding-top: 0 !important; }
+    }
+    @media (min-width: 992px) {
+      .main-content-navbar-padding { padding-top: 70px; }
+    }
+  </style>  
 </head>
 <body>
-  <h1>Más sobre nosotros</h1>
+  <div id="navbar-container"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <main class="main-content-navbar-padding">
+    <section class="dynamic-section nosotros-section">
+      <div class="info-box">
+        <h1>Más sobre nosotros</h1>
+        <div class="faq-content">        
+          <h2>Preguntas frecuentes</h2>
+        </div>
+        <div class="acreditaciones-content">
+          <h2>Acreditaciones</h2>
+          <p>Información sobre nuestras acreditaciones y certificaciones.</p>
+          <div class="EMA-9001-Sectores">
+            <h3>Acreditacion ISO 9001 Sectores</h3>
+            <img src="/src/assets/img/EMA-9001-Sectores.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+          </div>
+          <div class="EMA-9001-Sistemas">
+            <h3>Acreditacion ISO 9001 como Organismo de Certificacion de Sistemas de Gestión de Calidad</h3>
+            <img src="/src/assets/img/ISO-9001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+          </div>
+          <div class="EMA-27001-Sistemas">
+            <h3>Acreditacion ISO 27001 como Organismo de Certificacion de Sistemas de Gestión de Seguridad de la Información</h3>
+            <img src="/src/assets/img/ISO-27001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+          </div>
+          <div class="EMA-27001-2022">
+            <h3>Acreditacion ISO 27001:2022 Sistemas de Gestión de Seguridad de la Información</h3>
+            <img src="/src/assets/img/ISO-27001-2022.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+          </div>
+          <div class="EMA-37001-Sistemas">
+            <h3>Acreditacion ISO 37001 Sistemas de Gestión Antisoborno</h3>
+            <img src="/src/assets/img/ISO-37001.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+          </div>
+          <div class="SGSI-Diploma">
+            <h3>Diploma de Sistemas de Gestión de Seguridad de la Información</h3>
+            <img src="/src/assets/img/SGSI-DIPLOMA-LACS.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+          </div>
+          <div class="consulta">
+            <h3>Consulta de Acreditaciones</h3>
+            <p>Para consultar nuestras acreditaciones, puedes ingresar al sitio web de IAf, o bien escanear el codigo QR.</p>
+            <p><a href="https://www.iafcertsearch.org/certification-body/1d030e59-47e6-562d-a033-e14fd42d6040" target="_blank">Consulta de Acreditaciones LACS</a></p>
+            <img src="/src/assets/img/iaf-qr.png" alt="Código QR de LACS" style="max-width: 200px; width: 30vw; min-width: 150px; display: block; margin: 0 auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer"></div>
+  <script src="/src/js/gsap.js"></script>
+  <script src="/src/js/navbar-dropdown.js"></script>
+
+  <script>
+    // Navbar Desktop
+    fetch('/src/components/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+        document.getElementById('navbar-container').innerHTML = html;
+      });
+    // Navbar Mobile
+    function loadNavbarMobile() {
+      fetch('/src/components/navbar-mobile.html')
+        .then(res => res.text())
+        .then(html => {
+          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+          document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+          const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+          if (navMobile) {
+            navMobile.classList.remove('fixed-top');
+            navMobile.classList.add('fixed-bottom');
+            navMobile.style.top = 'auto';
+            navMobile.style.bottom = '0';
+            navMobile.style.width = '100%';
+            navMobile.style.zIndex = '1050';
+          }
+
+        });
+    }
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    window.addEventListener('resize', function() {
+      if (isMobile()) loadNavbarMobile();
+      else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+    });
+    window.addEventListener('DOMContentLoaded', function() {
+      if (isMobile()) loadNavbarMobile();
+
+    });
+    // Footer
+    fetch('/src/components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+        document.getElementById('footer').innerHTML = html;
+      });
+
+
+</script>
+<script src="/src/js/footer.js"></script>
 </body>
 </html>
