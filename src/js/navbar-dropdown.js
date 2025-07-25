@@ -55,8 +55,14 @@ function initDropdowns() {
       dropdown.innerHTML = drop.items.map(item => {
         const folder = drop.label;
         const file = item;
-        // Siempre usar path absoluto desde /src/components/
-        const href = `/src/components/${folder}/${file}.html`;
+        // Generar path relativo según ubicación actual
+        let href = '';
+        const currentPath = window.location.pathname;
+        if (currentPath.match(/\/components\//)) {
+          href = `../components/${folder}/${file}.html`;
+        } else {
+          href = `./components/${folder}/${file}.html`;
+        }
         return `<li><a href="#" data-href="${href}">${item}</a></li>`;
       }).join('');
       dropdownContainer.appendChild(dropdown);
@@ -73,7 +79,7 @@ function initDropdowns() {
             return;
           }
           e.preventDefault();
-          let href = target.getAttribute('data-href'); // Siempre es absoluto desde /src/components/
+          let href = target.getAttribute('data-href');
           const headImg = document.querySelector('.head-img-container');
           const cards = document.getElementById('cards');
           const dynamicContent = document.getElementById('dynamic-content');
@@ -84,7 +90,6 @@ function initDropdowns() {
             fetch(href)
               .then(res => {
                 if (!res.ok) {
-                  // Si falla el fetch, cerrar dropdown y redirigir con delay
                   setTimeout(() => { window.location.href = href; }, 180);
                   closeDropdown();
                   return Promise.reject();
@@ -97,9 +102,9 @@ function initDropdowns() {
               .catch(() => {});
             setTimeout(closeDropdown, 180);
           } else {
-            // Siempre cerrar dropdown y redirigir con delay visual
-            setTimeout(() => { window.location.href = href; }, 180);
+            // Cerrar dropdown, esperar el delay y luego redirigir
             closeDropdown();
+            setTimeout(() => { window.location.href = href; }, 180);
           }
         }
       });
@@ -172,7 +177,13 @@ function initDropdowns() {
       mobileDropdown.innerHTML = drop.items.map(item => {
         const folder = drop.label;
         const file = item;
-        const href = `./components/${folder}/${file}.html`;
+        let href = '';
+        const currentPath = window.location.pathname;
+        if (currentPath.match(/\/components\//)) {
+          href = `../components/${folder}/${file}.html`;
+        } else {
+          href = `./components/${folder}/${file}.html`;
+        }
         return `<li><a href="#" data-href="${href}">${item}</a></li>`;
       }).join('');
       mobileDropdownContainer.appendChild(mobileDropdown);

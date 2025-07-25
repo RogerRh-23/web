@@ -112,48 +112,74 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CSSRulePlugin.min.js"></script>
   <!-- JS principales del proyecto (ajusta solo si existen en tu estructura) -->
   <script src="../js/gsap.js"></script>
-  <script src="../js/navbar-dropdown.js"></script>
+  <!-- navbar-dropdown.js se carga al final del body para asegurar que la navbar ya está en el DOM -->
   <script src="../js/certificados-cliente.js"></script>
   <script src="../js/certificados-admin.js"></script>
   <script>
-  // Navbar Desktop
-  fetch('navbar.html')
-    .then(res => res.text())
-    .then(html => {
-      html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-      document.getElementById('navbar-placeholder').innerHTML = html;
-      if (typeof initDropdowns === 'function') initDropdowns();
+  // Navbar dinámica (desktop o mobile)
+  function loadNavbar() {
+    const isMobile = window.innerWidth < 992;
+    const navbarPlaceholder = document.getElementById('navbar-placeholder');
+    const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+    if (isMobile) {
+      // Limpiar desktop
+      if (navbarPlaceholder) navbarPlaceholder.innerHTML = '';
+      fetch('navbar-mobile.html')
+        .then(res => res.text())
+        .then(html => {
+          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+          navbarMobilePlaceholder.innerHTML = html;
+          const navMobile = navbarMobilePlaceholder.firstElementChild;
+          if (navMobile) {
+            navMobile.classList.remove('fixed-top');
+            navMobile.classList.add('fixed-bottom');
+            navMobile.style.top = 'auto';
+            navMobile.style.bottom = '0';
+            navMobile.style.width = '100%';
+            navMobile.style.zIndex = '1050';
+          }
+          ensureDropdownScript();
+        });
+    } else {
+      // Limpiar mobile
+      if (navbarMobilePlaceholder) navbarMobilePlaceholder.innerHTML = '';
+      fetch('navbar.html')
+        .then(res => res.text())
+        .then(html => {
+          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+          navbarPlaceholder.innerHTML = html;
+          ensureDropdownScript();
+        });
+    }
+  }
+  // Siempre recarga el script de dropdown y reintenta ejecutar initDropdowns tras cada cambio de navbar
+  function ensureDropdownScript() {
+    // Elimina cualquier script previo de navbar-dropdown.js
+    document.querySelectorAll('script').forEach(function(s) {
+      if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
     });
-  // Navbar Mobile
-  function loadNavbarMobile() {
-    fetch('navbar-mobile.html')
-      .then(res => res.text())
-      .then(html => {
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
-        const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
-        if (navMobile) {
-          navMobile.classList.remove('fixed-top');
-          navMobile.classList.add('fixed-bottom');
-          navMobile.style.top = 'auto';
-          navMobile.style.bottom = '0';
-          navMobile.style.width = '100%';
-          navMobile.style.zIndex = '1050';
-        }
-        initDropdowns();
-      });
+    // Carga el script de nuevo
+    var script = document.createElement('script');
+    script.src = '../js/navbar-dropdown.js';
+    script.onload = function() {
+      retryInitDropdowns();
+    };
+    document.body.appendChild(script);
   }
-  function isMobile() {
-    return window.innerWidth < 992;
+
+  // Reintenta ejecutar initDropdowns hasta 10 veces con 100ms de intervalo
+  function retryInitDropdowns(attempt) {
+    attempt = attempt || 1;
+    if (typeof initDropdowns === 'function') {
+      try { initDropdowns(); } catch(e) {}
+      return;
+    }
+    if (attempt < 10) {
+      setTimeout(function() { retryInitDropdowns(attempt + 1); }, 100);
+    }
   }
-  window.addEventListener('resize', function() {
-    if (isMobile()) loadNavbarMobile();
-    else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
-  });
-  window.addEventListener('DOMContentLoaded', function() {
-    if (isMobile()) loadNavbarMobile();
-    initDropdowns();
-  });
+  window.addEventListener('resize', loadNavbar);
+  window.addEventListener('DOMContentLoaded', loadNavbar);
   // Footer
   fetch('footer.html')
     .then(res => res.text())
@@ -161,8 +187,8 @@
       html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
       document.getElementById('footer').innerHTML = html;
     });
-
   </script>
+
   <style>
     @media (max-width: 991.98px) {
       #footer { margin-bottom: 50px !important; }
@@ -173,5 +199,6 @@
     }
 </style>
 <script src="../js/footer.js"></script>
+
 </body>
 </html>
