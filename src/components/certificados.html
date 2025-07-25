@@ -117,7 +117,17 @@
   <script src="../js/certificados-admin.js"></script>
   <script>
   // Navbar dinámica (desktop o mobile)
+  function cleanDropdownsAndScripts() {
+    // Elimina dropdowns previos
+    document.querySelectorAll('.dropdown-gsap-container').forEach(el => el.remove());
+    // Elimina scripts previos de navbar-dropdown.js
+    document.querySelectorAll('script').forEach(function(s) {
+      if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
+    });
+  }
+
   function loadNavbar() {
+    cleanDropdownsAndScripts();
     const isMobile = window.innerWidth < 992;
     const navbarPlaceholder = document.getElementById('navbar-placeholder');
     const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');

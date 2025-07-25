@@ -1419,6 +1419,12 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   transition: opacity 0.32s, transform 0.32s;
 }
 
+.dropdown-gsap-container,
+.dropdown-gsap-mobile {
+  z-index: 99999 !important;
+  display: block !important;
+}
+
 .dynamic-section {
   width: 100%;
   display: flex;
@@ -2235,6 +2241,48 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   .politicas-main section {
     padding: 1rem 0.2rem 1.2rem 0.2rem;
   }
+}
+
+.cards-certificacion-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.card-certificacion {
+  flex: 1 1 300px;
+  max-width: 350px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.card-certificacion:hover {
+  box-shadow: 0 4px 16px rgba(25, 118, 165, 0.15);
+}
+
+.card-certificacion img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.card-certificacion h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #1976a5;
+}
+
+.card-certificacion p {
+  text-align: center;
 }
 
 body::-webkit-scrollbar {

@@ -66,3 +66,9 @@
   will-change: opacity, transform, height;
   transition: opacity 0.32s, transform 0.32s;
 }
+
+.dropdown-gsap-container,
+.dropdown-gsap-mobile {
+  z-index: 99999 !important;
+  display: block !important;
+}

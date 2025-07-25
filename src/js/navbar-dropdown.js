@@ -8,11 +8,18 @@ function initDropdowns() {
   // Utilidad para obtener el enlace de la navbar por texto (desktop)
   function getDropdownLink(texto) {
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    let found = false;
     for (let link of navLinks) {
+      // Log para ver qué links detecta
+      console.log('[Dropdown][DEBUG] Analizando link:', link.textContent.trim());
       if (link.textContent.trim().includes(texto)) {
         link.setAttribute('href', 'javascript:void(0)');
+        found = true;
         return link;
       }
+    }
+    if (!found) {
+      console.warn(`[Dropdown][WARN] No se encontró el link de dropdown para: "${texto}". Verifica el texto y las clases en la navbar.`);
     }
     return null;
   }
@@ -47,6 +54,9 @@ function initDropdowns() {
   dropdowns.forEach(drop => {
     // Desktop
     const navItem = getDropdownLink(drop.label);
+    if (!navItem) {
+      console.warn(`[Dropdown][WARN] No se pudo crear el dropdown para: "${drop.label}". El link no fue encontrado.`);
+    }
     if (navItem) {
       let dropdownContainer = document.createElement('div');
       dropdownContainer.className = 'dropdown-gsap-container';
