@@ -72,7 +72,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-  <div id="navbar-container"></div>
+  <div id="navbar-placeholder"></div>
   <div id="navbar-mobile-placeholder"></div>
   <main class="main-content-navbar-padding">
     <section class="dynamic-section certificados-section">
@@ -111,8 +111,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CSSRulePlugin.min.js"></script>
   <!-- JS principales del proyecto (ajusta solo si existen en tu estructura) -->
-  <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/gsap.js"></script>
+  <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/certificados-cliente.js"></script>
   <script src="../js/certificados-admin.js"></script>
   <script>
@@ -121,8 +121,8 @@
     .then(res => res.text())
     .then(html => {
       html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-      document.getElementById('navbar-container').innerHTML = html;
-      initDropdowns();
+      document.getElementById('navbar-placeholder').innerHTML = html;
+      if (typeof initDropdowns === 'function') initDropdowns();
     });
   // Navbar Mobile
   function loadNavbarMobile() {
@@ -162,16 +162,6 @@
       document.getElementById('footer').innerHTML = html;
     });
 
-  // Inicializar dropdowns de Bootstrap
-  function initDropdowns() {
-    if (window.bootstrap && window.bootstrap.Dropdown) {
-      document.querySelectorAll('.navbar .dropdown-toggle').forEach(function (dropdownToggleEl) {
-        new window.bootstrap.Dropdown(dropdownToggleEl);
-      });
-    } else if (window.jQuery && window.jQuery.fn.dropdown) {
-      window.jQuery('.navbar .dropdown-toggle').dropdown();
-    }
-  }
   </script>
   <style>
     @media (max-width: 991.98px) {

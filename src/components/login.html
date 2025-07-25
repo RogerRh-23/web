@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <div id="navbar-container"></div>
+  <div id="navbar-placeholder"></div>
   <div id="navbar-mobile-placeholder"></div>
   <main class="main-content-navbar-padding">
     <div class="login-bg">
@@ -61,6 +61,7 @@
   </main>
   <div id="footer"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="/src/js/gsap.js"></script>
   <script src="/src/js/navbar-dropdown.js"></script>
 
@@ -70,7 +71,8 @@
       .then(res => res.text())
       .then(html => {
         html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-        document.getElementById('navbar-container').innerHTML = html;
+        document.getElementById('navbar-placeholder').innerHTML = html;
+        if (typeof initDropdowns === 'function') initDropdowns();
       });
     // Navbar Mobile
     function loadNavbarMobile() {
@@ -88,7 +90,10 @@
             navMobile.style.width = '100%';
             navMobile.style.zIndex = '1050';
           }
-
+          // Esperar a que la navbar mobile esté en el DOM antes de inicializar los dropdowns
+          setTimeout(() => {
+            if (typeof initDropdowns === 'function') initDropdowns();
+          }, 0);
         });
     }
     function isMobile() {

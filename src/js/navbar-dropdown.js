@@ -35,7 +35,7 @@ function initDropdowns() {
     },
     {
       label: 'Procesos',
-      items: ['Proceso de Certificación', 'Vigencia de la Certificación', 'Procedimiento de atención de quejas']
+      items: ['Proceso de Certificación', 'Vigencia de la Certificación', 'Proceso de atención de quejas']
     },
     {
       label: 'Centro de formación',
@@ -55,7 +55,8 @@ function initDropdowns() {
       dropdown.innerHTML = drop.items.map(item => {
         const folder = drop.label;
         const file = item;
-        const href = `./components/${folder}/${file}.html`;
+        // Siempre usar path absoluto desde /src/components/
+        const href = `/src/components/${folder}/${file}.html`;
         return `<li><a href="#" data-href="${href}">${item}</a></li>`;
       }).join('');
       dropdownContainer.appendChild(dropdown);
@@ -65,22 +66,41 @@ function initDropdowns() {
       dropdown.addEventListener('click', function(e) {
         const target = e.target.closest('a[data-href]');
         if (target) {
+          // Permitir abrir en nueva pestaña/ventana con Ctrl, Shift o botón medio
+          if (e.ctrlKey || e.shiftKey || e.metaKey || e.button === 1) {
+            window.open(target.getAttribute('data-href'), '_blank');
+            setTimeout(closeDropdown, 200);
+            return;
+          }
           e.preventDefault();
-          const href = target.getAttribute('data-href');
+          let href = target.getAttribute('data-href'); // Siempre es absoluto desde /src/components/
           const headImg = document.querySelector('.head-img-container');
           const cards = document.getElementById('cards');
           const dynamicContent = document.getElementById('dynamic-content');
-          if (headImg) headImg.style.display = 'none';
-          if (cards) cards.style.display = 'none';
           if (dynamicContent) {
+            if (headImg) headImg.style.display = 'none';
+            if (cards) cards.style.display = 'none';
             dynamicContent.style.display = 'block';
             fetch(href)
-              .then(res => res.text())
+              .then(res => {
+                if (!res.ok) {
+                  // Si falla el fetch, cerrar dropdown y redirigir con delay
+                  setTimeout(() => { window.location.href = href; }, 180);
+                  closeDropdown();
+                  return Promise.reject();
+                }
+                return res.text();
+              })
               .then(html => {
-                dynamicContent.innerHTML = html;
-              });
+                if (html) dynamicContent.innerHTML = html;
+              })
+              .catch(() => {});
+            setTimeout(closeDropdown, 180);
+          } else {
+            // Siempre cerrar dropdown y redirigir con delay visual
+            setTimeout(() => { window.location.href = href; }, 180);
+            closeDropdown();
           }
-          closeDropdown();
         }
       });
       let open = false;
@@ -248,14 +268,5 @@ function initDropdowns() {
 }
 
 // Esperar a que la navbar esté en el DOM
-const navbarPlaceholder = document.getElementById('navbar-placeholder');
-if (navbarPlaceholder) {
-  const observer = new MutationObserver((mutations, obs) => {
-    if (navbarPlaceholder.querySelector('.navbar-nav')) {
-      initDropdowns();
-      obs.disconnect();
-    }
-  });
-  observer.observe(navbarPlaceholder, { childList: true, subtree: true });
-}
+// La inicialización de los dropdowns se hace explícitamente tras cargar la navbar en cada HTML.
 // ...estilos y animaciones en CSS/scss para .dropdown-gsap-container y .dropdown-gsap...
