@@ -22,8 +22,16 @@
 <body>
   <div id="navbar-container"></div>
   <div id="navbar-mobile-placeholder"></div>
-  <h1>Reglamentos</h1>
-  <p>Contenido de la sección "Reglamentos".</p>
+  <div class="reglamentos-container">
+    <h1>Reglamentos</h1>
+    <div class="reglamento-section">
+      <h2>Reglamento de uso de marca</h2>
+      <iframe src="/src/assets/docs/RCTED-02 Reglamento de uso de marca para sistema de gestion certificado LACS ver 10.pdf" width="100%" height="600px"></iframe>
+    </div>
+    <div class="reglamento-section">
+      <h2>Reglamento de empresa certificada</h2>
+    </div>  
+  </div>
   <div id="footer"></div>
 
   <script src="/src/js/gsap.js"></script>
@@ -34,7 +42,7 @@
     fetch('../navbar.html')
       .then(res => res.text())
       .then(html => {
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+        html = html.replace(/src=(["'])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
         document.getElementById('navbar-container').innerHTML = html;
       });
     // Navbar Mobile
@@ -42,7 +50,7 @@
       fetch('../navbar-mobile.html')
         .then(res => res.text())
         .then(html => {
-          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+          html = html.replace(/src=(["'])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
           document.getElementById('navbar-mobile-placeholder').innerHTML = html;
           const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
           if (navMobile) {
@@ -69,7 +77,7 @@
     fetch('../footer.html')
       .then(res => res.text())
       .then(html => {
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+        html = html.replace(/src=(["'])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
         document.getElementById('footer').innerHTML = html;
       });
   </script>
