@@ -15,12 +15,13 @@
 .navbar-mobile-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0;
+  padding: 0 0.5rem;
   margin: 0;
   list-style: none;
+  gap: 0.2rem;
 }
 .navbar-mobile-link {
   display: flex;
@@ -34,6 +35,8 @@
   font-size: 1.7rem;
   transition: background 0.18s, color 0.18s;
   text-decoration: none;
+  margin: 0 0.18rem;
+  z-index: 2;
 }
 .navbar-mobile-link:hover,
 .navbar-mobile-link:focus {
@@ -80,6 +83,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1.2rem;
+  }
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-left: 1.5rem;
+    position: relative;
+    z-index: 1100;
   }
   background: $pantone-b7693u;
   width: 100vw;
@@ -103,7 +115,7 @@
   .nav-item {
     display: flex;
     align-items: center;
-    margin: 0 2.8rem;
+    margin: 0 1.5rem;
   }
   cursor: default;
   .nav-link {
@@ -123,11 +135,37 @@
     border-color: $pantone-b7693u;
     color: $color-white;
     text-decoration: none;
-    margin: 20px;
+    margin: 0 0.5rem;
+    padding: 0.45rem 1.1rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     &:hover {
       color: $pantone-p120-5u;
       border-color: $pantone-p120-5u;
       text-decoration: none;
+    }
+  }
+  // Asegura que el botón de cambio de idioma sea visible y no se oculte
+  .btn-lang-switcher {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: $pantone-p120-5u33;
+    color: $color-white;
+    border: 1.5px solid $pantone-p120-5u;
+    border-radius: 6px;
+    padding: 0.45rem 1.1rem;
+    margin: 0 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 1200;
+    transition: background 0.18s, color 0.18s;
+    &:hover {
+      background: $pantone-p120-5u;
+      color: $pantone-b7693u;
+      border-color: $pantone-b7693u;
     }
   }
 }

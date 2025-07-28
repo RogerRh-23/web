@@ -94,12 +94,13 @@ body {
 .navbar-mobile-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0;
+  padding: 0 0.5rem;
   margin: 0;
   list-style: none;
+  gap: 0.2rem;
 }
 
 .navbar-mobile-link {
@@ -114,6 +115,8 @@ body {
   font-size: 1.7rem;
   transition: background 0.18s, color 0.18s;
   text-decoration: none;
+  margin: 0 0.18rem;
+  z-index: 2;
 }
 
 .navbar-mobile-link:hover,
@@ -171,6 +174,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.2rem;
+}
+.navbar-custom .navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-left: 1.5rem;
+  position: relative;
+  z-index: 1100;
 }
 .navbar-custom .navbar-brand img {
   border-radius: 8px;
@@ -188,7 +200,7 @@ body {
 .navbar-custom .nav-item {
   display: flex;
   align-items: center;
-  margin: 0 2.8rem;
+  margin: 0 1.5rem;
 }
 .navbar-custom .nav-link {
   color: #e1dfea;
@@ -207,12 +219,37 @@ body {
   border-color: rgb(20, 50, 63);
   color: #e1dfea;
   text-decoration: none;
-  margin: 20px;
+  margin: 0 0.5rem;
+  padding: 0.45rem 1.1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .navbar-custom .btn-outline-light:hover {
   color: rgb(51, 145, 170);
   border-color: rgb(51, 145, 170);
   text-decoration: none;
+}
+.navbar-custom .btn-lang-switcher {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: rgba(51, 145, 170, 0.3);
+  color: #e1dfea;
+  border: 1.5px solid rgb(51, 145, 170);
+  border-radius: 6px;
+  padding: 0.45rem 1.1rem;
+  margin: 0 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1200;
+  transition: background 0.18s, color 0.18s;
+}
+.navbar-custom .btn-lang-switcher:hover {
+  background: rgb(51, 145, 170);
+  color: rgb(20, 50, 63);
+  border-color: rgb(20, 50, 63);
 }
 
 .preload {

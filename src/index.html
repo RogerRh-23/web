@@ -59,7 +59,12 @@
               <li class="nav-item"><a class="nav-link" href="./components/certificados.html"><i class="bi bi-award"></i> Certificados</a></li>
               <li class="nav-item"><a class="nav-link" href="./components/contacto.html"><i class="bi bi-envelope"></i> Contacto</a></li>
             </ul>
-            <a class="btn btn-outline-light" href="./components/login.html"><i class="bi bi-person-circle"></i> Iniciar Sesión</a>
+            <div class="navbar-actions">
+              <button id="lang-switcher" class="btn btn-outline-light btn-lang-switcher" type="button" aria-label="Cambiar idioma">
+                <i class="bi bi-translate"></i> EN
+              </button>
+              <a class="btn btn-outline-light" href="/src/components/login.html"><i class="bi bi-person-circle"></i> Iniciar Sesión</a>
+            </div>
           </div>
         </div>
       </nav>
@@ -189,6 +194,7 @@
   <script src="./js/hero-reveal.js"></script>
   <script src="./js/hero-reveal-fix.js"></script>
   <script src="./js/ema-gsap.js"></script>
+  <script src="./js/lang-switcher.js"></script>
   <script>
     // Navbar y footer ahora son fijos en el HTML
 
@@ -379,6 +385,16 @@
         }
       }
     });
+
+  fetch('../navbar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('navbar-container').innerHTML = html;
+    // Vuelve a cargar el script de idioma
+    const script = document.createElement('script');
+    script.src = '/src/js/lang-switcher.js';
+    document.body.appendChild(script);
+  });
   </script>
   <script src="./js/navbar-dropdown.js"></script>
   <script src="./js/main.js"></script>
