@@ -1,17 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Sorteo y Retrabajo</title>
+  <link rel="stylesheet" href="../../styles/main.css">
+  <link rel="icon" type="image/png" href="../../assets/img/LACS-V.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @media (max-width: 991.98px) {
+      #footer { margin-bottom: 90px !important; }
+      .main-content-navbar-padding { padding-top: 0 !important; }
+    }
+    @media (min-width: 992px) {
+      .main-content-navbar-padding { padding-top: 70px; }
+    }
+  </style>
 </head>
 <body>
+  <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
   <div class="info-box">
     <div class="section-content">
       <h1 class="section-title">Sorteo y Retrabajo</h1>
       <!-- Aquí se cargará el contenido dinámico de sorteo y retrabajo -->
     </div>
   </div>
+  <div id="footer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="../../js/gsap.js"></script>
+  <script>
+    // Navbar dinámica (desktop o mobile)
+    function loadNavbar() {
+      const isMobile = window.innerWidth < 992;
+      const navbarPlaceholder = document.getElementById('navbar-placeholder');
+      const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile) {
+        if (navbarPlaceholder) navbarPlaceholder.innerHTML = '';
+        fetch('../../components/navbar-mobile.html')
+          .then(res => res.text())
+          .then(html => {
+            html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
+            navbarMobilePlaceholder.innerHTML = html;
+            const navMobile = navbarMobilePlaceholder.firstElementChild;
+            if (navMobile) {
+              navMobile.classList.remove('fixed-top');
+              navMobile.classList.add('fixed-bottom');
+              navMobile.style.top = 'auto';
+              navMobile.style.bottom = '0';
+              navMobile.style.width = '100%';
+              navMobile.style.zIndex = '1050';
+            }
+            loadNavbarDropdownScript();
+          });
+      } else {
+        if (navbarMobilePlaceholder) navbarMobilePlaceholder.innerHTML = '';
+        fetch('../../components/navbar.html')
+          .then(res => res.text())
+          .then(html => {
+            html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
+            navbarPlaceholder.innerHTML = html;
+            loadNavbarDropdownScript();
+          });
+      }
+    }
+    function loadNavbarDropdownScript() {
+      document.querySelectorAll('script').forEach(function(s) {
+        if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
+      });
+      var script = document.createElement('script');
+      script.src = '../../js/navbar-dropdown.js?v=' + Date.now();
+      script.onload = function() {
+        if (typeof initDropdowns === 'function') {
+          try { initDropdowns(); } catch(e) { console.error('Error al ejecutar initDropdowns:', e); }
+        }
+      };
+      document.body.appendChild(script);
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
+    // Footer
+    fetch('../../components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
+        document.getElementById('footer').innerHTML = html;
+      });
+  </script>
 </body>
 </html>
  

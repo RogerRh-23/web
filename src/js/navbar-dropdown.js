@@ -1,25 +1,12 @@
-// Dropdown animado con GSAP para la navbar
-// Estructura y lógica de los dropdowns
-
-// Dropdown animado con GSAP para la navbar
-// Estructura y lógica de los dropdowns
-
 function initDropdowns() {
   // Utilidad para obtener el enlace de la navbar por texto (desktop)
   function getDropdownLink(texto) {
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    let found = false;
     for (let link of navLinks) {
-      // Log para ver qué links detecta
-      console.log('[Dropdown][DEBUG] Analizando link:', link.textContent.trim());
       if (link.textContent.trim().includes(texto)) {
         link.setAttribute('href', 'javascript:void(0)');
-        found = true;
         return link;
       }
-    }
-    if (!found) {
-      console.warn(`[Dropdown][WARN] No se encontró el link de dropdown para: "${texto}". Verifica el texto y las clases en la navbar.`);
     }
     return null;
   }
@@ -38,15 +25,26 @@ function initDropdowns() {
   const dropdowns = [
     {
       label: 'Servicios',
-      items: ['Certificación de Sistemas de Gestión', 'Capacitación', 'Sorteo y Retrabajo']
+      items: [
+        { name: 'Certificación de Sistemas de Gestión', path: 'Servicios/Certificación de Sistemas de Gestión.html' },
+        { name: 'Capacitación', path: 'Servicios/Capacitación.html' },
+        { name: 'Sorteo y Retrabajo', path: 'Servicios/Sorteo y Retrabajo.html' }
+      ]
     },
     {
       label: 'Procesos',
-      items: ['Proceso de Certificación', 'Vigencia de la Certificación', 'Proceso de atención de quejas']
+      items: [
+        { name: 'Proceso de Certificación', path: 'Procesos/Proceso de Certificación.html' },
+        { name: 'Vigencia de la Certificación', path: 'Procesos/Vigencia de la Certificación.html' },
+        { name: 'Procedimiento de atención de quejas', path: 'Procesos/Procedimiento de atención de quejas.html' }
+      ]
     },
     {
       label: 'Centro de formación',
-      items: ['Cursos', 'Webinars']
+      items: [
+        { name: 'Cursos', path: 'Centro de formación/Cursos.html' },
+        { name: 'Webinars', path: 'Centro de formación/Webinars.html' }
+      ]
     }
   ];
 
@@ -54,76 +52,48 @@ function initDropdowns() {
   dropdowns.forEach(drop => {
     // Desktop
     const navItem = getDropdownLink(drop.label);
-    if (!navItem) {
-      console.warn(`[Dropdown][WARN] No se pudo crear el dropdown para: "${drop.label}". El link no fue encontrado.`);
-    }
     if (navItem) {
       let dropdownContainer = document.createElement('div');
       dropdownContainer.className = 'dropdown-gsap-container';
       let dropdown = document.createElement('ul');
       dropdown.className = 'dropdown-gsap';
       dropdown.innerHTML = drop.items.map(item => {
-        const folder = drop.label;
-        const file = item;
-        // Generar path relativo según ubicación actual
+        // Generar path relativo correcto según ubicación actual
         let href = '';
         const currentPath = window.location.pathname;
+        // Elimina cualquier doble 'components/' en la ruta final
         if (currentPath.match(/\/components\//)) {
-          href = `../components/${folder}/${file}.html`;
+          // Si ya estamos en /components/, solo subimos un nivel si estamos en un subdirectorio
+          const depth = currentPath.split('/components/')[1].split('/').length - 1;
+          if (depth > 0) {
+            href = `../${item.path}`;
+          } else {
+            href = `${item.path}`;
+          }
         } else {
-          href = `./components/${folder}/${file}.html`;
+          href = `./components/${item.path}`;
         }
-        return `<li><a href="#" data-href="${href}">${item}</a></li>`;
+        // Normaliza la ruta para evitar doble 'components/'
+        href = href.replace(/components\/components\//g, 'components/');
+        return `<li><a href="${href}">${item.name}</a></li>`;
       }).join('');
       dropdownContainer.appendChild(dropdown);
       document.body.appendChild(dropdownContainer);
       gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
-      // Delegación de eventos para cargar dinámicamente el contenido
-      dropdown.addEventListener('click', function(e) {
-        const target = e.target.closest('a[data-href]');
-        if (target) {
-          // Permitir abrir en nueva pestaña/ventana con Ctrl, Shift o botón medio
-          if (e.ctrlKey || e.shiftKey || e.metaKey || e.button === 1) {
-            window.open(target.getAttribute('data-href'), '_blank');
-            setTimeout(closeDropdown, 200);
-            return;
-          }
-          e.preventDefault();
-          let href = target.getAttribute('data-href');
-          const headImg = document.querySelector('.head-img-container');
-          const cards = document.getElementById('cards');
-          const dynamicContent = document.getElementById('dynamic-content');
-          if (dynamicContent) {
-            if (headImg) headImg.style.display = 'none';
-            if (cards) cards.style.display = 'none';
-            dynamicContent.style.display = 'block';
-            fetch(href)
-              .then(res => {
-                if (!res.ok) {
-                  setTimeout(() => { window.location.href = href; }, 180);
-                  closeDropdown();
-                  return Promise.reject();
-                }
-                return res.text();
-              })
-              .then(html => {
-                if (html) dynamicContent.innerHTML = html;
-              })
-              .catch(() => {});
-            setTimeout(closeDropdown, 180);
-          } else {
-            // Cerrar dropdown, esperar el delay y luego redirigir
-            closeDropdown();
-            setTimeout(() => { window.location.href = href; }, 180);
-          }
-        }
-      });
       let open = false;
+      let mouseOverDropdown = false;
+      let mouseOverNavItem = false;
       function isHovering() {
-        return navItem.matches(':hover') || dropdownContainer.matches(':hover');
+        return mouseOverDropdown || mouseOverNavItem;
       }
       let hoverTimeout;
+      const CLOSE_DELAY = 50; // ms, aún más margen para elegir opción
       function showDropdown() {
+      // Listeners para detectar si el mouse está sobre el navItem o el dropdownContainer
+      navItem.addEventListener('mouseenter', () => { mouseOverNavItem = true; });
+      navItem.addEventListener('mouseleave', () => { mouseOverNavItem = false; });
+      dropdownContainer.addEventListener('mouseenter', () => { mouseOverDropdown = true; });
+      dropdownContainer.addEventListener('mouseleave', () => { mouseOverDropdown = false; });
         if (!open) {
           open = true;
           const rect = navItem.getBoundingClientRect();
@@ -170,7 +140,7 @@ function initDropdowns() {
         clearTimeout(hoverTimeout);
         hoverTimeout = setTimeout(() => {
           if (!isHovering()) closeDropdown();
-        }, 100);
+        }, CLOSE_DELAY);
       }
       navItem.addEventListener('mouseleave', handleMouseLeave);
       navItem.addEventListener('blur', handleMouseLeave);
@@ -185,19 +155,16 @@ function initDropdowns() {
       let mobileDropdown = document.createElement('ul');
       mobileDropdown.className = 'dropdown-gsap';
       mobileDropdown.innerHTML = drop.items.map(item => {
-        const folder = drop.label;
-        const file = item;
         let href = '';
         const currentPath = window.location.pathname;
         if (currentPath.match(/\/components\//)) {
-          href = `../components/${folder}/${file}.html`;
+          href = `../components/${item.path}`;
         } else {
-          href = `./components/${folder}/${file}.html`;
+          href = `./components/${item.path}`;
         }
-        return `<li><a href="#" data-href="${href}">${item}</a></li>`;
+        return `<li><a href="${href}">${item.name}</a></li>`;
       }).join('');
       mobileDropdownContainer.appendChild(mobileDropdown);
-      // Append to the mobile dropdown placeholder for correct positioning
       const mobileDropdownPlaceholder = document.getElementById('navbar-mobile-dropdown-placeholder');
       if (mobileDropdownPlaceholder) {
         mobileDropdownPlaceholder.appendChild(mobileDropdownContainer);
@@ -205,7 +172,6 @@ function initDropdowns() {
         document.body.appendChild(mobileDropdownContainer);
       }
       gsap.set(mobileDropdownContainer, { y: 60, opacity: 0, display: 'none' });
-      // Mostrar dropdown al hacer click en el icono
       let mobileOpen = false;
       function showMobileDropdown() {
         if (!mobileOpen) {
@@ -216,7 +182,6 @@ function initDropdowns() {
           mobileDropdownContainer.style.zIndex = '99999';
           mobileDropdownContainer.style.visibility = 'visible';
           mobileDropdownContainer.style.display = 'block';
-          // Esperar a que el dropdown esté en el DOM para calcular el alto
           setTimeout(() => {
             let dropdownHeight = mobileDropdownContainer.offsetHeight;
             if (!dropdownHeight || dropdownHeight < 40) dropdownHeight = 120;
@@ -228,7 +193,6 @@ function initDropdowns() {
               { y: 0, opacity: 1, duration: 0.10, ease: 'power2.out' }
             );
           }, 0);
-          // Cerrar si se hace click fuera
           setTimeout(() => {
             document.addEventListener('mousedown', handleOutsideClick);
           }, 0);
@@ -260,28 +224,6 @@ function initDropdowns() {
           closeMobileDropdown();
         } else {
           showMobileDropdown();
-        }
-      });
-      // Cargar contenido y cerrar al hacer click en una opción
-      mobileDropdown.addEventListener('click', function(e) {
-        const target = e.target.closest('a[data-href]');
-        if (target) {
-          e.preventDefault();
-          const href = target.getAttribute('data-href');
-          const headImg = document.querySelector('.head-img-container');
-          const cards = document.getElementById('cards');
-          const dynamicContent = document.getElementById('dynamic-content');
-          if (headImg) headImg.style.display = 'none';
-          if (cards) cards.style.display = 'none';
-          if (dynamicContent) {
-            dynamicContent.style.display = 'block';
-            fetch(href)
-              .then(res => res.text())
-              .then(html => {
-                dynamicContent.innerHTML = html;
-              });
-          }
-          closeMobileDropdown();
         }
       });
     }

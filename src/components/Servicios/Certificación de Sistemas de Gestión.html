@@ -8,16 +8,27 @@
   <link rel="icon" type="image/png" href="/src/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @media (max-width: 991.98px) {
+      #footer { margin-bottom: 90px !important; }
+      .main-content-navbar-padding { padding-top: 0 !important; }
+    }
+    @media (min-width: 992px) {
+      .main-content-navbar-padding { padding-top: 70px; }
+    }
+  </style>
 </head>
 <body>
-<section class="dynamic-section certificacion-sistemas-section">
- <div class="info-box">
+  <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div class="info-box">
     <div class="section-content">
       <h1 class="section-title">Certificación de Sistemas de Gestión</h1>
-      <!-- Card ISO 9001 -->
-      <div class="cards-certificacion-container">
+    </div>
+    <div class="carousel-certificacion">
+      <button class="carousel-arrow prev" aria-label="Anterior">&#10094;</button>
+      <div class="carousel-track">
         <div class="card-certificacion">
-          <img src="../../assets/img/ISO-9001-17021.jpg" alt="ISO 9001">
           <h2>ISO 9001</h2>
           <p>
             ISO 9001 reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a logro de objetivos y metas.<br><br>
@@ -31,11 +42,7 @@
             </ul>
           </p>
         </div>
-      </div>
-      <!-- Card ISO/IEC 27001 -->
-      <div class="cards-certificacion-container">
         <div class="card-certificacion">
-          <img src="../../assets/img/ISO-27001-17021.jpg" alt="ISO 27001">
           <h2>ISO/IEC 27001</h2>
           <p>
             La ISO/IEC 27001 es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI). Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o maneja a fin de generar confianza con sus clientes, socios y público en general.<br><br>
@@ -50,11 +57,7 @@
             </ul>
           </p>
         </div>
-      </div>
-      <!-- Card ISO 37001 -->
-      <div class="cards-certificacion-container">
         <div class="card-certificacion">
-          <img src="../../assets/img/ISO-37001.jpg" alt="ISO 37001">
           <h2>ISO 37001</h2>
           <p>
             ISO 37001 es una norma dedicada establecer un sistema de gestión que ayude a las organizaciones a prevenir, detectar y responder al soborno, así como a cumplir las leyes antisoborno y los compromisos voluntarios aplicables a sus actividades. Abarca diversas formas de soborno (directo e indirecto) en los sectores público, privado y sin ánimo de lucro.<br><br>
@@ -69,12 +72,74 @@
           </p>
         </div>
       </div>
+      <button class="carousel-arrow next" aria-label="Siguiente">&#10095;</button>
+    </div>
     </div>
   </div>
-</section>
 <div id="footer"></div>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="../../js/gsap.js"></script>  
+<script>
+// Navbar dinámica (desktop o mobile)
+// ...existing code...
+// Navbar dinámica (desktop o mobile)
+function loadNavbar() {
+  const isMobile = window.innerWidth < 992;
+  const navbarPlaceholder = document.getElementById('navbar-placeholder');
+  const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+  if (isMobile) {
+    if (navbarPlaceholder) navbarPlaceholder.innerHTML = '';
+    fetch('../../components/navbar-mobile.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
+        navbarMobilePlaceholder.innerHTML = html;
+        const navMobile = navbarMobilePlaceholder.firstElementChild;
+        if (navMobile) {
+          navMobile.classList.remove('fixed-top');
+          navMobile.classList.add('fixed-bottom');
+          navMobile.style.top = 'auto';
+          navMobile.style.bottom = '0';
+          navMobile.style.width = '100%';
+          navMobile.style.zIndex = '1050';
+        }
+        loadNavbarDropdownScript();
+      });
+  } else {
+    if (navbarMobilePlaceholder) navbarMobilePlaceholder.innerHTML = '';
+    fetch('../../components/navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
+        navbarPlaceholder.innerHTML = html;
+        loadNavbarDropdownScript();
+      });
+  }
+}
+function loadNavbarDropdownScript() {
+  document.querySelectorAll('script').forEach(function(s) {
+    if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
+  });
+  var script = document.createElement('script');
+  script.src = '../../js/navbar-dropdown.js?v=' + Date.now();
+  script.onload = function() {
+    if (typeof initDropdowns === 'function') {
+      try { initDropdowns(); } catch(e) { console.error('Error al ejecutar initDropdowns:', e); }
+    }
+  };
+  document.body.appendChild(script);
+}
+window.addEventListener('resize', loadNavbar);
+window.addEventListener('DOMContentLoaded', loadNavbar);
+// Footer
+fetch('../../components/footer.html')
+  .then(res => res.text())
+  .then(html => {
+    html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
+    document.getElementById('footer').innerHTML = html;
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+<script src="../../js/carousel-gsap.js"></script>
 </body>
 </html>
  

@@ -115,23 +115,13 @@
   <!-- navbar-dropdown.js se carga al final del body para asegurar que la navbar ya está en el DOM -->
   <script src="../js/certificados-cliente.js"></script>
   <script src="../js/certificados-admin.js"></script>
+  // El script de navbar-dropdown.js se cargará dinámicamente después de insertar la navbar
   <script>
   // Navbar dinámica (desktop o mobile)
-  function cleanDropdownsAndScripts() {
-    // Elimina dropdowns previos
-    document.querySelectorAll('.dropdown-gsap-container').forEach(el => el.remove());
-    // Elimina scripts previos de navbar-dropdown.js
-    document.querySelectorAll('script').forEach(function(s) {
-      if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
-    });
-  }
-
   function loadNavbar() {
-    cleanDropdownsAndScripts();
     const isMobile = window.innerWidth < 992;
     const navbarPlaceholder = document.getElementById('navbar-placeholder');
     const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
-    console.log('[Navbar] Cargando navbar. isMobile:', isMobile);
     if (isMobile) {
       if (navbarPlaceholder) navbarPlaceholder.innerHTML = '';
       fetch('navbar-mobile.html')
@@ -148,8 +138,7 @@
             navMobile.style.width = '100%';
             navMobile.style.zIndex = '1050';
           }
-          console.log('[Navbar] Navbar mobile insertada en el DOM');
-          ensureDropdownScript();
+          loadNavbarDropdownScript();
         });
     } else {
       if (navbarMobilePlaceholder) navbarMobilePlaceholder.innerHTML = '';
@@ -158,47 +147,28 @@
         .then(html => {
           html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
           navbarPlaceholder.innerHTML = html;
-          console.log('[Navbar] Navbar desktop insertada en el DOM');
-          ensureDropdownScript();
+          loadNavbarDropdownScript();
         });
     }
   }
-  // Siempre recarga el script de dropdown y reintenta ejecutar initDropdowns tras cada cambio de navbar
-  function ensureDropdownScript() {
+  // Carga dinámica del script navbar-dropdown.js después de insertar la navbar
+  function loadNavbarDropdownScript() {
     // Elimina cualquier script previo de navbar-dropdown.js
     document.querySelectorAll('script').forEach(function(s) {
       if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
     });
-    // Carga el script de nuevo, forzando recarga sin caché
     var script = document.createElement('script');
     script.src = '../js/navbar-dropdown.js?v=' + Date.now();
     script.onload = function() {
-      console.log('[Dropdown] navbar-dropdown.js cargado');
-      retryInitDropdowns();
-    };
-    script.onerror = function() {
-      console.error('[Dropdown] Error: navbar-dropdown.js NO se pudo cargar. Revisa la ruta y la consola de red.');
+      if (typeof initDropdowns === 'function') {
+        try { initDropdowns(); } catch(e) { console.error('Error al ejecutar initDropdowns:', e); }
+      }
     };
     document.body.appendChild(script);
   }
-
-  // Reintenta ejecutar initDropdowns hasta 10 veces con 100ms de intervalo
-  function retryInitDropdowns(attempt) {
-    attempt = attempt || 1;
-    if (typeof initDropdowns === 'function') {
-      console.log('[Dropdown] initDropdowns encontrada. Ejecutando...');
-      try { initDropdowns(); console.log('[Dropdown] initDropdowns ejecutada.'); } catch(e) { console.error('[Dropdown] Error al ejecutar initDropdowns:', e); }
-      return;
-    }
-    if (attempt < 10) {
-      console.log('[Dropdown] initDropdowns no disponible aún. Reintentando (' + attempt + ')...');
-      setTimeout(function() { retryInitDropdowns(attempt + 1); }, 100);
-    } else {
-      console.warn('[Dropdown] No se pudo inicializar initDropdowns tras varios intentos.');
-    }
-  }
   window.addEventListener('resize', loadNavbar);
   window.addEventListener('DOMContentLoaded', loadNavbar);
+  // ...existing code...
   // Footer
   fetch('footer.html')
     .then(res => res.text())
