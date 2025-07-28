@@ -77,6 +77,15 @@ body {
   -ms-overflow-style: none; /* IE 10+ */
 }
 
+#google_translate_element {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  z-index: -1;
+}
+
 .navbar-mobile {
   display: flex;
   justify-content: center;
