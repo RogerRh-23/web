@@ -24,13 +24,14 @@
   <div id="navbar-mobile-placeholder"></div>
   <h1>Reglamentos</h1>
   <p>Contenido de la sección "Reglamentos".</p>
+  <div id="footer"></div>
 
   <script src="/src/js/gsap.js"></script>
   <script src="/src/js/navbar-dropdown.js"></script>
 
   <script>
     // Navbar Desktop
-    fetch('navbar.html')
+    fetch('../navbar.html')
       .then(res => res.text())
       .then(html => {
         html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
@@ -38,7 +39,7 @@
       });
     // Navbar Mobile
     function loadNavbarMobile() {
-      fetch('navbar-mobile.html')
+      fetch('../navbar-mobile.html')
         .then(res => res.text())
         .then(html => {
           html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
@@ -52,7 +53,6 @@
             navMobile.style.width = '100%';
             navMobile.style.zIndex = '1050';
           }
-
         });
     }
     function isMobile() {
@@ -64,18 +64,14 @@
     });
     window.addEventListener('DOMContentLoaded', function() {
       if (isMobile()) loadNavbarMobile();
-
     });
     // Footer
-    fetch('footer.html')
+    fetch('../footer.html')
       .then(res => res.text())
       .then(html => {
         html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
         document.getElementById('footer').innerHTML = html;
       });
-
-
-</script>
-<script src="/src/js/footer.js"></script>
+  </script>
 </body>
 </html>

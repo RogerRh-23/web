@@ -88,13 +88,35 @@ function initDropdowns() {
       }
       let hoverTimeout;
       const CLOSE_DELAY = 50; // ms, aún más margen para elegir opción
+
+      // --- NUEVO: Cerrar otros dropdowns antes de abrir este ---
+      function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown-gsap-container').forEach(el => {
+          if (el !== dropdownContainer && el.style.display === 'block') {
+            gsap.to(el, {
+              x: -40,
+              opacity: 0,
+              rotateY: -70,
+              height: 0,
+              duration: 0.32,
+              ease: 'power2.in',
+              transformOrigin: 'left center',
+              onComplete: () => {
+                el.style.display = 'none';
+              }
+            });
+          }
+        });
+      }
+
       function showDropdown() {
-      // Listeners para detectar si el mouse está sobre el navItem o el dropdownContainer
-      navItem.addEventListener('mouseenter', () => { mouseOverNavItem = true; });
-      navItem.addEventListener('mouseleave', () => { mouseOverNavItem = false; });
-      dropdownContainer.addEventListener('mouseenter', () => { mouseOverDropdown = true; });
-      dropdownContainer.addEventListener('mouseleave', () => { mouseOverDropdown = false; });
+        // Listeners para detectar si el mouse está sobre el navItem o el dropdownContainer
+        navItem.addEventListener('mouseenter', () => { mouseOverNavItem = true; });
+        navItem.addEventListener('mouseleave', () => { mouseOverNavItem = false; });
+        dropdownContainer.addEventListener('mouseenter', () => { mouseOverDropdown = true; });
+        dropdownContainer.addEventListener('mouseleave', () => { mouseOverDropdown = false; });
         if (!open) {
+          closeAllDropdowns(); // Cierra otros antes de abrir
           open = true;
           const rect = navItem.getBoundingClientRect();
           const navbar = document.querySelector('.navbar-custom');
