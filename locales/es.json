@@ -1,0 +1,36 @@
+{
+  "navbar": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "processes": "Procesos",
+    "training": "Centro de formación",
+    "certificates": "Certificados",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión"
+  },
+  "footer": {
+    "about": "Más sobre nosotros",
+    "faq": "Preguntas frecuentes",
+    "accreditations": "Nuestras acreditaciones",
+    "clients": "Clientes",
+    "certified_clients": "Clientes certificados",
+    "regulations": "Reglamentos",
+    "brand_use": "Reglamento de uso de marca",
+    "certified_company": "Reglamento de empresa certificada",
+    "policies": "Politicas",
+    "privacy": "Aviso de privacidad",
+    "confidentiality": "Política de confidencialidad",
+    "impartiality": "Política de Imparcialidad",
+    "copyright": "Todos los derechos reservados."
+  },
+  "ema": {
+    "title": "Acreditaciones EMA",
+    "iso9001": "Acreditación ISO 9001:2015 Sistemas de Gestion de Calidad",
+    "iso27001": "Acreditación ISO 27001:2013 Sistemas de Gestión de Seguridad de la Información",
+    "iso37001": "Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno"
+  },
+  "cards": {
+    "Who are we?": "¿Quiénes somos?",
+    "Information": ""
+  }
+}

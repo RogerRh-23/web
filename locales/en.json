@@ -1,0 +1,32 @@
+{
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "processes": "Processes",
+    "training": "Training Center",
+    "certificates": "Certificates",
+    "contact": "Contact",
+    "login": "Login"
+  },
+  "footer": {
+    "about": "About us",
+    "faq": "Frequently Asked Questions",
+    "accreditations": "Our accreditations",
+    "clients": "Clients",
+    "certified_clients": "Certified clients",
+    "regulations": "Regulations",
+    "brand_use": "Brand use regulation",
+    "certified_company": "Certified company regulation",
+    "policies": "Policies",
+    "privacy": "Privacy notice",
+    "confidentiality": "Confidentiality policy",
+    "impartiality": "Impartiality policy",
+    "copyright": "All rights reserved."
+  },
+  "ema": {
+    "title": "EMA Accreditations",
+    "iso9001": "ISO 9001:2015 Quality Management Systems Accreditation",
+    "iso27001": "ISO 27001:2013 Information Security Management Accreditation",
+    "iso37001": "ISO 37001:2016 Anti-bribery Management Accreditation"
+  }
+}

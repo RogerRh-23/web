@@ -49,6 +49,34 @@ function initDropdowns() {
   ];
 
   // Lógica para crear y animar los dropdowns para desktop y mobile
+  // --- Cerrar todos los dropdowns al hacer scroll, resize o clic fuera ---
+  function closeAllDropdownsGlobal() {
+    document.querySelectorAll('.dropdown-gsap-container').forEach(el => {
+      if (el.style.display === 'block') {
+        gsap.to(el, {
+          x: -40,
+          opacity: 0,
+          rotateY: -70,
+          height: 0,
+          duration: 0.32,
+          ease: 'power2.in',
+          transformOrigin: 'left center',
+          onComplete: () => {
+            el.style.display = 'none';
+          }
+        });
+      }
+    });
+  }
+  window.addEventListener('scroll', closeAllDropdownsGlobal);
+  window.addEventListener('resize', closeAllDropdownsGlobal);
+  document.addEventListener('mousedown', function(e) {
+    // Si el clic no es sobre un dropdown ni sobre un nav-link, cierra todos
+    if (!e.target.closest('.dropdown-gsap-container') && !e.target.closest('.nav-link')) {
+      closeAllDropdownsGlobal();
+    }
+  });
+
   dropdowns.forEach(drop => {
     // Desktop
     const navItem = getDropdownLink(drop.label);
