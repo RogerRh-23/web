@@ -86,12 +86,9 @@ function initDropdowns() {
       let dropdown = document.createElement('ul');
       dropdown.className = 'dropdown-gsap';
       dropdown.innerHTML = drop.items.map(item => {
-        // Generar path relativo correcto según ubicación actual
         let href = '';
         const currentPath = window.location.pathname;
-        // Elimina cualquier doble 'components/' en la ruta final
         if (currentPath.match(/\/components\//)) {
-          // Si ya estamos en /components/, solo subimos un nivel si estamos en un subdirectorio
           const depth = currentPath.split('/components/')[1].split('/').length - 1;
           if (depth > 0) {
             href = `../${item.path}`;
@@ -101,7 +98,6 @@ function initDropdowns() {
         } else {
           href = `./components/${item.path}`;
         }
-        // Normaliza la ruta para evitar doble 'components/'
         href = href.replace(/components\/components\//g, 'components/');
         return `<li><a href="${href}">${item.name}</a></li>`;
       }).join('');
@@ -110,42 +106,34 @@ function initDropdowns() {
       gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
       let open = false;
       let mouseOverDropdown = false;
-      let mouseOverNavItem = false;
       function isHovering() {
-        return mouseOverDropdown || mouseOverNavItem;
+        return mouseOverDropdown;
       }
       let hoverTimeout;
-      const CLOSE_DELAY = 50; // ms, aún más margen para elegir opción
+      const CLOSE_DELAY = 50;
 
-      // --- NUEVO: Cerrar otros dropdowns antes de abrir este ---
-      function closeAllDropdowns() {
-        document.querySelectorAll('.dropdown-gsap-container').forEach(el => {
-          if (el !== dropdownContainer && el.style.display === 'block') {
-            gsap.to(el, {
-              x: -40,
-              opacity: 0,
-              rotateY: -70,
-              height: 0,
-              duration: 0.32,
-              ease: 'power2.in',
-              transformOrigin: 'left center',
-              onComplete: () => {
-                el.style.display = 'none';
-              }
-            });
-          }
-        });
-      }
+      navItem.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!open) {
+          showDropdown();
+        } else {
+          closeDropdown();
+        }
+      });
+      dropdownContainer.addEventListener('mouseenter', () => {
+        mouseOverDropdown = true;
+        clearTimeout(hoverTimeout);
+      });
+      dropdownContainer.addEventListener('mouseleave', () => {
+        mouseOverDropdown = false;
+        handleMouseLeave();
+      });
 
       function showDropdown() {
-        // Listeners para detectar si el mouse está sobre el navItem o el dropdownContainer
-        navItem.addEventListener('mouseenter', () => { mouseOverNavItem = true; });
-        navItem.addEventListener('mouseleave', () => { mouseOverNavItem = false; });
-        dropdownContainer.addEventListener('mouseenter', () => { mouseOverDropdown = true; });
-        dropdownContainer.addEventListener('mouseleave', () => { mouseOverDropdown = false; });
         if (!open) {
-          closeAllDropdowns(); // Cierra otros antes de abrir
+          gsap.killTweensOf(dropdownContainer);
           open = true;
+          dropdownContainer.dataset.open = 'true';
           const rect = navItem.getBoundingClientRect();
           const navbar = document.querySelector('.navbar-custom');
           let top = rect.bottom + 2;
@@ -158,16 +146,24 @@ function initDropdowns() {
           dropdownContainer.style.top = top + 'px';
           dropdownContainer.style.minWidth = rect.width + 'px';
           dropdownContainer.style.display = 'block';
-          gsap.fromTo(
-            dropdownContainer,
-            { x: -40, opacity: 0, rotateY: -70, height: 0 },
-            { x: 0, opacity: 1, rotateY: 0, height: 'auto', duration: 0.48, ease: 'power2.out', transformOrigin: 'left center' }
-          );
+          gsap.set(dropdownContainer, { x: -40, opacity: 0, rotateY: -70, height: 0 });
+          gsap.to(dropdownContainer, {
+            x: 0,
+            opacity: 1,
+            rotateY: 0,
+            height: 'auto',
+            duration: 0.48,
+            ease: 'power2.out',
+            transformOrigin: 'left center'
+          });
         }
       }
       function closeDropdown() {
         if (open) {
+          gsap.killTweensOf(dropdownContainer);
           open = false;
+          dropdownContainer.dataset.open = 'false';
+          gsap.set(dropdownContainer, { x: 0, opacity: 1, rotateY: 0, height: 'auto' });
           gsap.to(dropdownContainer, {
             x: -40,
             opacity: 0,
@@ -182,21 +178,14 @@ function initDropdowns() {
           });
         }
       }
-      navItem.addEventListener('mouseenter', showDropdown);
-      navItem.addEventListener('focus', showDropdown);
-      dropdownContainer.addEventListener('mouseenter', showDropdown);
-      dropdownContainer.addEventListener('focus', showDropdown);
       function handleMouseLeave() {
         clearTimeout(hoverTimeout);
         hoverTimeout = setTimeout(() => {
           if (!isHovering()) closeDropdown();
         }, CLOSE_DELAY);
       }
-      navItem.addEventListener('mouseleave', handleMouseLeave);
-      navItem.addEventListener('blur', handleMouseLeave);
-      dropdownContainer.addEventListener('mouseleave', handleMouseLeave);
-      dropdownContainer.addEventListener('blur', handleMouseLeave);
     }
+    // ...lógica eliminada para desktop, solo mobile permanece...
     // Mobile
     const mobileIcon = getMobileIcon(drop.label);
     if (mobileIcon) {
