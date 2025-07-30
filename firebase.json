@@ -5,6 +5,13 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "rewrites": [
+      { "source": "**", "destination": "/errors/maintenance.html" }
+    ],
+    "error": {
+      "404": "/errors/404.html",
+      "500": "/errors/500.html"
+    }
   }
 }
