@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div><strong>Alcance:</strong> ${c.alcance}</div>
             <div><strong>Sitio:</strong> ${c.sitio}</div>
             <div><strong>Sectores:</strong> ${c.sectores}</div>
+            <div><strong>Documento cargado:</strong> ${c.archivoNombre ? `<a href="https://drive.google.com/file/d/${c.archivoId}" target="_blank">${c.archivoNombre}</a>` : 'No disponible'}</div>
             <div class="admin-certificados-actions">
               <button class="btn btn-warning" id="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
               <button class="btn btn-danger" id="btn-delete"><i class="bi bi-trash"></i> Eliminar</button>
@@ -177,6 +178,15 @@ document.addEventListener('DOMContentLoaded', function () {
     formEditar['edit-alcance'].value = cert.alcance;
     formEditar['edit-sitio'].value = cert.sitio;
     formEditar['edit-sectores'].value = cert.sectores;
+    // Mostrar nombre del archivo cargado si existe
+    let archivoLabel = formEditar.querySelector('#archivoCertificadoLabel');
+    if (!archivoLabel) {
+      archivoLabel = document.createElement('div');
+      archivoLabel.id = 'archivoCertificadoLabel';
+      archivoLabel.style.marginTop = '10px';
+      formEditar.appendChild(archivoLabel);
+    }
+    archivoLabel.textContent = cert.archivoNombre ? `Documento cargado: ${cert.archivoNombre}` : 'No hay documento cargado';
     modalEditar.style.display = 'flex';
     setTimeout(() => { modalEditar.style.opacity = '1'; }, 10);
   }
@@ -279,28 +289,54 @@ document.addEventListener('DOMContentLoaded', function () {
   if (formAgregar) {
     formAgregar.addEventListener('submit', function(e) {
       e.preventDefault();
-      // Validación simple
-      const nuevoCert = {
-        org: formAgregar.nombreOrg.value.trim(),
-        estandar: formAgregar.estandar.value.trim(),
-        estado: formAgregar.estatus.value,
-        num: formAgregar.numeroCertificado.value.trim(),
-        inicio: formAgregar.fechaInicio.value,
-        fin: formAgregar.fechaFin.value,
-        alcance: formAgregar.alcance.value.trim(),
-        sitio: formAgregar.sitio.value.trim(),
-        sectores: formAgregar.sectores.value.trim()
-      };
-      // Validar campos obligatorios
-      for (const key in nuevoCert) {
-        if (!nuevoCert[key]) {
-          alert('Por favor completa todos los campos.');
-          return;
-        }
+      const archivoInput = formAgregar.archivoCertificado;
+      const archivo = archivoInput && archivoInput.files[0];
+      const formData = new FormData();
+      formData.append('nombreOrg', formAgregar.nombreOrg.value.trim());
+      formData.append('estandar', formAgregar.estandar.value.trim());
+      formData.append('estatus', formAgregar.estatus.value);
+      formData.append('numeroCertificado', formAgregar.numeroCertificado.value.trim());
+      formData.append('fechaInicio', formAgregar.fechaInicio.value);
+      formData.append('fechaFin', formAgregar.fechaFin.value);
+      formData.append('alcance', formAgregar.alcance.value.trim());
+      formData.append('sitio', formAgregar.sitio.value.trim());
+      formData.append('sectores', formAgregar.sectores.value.trim());
+      if (archivo) {
+        formData.append('archivoCertificado', archivo);
+      } else {
+        alert('Por favor selecciona un archivo de certificado.');
+        return;
       }
-      certificados.push(nuevoCert);
-      ocultarModal();
-      renderCertificados();
+      fetch('https://mexico-lacs-55d72.cloudfunctions.net/uploadCertificate', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const nuevoCert = {
+            org: formAgregar.nombreOrg.value.trim(),
+            estandar: formAgregar.estandar.value.trim(),
+            estado: formAgregar.estatus.value,
+            num: formAgregar.numeroCertificado.value.trim(),
+            inicio: formAgregar.fechaInicio.value,
+            fin: formAgregar.fechaFin.value,
+            alcance: formAgregar.alcance.value.trim(),
+            sitio: formAgregar.sitio.value.trim(),
+            sectores: formAgregar.sectores.value.trim(),
+            archivoNombre: archivo.name,
+            archivoId: data.fileId
+          };
+          certificados.push(nuevoCert);
+          ocultarModal();
+          renderCertificados();
+        } else {
+          alert('Error al subir el archivo: ' + (data.error || ''));
+        }
+      })
+      .catch(err => {
+        alert('Error al enviar el certificado: ' + err.message);
+      });
     });
   }
 
