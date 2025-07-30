@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sitio en mantenimiento</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div class="error-container">
+    <h1>¡Volvemos pronto!</h1>
+    <p>Estamos realizando tareas de mantenimiento.<br>Por favor, vuelve en unos minutos.</p>
+  </div>
+  <div id="footer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="/src/js/gsap.js"></script>
+  <script src="/src/js/navbar-dropdown.js"></script>
+  <script>
+    // Navbar Desktop
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+        document.getElementById('navbar-container').innerHTML = html;
+        setTimeout(() => {
+          if (typeof initDropdowns === 'function') initDropdowns();
+        }, 0);
+      });
+    // Navbar Mobile
+    function loadNavbarMobile() {
+      fetch('navbar-mobile.html')
+        .then(res => res.text())
+        .then(html => {
+          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+          document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+          const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+          if (navMobile) {
+            navMobile.classList.remove('fixed-top');
+            navMobile.classList.add('fixed-bottom');
+            navMobile.style.top = 'auto';
+            navMobile.style.bottom = '0';
+            navMobile.style.width = '100%';
+            navMobile.style.zIndex = '1050';
+          }
+          setTimeout(() => {
+            if (typeof initDropdowns === 'function') initDropdowns();
+          }, 0);
+        });
+    }
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    window.addEventListener('resize', function() {
+      if (isMobile()) loadNavbarMobile();
+      else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+    });
+    window.addEventListener('DOMContentLoaded', function() {
+      if (isMobile()) loadNavbarMobile();
+    });
+    // Footer
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
+        document.getElementById('footer').innerHTML = html;
+      });
+  </script>
+</body>
+</html>
