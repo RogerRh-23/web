@@ -1,56 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
   const infoBox = document.querySelector('.info-box');
 
-  // Simulación de lista de certificados
-  const certificados = [
-    {
-      org: 'LACS S.A. de C.V.',
-      estandar: 'ISO 9001',
-      estado: 'Vigente',
-      num: '2024-0123',
-      inicio: '2024-01-01',
-      fin: '2025-01-01',
-      alcance: 'Certificación de sistemas de gestión de calidad',
-      sitio: 'CDMX, México',
-      sectores: 'Servicios, Manufactura'
-    },
-    {
-      org: 'Empresa XYZ',
-      estandar: 'ISO 27001',
-      estado: 'Suspendido',
-      num: '2023-00077',
-      inicio: '2024-01-01',
-      fin: '2025-01-01',
-      alcance: 'Gestión de seguridad de la información',
-      sitio: 'Guadalajara, México',
-      sectores: 'TI, Servicios'
-    }
-  ];
+  let certificados = [];
 
-  function renderCertificados() {
-    // Animaciones GSAP para botones de detalle
-    function animateButton(btn) {
-      btn.addEventListener('mouseenter', function() {
-        if (window.gsap) {
-          gsap.to(btn, {scale: 1.08, boxShadow: '0 6px 18px rgba(20,30,60,0.18)', duration: 0.18, ease: 'power2.out'});
-        }
-      });
-      btn.addEventListener('mouseleave', function() {
-        if (window.gsap) {
-          gsap.to(btn, {scale: 1, boxShadow: '0 2px 8px rgba(20,30,60,0.10)', duration: 0.18, ease: 'power2.out'});
-        }
-      });
-      btn.addEventListener('mousedown', function() {
-        if (window.gsap) {
-          gsap.to(btn, {scale: 0.93, duration: 0.12, ease: 'power2.in'});
-        }
-      });
-      btn.addEventListener('mouseup', function() {
-        if (window.gsap) {
-          gsap.to(btn, {scale: 1.08, duration: 0.12, ease: 'power2.out'});
-        }
-      });
-    }
+  function animateButton(btn) {
+    btn.addEventListener('mouseenter', function() {
+      if (window.gsap) {
+        gsap.to(btn, {scale: 1.08, boxShadow: '0 6px 18px rgba(20,30,60,0.18)', duration: 0.18, ease: 'power2.out'});
+      }
+    });
+    btn.addEventListener('mouseleave', function() {
+      if (window.gsap) {
+        gsap.to(btn, {scale: 1, boxShadow: '0 2px 8px rgba(20,30,60,0.10)', duration: 0.18, ease: 'power2.out'});
+      }
+    });
+    btn.addEventListener('mousedown', function() {
+      if (window.gsap) {
+        gsap.to(btn, {scale: 0.93, duration: 0.12, ease: 'power2.in'});
+      }
+    });
+    btn.addEventListener('mouseup', function() {
+      if (window.gsap) {
+        gsap.to(btn, {scale: 1.08, duration: 0.12, ease: 'power2.out'});
+      }
+    });
+  }
+
+  function renderCertificadosUI() {
     infoBox.innerHTML = `
       <div class="admin-certificados-header">
         <h2><i class="bi bi-shield-lock-fill" style="color:#1976a5"></i> Administración de Certificados</h2>
@@ -78,34 +54,29 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="admin-certificados-detalle" style="display:none;"></div>
       </div>
     `;
-    // Animación GSAP
     if (window.gsap) {
       gsap.from('.admin-certificados-header', {opacity: 0, y: 40, duration: 0.7, ease: 'power2.out'});
       gsap.from('.admin-certificados-list', {opacity: 0, y: 40, duration: 0.7, delay: 0.2, ease: 'power2.out'});
     }
 
-    // Interacción para mostrar detalle y botones
     const rows = document.querySelectorAll('.cert-row');
     let detalleRow = null;
     let detalleIdx = null;
     rows.forEach(row => {
       row.addEventListener('click', function(e) {
         const idx = row.getAttribute('data-index');
-        // Si ya está abierto y se hace clic en la misma fila, ocultar
         if (detalleRow && detalleIdx === idx) {
           detalleRow.remove();
           detalleRow = null;
           detalleIdx = null;
           return;
         }
-        // Elimina cualquier detalle abierto
         if (detalleRow) {
           detalleRow.remove();
           detalleRow = null;
           detalleIdx = null;
         }
         const c = certificados[idx];
-        // Crea la fila de detalle justo debajo de la seleccionada
         detalleRow = document.createElement('tr');
         detalleRow.className = 'admin-certificados-detalle-row';
         detalleRow.innerHTML = `<td colspan="2">
@@ -116,9 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <div><strong>No. Certificado:</strong> ${c.num}</div>
             <div><strong>Fecha de inicio:</strong> ${c.inicio}</div>
             <div><strong>Fecha de finalización:</strong> ${c.fin}</div>
-            <div><strong>Alcance:</strong> ${c.alcance}</div>
-            <div><strong>Sitio:</strong> ${c.sitio}</div>
-            <div><strong>Sectores:</strong> ${c.sectores}</div>
             <div><strong>Documento cargado:</strong> ${c.archivoNombre ? `<a href="https://drive.google.com/file/d/${c.archivoId}" target="_blank">${c.archivoNombre}</a>` : 'No disponible'}</div>
             <div class="admin-certificados-actions">
               <button class="btn btn-warning" id="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
@@ -126,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
           </div>
         </td>`;
-        // Animar botones de detalle
         const btnEdit = detalleRow.querySelector('#btn-edit');
         const btnDelete = detalleRow.querySelector('#btn-delete');
         animateButton(btnEdit);
@@ -149,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (window.gsap) {
           gsap.from('.admin-certificados-detalle-box', {opacity: 0, y: 30, duration: 0.5, ease: 'power2.out'});
         }
-        // Lógica para mostrar el modal de edición
         if (btnEdit) {
           btnEdit.onclick = function(e) {
             e.preventDefault();
@@ -158,6 +124,46 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     });
+
+    document.addEventListener('click', function(e) {
+      const isRow = e.target.closest('.cert-row');
+      const isDetalle = e.target.closest('.admin-certificados-detalle-row');
+      if (!isRow && !isDetalle && detalleRow) {
+        detalleRow.remove();
+        detalleRow = null;
+        detalleIdx = null;
+      }
+    });
+
+    setTimeout(() => {
+      const btnAgregar = document.getElementById('btn-add');
+      if (btnAgregar) {
+        btnAgregar.onclick = function(e) {
+          e.preventDefault();
+          mostrarModal();
+        };
+      }
+    }, 0);
+  }
+
+  function renderCertificados() {
+    fetch('/api/certificados', {
+      headers: {
+        'Authorization': 'Bearer admin-token'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        certificados = data;
+        renderCertificadosUI();
+      })
+      .catch(() => {
+        infoBox.innerHTML = '<div class="admin-certificados-error">No se pudo cargar la lista de certificados.</div>';
+      });
+  }
+
+  // Inicializar renderizado con datos del backend
+  renderCertificados();
   // Modal editar certificado
   const modalEditar = document.getElementById('modalEditarCertificado');
   const cerrarModalEditar = document.getElementById('cerrarModalEditar');
@@ -175,9 +181,6 @@ document.addEventListener('DOMContentLoaded', function () {
     formEditar['edit-numeroCertificado'].value = cert.num;
     formEditar['edit-fechaInicio'].value = cert.inicio;
     formEditar['edit-fechaFin'].value = cert.fin;
-    formEditar['edit-alcance'].value = cert.alcance;
-    formEditar['edit-sitio'].value = cert.sitio;
-    formEditar['edit-sectores'].value = cert.sectores;
     // Mostrar nombre del archivo cargado si existe
     let archivoLabel = formEditar.querySelector('#archivoCertificadoLabel');
     if (!archivoLabel) {
@@ -210,17 +213,13 @@ document.addEventListener('DOMContentLoaded', function () {
     formEditar.addEventListener('submit', function(e) {
       e.preventDefault();
       if (editIdx === null) return;
-      // Validación simple
       const certEditado = {
         org: formEditar['edit-nombreOrg'].value.trim(),
         estandar: formEditar['edit-estandar'].value.trim(),
         estado: formEditar['edit-estatus'].value,
         num: formEditar['edit-numeroCertificado'].value.trim(),
         inicio: formEditar['edit-fechaInicio'].value,
-        fin: formEditar['edit-fechaFin'].value,
-        alcance: formEditar['edit-alcance'].value.trim(),
-        sitio: formEditar['edit-sitio'].value.trim(),
-        sectores: formEditar['edit-sectores'].value.trim()
+        fin: formEditar['edit-fechaFin'].value
       };
       for (const key in certEditado) {
         if (!certEditado[key]) {
@@ -228,9 +227,25 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
       }
-      certificados[editIdx] = certEditado;
-      ocultarModalEditar();
-      renderCertificados();
+      fetch(`/api/certificados/${certEditado.num}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer admin-token'
+        },
+        body: JSON.stringify(certEditado)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Error al actualizar certificado');
+        return res.json();
+      })
+      .then(() => {
+        ocultarModalEditar();
+        renderCertificados();
+      })
+      .catch(err => {
+        alert(err.message);
+      });
     });
   }
 
@@ -244,21 +259,8 @@ document.addEventListener('DOMContentLoaded', function () {
         detalleIdx = null;
       }
     });
-  }
 
-  renderCertificados();
-  // Asignar evento al botón agregar después de renderizar
-  setTimeout(() => {
-    const btnAgregar = document.getElementById('btn-add');
-    if (btnAgregar) {
-      btnAgregar.onclick = function(e) {
-        e.preventDefault();
-        mostrarModal();
-      };
-    }
-  }, 0);
-
-   // Modal agregar certificado
+  // Modal agregar certificado
   const modal = document.getElementById('modalAgregarCertificado');
   const cerrarModal = document.getElementById('cerrarModalCertificado');
   const formAgregar = document.getElementById('formAgregarCertificado');
@@ -298,48 +300,31 @@ document.addEventListener('DOMContentLoaded', function () {
       formData.append('numeroCertificado', formAgregar.numeroCertificado.value.trim());
       formData.append('fechaInicio', formAgregar.fechaInicio.value);
       formData.append('fechaFin', formAgregar.fechaFin.value);
-      formData.append('alcance', formAgregar.alcance.value.trim());
-      formData.append('sitio', formAgregar.sitio.value.trim());
-      formData.append('sectores', formAgregar.sectores.value.trim());
       if (archivo) {
         formData.append('archivoCertificado', archivo);
       } else {
         alert('Por favor selecciona un archivo de certificado.');
         return;
       }
-      fetch('https://mexico-lacs-55d72.cloudfunctions.net/uploadCertificate', {
+      fetch('/api/certificados', {
         method: 'POST',
+        headers: {
+          'Authorization': 'Bearer admin-token'
+        },
         body: formData
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          const nuevoCert = {
-            org: formAgregar.nombreOrg.value.trim(),
-            estandar: formAgregar.estandar.value.trim(),
-            estado: formAgregar.estatus.value,
-            num: formAgregar.numeroCertificado.value.trim(),
-            inicio: formAgregar.fechaInicio.value,
-            fin: formAgregar.fechaFin.value,
-            alcance: formAgregar.alcance.value.trim(),
-            sitio: formAgregar.sitio.value.trim(),
-            sectores: formAgregar.sectores.value.trim(),
-            archivoNombre: archivo.name,
-            archivoId: data.fileId
-          };
-          certificados.push(nuevoCert);
-          ocultarModal();
-          renderCertificados();
-        } else {
-          alert('Error al subir el archivo: ' + (data.error || ''));
-        }
+      .then(res => {
+        if (!res.ok) throw new Error('Error al agregar certificado');
+        return res.json();
+      })
+      .then(() => {
+        ocultarModal();
+        renderCertificados();
       })
       .catch(err => {
-        alert('Error al enviar el certificado: ' + err.message);
+        alert(err.message);
       });
     });
   }
 
-  // Aquí puedes agregar lógica para los botones (Agregar, Editar, Eliminar)
-  // Por ahora solo muestra la interfaz
 });
