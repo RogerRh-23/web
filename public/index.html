@@ -1,89 +1,412 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin America Certification & Systems</title>
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="icon" type="image/png" href="./assets/img/LACS-V.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @media (max-width: 991.98px) {
+      #footer { margin-bottom: 90px !important; }
+      .main-content-navbar-padding { padding-top: 0 !important; }
+    }
+    @media (min-width: 992px) {
+      .main-content-navbar-padding { padding-top: 70px; }
+    }
+  </style>
+</head>
+<body>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.0.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.0.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  <!-- Hero Reveal Overlay -->
+  <div class="hero-reveal">
+    <div class="hero-reveal-rects">
+      <div class="hero-rect" style="left:calc(0 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:1"></div>
+      <div class="hero-rect" style="left:calc(1 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:2"></div>
+      <div class="hero-rect" style="left:calc(2 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:3"></div>
+      <div class="hero-rect" style="left:calc(3 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:4"></div>
+      <div class="hero-rect" style="left:calc(4 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:5"></div>
+      <div class="hero-rect" style="left:calc(5 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:6"></div>
+      <div class="hero-rect" style="left:calc(6 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:7"></div>
+      <div class="hero-rect" style="left:calc(7 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:8"></div>
+      <div class="hero-rect" style="left:calc(8 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:9"></div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <div class="hero-reveal-logo-fixed">
+      <img class="hero-logo-img" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
+    </div>
+    </div>
+    <button class="hero-reveal-arrow" id="hero-reveal-arrow" aria-label="Scroll">
+      <svg viewBox="0 0 24 24"><path d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z"/></svg>
+      <!-- Puedes agregar aquí un texto accesible traducible si lo deseas -->
+    </button>
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  <!-- INICIO NAVBAR FIJA -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow" id="main-navbar" style="display:none;">
+    <div class="navbar-content">
+      <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid">
+          <span class="navbar-brand">
+            <img src="/assets/img/LACS.png" alt="LACS Logo"/>
+          </span>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link active" aria-current="page" href="/index.html"><i class="bi bi-house-door"></i> <span data-i18n="navbar.home">Inicio</span></a></li>
+              <li class="nav-item"><a class="nav-link"><i class="bi bi-briefcase"></i> <span data-i18n="navbar.services">Servicios</span></a></li>
+              <li class="nav-item"><a class="nav-link"><i class="bi bi-diagram-3"></i> <span data-i18n="navbar.processes">Procesos</span></a></li>
+              <li class="nav-item"><a class="nav-link"><i class="bi bi-mortarboard"></i> <span data-i18n="navbar.training">Centro de formación</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="./components/certificados.html"><i class="bi bi-award"></i> <span data-i18n="navbar.certificates">Certificados</span></a></li>
+              <li class="nav-item"><a class="nav-link" href="./components/contacto.html"><i class="bi bi-envelope"></i> <span data-i18n="navbar.contact">Contacto</span></a></li>
+            </ul>
+            <div class="navbar-actions">
+              <button id="lang-switcher" class="btn btn-outline-light btn-lang-switcher" type="button" aria-label="Cambiar idioma">
+                <i class="bi bi-translate"></i> EN
+              </button>
+              <a class="btn btn-outline-light" href="/components/login.html"><i class="bi bi-person-circle"></i> <span data-i18n="navbar.login">Iniciar Sesión</span></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </nav>
+  <main class="pt-5" style="min-height: 80vh;">
+    <div id="dynamic-content"></div>
+    <div class="head-img-container">
+      <img class="main-head-img" src="./assets/img/img2.png" alt="img1.png" />
+      <div class="lacs-mask"></div>
+      <img class="lacs-logo-overlay" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
+    </div>
+    <!-- SVG animado y contenedor eliminados -->
+    <div id="cards" class="section-gsap"></div>
+    <div id="ema" class="section-gsap">
+      <div class="ema-container">
+        <section class="ema-section">
+          <h1 class="section-title" data-i18n="ema.title">Acreditaciones EMA</h1>
+          <div class="section-content">
+            <div class="ema-96-13">
+              <a href="./assets/docs/ACREDITACION ISO 9001  17021-1.pdf" target="_blank" rel="noopener">
+                <button>
+                  <img src="./assets/img/96-13.png" alt="EMA 96-13" class="ema-logo" />
+                </button>
+              </a>
+              <strong><span class="ema-text" data-i18n="ema.iso9001">Acreditación ISO 9001:2015 Sistemas de Gestion de Calidad</span></strong>
+            </div>
+            <div class="ema-96-20">
+              <a href="./assets/docs/ACREDITACION ISO 27001  17021-1.pdf" target="_blank" rel="noopener">
+                <button>
+                  <img src="./assets/img/96_20.png" alt="EMA 96-20" class="ema-logo" />
+                </button>
+              </a>
+              <strong><span class="ema-text" data-i18n="ema.iso27001">Acreditación ISO 27001:2013 Sistemas de Gestión de Seguridad de la Información</span></strong>
+            </div>
+            <div class="ema-96-2IAF">
+              <a href="./assets/docs/ACREDITACION ISO 37001.pdf" target="_blank" rel="noopener">
+                <button>
+                  <img src="./assets/img/96_20IAF.png" alt="EMA 96-20IAF" class="ema-logo" />
+                </button>
+              </a>
+              <strong><span class="ema-text" data-i18n="ema.iso37001">Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno</span></strong>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+  <!-- INICIO FOOTER FIJO -->
+  <footer class="footer bg-dark text-light py-4 mt-5" id="footer">
+    <footer class="footer-section">
+  <div class="footer-triangle"></div>
+  <div class="footer-content container">
+    <div class="footer-logo-social">
+      <div class="footer-logo-col">
+        <img src="./assets/img/LACS-Comp.png" alt="LACS Logo" class="footer-logo" />
+        <ul class="footer-social">
+          <li class="icon facebook">
+            <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" aria-label="Facebook" class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></i></a>
+          </li>
+          <li class="icon instagram">
+            <a href="https://www.instagram.com/lacs.mx/#" target="_blank" aria-label="Instagram" class="footer-social-link"><i class="fa-brands fa-instagram"></i></i></a>
+          </li>
+          <li class="icon linkedin">
+            <a href="https://www.linkedin.com/company/latin-american-certification-systems" target="_blank" aria-label="LinkedIn" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></i></a>
+          </li>
+          <li class="icon tiktok">
+            <a href="https://www.tiktok.com/@lacs_mx" target="_blank" aria-label="TikTok" class="footer-social-link"><i class="fa-brands fa-tiktok"></i></i></a>
+          </li>
+          <li class="icon whatsapp">
+            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp" class="footer-social-link"><i class="fa-brands fa-whatsapp"></i></i></a>
+          </li>
+          <li class="icon google-maps">
+            <a href="https://maps.app.goo.gl/3KpCwUMfCdGTCgCE9" target="_blank" aria-label="Google Maps" class="footer-social-link"><i class="bi bi-geo-alt-fill"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-options">
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.about">Más sobre nosotros</h3>
+        <ul class="footer-options-list">
+          <li><a href="/components/footer/Nosotros.html" data-i18n="footer.faq">Preguntas frecuentes</a></li>
+          <li><a href="/components/footer/Nosotros.html" data-i18n="footer.accreditations">Nuestras acreditaciones</a></li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.regulations">Reglamentos</h3>
+        <ul class="footer-options-list">
+          <li><a href="/components/footer/Reglamentos.html" data-i18n="footer.brand_use">Reglamento de uso de marca</a></li>
+          <li><a href="/components/footer/Reglamentos.html" data-i18n="footer.certified_company">Reglamento de empresa certificada</a></li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.policies">Politicas</h3>
+        <ul class="footer-options-list">
+          <li><a href="/components/footer/Politicas.html" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+          <li><a href="/components/footer/Politicas.html" data-i18n="footer.confidentiality">Política de confidencialidad</a></li>
+          <li><a href="/components/footer/Politicas.html" data-i18n="footer.impartiality">Política de Imparcialidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <span>&copy; 2025 Latin America Certification & Systems. <span data-i18n="footer.copyright">Todos los derechos reservados.</span></span>
+    </div>
+  </div>
+</footer>
+  </footer>
+  <div id="navbar-mobile-placeholder"></div>
+
+  <!-- GSAP core y plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CSSRulePlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <!-- i18next y backend CDN -->
+  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <script src="./js/i18n.js"></script>
+  <!-- Google Translate eliminado, ahora se usa i18next -->
+  <!-- JS principales del proyecto -->
+  <script src="./js/gsap.js"></script>
+  <script src="./js/hero-reveal.js"></script>
+  <script src="./js/hero-reveal-fix.js"></script>
+  <script src="./js/ema-gsap.js"></script>
+  <script src="./js/lang-switcher.js"></script>
+  <script>
+    // Navbar y footer ahora son fijos en el HTML
+
+    // Mostrar la navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function() {
+      const navbar = document.getElementById('main-navbar');
+      const hero = document.querySelector('.hero-reveal');
+      if (navbar && hero) {
+        const observer = new IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting) {
+            navbar.style.display = 'none';
+          } else {
+            navbar.style.display = '';
+          }
+        }, { threshold: 0.1 });
+        observer.observe(hero);
+      }
+    });
+
+    // Cargar navbar mobile solo en dispositivos pequeños
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbarMobile() {
+      const showNavbarMobile = () => {
+        fetch('./components/navbar-mobile.html')
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+            // Forzar inicialización de dropdowns móviles
+            if (typeof initDropdowns === 'function') {
+              initDropdowns();
+            } else {
+              setTimeout(() => { if (typeof initDropdowns === 'function') initDropdowns(); }, 200);
+            }
+            // Ocultar la navbar mobile al cargar
+            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+            if (navMobile) {
+              navMobile.style.display = 'none';
+              navMobile.classList.remove('fixed-top');
+              navMobile.classList.add('fixed-bottom');
+              navMobile.style.top = 'auto';
+              navMobile.style.bottom = '0';
+              navMobile.style.width = '100%';
+              navMobile.style.zIndex = '1050';
+            }
+          });
+      };
+      const hideNavbarMobile = () => {
+        document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+      };
+      const hero = document.querySelector('.hero-reveal');
+      if (isMobile()) {
+        if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
+          showNavbarMobile();
+          // Mostrar la navbar mobile si el hero ya no es visible
+          setTimeout(() => {
+            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+            if (navMobile) navMobile.style.display = '';
+          }, 300);
+        } else {
+          hideNavbarMobile();
+          // Usar IntersectionObserver para detectar cuando el hero desaparece
+          const observer = new IntersectionObserver(function(entries) {
+            if (!entries[0].isIntersecting) {
+              showNavbarMobile();
+              setTimeout(() => {
+                const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+                if (navMobile) navMobile.style.display = '';
+              }, 300);
+              observer.disconnect();
+            }
+          }, { threshold: 0.1 });
+          observer.observe(hero);
         }
+      } else {
+        hideNavbarMobile();
+      }
+    }
+    window.addEventListener('resize', loadNavbarMobile);
+    window.addEventListener('DOMContentLoaded', loadNavbarMobile);
+    // Cargar dinámicamente las cards
+    fetch('./components/cards.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('cards').innerHTML = html;
       });
-    </script>
-  </body>
+
+    // Delegar clicks en enlaces de dropdown de la navbar para cargar contenido dinámico
+    document.addEventListener('click', function(e) {
+      const navLink = e.target.closest('.navbar .dropdown-menu a[href]');
+      if (navLink) {
+        const href = navLink.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+          e.preventDefault();
+          fetch(href)
+            .then(res => res.text())
+            .then(html => {
+              const dyn = document.getElementById('dynamic-content');
+              const cards = document.getElementById('cards');
+              const headImg = document.querySelector('.head-img-container');
+              const hero = document.querySelector('.hero-reveal');
+              // Ocultar solo las cards y la imagen de cabecera, no el main ni el footer ni el header
+              if (cards) cards.style.display = 'none';
+              if (headImg) headImg.style.display = 'none';
+              if (hero) hero.style.display = 'none';
+              if (dyn) {
+                dyn.innerHTML = html;
+                dyn.style.display = 'block';
+                dyn.style.position = '';
+                dyn.style.top = '';
+                dyn.style.left = '';
+                dyn.style.width = '';
+                dyn.style.height = '';
+                dyn.style.zIndex = '';
+                dyn.style.pointerEvents = '';
+                dyn.style.overflowY = '';
+                // Eliminar estilos de login si existen
+                let loginStyle = document.getElementById('login-style-dynamic');
+                if (loginStyle) loginStyle.remove();
+                // Limpiar clases y estilos de login-bg si quedaron
+                const loginBg = dyn.querySelector('.login-bg');
+                if (loginBg) {
+                  loginBg.removeAttribute('style');
+                }
+              }
+            });
+        }
+      }
+    });
+    // Inicializar dropdowns de Bootstrap en la navbar de escritorio
+    function initDropdowns() {
+      // Si Bootstrap 5 está disponible
+      if (window.bootstrap && window.bootstrap.Dropdown) {
+        document.querySelectorAll('.navbar .dropdown-toggle').forEach(function (dropdownToggleEl) {
+          new window.bootstrap.Dropdown(dropdownToggleEl);
+        });
+      } else if (window.jQuery && window.jQuery.fn.dropdown) {
+        // Fallback para Bootstrap 4
+        window.jQuery('.navbar .dropdown-toggle').dropdown();
+      }
+    }
+    // Inicializar al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      initDropdowns();
+    });
+    // Re-inicializar después de cargar contenido dinámico
+    document.addEventListener('click', function(e) {
+      const navLink = e.target.closest('.navbar .dropdown-menu a[href]');
+      if (navLink) {
+        const href = navLink.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+          e.preventDefault();
+          fetch(href)
+            .then(res => res.text())
+            .then(html => {
+              const dyn = document.getElementById('dynamic-content');
+              const cards = document.getElementById('cards');
+              const headImg = document.querySelector('.head-img-container');
+              const hero = document.querySelector('.hero-reveal');
+              // Ocultar solo las cards y la imagen de cabecera, no el main ni el footer ni el header
+              if (cards) cards.style.display = 'none';
+              if (headImg) headImg.style.display = 'none';
+              if (hero) hero.style.display = 'none';
+              if (dyn) {
+                dyn.innerHTML = html;
+                dyn.style.display = 'block';
+                dyn.style.position = '';
+                dyn.style.top = '';
+                dyn.style.left = '';
+                dyn.style.width = '';
+                dyn.style.height = '';
+                dyn.style.zIndex = '';
+                dyn.style.pointerEvents = '';
+                dyn.style.overflowY = '';
+                // Eliminar estilos de login si existen
+                let loginStyle = document.getElementById('login-style-dynamic');
+                if (loginStyle) loginStyle.remove();
+                // Limpiar clases y estilos de login-bg si quedaron
+                const loginBg = dyn.querySelector('.login-bg');
+                if (loginBg) {
+                  loginBg.removeAttribute('style');
+                }
+                // Re-inicializar dropdowns después de cargar contenido
+                initDropdowns();
+              }
+            });
+        }
+      }
+    });
+
+  fetch('../navbar.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('navbar-container').innerHTML = html;
+    // Vuelve a cargar el script de idioma
+    const script = document.createElement('script');
+    script.src = '/src/js/lang-switcher.js';
+    document.body.appendChild(script);
+  });
+  </script>
+  <script type="text/javascript">
+
+
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
+  <script src="./js/navbar-dropdown.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/cards-anim.js"></script>
+  <script src="./js/valores-toggle.js"></script>
+  <script src="./js/footer.js"></script>
+</body>
 </html>
