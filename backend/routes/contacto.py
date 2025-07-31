@@ -1,9 +1,11 @@
+
 from fastapi import APIRouter, status, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 import os
 import smtplib
 from email.message import EmailMessage
+import traceback
 
 router = APIRouter()
 
@@ -17,7 +19,7 @@ class ContactoRequest(BaseModel):
 
 @router.post("/contacto", status_code=status.HTTP_200_OK)
 async def enviar_contacto(data: ContactoRequest, request: Request):
-    # Configuración de correo (ajusta según tu entorno)
+    print("Recibida petición de contacto:", data)
     SMTP_HOST = os.getenv("SMTP_HOST", "smtp.example.com")
     SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
     SMTP_USER = os.getenv("SMTP_USER", "usuario@example.com")
@@ -44,6 +46,9 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
             server.starttls()
             server.login(SMTP_USER, SMTP_PASS)
             server.send_message(msg)
+        print("Correo enviado correctamente")
         return {"ok": True, "msg": "Correo enviado"}
     except Exception as e:
+        print("Error enviando correo:", e)
+        traceback.print_exc()
         return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error enviando correo: {str(e)}"})
