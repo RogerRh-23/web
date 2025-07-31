@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Iniciar Sesión</title>
-  <link rel="stylesheet" href="/public/styles/main.css">
-  <link rel="icon" type="image/png" href="/public/assets/img/LACS-V.png">
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" type="image/png" href="../assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
@@ -23,16 +23,85 @@
   <main class="main-content-navbar-padding">
     <div class="login-bg">
       <div class="login-card">
-        <!-- ...contenido login... -->
+        <div class="login-success-logo" style="display: flex; margin-bottom: 1.5rem;">
+          <img src="../assets/img/LACS-V.png" alt="LACS Logo" style="max-width: 100px; width: 40vw; min-width: 80px; display: block; margin: 0 auto;">
+        </div>
+        <form class="login-form" autocomplete="off">
+          <div class="login-header">
+            <h2>¡Bienvenido!</h2>
+            <p>Accede a tu cuenta</p>
+          </div>
+          <div class="login-field">
+            <span class="login-icon"><i class="bi bi-person"></i></span>
+            <div class="login-input-group" style="flex:1;">
+              <input type="text" id="usuario" name="usuario" required placeholder=" " autocomplete="username">
+              <label for="usuario" class="login-label">Usuario</label>
+            </div>
+          </div>
+          <div class="login-field">
+            <span class="login-icon"><i class="bi bi-lock"></i></span>
+            <div class="login-input-group" style="flex:1;">
+              <input type="password" id="password" name="password" required placeholder=" " autocomplete="current-password">
+              <label for="password" class="login-label">Contraseña</label>
+            </div>
+          </div>
+          <button type="submit" class="login-btn">Iniciar sesión</button>
+          <div style="text-align:center; margin-top:0.7rem;">
+            <a href="#" class="login-forgot-link" id="forgot-password-link">¿Olvidaste tu contraseña?</a>
+      <!-- Modal para recuperación de contraseña -->
+      <div class="modal" id="modal-forgot-password">
+        <div class="modal-content forgot-modal-content">
+          <button class="close-modal" id="close-forgot-modal" title="Cerrar">&times;</button>
+          <h3 class="forgot-modal-title">Recuperar contraseña</h3>
+          <form id="forgot-password-form" autocomplete="off">
+            <label for="forgot-email">Correo electrónico registrado</label>
+            <input type="email" id="forgot-email" name="email" required placeholder="correo@ejemplo.com" class="forgot-modal-input">
+            <button type="submit" class="login-btn forgot-modal-btn">Enviar enlace</button>
+            <div id="forgot-message" class="forgot-modal-message"></div>
+          </form>
+        </div>
+      </div>
+  <script>
+    // Modal recuperación de contraseña
+    const forgotLink = document.getElementById('forgot-password-link');
+    const forgotModal = document.getElementById('modal-forgot-password');
+    const closeForgot = document.getElementById('close-forgot-modal');
+    if (forgotLink && forgotModal && closeForgot) {
+      forgotLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        forgotModal.style.display = 'block';
+      });
+      closeForgot.addEventListener('click', function() {
+        forgotModal.style.display = 'none';
+      });
+      window.addEventListener('click', function(e) {
+        if (e.target === forgotModal) forgotModal.style.display = 'none';
+      });
+    }
+    // Aquí puedes agregar lógica para enviar el correo de recuperación
+    const forgotForm = document.getElementById('forgot-password-form');
+    const forgotMsg = document.getElementById('forgot-message');
+    if (forgotForm && forgotMsg) {
+      forgotForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        forgotMsg.textContent = 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.';
+        forgotMsg.style.color = '#1976d2';
+        // Aquí iría la llamada real al backend
+      });
+    }
+  </script>
+          </div>
+          <div id="login-message"></div>
+        </form>
       </div>
     </div>
   </main>
   <div id="footer"></div>
   <div id="navbar-mobile-placeholder"></div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="/public/js/gsap.js"></script>
-  <script src="/public/js/navbar-dropdown.js"></script>
-  <script src="/public/js/footer.js"></script>
+  <script src="../js/gsap.js"></script>
+  <script src="../js/navbar-dropdown.js"></script>
+  <script src="../js/footer.js"></script>
   <script>
     // Cargar navbar desktop
     fetch('./navbar.html')
