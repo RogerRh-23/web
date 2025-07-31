@@ -8,22 +8,37 @@
   <link rel="icon" type="image/png" href="/src/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <style>
-    @media (max-width: 991.98px) {
-      #footer { margin-bottom: 90px !important; }
-      .main-content-navbar-padding { padding-top: 0 !important; }
-    }
-    @media (min-width: 992px) {
-      .main-content-navbar-padding { padding-top: 70px; }
-    }
-  </style>
+  <!-- Los estilos específicos del formulario de contacto están en _contacto.scss -->
 </head>
 <body>
   <div id="navbar-placeholder"></div>
   <main class="main-content-navbar-padding">
     <section class="dynamic-section contacto-section">
       <div class="info-box">
-        <!-- Aquí se cargará toda la información dinámica de contacto -->
+        <form class="contact-form" autocomplete="off">
+          <label for="nombre">NOMBRE (REQUERIDO)</label>
+          <input type="text" id="nombre" name="nombre" required>
+
+          <label for="email">EMAIL (REQUERIDO)</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="telefono">TELÉFONO (REQUERIDO)</label>
+          <input type="tel" id="telefono" name="telefono" required>
+
+          <label for="asunto">ASUNTO</label>
+          <input type="text" id="asunto" name="asunto">
+
+          <label for="empresa">EMPRESA</label>
+          <input type="text" id="empresa" name="empresa">
+
+          <label for="mensaje">MENSAJE</label>
+          <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+
+        <button type="submit" class="btn-enviar-contacto">
+          <i class="bi bi-envelope-fill" style="margin-right:0.5em;"></i>Enviar mensaje
+        </button>
+        <div id="contacto-msg" style="margin-top:1.1rem;font-size:1.04rem;"></div>
+        </form>
       </div>
     </section>
   </main>
@@ -34,6 +49,53 @@
   <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/footer.js"></script>
   <script>
+    // Envío real del formulario de contacto
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('.contact-form');
+      const msg = document.getElementById('contacto-msg');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          msg.textContent = '';
+          const data = {
+            nombre: form.nombre.value.trim(),
+            email: form.email.value.trim(),
+            telefono: form.telefono.value.trim(),
+            asunto: form.asunto.value.trim(),
+            empresa: form.empresa.value.trim(),
+            mensaje: form.mensaje.value.trim()
+          };
+          // Validación básica
+          if (!data.nombre || !data.email || !data.telefono) {
+            msg.textContent = 'Por favor, completa todos los campos requeridos.';
+            msg.style.color = '#c00';
+            return;
+          }
+          form.querySelector('button[type="submit"]').disabled = true;
+          fetch('/api/contacto', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+          .then(res => {
+            if (!res.ok) throw new Error('Error en el envío');
+            return res.json();
+          })
+          .then(resp => {
+            msg.textContent = '¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.';
+            msg.style.color = '#1877f3';
+            form.reset();
+          })
+          .catch(() => {
+            msg.textContent = 'Ocurrió un error al enviar el mensaje. Intenta de nuevo más tarde.';
+            msg.style.color = '#c00';
+          })
+          .finally(() => {
+            form.querySelector('button[type="submit"]').disabled = false;
+          });
+        });
+      }
+    });
     // Cargar navbar desktop
     fetch('./navbar.html')
       .then(res => res.text())

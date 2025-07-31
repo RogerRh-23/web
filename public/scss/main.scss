@@ -1,3 +1,4 @@
+@import 'contacto';
 html, body {
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE y Edge Legacy */
@@ -80,6 +81,7 @@ img {
 @import 'certificacion-sistemas';
 @import 'reglamentos';
 @import 'dev-panel';
+@import 'contacto';
 
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */

@@ -68,6 +68,16 @@ window.initDropdowns = function initDropdowns() {
 console.log('[Dropdown] navbar-dropdown.js loaded');
   // Eliminar todos los dropdowns previos para evitar duplicados
   document.querySelectorAll('.dropdown-gsap-container').forEach(el => el.remove());
+
+  // Cerrar todos los dropdowns si se hace clic fuera de ellos o de cualquier nav-link (solo un listener global)
+  if (!window._dropdownsGlobalListener) {
+    document.addEventListener('mousedown', function(e) {
+      if (!e.target.closest('.dropdown-gsap-container') && !e.target.closest('.nav-link')) {
+        closeAllDropdownsGlobal();
+      }
+    });
+    window._dropdownsGlobalListener = true;
+  }
   // Utilidad para obtener el enlace de la navbar por texto (desktop)
   function getDropdownLink(label) {
     // Busca por atributo data-dropdown para ser robusto ante iconos o formato
@@ -138,12 +148,7 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
   }
   window.addEventListener('scroll', closeAllDropdownsGlobal);
   window.addEventListener('resize', closeAllDropdownsGlobal);
-  document.addEventListener('mousedown', function(e) {
-    // Si el clic no es sobre un dropdown ni sobre un nav-link, cierra todos
-    if (!e.target.closest('.dropdown-gsap-container') && !e.target.closest('.nav-link')) {
-      closeAllDropdownsGlobal();
-    }
-  });
+  // (Eliminado: duplicado innecesario de event listener para cerrar dropdowns)
 
   dropdowns.forEach(drop => {
     // Desktop
@@ -151,6 +156,7 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
     if (navItem) {
       let dropdownContainer = document.createElement('div');
       dropdownContainer.className = 'dropdown-gsap-container';
+      // Expone la instancia de control para sincronizar 'open' al cerrar
       let dropdown = document.createElement('ul');
       dropdown.className = 'dropdown-gsap';
       dropdown.innerHTML = drop.items.map(item => {
@@ -214,12 +220,37 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
       let hoverTimeout;
       const CLOSE_DELAY = 50;
 
+      // Expone la instancia de control para sincronizar 'open' al cerrar
+      dropdownContainer._dropdownInstance = { closeDropdown: () => { if (open) closeDropdown(); } };
+
       navItem.addEventListener('click', function(e) {
         e.preventDefault();
-        if (!open) {
-          showDropdown();
-        } else {
+        // Si ya está abierto, ciérralo
+        if (open) {
           closeDropdown();
+        } else {
+          // Cierra todos los demás dropdowns antes de abrir este, usando la instancia para actualizar 'open'
+          document.querySelectorAll('.dropdown-gsap-container').forEach(el => {
+            if (el !== dropdownContainer && el.style.display === 'block') {
+              if (el._dropdownInstance && typeof el._dropdownInstance.closeDropdown === 'function') {
+                el._dropdownInstance.closeDropdown();
+              } else {
+                gsap.to(el, {
+                  x: -40,
+                  opacity: 0,
+                  rotateY: -70,
+                  height: 0,
+                  duration: 0.32,
+                  ease: 'power2.in',
+                  transformOrigin: 'left center',
+                  onComplete: () => {
+                    el.style.display = 'none';
+                  }
+                });
+              }
+            }
+          });
+          showDropdown();
         }
       });
       dropdownContainer.addEventListener('mouseenter', () => {
@@ -244,9 +275,11 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
           dropdownContainer.style.position = 'fixed';
           dropdownContainer.style.minWidth = rect.width + 'px';
           dropdownContainer.style.zIndex = '99999';
-          dropdownContainer.style.background = '#fff';
-          dropdownContainer.style.boxShadow = '0 8px 24px rgba(0,0,0,0.18)';
-          dropdownContainer.style.border = 'none';
+          // Eliminar cualquier override de background, border, border-radius
+          dropdownContainer.style.background = '';
+          dropdownContainer.style.boxShadow = '';
+          dropdownContainer.style.border = '';
+          dropdownContainer.style.borderRadius = '';
           // Forzar reflow para obtener altura
           dropdownContainer.offsetHeight;
           let margin = 6;
@@ -335,6 +368,11 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
           mobileDropdownContainer.style.top = top + 'px';
           mobileDropdownContainer.style.minWidth = rect.width + 'px';
           mobileDropdownContainer.style.zIndex = '99999';
+          // Eliminar cualquier override de background, border, border-radius
+          mobileDropdownContainer.style.background = '';
+          mobileDropdownContainer.style.boxShadow = '';
+          mobileDropdownContainer.style.border = '';
+          mobileDropdownContainer.style.borderRadius = '';
           mobileDropdownContainer.style.display = 'block';
           mobileDropdownContainer.style.visibility = 'visible';
           gsap.set(mobileDropdownContainer, { y: 0, opacity: 0 });
