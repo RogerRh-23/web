@@ -19,7 +19,7 @@
   margin: 0;
   padding: 0.5rem 0;
   background: $color-white;
-  border-radius: 1.2rem;
+  border-radius: 1.2rem !important; // Refuerzo para evitar que JS/GSAP lo sobrescriba
   box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
   min-width: 180px;
   max-width: 260px;
@@ -66,7 +66,7 @@
   position: fixed;
   pointer-events: none;
   box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
-  border-radius: 1.2rem;
+  border-radius: 1.2rem !important; // Refuerzo para evitar que JS/GSAP lo sobrescriba
   background: $color-white;
   min-width: 180px;
   max-width: 260px;
