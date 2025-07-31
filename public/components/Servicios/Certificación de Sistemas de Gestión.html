@@ -99,62 +99,90 @@
   </div>
 <div id="footer"></div>
 <script>
-function loadNavbar() {
-  const isMobile = window.innerWidth < 992;
-  const navbarPlaceholder = document.getElementById('navbar-placeholder');
-  const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
-  if (isMobile) {
-    if (navbarPlaceholder) navbarPlaceholder.innerHTML = '';
-    fetch('../../components/navbar-mobile.html')
-      .then(res => res.text())
-      .then(html => {
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
-        navbarMobilePlaceholder.innerHTML = html;
-        const navMobile = navbarMobilePlaceholder.firstElementChild;
-        if (navMobile) {
-          navMobile.classList.remove('fixed-top');
-          navMobile.classList.add('fixed-bottom');
-          navMobile.style.top = 'auto';
-          navMobile.style.bottom = '0';
-          navMobile.style.width = '100%';
-          navMobile.style.zIndex = '1050';
-        }
-        loadNavbarDropdownScript();
-      });
-  } else {
-    if (navbarMobilePlaceholder) navbarMobilePlaceholder.innerHTML = '';
-    fetch('../../components/navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
-        navbarPlaceholder.innerHTML = html;
-        loadNavbarDropdownScript();
-      });
-  }
-}
-function loadNavbarDropdownScript() {
-  document.querySelectorAll('script').forEach(function(s) {
-    if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
-  });
-  var script = document.createElement('script');
-  script.src = '../../js/navbar-dropdown.js?v=' + Date.now();
-  script.onload = function() {
-    if (typeof initDropdowns === 'function') {
-      try { initDropdowns(); } catch(e) { console.error('Error al ejecutar initDropdowns:', e); }
+    // Función para cargar scripts externos dinámicamente y ejecutar callback al terminar
+    function loadExternalScript(src, callback) {
+      var script = document.createElement('script');
+      script.src = src;
+      script.async = false;
+      script.onload = function() {
+        if (typeof callback === 'function') callback();
+      };
+      document.body.appendChild(script);
     }
-  };
-  document.body.appendChild(script);
-}
-window.addEventListener('resize', loadNavbar);
-window.addEventListener('DOMContentLoaded', loadNavbar);
-// Footer
-fetch('../../components/footer.html')
-  .then(res => res.text())
-  .then(html => {
-    html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../../assets/img/');
-    document.getElementById('footer').innerHTML = html;
-  });
-</script>
+
+    // Navbar Desktop y Mobile: unificar carga y inicialización
+    function loadNavbar(type) {
+      const url = type === 'mobile' ? '../navbar-mobile.html' : '../navbar.html';
+      fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
+          const containerId = type === 'mobile' ? 'navbar-mobile-placeholder' : 'navbar-container';
+          document.getElementById(containerId).innerHTML = html;
+          // Corrige los enlaces de la navbar para evitar rutas duplicadas
+          const navbarLinks = document.querySelectorAll(`#${containerId} a`);
+          navbarLinks.forEach(link => {
+            if (link.href.includes('/components/components/')) {
+              link.href = link.href.replace('/components/components/', '/components/');
+            }
+          });
+          if (type === 'mobile') {
+            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
+            if (navMobile) {
+              navMobile.classList.remove('fixed-top');
+              navMobile.classList.add('fixed-bottom');
+              navMobile.style.top = 'auto';
+              navMobile.style.bottom = '0';
+              navMobile.style.width = '100%';
+              navMobile.style.zIndex = '1050';
+            }
+          }
+          // Inicializar dropdowns solo después de cargar el script (una sola vez)
+          if (!window._navbarDropdownLoaded) {
+            window._navbarDropdownLoaded = true;
+            loadExternalScript('../../js/navbar-dropdown.js', function() {
+              if (typeof window.initDropdowns === 'function') window.initDropdowns();
+            });
+          } else {
+            if (typeof window.initDropdowns === 'function') window.initDropdowns();
+          }
+        });
+    }
+
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    window.addEventListener('resize', function() {
+      if (isMobile()) loadNavbar('mobile');
+      else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
+    });
+    window.addEventListener('DOMContentLoaded', function() {
+      if (isMobile()) loadNavbar('mobile');
+      else loadNavbar('desktop');
+    });
+
+    // Footer
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
+        document.getElementById('footer').innerHTML = html;
+        // Corrige los enlaces del footer para evitar rutas duplicadas
+        const footerLinks = document.querySelectorAll('#footer a');
+        footerLinks.forEach(link => {
+          if (link.href.includes('/components/components/')) {
+            link.href = link.href.replace('/components/components/', '/components/');
+          }
+        });
+        // Cargar script y luego inicializar footer
+        loadExternalScript('../../js/footer.js', function() {
+          if (typeof window.initFooter === 'function') window.initFooter();
+        });
+      });
+
+    // Cargar GSAP solo una vez (si lo necesitas en la página)
+    loadExternalScript('../../js/gsap.js');
+  </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
 <script src="../../js/carousel-gsap.js"></script>

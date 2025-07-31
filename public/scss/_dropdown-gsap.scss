@@ -2,7 +2,16 @@
 .dropdown-gsap-container {
   z-index: 9999;
   position: fixed;
-  pointer-events: auto;
+  pointer-events: none;
+  display: none;
+  /* Más separación desde la navbar */
+  &.dropdown-gsap-container {
+    margin-top: 18px;
+  }
+}
+.dropdown-gsap-container[style*="display: block"] {
+  pointer-events: auto !important;
+  display: block !important;
 }
 
 .dropdown-gsap {
@@ -10,7 +19,7 @@
   margin: 0;
   padding: 0.5rem 0;
   background: $color-white;
-  border-radius: 0.7rem;
+  border-radius: 1.2rem;
   box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
   min-width: 180px;
   max-width: 260px;
@@ -51,20 +60,25 @@
 }
 
 // Estilos y animación para dropdowns en mobile
+// Dropdown mobile: oculto por defecto, visible solo cuando se muestra
 .dropdown-gsap-mobile {
   z-index: 9999;
   position: fixed;
-  pointer-events: auto;
+  pointer-events: none;
   box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
-  border-radius: 0.7rem;
+  border-radius: 1.2rem;
   background: $color-white;
   min-width: 180px;
   max-width: 260px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0.2rem;
   will-change: opacity, transform, height;
   transition: opacity 0.32s, transform 0.32s;
+}
+.dropdown-gsap-mobile[style*="display: block"] {
+  display: flex !important;
+  pointer-events: auto !important;
 }
 
 .dropdown-gsap-container,

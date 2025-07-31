@@ -1,7 +1,7 @@
 // footer.js
 // Acordeón para las opciones del footer en mobile
 
-document.addEventListener('DOMContentLoaded', function() {
+window.initFooter = function initFooter() {
   function isMobileFooter() {
     return window.innerWidth <= 575;
   }
@@ -28,4 +28,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Inicializar acordeón en load y en resize
   setupFooterAccordion();
   window.addEventListener('resize', setupFooterAccordion);
-});
+};
+
+// Inicializar automáticamente si el footer ya está en el DOM
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(function() {
+    if (document.getElementById('footer')) window.initFooter();
+  }, 100);
+} else {
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('footer')) window.initFooter();
+  });
+}

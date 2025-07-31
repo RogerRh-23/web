@@ -58,14 +58,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Certificados</title>
-  <link rel="stylesheet" href="../styles/main.css">
-  <link rel="icon" type="image/png" href="../assets/img/LACS-V.png">
+  <link rel="stylesheet" href="/public/styles/main.css">
+  <link rel="icon" type="image/png" href="/public/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
   <div id="navbar-placeholder"></div>
-  <div id="navbar-mobile-placeholder"></div>
   <main class="main-content-navbar-padding">
     <section class="dynamic-section certificados-section">
       <form class="certificados-search-form" autocomplete="off" style="margin-bottom: 2rem;">
@@ -77,7 +76,7 @@
           <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
       </form>
-      <div class="admin-certificados-actions" style="margin-bottom:2rem; display:flex; gap:1rem;">
+      <div class="admin-certificados-actions" style="margin-bottom:2rem; display:flex; gap:1rem;"></div>
       <div class="info-box">
         <!-- Vista cliente: información del certificado -->
         <div class="certificado-info">
@@ -98,75 +97,35 @@
     </section>
   </main>
   <div id="footer"></div>
-  <!-- GSAP Core y Plugins -->
+  <div id="navbar-mobile-placeholder"></div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CSSRulePlugin.min.js"></script>
-  <!-- JS principales del proyecto (ajusta solo si existen en tu estructura) -->
   <script src="../js/gsap.js"></script>
-  <!-- navbar-dropdown.js se carga al final del body para asegurar que la navbar ya está en el DOM -->
+  <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/certificados-cliente.js"></script>
   <script src="../js/certificados-admin.js"></script>
+  <script src="../js/footer.js"></script>
   <script>
-  // Navbar dinámica (desktop o mobile)
-  function loadNavbar() {
-    const isMobile = window.innerWidth < 992;
-    const navbarPlaceholder = document.getElementById('navbar-placeholder');
-    const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
-    if (isMobile) {
-      if (navbarPlaceholder) navbarPlaceholder.innerHTML = '';
-      fetch('navbar-mobile.html')
-        .then(res => res.text())
-        .then(html => {
-          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-          navbarMobilePlaceholder.innerHTML = html;
-          const navMobile = navbarMobilePlaceholder.firstElementChild;
-          if (navMobile) {
-            navMobile.classList.remove('fixed-top');
-            navMobile.classList.add('fixed-bottom');
-            navMobile.style.top = 'auto';
-            navMobile.style.bottom = '0';
-            navMobile.style.width = '100%';
-            navMobile.style.zIndex = '1050';
-          }
-          loadNavbarDropdownScript();
-        });
-    } else {
-      if (navbarMobilePlaceholder) navbarMobilePlaceholder.innerHTML = '';
-      fetch('navbar.html')
-        .then(res => res.text())
-        .then(html => {
-          html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-          navbarPlaceholder.innerHTML = html;
-          loadNavbarDropdownScript();
-        });
-    }
-  }
-  // Carga dinámica del script navbar-dropdown.js después de insertar la navbar
-  function loadNavbarDropdownScript() {
-    // Elimina cualquier script previo de navbar-dropdown.js
-    document.querySelectorAll('script').forEach(function(s) {
-      if (s.src && s.src.includes('navbar-dropdown.js')) s.remove();
-    });
-    var script = document.createElement('script');
-    script.src = '../js/navbar-dropdown.js?v=' + Date.now();
-    script.onload = function() {
-      if (typeof initDropdowns === 'function') {
-        try { initDropdowns(); } catch(e) { console.error('Error al ejecutar initDropdowns:', e); }
-      }
-    };
-    document.body.appendChild(script);
-  }
-  window.addEventListener('resize', loadNavbar);
-  window.addEventListener('DOMContentLoaded', loadNavbar);
-  // ...existing code...
-  // Footer
-  fetch('footer.html')
-    .then(res => res.text())
-    .then(html => {
-      html = html.replace(/src=["']\.\/assets\/img\//g, 'src="../assets/img/');
-      document.getElementById('footer').innerHTML = html;
-    });
+    // Cargar navbar desktop
+    fetch('./navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-placeholder').innerHTML = html;
+        window.initDropdowns && window.initDropdowns();
+      });
+    // Cargar navbar mobile
+    fetch('./navbar-mobile.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+        window.initDropdowns && window.initDropdowns();
+      });
+    // Cargar footer
+    fetch('./footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+        window.initFooter && window.initFooter();
+      });
   </script>
 
   <style>
@@ -178,7 +137,6 @@
       .main-content-navbar-padding { padding-top: 70px; }
     }
 </style>
-<script src="../js/footer.js"></script>
 
 </body>
 </html>

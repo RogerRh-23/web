@@ -1,12 +1,80 @@
-function initDropdowns() {
-  // Utilidad para obtener el enlace de la navbar por texto (desktop)
-  function getDropdownLink(texto) {
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    for (let link of navLinks) {
-      if (link.textContent.trim().includes(texto)) {
-        link.setAttribute('href', 'javascript:void(0)');
-        return link;
+// Mostrar enlace a dev-panel en navbar móvil solo si el usuario es dev o admin
+function showDevPanelLinkMobileIfAuthorized() {
+  const devLinkId = 'dev-panel-link-mobile';
+  let devLink = document.getElementById(devLinkId);
+  if (!devLink) {
+    // Insertar el enlace al final de la navbar móvil solo si no existe
+    const nav = document.querySelector('.navbar-mobile ul');
+    if (nav) {
+      devLink = document.createElement('li');
+      devLink.className = 'nav-item';
+      devLink.id = devLinkId;
+      devLink.innerHTML = '<a class="nav-link" href="/public/components/dev-panel.html"><i class="bi bi-tools"></i> Panel Dev</a>';
+      nav.appendChild(devLink);
+    }
+  }
+  // Por defecto oculto
+  if (devLink) devLink.style.display = 'none';
+  // Verificar token y rol
+  const token = localStorage.getItem('dev_token') || localStorage.getItem('admin_token');
+  if (!token) return;
+  fetch('/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+    .then(res => res.json())
+    .then(data => {
+      if (data && (data.role === 'dev' || data.role === 'admin')) {
+        if (devLink) devLink.style.display = '';
       }
+    })
+    .catch(() => {});
+}
+// Mostrar enlace a dev-panel solo si el usuario es dev o admin
+function showDevPanelLinkIfAuthorized() {
+  const devLinkId = 'dev-panel-link';
+  let devLink = document.getElementById(devLinkId);
+  if (!devLink) {
+    // Insertar el enlace al final de la navbar solo si no existe
+    const nav = document.querySelector('.navbar-nav');
+    if (nav) {
+      devLink = document.createElement('li');
+      devLink.className = 'nav-item';
+      devLink.id = devLinkId;
+      devLink.innerHTML = '<a class="nav-link" href="/public/components/dev-panel.html"><i class="bi bi-tools"></i> Panel Dev</a>';
+      nav.appendChild(devLink);
+    }
+  }
+  // Por defecto oculto
+  if (devLink) devLink.style.display = 'none';
+  // Verificar token y rol
+  const token = localStorage.getItem('dev_token') || localStorage.getItem('admin_token');
+  if (!token) return;
+  fetch('/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+    .then(res => res.json())
+    .then(data => {
+      if (data && (data.role === 'dev' || data.role === 'admin')) {
+        if (devLink) devLink.style.display = '';
+      }
+    })
+    .catch(() => {});
+}
+
+window.initDropdowns = function initDropdowns() {
+  showDevPanelLinkIfAuthorized();
+  showDevPanelLinkMobileIfAuthorized();
+  // Confirmación inmediata de disponibilidad
+  if (!window._initDropdownsDefined) {
+    window._initDropdownsDefined = true;
+    console.log('[Dropdown] window.initDropdowns is now defined');
+  }
+console.log('[Dropdown] navbar-dropdown.js loaded');
+  // Eliminar todos los dropdowns previos para evitar duplicados
+  document.querySelectorAll('.dropdown-gsap-container').forEach(el => el.remove());
+  // Utilidad para obtener el enlace de la navbar por texto (desktop)
+  function getDropdownLink(label) {
+    // Busca por atributo data-dropdown para ser robusto ante iconos o formato
+    const link = document.querySelector('.navbar-nav .nav-link[data-dropdown="' + label + '"]');
+    if (link) {
+      link.setAttribute('href', 'javascript:void(0)');
+      return link;
     }
     return null;
   }
@@ -86,21 +154,55 @@ function initDropdowns() {
       let dropdown = document.createElement('ul');
       dropdown.className = 'dropdown-gsap';
       dropdown.innerHTML = drop.items.map(item => {
-        let href = '';
         const currentPath = window.location.pathname;
-        if (currentPath.match(/\/components\//)) {
-          const depth = currentPath.split('/components/')[1].split('/').length - 1;
-          if (depth > 0) {
-            href = `../${item.path}`;
-          } else {
-            href = `${item.path}`;
-          }
-        } else {
+        let href = '';
+        if (currentPath.endsWith('index.html') || currentPath === '/' || currentPath === '/public/' || currentPath === '/public/index.html') {
           href = `./components/${item.path}`;
+        } else {
+          href = `${item.path}`;
         }
-        href = href.replace(/components\/components\//g, 'components/');
-        return `<li><a href="${href}">${item.name}</a></li>`;
+        return `<li><a href="${href}" class="dropdown-dynamic-link">${item.name}</a></li>`;
       }).join('');
+      // Agregar event listener a los enlaces del dropdown para carga dinámica
+      setTimeout(() => {
+        dropdown.querySelectorAll('.dropdown-dynamic-link').forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+              e.preventDefault();
+              fetch(href)
+                .then(res => res.text())
+                .then(html => {
+                  const dyn = document.getElementById('dynamic-content');
+                  const cards = document.getElementById('cards');
+                  const headImg = document.querySelector('.head-img-container');
+                  const hero = document.querySelector('.hero-reveal');
+                  if (cards) cards.style.display = 'none';
+                  if (headImg) headImg.style.display = 'none';
+                  if (hero) hero.style.display = 'none';
+                  if (dyn) {
+                    dyn.innerHTML = html;
+                    dyn.style.display = 'block';
+                    dyn.style.position = '';
+                    dyn.style.top = '';
+                    dyn.style.left = '';
+                    dyn.style.width = '';
+                    dyn.style.height = '';
+                    dyn.style.zIndex = '';
+                    dyn.style.pointerEvents = '';
+                    dyn.style.overflowY = '';
+                    let loginStyle = document.getElementById('login-style-dynamic');
+                    if (loginStyle) loginStyle.remove();
+                    const loginBg = dyn.querySelector('.login-bg');
+                    if (loginBg) {
+                      loginBg.removeAttribute('style');
+                    }
+                  }
+                });
+            }
+          });
+        });
+      }, 0);
       dropdownContainer.appendChild(dropdown);
       document.body.appendChild(dropdownContainer);
       gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
@@ -131,21 +233,28 @@ function initDropdowns() {
 
       function showDropdown() {
         if (!open) {
+          console.log('[Dropdown] showDropdown called for', drop.label);
           gsap.killTweensOf(dropdownContainer);
           open = true;
           dropdownContainer.dataset.open = 'true';
           const rect = navItem.getBoundingClientRect();
-          const navbar = document.querySelector('.navbar-custom');
-          let top = rect.bottom + 2;
-          if (navbar) {
-            const navbarRect = navbar.getBoundingClientRect();
-            top = navbarRect.bottom;
-          }
-          dropdownContainer.style.position = 'fixed';
-          dropdownContainer.style.left = rect.left + 'px';
-          dropdownContainer.style.top = top + 'px';
-          dropdownContainer.style.minWidth = rect.width + 'px';
+          // Desktop: desplegar hacia ABAJO de la navbar con margen
           dropdownContainer.style.display = 'block';
+          dropdownContainer.style.visibility = 'hidden';
+          dropdownContainer.style.position = 'fixed';
+          dropdownContainer.style.minWidth = rect.width + 'px';
+          dropdownContainer.style.zIndex = '99999';
+          dropdownContainer.style.background = '#fff';
+          dropdownContainer.style.boxShadow = '0 8px 24px rgba(0,0,0,0.18)';
+          dropdownContainer.style.border = 'none';
+          // Forzar reflow para obtener altura
+          dropdownContainer.offsetHeight;
+          let margin = 6;
+          let top = rect.bottom + margin;
+          let left = rect.left;
+          dropdownContainer.style.left = left + 'px';
+          dropdownContainer.style.top = top + 'px';
+          dropdownContainer.style.visibility = 'visible';
           gsap.set(dropdownContainer, { x: -40, opacity: 0, rotateY: -70, height: 0 });
           gsap.to(dropdownContainer, {
             x: 0,
@@ -216,22 +325,20 @@ function initDropdowns() {
         if (!mobileOpen) {
           mobileOpen = true;
           const rect = mobileIcon.getBoundingClientRect();
-          mobileDropdownContainer.style.position = 'fixed';
-          mobileDropdownContainer.style.left = rect.left + 'px';
+          // Mobile: desplegar hacia ARRIBA de la mobile-navbar
+          let dropdownHeight = mobileDropdownContainer.offsetHeight;
+          if (!dropdownHeight || dropdownHeight < 40) dropdownHeight = 120;
+          let top = rect.top + window.scrollY - dropdownHeight - 8;
+          let left = rect.left + window.scrollX;
+          mobileDropdownContainer.style.position = 'absolute';
+          mobileDropdownContainer.style.left = left + 'px';
+          mobileDropdownContainer.style.top = top + 'px';
+          mobileDropdownContainer.style.minWidth = rect.width + 'px';
           mobileDropdownContainer.style.zIndex = '99999';
-          mobileDropdownContainer.style.visibility = 'visible';
           mobileDropdownContainer.style.display = 'block';
-          setTimeout(() => {
-            let dropdownHeight = mobileDropdownContainer.offsetHeight;
-            if (!dropdownHeight || dropdownHeight < 40) dropdownHeight = 120;
-            mobileDropdownContainer.style.top = (rect.top - dropdownHeight - 8) + 'px';
-            mobileDropdownContainer.style.minWidth = rect.width + 'px';
-            gsap.fromTo(
-              mobileDropdownContainer,
-              { y: 60, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.10, ease: 'power2.out' }
-            );
-          }, 0);
+          mobileDropdownContainer.style.visibility = 'visible';
+          gsap.set(mobileDropdownContainer, { y: 0, opacity: 0 });
+          gsap.to(mobileDropdownContainer, { y: 0, opacity: 1, duration: 0.10, ease: 'power2.out' });
           setTimeout(() => {
             document.addEventListener('mousedown', handleOutsideClick);
           }, 0);
@@ -267,8 +374,14 @@ function initDropdowns() {
       });
     }
   });
+  // Si la navbar no está en el DOM, esperar y reintentar
+  const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+  if (!navLinks.length) {
+    // Asegura que la función siga expuesta aunque se retarde la inicialización
+    setTimeout(window.initDropdowns, 100);
+    return;
+  }
+  // ...resto de la lógica...
+  // ...estilos y animaciones en CSS/scss para .dropdown-gsap-container y .dropdown-gsap...
 }
-
-// Esperar a que la navbar esté en el DOM
-// La inicialización de los dropdowns se hace explícitamente tras cargar la navbar en cada HTML.
-// ...estilos y animaciones en CSS/scss para .dropdown-gsap-container y .dropdown-gsap...
+console.log('[Dropdown] navbar-dropdown.js loaded');
