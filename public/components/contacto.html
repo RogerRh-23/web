@@ -15,30 +15,37 @@
   <main class="main-content-navbar-padding">
     <section class="dynamic-section contacto-section">
       <div class="info-box">
-        <form class="contact-form" autocomplete="off">
-          <label for="nombre">NOMBRE (REQUERIDO)</label>
-          <input type="text" id="nombre" name="nombre" required>
+        <h1 class="contacto-title">Contacto</h1>
+        <p class="contacto-desc">Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
+        <div class="contacto-flex">
+          <form class="contact-form" autocomplete="off">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
 
-          <label for="email">EMAIL (REQUERIDO)</label>
-          <input type="email" id="email" name="email" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
 
-          <label for="telefono">TELÉFONO (REQUERIDO)</label>
-          <input type="tel" id="telefono" name="telefono" required>
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" required>
 
-          <label for="asunto">ASUNTO</label>
-          <input type="text" id="asunto" name="asunto">
+            <label for="asunto">Asunto</label>
+            <input type="text" id="asunto" name="asunto">
 
-          <label for="empresa">EMPRESA</label>
-          <input type="text" id="empresa" name="empresa">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" name="empresa">
 
-          <label for="mensaje">MENSAJE</label>
-          <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="4"></textarea>
 
-        <button type="submit" class="btn-enviar-contacto">
-          <i class="bi bi-envelope-fill" style="margin-right:0.5em;"></i>Enviar mensaje
-        </button>
-        <div id="contacto-msg" style="margin-top:1.1rem;font-size:1.04rem;"></div>
-        </form>
+            <button type="submit" class="btn-enviar-contacto">
+              <i class="bi bi-envelope-fill"></i>Enviar mensaje
+            </button>
+            <div id="contacto-msg"></div>
+          </form>
+          <div class="contacto-mapa">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d60198.526708976824!2d-99.245381!3d19.4379718!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8cacfed927d%3A0xe15def05386cd6d4!2sLatin%20American%20Certification%20%26%20Systems%2C%20A.C.!5e0!3m2!1ses-419!2smx!4v1754062096349!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
       </div>
     </section>
   </main>

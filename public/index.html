@@ -9,6 +9,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
+    /* Oculta la navbar por defecto, se muestra solo cuando .navbar-visible está en el body */
+    #navbar-placeholder { display: none; transition: opacity 0.3s; }
+    body.navbar-visible #navbar-placeholder { display: block; opacity: 1; }
+    body:not(.navbar-visible) #navbar-placeholder { opacity: 0; }
+  </style>
+  <style>
     @media (max-width: 991.98px) {
       #footer { margin-bottom: 90px !important; }
       .main-content-navbar-padding { padding-top: 0 !important; }
@@ -115,6 +121,26 @@
   <script src="./js/hero-reveal-fix.js"></script>
   <script src="./js/ema-gsap.js"></script>
   <script src="./js/lang-switcher.js"></script>
+  <script>
+    // Mostrar navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function() {
+      const hero = document.querySelector('.hero-reveal');
+      const body = document.body;
+      if (!hero) {
+        body.classList.add('navbar-visible');
+        return;
+      }
+      function updateNavbar(entries) {
+        if (!entries[0].isIntersecting) {
+          body.classList.add('navbar-visible');
+        } else {
+          body.classList.remove('navbar-visible');
+        }
+      }
+      const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
+      observer.observe(hero);
+    });
+  </script>  
   <script>
     // Cargar navbar desktop y asegurar inicialización de dropdowns
     function loadNavbarDesktop() {
