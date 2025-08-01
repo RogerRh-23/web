@@ -39,6 +39,7 @@
   box-sizing: border-box;
   padding-top: 2rem;
 }
+
 .ema-96-13, .ema-96-20, .ema-96-2IAF {
   background: $color-white;
   padding: 0.5rem 0.5rem;
@@ -99,3 +100,21 @@
   filter: none;
 }
 
+@media (max-width: 767.98px) {
+  .section-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .ema-96-13, .ema-96-20, .ema-96-2IAF {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+  .ema-logo {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 90px;
+  }
+}
