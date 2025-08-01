@@ -478,6 +478,21 @@ body {
   transition: opacity 0.5s;
 }
 
+.login-logo-img {
+  max-width: 100px;
+  width: 40vw;
+  min-width: 80px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease-in-out;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+  transform: scale(0.7);
+  animation: logoFadeIn 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  will-change: transform;
+}
+
 .modal#modal-forgot-password {
   display: none;
   position: fixed;
@@ -659,7 +674,7 @@ body {
   left: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
-  color: rgb(20, 50, 63);
+  color: #1976a5;
   font-size: 1.08rem;
   pointer-events: none;
   transition: 0.18s;
@@ -672,7 +687,7 @@ body {
   left: 0.6rem;
   font-size: 0.85rem;
   color: rgb(51, 145, 170);
-  background: #e1dfea;
+  background: transparent;
   padding: 0 0.2rem;
 }
 

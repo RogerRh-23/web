@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems</title>
-  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="../../styles/main.css">
   <link rel="icon" type="image/png" href="./assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -19,96 +19,44 @@
   </style>
 </head>
 <body>
+  <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
   <div class="info-box">
     <div class="section-content">
       <h1 class="section-title">Vigencia de la Certificación</h1>
       <!-- Aquí se cargará el contenido dinámico de la vigencia de la certificación -->
     </div>
   </div>
+  <div id="footer"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="../js/gsap.js"></script>
+  <script src="../js/navbar-dropdown.js"></script>
+  <script src="../js/certificados-cliente.js"></script>
+  <script src="../js/certificados-admin.js"></script>
+  <script src="../js/footer.js"></script>
   <script>
-    // Función para cargar scripts externos dinámicamente y ejecutar callback al terminar
-    function loadExternalScript(src, callback) {
-      var script = document.createElement('script');
-      script.src = src;
-      script.async = false;
-      script.onload = function() {
-        if (typeof callback === 'function') callback();
-      };
-      document.body.appendChild(script);
-    }
-
-    // Navbar Desktop y Mobile: unificar carga y inicialización
-    function loadNavbar(type) {
-      const url = type === 'mobile' ? '../navbar-mobile.html' : '../navbar.html';
-      fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
-          const containerId = type === 'mobile' ? 'navbar-mobile-placeholder' : 'navbar-container';
-          document.getElementById(containerId).innerHTML = html;
-          // Corrige los enlaces de la navbar para evitar rutas duplicadas
-          const navbarLinks = document.querySelectorAll(`#${containerId} a`);
-          navbarLinks.forEach(link => {
-            if (link.href.includes('/components/components/')) {
-              link.href = link.href.replace('/components/components/', '/components/');
-            }
-          });
-          if (type === 'mobile') {
-            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
-            if (navMobile) {
-              navMobile.classList.remove('fixed-top');
-              navMobile.classList.add('fixed-bottom');
-              navMobile.style.top = 'auto';
-              navMobile.style.bottom = '0';
-              navMobile.style.width = '100%';
-              navMobile.style.zIndex = '1050';
-            }
-          }
-          // Inicializar dropdowns solo después de cargar el script (una sola vez)
-          if (!window._navbarDropdownLoaded) {
-            window._navbarDropdownLoaded = true;
-            loadExternalScript('../../js/navbar-dropdown.js', function() {
-              if (typeof window.initDropdowns === 'function') window.initDropdowns();
-            });
-          } else {
-            if (typeof window.initDropdowns === 'function') window.initDropdowns();
-          }
-        });
-    }
-
-    function isMobile() {
-      return window.innerWidth < 992;
-    }
-    window.addEventListener('resize', function() {
-      if (isMobile()) loadNavbar('mobile');
-      else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
-    });
-    window.addEventListener('DOMContentLoaded', function() {
-      if (isMobile()) loadNavbar('mobile');
-      else loadNavbar('desktop');
-    });
-
-    // Footer
+    // Cargar navbar desktop
+    fetch('../navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-placeholder').innerHTML = html;
+        window.initDropdowns && window.initDropdowns();
+      });
+    // Cargar navbar mobile
+    fetch('../navbar-mobile.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+        window.initDropdowns && window.initDropdowns();
+      });
+    // Cargar footer
     fetch('../footer.html')
       .then(res => res.text())
       .then(html => {
-        html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
         document.getElementById('footer').innerHTML = html;
-        // Corrige los enlaces del footer para evitar rutas duplicadas
-        const footerLinks = document.querySelectorAll('#footer a');
-        footerLinks.forEach(link => {
-          if (link.href.includes('/components/components/')) {
-            link.href = link.href.replace('/components/components/', '/components/');
-          }
-        });
-        // Cargar script y luego inicializar footer
-        loadExternalScript('../../js/footer.js', function() {
-          if (typeof window.initFooter === 'function') window.initFooter();
-        });
+        window.initFooter && window.initFooter();
       });
-
-    // Cargar GSAP solo una vez (si lo necesitas en la página)
-    loadExternalScript('../../js/gsap.js');
   </script>
 </body>
 </html>

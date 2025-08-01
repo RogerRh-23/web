@@ -227,6 +227,45 @@
         document.getElementById('cards').innerHTML = html;
       });
 
+    // Función para mostrar/ocultar portada según navegación SPA o acceso directo
+    function showHomeSections(show) {
+      const cards = document.getElementById('cards');
+      const main = document.querySelector('main');
+      // Seleccionar solo los elementos dentro de main
+      const headImg = main ? main.querySelector('.head-img-container') : null;
+      const ema = main ? main.querySelector('#ema') : null;
+      const hero = document.querySelector('.hero-reveal');
+      if (cards) cards.style.setProperty('display', show ? '' : 'none', 'important');
+      if (headImg) headImg.style.setProperty('display', show ? '' : 'none', 'important');
+      if (hero) hero.style.setProperty('display', show ? '' : 'none', 'important');
+      if (ema) ema.style.setProperty('display', show ? '' : 'none', 'important');
+    }
+
+    // Oculta portada si no estamos en la home (acceso directo o recarga)
+    // Ejecutar inmediatamente para cubrir carga temprana
+    (function() {
+      const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html';
+      showHomeSections(isHome);
+    })();
+    document.addEventListener('DOMContentLoaded', function() {
+      const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html';
+      showHomeSections(isHome);
+    });
+
+    // Escucha eventos de navegación SPA (cuando se carga contenido dinámico)
+    window.addEventListener('show-home-sections', function(e) {
+      showHomeSections(true);
+      // Limpia el contenido dinámico
+      const dyn = document.getElementById('dynamic-content');
+      if (dyn) {
+        dyn.innerHTML = '';
+        dyn.style.display = 'none';
+      }
+    });
+    window.addEventListener('hide-home-sections', function(e) {
+      showHomeSections(false);
+    });
+
     // Cargar footer
     fetch('./components/footer.html')
       .then(res => res.text())

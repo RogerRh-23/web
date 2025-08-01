@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems</title>
-  <link rel="stylesheet" href="./styles/main.css">
-  <link rel="icon" type="image/png" href="./assets/img/LACS-V.png">
+  <link rel="stylesheet" href="../../styles/main.css">
+  <link rel="icon" type="image/png" href="../assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
@@ -19,7 +19,9 @@
   </style>
 </head>
 <body>
-  <div class="info-box">
+  <div id="navbar-placeholder"></div>
+  <main>
+    <div class="info-box">
     <div class="section-content">
       <h1 class="section-title">Capacitación</h1>
       <p class="info-card-text">
@@ -38,6 +40,39 @@
       <a href="#" class="btn btn-primary">Solicitar información</a>
     </div>
   </div>
+  </main>
+
+  <div id="footer"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="../js/gsap.js"></script>
+  <script src="../js/navbar-dropdown.js"></script>
+  <script src="../js/certificados-cliente.js"></script>
+  <script src="../js/certificados-admin.js"></script>
+  <script src="../js/footer.js"></script>
+  <script>
+    // Cargar navbar desktop
+    fetch('../navbar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-placeholder').innerHTML = html;
+        window.initDropdowns && window.initDropdowns();
+      });
+    // Cargar navbar mobile
+    fetch('../navbar-mobile.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
+        window.initDropdowns && window.initDropdowns();
+      });
+    // Cargar footer
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+        window.initFooter && window.initFooter();
+      });
+  </script>
 </body>
 </html>
   

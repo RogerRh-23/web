@@ -156,7 +156,6 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
     if (navItem) {
       let dropdownContainer = document.createElement('div');
       dropdownContainer.className = 'dropdown-gsap-container';
-      // Expone la instancia de control para sincronizar 'open' al cerrar
       let dropdown = document.createElement('ul');
       dropdown.className = 'dropdown-gsap';
       dropdown.innerHTML = drop.items.map(item => {
@@ -167,48 +166,8 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
         } else {
           href = `${item.path}`;
         }
-        return `<li><a href="${href}" class="dropdown-dynamic-link">${item.name}</a></li>`;
+        return `<li><a href="${href}">${item.name}</a></li>`;
       }).join('');
-      // Agregar event listener a los enlaces del dropdown para carga dinámica
-      setTimeout(() => {
-        dropdown.querySelectorAll('.dropdown-dynamic-link').forEach(link => {
-          link.addEventListener('click', function(e) {
-            const href = link.getAttribute('href');
-            if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
-              e.preventDefault();
-              fetch(href)
-                .then(res => res.text())
-                .then(html => {
-                  const dyn = document.getElementById('dynamic-content');
-                  const cards = document.getElementById('cards');
-                  const headImg = document.querySelector('.head-img-container');
-                  const hero = document.querySelector('.hero-reveal');
-                  if (cards) cards.style.display = 'none';
-                  if (headImg) headImg.style.display = 'none';
-                  if (hero) hero.style.display = 'none';
-                  if (dyn) {
-                    dyn.innerHTML = html;
-                    dyn.style.display = 'block';
-                    dyn.style.position = '';
-                    dyn.style.top = '';
-                    dyn.style.left = '';
-                    dyn.style.width = '';
-                    dyn.style.height = '';
-                    dyn.style.zIndex = '';
-                    dyn.style.pointerEvents = '';
-                    dyn.style.overflowY = '';
-                    let loginStyle = document.getElementById('login-style-dynamic');
-                    if (loginStyle) loginStyle.remove();
-                    const loginBg = dyn.querySelector('.login-bg');
-                    if (loginBg) {
-                      loginBg.removeAttribute('style');
-                    }
-                  }
-                });
-            }
-          });
-        });
-      }, 0);
       dropdownContainer.appendChild(dropdown);
       document.body.appendChild(dropdownContainer);
       gsap.set(dropdownContainer, { height: 0, opacity: 0, display: 'none' });
@@ -220,16 +179,13 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
       let hoverTimeout;
       const CLOSE_DELAY = 50;
 
-      // Expone la instancia de control para sincronizar 'open' al cerrar
       dropdownContainer._dropdownInstance = { closeDropdown: () => { if (open) closeDropdown(); } };
 
       navItem.addEventListener('click', function(e) {
         e.preventDefault();
-        // Si ya está abierto, ciérralo
         if (open) {
           closeDropdown();
         } else {
-          // Cierra todos los demás dropdowns antes de abrir este, usando la instancia para actualizar 'open'
           document.querySelectorAll('.dropdown-gsap-container').forEach(el => {
             if (el !== dropdownContainer && el.style.display === 'block') {
               if (el._dropdownInstance && typeof el._dropdownInstance.closeDropdown === 'function') {
@@ -264,23 +220,19 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
 
       function showDropdown() {
         if (!open) {
-          console.log('[Dropdown] showDropdown called for', drop.label);
           gsap.killTweensOf(dropdownContainer);
           open = true;
           dropdownContainer.dataset.open = 'true';
           const rect = navItem.getBoundingClientRect();
-          // Desktop: desplegar hacia ABAJO de la navbar con margen
           dropdownContainer.style.display = 'block';
           dropdownContainer.style.visibility = 'hidden';
           dropdownContainer.style.position = 'fixed';
           dropdownContainer.style.minWidth = rect.width + 'px';
           dropdownContainer.style.zIndex = '99999';
-          // Eliminar cualquier override de background, border, border-radius
           dropdownContainer.style.background = '';
           dropdownContainer.style.boxShadow = '';
           dropdownContainer.style.border = '';
           dropdownContainer.style.borderRadius = '';
-          // Forzar reflow para obtener altura
           dropdownContainer.offsetHeight;
           let margin = 6;
           let top = rect.bottom + margin;
@@ -327,7 +279,6 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
         }, CLOSE_DELAY);
       }
     }
-    // ...lógica eliminada para desktop, solo mobile permanece...
     // Mobile
     const mobileIcon = getMobileIcon(drop.label);
     if (mobileIcon) {
@@ -358,7 +309,6 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
         if (!mobileOpen) {
           mobileOpen = true;
           const rect = mobileIcon.getBoundingClientRect();
-          // Mobile: desplegar hacia ARRIBA de la mobile-navbar
           let dropdownHeight = mobileDropdownContainer.offsetHeight;
           if (!dropdownHeight || dropdownHeight < 40) dropdownHeight = 120;
           let top = rect.top + window.scrollY - dropdownHeight - 8;
@@ -368,7 +318,6 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
           mobileDropdownContainer.style.top = top + 'px';
           mobileDropdownContainer.style.minWidth = rect.width + 'px';
           mobileDropdownContainer.style.zIndex = '99999';
-          // Eliminar cualquier override de background, border, border-radius
           mobileDropdownContainer.style.background = '';
           mobileDropdownContainer.style.boxShadow = '';
           mobileDropdownContainer.style.border = '';
@@ -415,9 +364,19 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
   // Si la navbar no está en el DOM, esperar y reintentar
   const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
   if (!navLinks.length) {
-    // Asegura que la función siga expuesta aunque se retarde la inicialización
     setTimeout(window.initDropdowns, 100);
     return;
+  }
+
+  // SPA: Mostrar portada al volver a la home
+  const logo = document.querySelector('.navbar-brand, .navbar-mobile-brand');
+  if (logo) {
+    logo.addEventListener('click', function(e) {
+      // Si es SPA, muestra portada y limpia contenido dinámico
+      if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html') {
+        window.dispatchEvent(new CustomEvent('show-home-sections'));
+      }
+    });
   }
   // ...resto de la lógica...
   // ...estilos y animaciones en CSS/scss para .dropdown-gsap-container y .dropdown-gsap...

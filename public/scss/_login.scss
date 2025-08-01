@@ -1,3 +1,18 @@
+// Logo principal en login
+.login-logo-img {
+  max-width: 100px;
+  width: 40vw;
+  min-width: 80px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 100%;
+  box-shadow: $shadow-4layer;
+  transition: transform 0.3s ease-in-out;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));
+  transform: scale(0.7);
+  animation: logoFadeIn 0.7s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+  will-change: transform;
+}
 // Modal recuperación de contraseña
 .modal#modal-forgot-password {
   display: none;
@@ -158,7 +173,7 @@
   left: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
-  color: $pantone-b7693u;
+  color: $color-label;
   font-size: 1.08rem;
   pointer-events: none;
   transition: 0.18s;
@@ -170,7 +185,7 @@
   left: 0.6rem;
   font-size: 0.85rem;
   color: $pantone-p120-5u;
-  background: $color-white;
+  background: transparent;
   padding: 0 0.2rem;
 }
 .login-input-group input {
