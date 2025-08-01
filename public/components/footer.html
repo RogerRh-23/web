@@ -6,22 +6,28 @@
         <img src="/public/assets/img/LACS-Footer.png" alt="LACS Logo" class="footer-logo" />
         <ul class="footer-social">
           <li class="icon facebook" data-tooltip="Facebook">
-            <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" aria-label="Facebook" class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" aria-label="Facebook"
+              class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></i></a>
           </li>
           <li class="icon instagram" data-tooltip="Instagram">
-            <a href="https://www.instagram.com/lacs.mx/#" target="_blank" aria-label="Instagram" class="footer-social-link"><i class="fa-brands fa-instagram"></i></i></a>
+            <a href="https://www.instagram.com/lacs.mx/#" target="_blank" aria-label="Instagram"
+              class="footer-social-link"><i class="fa-brands fa-instagram"></i></i></a>
           </li>
           <li class="icon linkedin" data-tooltip="LinkedIn">
-            <a href="https://www.linkedin.com/company/latin-american-certification-systems" target="_blank" aria-label="LinkedIn" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></i></a>
+            <a href="https://www.linkedin.com/company/latin-american-certification-systems" target="_blank"
+              aria-label="LinkedIn" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></i></a>
           </li>
           <li class="icon tiktok" data-tooltip="TikTok">
-            <a href="https://www.tiktok.com/@lacs_mx" target="_blank" aria-label="TikTok" class="footer-social-link"><i class="fa-brands fa-tiktok"></i></i></a>
+            <a href="https://www.tiktok.com/@lacs_mx" target="_blank" aria-label="TikTok" class="footer-social-link"><i
+                class="fa-brands fa-tiktok"></i></i></a>
           </li>
           <li class="icon whatsapp" data-tooltip="WhatsApp">
-            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp" class="footer-social-link"><i class="fa-brands fa-whatsapp"></i></i></a>
+            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp" class="footer-social-link"><i
+                class="fa-brands fa-whatsapp"></i></i></a>
           </li>
           <li class="icon google-maps" data-tooltip="Google Maps">
-            <a href="https://maps.app.goo.gl/3KpCwUMfCdGTCgCE9" target="_blank" aria-label="Google Maps" class="footer-social-link"><i class="bi bi-geo-alt-fill"></i></a>
+            <a href="https://maps.app.goo.gl/3KpCwUMfCdGTCgCE9" target="_blank" aria-label="Google Maps"
+              class="footer-social-link"><i class="bi bi-geo-alt-fill"></i></a>
           </li>
         </ul>
       </div>
@@ -49,15 +55,19 @@
           <li><a href="/public/components/footer/Politicas.html">Política de Imparcialidad</a></li>
         </ul>
       </div>
-      <div class="footer-options-list">
+      <div class="footer-options-col">
         <h3>Contacto</h3>
-        <ul>
-          <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp" class="footer-contact-link">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp: <span style="font-weight:600;">+52 1 55 7047 2422</span>
-          </a>
-        </ul>
-        <ul>
-          <span><i class="fa-regular fa-envelope"></i> Correo: <span style="font-style:italic;">info@lacs.org.mx</span></span>
+        <ul class="footer-options-list">
+          <li>
+            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp: <span>+52 1 55 7047 2422</span>
+            </a>
+          </li>
+          <li>
+            <a href="/public/components/contacto.html">
+              <i class="fa-regular fa-envelope"></i> Correo: <span style="font-style:italic;">info@lacs.org.mx</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -68,7 +78,7 @@
 </footer>
 <script>
   // Actualiza el año automáticamente en el footer
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     var yearSpan = document.querySelector('.footer-copy span');
     if (yearSpan) {
       yearSpan.innerHTML = `&copy; ${new Date().getFullYear()} Latin America Certification & Systems. Todos los derechos reservados.`;

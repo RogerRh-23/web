@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +11,39 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     /* Oculta la navbar por defecto, se muestra solo cuando .navbar-visible está en el body */
-    #navbar-placeholder { display: none; transition: opacity 0.3s; }
-    body.navbar-visible #navbar-placeholder { display: block; opacity: 1; }
-    body:not(.navbar-visible) #navbar-placeholder { opacity: 0; }
+    #navbar-placeholder {
+      display: none;
+      transition: opacity 0.3s;
+    }
+
+    body.navbar-visible #navbar-placeholder {
+      display: block;
+      opacity: 1;
+    }
+
+    body:not(.navbar-visible) #navbar-placeholder {
+      opacity: 0;
+    }
   </style>
   <style>
     @media (max-width: 991.98px) {
-      #footer { margin-bottom: 90px !important; }
-      .main-content-navbar-padding { padding-top: 0 !important; }
+      #footer {
+        margin-bottom: 90px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
     }
+
     @media (min-width: 992px) {
-      .main-content-navbar-padding { padding-top: 70px; }
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Hero Reveal Overlay -->
@@ -43,8 +63,10 @@
       <img class="hero-logo-img" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
     </div>
     <button class="hero-reveal-arrow" id="hero-reveal-arrow" aria-label="Scroll">
-      <svg viewBox="0 0 24 24"><path d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z"/></svg>
-      <!-- Puedes agregar aquí un texto accesible traducible si lo deseas -->
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z" />
+      </svg>
     </button>
   </div>
 
@@ -69,7 +91,8 @@
                   <img src="./assets/img/96-13.png" alt="EMA 96-13" class="ema-logo" />
                 </button>
               </a>
-              <strong><span class="ema-text" data-i18n="ema.iso9001">Acreditación ISO 9001:2015 Sistemas de Gestion de Calidad</span></strong>
+              <strong><span class="ema-text" data-i18n="ema.iso9001">Acreditación ISO 9001:2015 Sistemas de Gestion de
+                  Calidad</span></strong>
             </div>
             <div class="ema-96-20">
               <a href="./assets/docs/ACREDITACION ISO 27001  17021-1.pdf" target="_blank" rel="noopener">
@@ -77,7 +100,8 @@
                   <img src="./assets/img/96_20.png" alt="EMA 96-20" class="ema-logo" />
                 </button>
               </a>
-              <strong><span class="ema-text" data-i18n="ema.iso27001">Acreditación ISO 27001:2013 Sistemas de Gestión de Seguridad de la Información</span></strong>
+              <strong><span class="ema-text" data-i18n="ema.iso27001">Acreditación ISO 27001:2013 Sistemas de Gestión de
+                  Seguridad de la Información</span></strong>
             </div>
             <div class="ema-96-2IAF">
               <a href="./assets/docs/ACREDITACION ISO 37001.pdf" target="_blank" rel="noopener">
@@ -85,7 +109,8 @@
                   <img src="./assets/img/96_20IAF.png" alt="EMA 96-20IAF" class="ema-logo" />
                 </button>
               </a>
-              <strong><span class="ema-text" data-i18n="ema.iso37001">Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno</span></strong>
+              <strong><span class="ema-text" data-i18n="ema.iso37001">Acreditación ISO 37001:2016 Sistemas de Gestión
+                  Antisoborno</span></strong>
             </div>
           </div>
         </section>
@@ -123,7 +148,7 @@
   <script src="./js/lang-switcher.js"></script>
   <script>
     // Mostrar navbar solo cuando el hero no es visible
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const hero = document.querySelector('.hero-reveal');
       const body = document.body;
       if (!hero) {
@@ -140,7 +165,7 @@
       const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
       observer.observe(hero);
     });
-  </script>  
+  </script>
   <script>
     // Cargar navbar desktop y asegurar inicialización de dropdowns
     function loadNavbarDesktop() {
@@ -152,7 +177,7 @@
           if (!window._dropdownScriptLoaded) {
             const script = document.createElement('script');
             script.src = './js/navbar-dropdown.js';
-            script.onload = function() {
+            script.onload = function () {
               window._dropdownScriptLoaded = true;
               if (typeof window.initDropdowns === 'function') {
                 console.log('[Dropdown] initDropdowns found after script load (desktop)');
@@ -161,7 +186,7 @@
                 console.error('[Dropdown] initDropdowns NOT found after script load (desktop)');
               }
             };
-            script.onerror = function() {
+            script.onerror = function () {
               console.error('[Dropdown] Error loading navbar-dropdown.js (desktop)');
             };
             document.body.appendChild(script);
@@ -198,7 +223,7 @@
             } else {
               const script = document.createElement('script');
               script.src = './js/navbar-dropdown.js';
-              script.onload = function() {
+              script.onload = function () {
                 window._dropdownScriptLoaded = true;
                 if (typeof window.initDropdowns === 'function') {
                   console.log('[Dropdown] initDropdowns found after script load (mobile)');
@@ -207,7 +232,7 @@
                   console.error('[Dropdown] initDropdowns NOT found after script load (mobile)');
                 }
               };
-              script.onerror = function() {
+              script.onerror = function () {
                 console.error('[Dropdown] Error loading navbar-dropdown.js (mobile)');
               };
               document.body.appendChild(script);
@@ -227,7 +252,7 @@
           }, 300);
         } else {
           hideNavbarMobile();
-          const observer = new IntersectionObserver(function(entries) {
+          const observer = new IntersectionObserver(function (entries) {
             if (!entries[0].isIntersecting) {
               showNavbarMobile();
               setTimeout(() => {
@@ -269,17 +294,17 @@
 
     // Oculta portada si no estamos en la home (acceso directo o recarga)
     // Ejecutar inmediatamente para cubrir carga temprana
-    (function() {
+    (function () {
       const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html';
       showHomeSections(isHome);
     })();
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html';
       showHomeSections(isHome);
     });
 
     // Escucha eventos de navegación SPA (cuando se carga contenido dinámico)
-    window.addEventListener('show-home-sections', function(e) {
+    window.addEventListener('show-home-sections', function (e) {
       showHomeSections(true);
       // Limpia el contenido dinámico
       const dyn = document.getElementById('dynamic-content');
@@ -288,7 +313,7 @@
         dyn.style.display = 'none';
       }
     });
-    window.addEventListener('hide-home-sections', function(e) {
+    window.addEventListener('hide-home-sections', function (e) {
       showHomeSections(false);
     });
 
@@ -302,14 +327,15 @@
   </script>
   <script type="text/javascript">
 
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-}
-</script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+  </script>
   <!-- navbar-dropdown.js se importa dinámicamente después de cargar la navbar -->
   <script src="./js/footer.js"></script>
   <script src="./js/main.js"></script>
   <script src="./js/cards-anim.js"></script>
   <script src="./js/valores-toggle.js"></script>
 </body>
+
 </html>

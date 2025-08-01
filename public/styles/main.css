@@ -957,12 +957,14 @@ body {
   flex-direction: column;
   align-items: flex-start;
   min-width: 180px;
+  text-align: left;
 }
 
 .footer-options-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  text-align: left;
 }
 
 .footer-options-list li {
@@ -997,6 +999,9 @@ body {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  text-align: left;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
   width: 100%;
   gap: 2.5rem;
 }
@@ -1214,6 +1219,9 @@ body {
     border-right: none;
     padding-bottom: 0.4rem;
     padding-top: 0.4rem;
+    text-align: center;
+  }
+  .footer-options-list {
     text-align: center;
   }
   .footer-options-col:last-child {
