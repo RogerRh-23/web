@@ -1,0 +1,189 @@
+// Fondo y capas principales para el diagrama interactivo v4
+.proceso-bg-v4 {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100%;
+  background: #f6f8fc;
+  z-index: 0;
+}
+.proceso-main-v4 {
+  position: relative;
+  margin: 0 auto;
+  max-width: 900px;
+  min-height: 100vh;
+  z-index: 1;
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 2rem;
+}
+.proceso-title-v4 {
+  position: relative;
+  z-index: 3;
+  background: transparent;
+  padding: 0 0 0.5rem 0;
+  text-align: center;
+}
+.proceso-arrows-layer-v4 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+.proceso-diagrama-steps-v4 {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  position: relative;
+  z-index: 3;
+}
+.proceso-step-v4 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 160px;
+  position: relative;
+  z-index: 4;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 18px 0 rgba(24,119,243,0.13);
+  padding: 1.5rem 2.5rem;
+  width: 100%;
+  transition: box-shadow 0.2s;
+}
+.proceso-step-v4.align-left { justify-content: flex-start; }
+.proceso-step-v4.align-right { justify-content: flex-end; }
+.proceso-step-v4.align-center { justify-content: center; }
+.proceso-step-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #0a58ca;
+  color: #fff;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px #e7f0fa;
+  font-weight: bold;
+  margin-right: 1.2rem;
+  margin-left: 0;
+  flex-shrink: 0;
+}
+.proceso-step-v4.align-right .proceso-step-circle {
+  margin-left: 1.2rem;
+  margin-right: 0;
+}
+.proceso-info-animada {
+  min-width: 220px;
+  max-width: 420px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  text-align: left;
+}
+.proceso-info-animada h3 { font-size: 1.15rem; margin-bottom: 0.7rem; color: #0a58ca; }
+.proceso-info-animada p { font-size: 1.01rem; color: #222; margin: 0; }
+.proceso-arrow-svg-v4 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  display: block;
+  overflow: visible;
+}
+// Título centrado para la sección de proceso de certificación
+.proceso-certificacion-title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2.5rem;
+}
+// Estilos para el diagrama interactivo de Proceso de Certificación
+#proceso-certificacion-diagrama {
+  width: 100%;
+  max-width: 900px;
+  margin: 1.2rem auto 1.2rem auto;
+  padding: 1rem 0.5rem;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+}
+.proceso-diagrama-steps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+.proceso-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  background: #f7fafd;
+  border-radius: 0.8rem;
+  box-shadow: 0 1px 6px 0 rgba(24,119,243,0.07);
+  padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+.proceso-step:hover {
+  box-shadow: 0 4px 18px 0 rgba(24,119,243,0.13);
+  transform: translateY(-4px) scale(1.025);
+  z-index: 2;
+}
+.proceso-step-circle {
+  min-width: 48px;
+  min-height: 48px;
+  max-width: 48px;
+  max-height: 48px;
+  border-radius: 50%;
+  background: #1877f3;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px 0 rgba(24,119,243,0.13);
+  margin-right: 0.5rem;
+}
+.proceso-step-content h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1877f3;
+  margin: 0 0 0.3rem 0;
+}
+.proceso-step-content p {
+  font-size: 1rem;
+  color: #222;
+  margin: 0;
+}
+.proceso-step-arrow {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 700px) {
+  #proceso-certificacion-diagrama {
+    padding: 0.5rem 0.2rem;
+  }
+  .proceso-step {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem;
+  }
+  .proceso-step-circle {
+    margin-bottom: 0.5rem;
+    margin-right: 0;
+  }
+}
