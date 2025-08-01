@@ -159,13 +159,8 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
       let dropdown = document.createElement('ul');
       dropdown.className = 'dropdown-gsap';
       dropdown.innerHTML = drop.items.map(item => {
-        const currentPath = window.location.pathname;
-        let href = '';
-        if (currentPath.endsWith('index.html') || currentPath === '/' || currentPath === '/public/' || currentPath === '/public/index.html') {
-          href = `./components/${item.path}`;
-        } else {
-          href = `${item.path}`;
-        }
+        // Siempre usar ruta absoluta desde /public/components/
+        const href = `/public/components/${item.path}`;
         return `<li><a href="${href}">${item.name}</a></li>`;
       }).join('');
       dropdownContainer.appendChild(dropdown);
@@ -287,13 +282,8 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
       let mobileDropdown = document.createElement('ul');
       mobileDropdown.className = 'dropdown-gsap';
       mobileDropdown.innerHTML = drop.items.map(item => {
-        let href = '';
-        const currentPath = window.location.pathname;
-        if (currentPath.match(/\/components\//)) {
-          href = `../components/${item.path}`;
-        } else {
-          href = `./components/${item.path}`;
-        }
+        // Siempre usar ruta absoluta desde /public/components/
+        const href = `/public/components/${item.path}`;
         return `<li><a href="${href}">${item.name}</a></li>`;
       }).join('');
       mobileDropdownContainer.appendChild(mobileDropdown);
@@ -378,7 +368,5 @@ console.log('[Dropdown] navbar-dropdown.js loaded');
       }
     });
   }
-  // ...resto de la lógica...
-  // ...estilos y animaciones en CSS/scss para .dropdown-gsap-container y .dropdown-gsap...
 }
 console.log('[Dropdown] navbar-dropdown.js loaded');
