@@ -1,6 +1,7 @@
 <!-- Página: Reglamentos -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,40 +12,51 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     @media (max-width: 991.98px) {
-      #footer { margin-bottom: 90px !important; }
-      .main-content-navbar-padding { padding-top: 0 !important; }
+      #footer {
+        margin-bottom: 90px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
     }
+
     @media (min-width: 992px) {
-      .main-content-navbar-padding { padding-top: 70px; }
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div id="navbar-container"></div>
   <div id="navbar-mobile-placeholder"></div>
   <div class="reglamentos-container">
-    <h1>Reglamentos</h1>
+    <h1 class="section-title">Reglamentos</h1>
     <div class="reglamento-section">
       <h2>Reglamento de uso de marca</h2>
-      <iframe src="../../assets/docs/RCTED-02 Reglamento de uso de marca para sistema de gestion certificado LACS ver 10.pdf" width="100%" height="600px"></iframe>
+      <iframe
+        src="../../assets/docs/RCTED-02 Reglamento de uso de marca para sistema de gestion certificado LACS ver 10.pdf"
+        width="100%" height="600px"></iframe>
     </div>
     <div class="reglamento-section">
       <h2>Reglamento de empresa certificada</h2>
-    </div>  
+    </div>
   </div>
 
   <div id="footer"></div>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="../../js/gsap.js"></script>
   <script src="../../js/navbar-dropdown.js"></script>
 
-<script>
+  <script>
     // Función para cargar scripts externos dinámicamente y ejecutar callback al terminar
     function loadExternalScript(src, callback) {
       var script = document.createElement('script');
       script.src = src;
       script.async = false;
-      script.onload = function() {
+      script.onload = function () {
         if (typeof callback === 'function') callback();
       };
       document.body.appendChild(script);
@@ -80,7 +92,7 @@
           // Inicializar dropdowns solo después de cargar el script (una sola vez)
           if (!window._navbarDropdownLoaded) {
             window._navbarDropdownLoaded = true;
-            loadExternalScript('../../js/navbar-dropdown.js', function() {
+            loadExternalScript('../../js/navbar-dropdown.js', function () {
               if (typeof window.initDropdowns === 'function') window.initDropdowns();
             });
           } else {
@@ -92,11 +104,11 @@
     function isMobile() {
       return window.innerWidth < 992;
     }
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       if (isMobile()) loadNavbar('mobile');
       else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
     });
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
       if (isMobile()) loadNavbar('mobile');
       else loadNavbar('desktop');
     });
@@ -115,7 +127,7 @@
           }
         });
         // Cargar script y luego inicializar footer
-        loadExternalScript('../../js/footer.js', function() {
+        loadExternalScript('../../js/footer.js', function () {
           if (typeof window.initFooter === 'function') window.initFooter();
         });
       });
@@ -124,4 +136,5 @@
     loadExternalScript('../../js/gsap.js');
   </script>
 </body>
+
 </html>

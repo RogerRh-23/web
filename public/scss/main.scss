@@ -1,7 +1,11 @@
 @import 'contacto';
-html, body {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE y Edge Legacy */
+
+html,
+body {
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE y Edge Legacy */
   overflow: auto !important;
 }
 
@@ -13,36 +17,50 @@ body::-webkit-scrollbar,
   display: none !important;
   background: transparent !important;
 }
+
 body {
   scrollbar-width: none; // Firefox
   -ms-overflow-style: none; // IE y Edge Legacy
 }
+
 body::-webkit-scrollbar {
   width: 0 !important;
   height: 0 !important;
   display: none !important;
   background: transparent !important;
 }
+
 body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera, Edge Chromium */
+  display: none;
+  /* Chrome, Safari, Opera, Edge Chromium */
 }
+
 body::-ms-scrollbar {
-  display: none; /* Edge Legacy */
+  display: none;
+  /* Edge Legacy */
 }
+
 body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
-html, body {
+
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100vw;
@@ -50,6 +68,7 @@ html, body {
   box-sizing: border-box;
   overflow-x: hidden;
 }
+
 // Archivo principal SCSS
 
 // Deshabilitar arrastre y clic derecho en todas las imágenes
@@ -62,6 +81,7 @@ img {
 img {
   -webkit-touch-callout: none;
 }
+
 @import 'variables';
 @import 'base';
 @import 'mixins';
@@ -85,7 +105,8 @@ img {
 @import 'proceso-certificacion';
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 // Evita overflow horizontal en elementos de ancho completo
@@ -109,6 +130,23 @@ body::-webkit-scrollbar {
   overflow-x: hidden;
   z-index: 0;
 }
+
+.news-container {
+  max-width: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+  padding: 0 2rem;
+  margin: 0 auto;
+
+  .fb-page {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: $color-white;
+    padding: 1rem;
+  }
+}
+
 .main-head-img {
   display: block;
   position: absolute;
@@ -138,37 +176,75 @@ body::-webkit-scrollbar {
   object-position: center center;
   overflow-x: hidden;
 }
+
 .lacs-comp-overlay {
   max-width: 100%;
   width: 100vw;
   overflow-x: hidden;
 }
+
 // Agrega aquí tus estilos o imports adicionales
+// Loader para el widget de Facebook en Novedades
+.fb-widget-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  width: 100%;
+  background: linear-gradient(90deg, #e3f2fd 0%, #fff 100%);
+  border-radius: 1rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.fb-widget-loader .spinner {
+  width: 48px;
+  height: 48px;
+  border: 6px solid #90caf9;
+  border-top: 6px solid #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .cards-section {
   .row {
     margin-top: 0;
     margin-bottom: 0;
   }
+
   .card {
     border-radius: 1.25rem;
     border: none;
     background: #fff;
-    box-shadow: 0 4px 24px rgba(51,145,170,0.08);
+    box-shadow: 0 4px 24px rgba(51, 145, 170, 0.08);
     transition: transform 0.2s, box-shadow 0.2s;
     min-height: 320px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     &:hover {
       transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 8px 32px rgba(51,145,170,0.18);
+      box-shadow: 0 8px 32px rgba(51, 145, 170, 0.18);
     }
+
     .card-title {
       font-weight: 700;
       color: $pantone-p120-5u;
       margin-bottom: 1rem;
       font-size: 1.25rem;
     }
+
     .card-text {
       color: #222;
       font-size: 1rem;

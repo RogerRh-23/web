@@ -267,7 +267,7 @@
   }
 
   .footer-logo {
-    height: 7rem;
+    height: 5rem;
     margin: 0 auto 1rem auto;
     display: block;
   }
@@ -277,7 +277,7 @@
     margin: 0 auto 1rem auto;
     max-width: 100vw;
     gap: 1rem;
-    margin-left: 0;
+    margin-left: -2.5rem;
   }
 
   .footer-options-col {
@@ -330,5 +330,12 @@
 
   .footer-options-col.active h3::after {
     transform: translateY(-50%) rotate(180deg);
+  }
+
+  .footer-copy {
+    font-size: 0.9rem;
+    margin-bottom: -2rem;
+    position: bottom;
+    background: transparent;
   }
 }

@@ -119,8 +119,15 @@
 
     <!-- Novedades -->
     <section id="novedades" class="section-gsap novedades-section" style="margin-top: 2.5rem; margin-bottom: 2.5rem;">
-      <div class="container">
+      <div class="news-container">
         <h2 class="section-title">Novedades</h2>
+        <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=61574336477937" data-tabs="timeline"
+          data-width="500" data-height="600" data-small-header="false" data-adapt-container-width="true"
+          data-hide-cover="false" data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/profile.php?id=61574336477937" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/profile.php?id=61574336477937">Facebook</a>
+          </blockquote>
+        </div>
       </div>
     </section>
   </main>
@@ -139,7 +146,9 @@
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
   <script src="./js/i18n.js"></script>
-  <!-- Google Translate eliminado, ahora se usa i18next -->
+  <!-- Facebook SDK -->
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v19.0"></script>
   <!-- JS principales del proyecto -->
   <script src="./js/gsap.js"></script>
   <script src="./js/hero-reveal.js"></script>
