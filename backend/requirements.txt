@@ -6,3 +6,14 @@ google-auth-httplib2
 google-auth-oauthlib
 python-dotenv
 python-multipart
+python-jose
+passlib[bcrypt]
+email-validator
+python-magic
+requests
+httpx
+python-dateutil
+python-slugify
+starlette
+itsdangerous
+

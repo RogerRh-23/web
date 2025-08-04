@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    container_name: lacs-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  fastapi:
+    restart: always
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"
+    environment:
+      - ENV=development
+    command: [ "uvicorn", "main:app", "--host", "0.0.0", "--port", "8000" ]
+
+volumes:
+  mongo-data:

@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from auth.routes import router as auth_router
 from drive.routes import router as drive_router
-# from certificados.routes import router as certificados_router
+from certificados.routes import router as certificados_router
 from routes.contacto import router as contacto_router
 import os
 from dotenv import load_dotenv
@@ -13,7 +13,7 @@ app = FastAPI()
 
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
-# app.include_router(certificados_router)
+app.include_router(certificados_router)
 app.include_router(contacto_router, prefix="/api")
 
 @app.get("/")

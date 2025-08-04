@@ -4,7 +4,8 @@ from typing import Optional
 import os
 
 # Configuración de conexión (ajusta la URI según tu cuenta de MongoDB Atlas)
-MONGO_URI = os.getenv('MONGO_URI', 'mongodb+srv://usuario:password@cluster.mongodb.net/lacs?retryWrites=true&w=majority')
+
+MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/')
 client = MongoClient(MONGO_URI)
 db = client['lacs']
 collection = db['certificados']

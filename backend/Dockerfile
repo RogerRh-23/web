@@ -5,13 +5,13 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copia los archivos de requerimientos
-COPY requirements.txt .
+COPY backend/requirements.txt .
 
 # Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia el resto del código de la aplicación
-COPY . .
+COPY backend /app
 
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000

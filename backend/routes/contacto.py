@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, status, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
@@ -37,7 +36,6 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
     Empresa: {data.empresa}
     Asunto: {data.asunto}
     Mensaje:\n{data.mensaje}
-    IP: {request.client.host}
     """
     msg.set_content(body)
 
