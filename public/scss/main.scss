@@ -199,3 +199,19 @@ body::-webkit-scrollbar {
   text-align: center;
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .error-container {
+    padding: 1rem;
+    margin-right: 20%;
+  }
+
+  .maintenance-image {
+    width: 8rem;
+  }
+
+  .maintenance-text {
+    font-size: 1rem;
+  }
+
+}
