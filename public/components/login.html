@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,27 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     @media (max-width: 991.98px) {
-      #footer { margin-bottom: 90px !important; }
-      .main-content-navbar-padding { padding-top: 0 !important; }
+      #footer {
+        margin-bottom: 90px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
     }
+
     @media (min-width: 992px) {
-      .main-content-navbar-padding { padding-top: 70px; }
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
   <main class="main-content-navbar-padding">
     <div class="login-bg">
       <div class="login-card">
@@ -41,55 +53,57 @@
           <div class="login-field">
             <span class="login-icon"><i class="bi bi-lock"></i></span>
             <div class="login-input-group" style="flex:1;">
-              <input type="password" id="password" name="password" required placeholder=" " autocomplete="current-password">
+              <input type="password" id="password" name="password" required placeholder=" "
+                autocomplete="current-password">
               <label for="password" class="login-label">Contraseña</label>
             </div>
           </div>
           <button type="submit" class="login-btn">Iniciar sesión</button>
           <div style="text-align:center; margin-top:0.7rem;">
             <a href="#" class="login-forgot-link" id="forgot-password-link">¿Olvidaste tu contraseña?</a>
-      <!-- Modal para recuperación de contraseña -->
-      <div class="modal" id="modal-forgot-password">
-        <div class="modal-content forgot-modal-content">
-          <button class="close-modal" id="close-forgot-modal" title="Cerrar">&times;</button>
-          <h3 class="forgot-modal-title">Recuperar contraseña</h3>
-          <form id="forgot-password-form" autocomplete="off">
-            <label for="forgot-email">Correo electrónico registrado</label>
-            <input type="email" id="forgot-email" name="email" required placeholder="correo@ejemplo.com" class="forgot-modal-input">
-            <button type="submit" class="login-btn forgot-modal-btn">Enviar enlace</button>
-            <div id="forgot-message" class="forgot-modal-message"></div>
-          </form>
-        </div>
-      </div>
-  <script>
-    // Modal recuperación de contraseña
-    const forgotLink = document.getElementById('forgot-password-link');
-    const forgotModal = document.getElementById('modal-forgot-password');
-    const closeForgot = document.getElementById('close-forgot-modal');
-    if (forgotLink && forgotModal && closeForgot) {
-      forgotLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        forgotModal.style.display = 'block';
-      });
-      closeForgot.addEventListener('click', function() {
-        forgotModal.style.display = 'none';
-      });
-      window.addEventListener('click', function(e) {
-        if (e.target === forgotModal) forgotModal.style.display = 'none';
-      });
-    }
-    // Aquí puedes agregar lógica para enviar el correo de recuperación
-    const forgotForm = document.getElementById('forgot-password-form');
-    const forgotMsg = document.getElementById('forgot-message');
-    if (forgotForm && forgotMsg) {
-      forgotForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        forgotMsg.textContent = 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.';
-        forgotMsg.style.color = '#1976d2';
-        // Aquí iría la llamada real al backend
-      });
-    }
-  </script>
+            <!-- Modal para recuperación de contraseña -->
+            <div class="modal" id="modal-forgot-password">
+              <div class="modal-content forgot-modal-content">
+                <button class="close-modal" id="close-forgot-modal" title="Cerrar">&times;</button>
+                <h3 class="forgot-modal-title">Recuperar contraseña</h3>
+                <form id="forgot-password-form" autocomplete="off">
+                  <label for="forgot-email">Correo electrónico registrado</label>
+                  <input type="email" id="forgot-email" name="email" required placeholder="correo@ejemplo.com"
+                    class="forgot-modal-input">
+                  <button type="submit" class="login-btn forgot-modal-btn">Enviar enlace</button>
+                  <div id="forgot-message" class="forgot-modal-message"></div>
+                </form>
+              </div>
+            </div>
+            <script>
+              // Modal recuperación de contraseña
+              const forgotLink = document.getElementById('forgot-password-link');
+              const forgotModal = document.getElementById('modal-forgot-password');
+              const closeForgot = document.getElementById('close-forgot-modal');
+              if (forgotLink && forgotModal && closeForgot) {
+                forgotLink.addEventListener('click', function (e) {
+                  e.preventDefault();
+                  forgotModal.style.display = 'block';
+                });
+                closeForgot.addEventListener('click', function () {
+                  forgotModal.style.display = 'none';
+                });
+                window.addEventListener('click', function (e) {
+                  if (e.target === forgotModal) forgotModal.style.display = 'none';
+                });
+              }
+              // Aquí puedes agregar lógica para enviar el correo de recuperación
+              const forgotForm = document.getElementById('forgot-password-form');
+              const forgotMsg = document.getElementById('forgot-message');
+              if (forgotForm && forgotMsg) {
+                forgotForm.addEventListener('submit', function (e) {
+                  e.preventDefault();
+                  forgotMsg.textContent = 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.';
+                  forgotMsg.style.color = '#1976d2';
+                  // Aquí iría la llamada real al backend
+                });
+              }
+            </script>
           </div>
           <div id="login-message"></div>
         </form>
@@ -97,26 +111,71 @@
     </div>
   </main>
   <div id="footer"></div>
-  <div id="navbar-mobile-placeholder"></div>
+  <!-- Eliminado duplicado de navbar-mobile-placeholder -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="../js/gsap.js"></script>
   <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/footer.js"></script>
   <script>
-    // Cargar navbar desktop
-    fetch('./navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-      });
-    // Cargar navbar mobile
-    fetch('./navbar-mobile.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-      });
+    // Navbar adaptativa: solo carga la versión correspondiente
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('./navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('./navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
     // Cargar footer
     fetch('./footer.html')
       .then(res => res.text())
@@ -126,6 +185,5 @@
       });
   </script>
 </body>
+
 </html>
-
-

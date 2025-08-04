@@ -71,6 +71,8 @@
   </div>
 
   <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
   <main class="pt-5" style="min-height: 80vh;">
     <div id="dynamic-content"></div>
     <div class="head-img-container">
@@ -176,109 +178,69 @@
     });
   </script>
   <script>
-    // Cargar navbar desktop y asegurar inicialización de dropdowns
-    function loadNavbarDesktop() {
-      fetch('./components/navbar.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('navbar-placeholder').innerHTML = html;
-          // Importar el script de dropdowns solo una vez
-          if (!window._dropdownScriptLoaded) {
-            const script = document.createElement('script');
-            script.src = './js/navbar-dropdown.js';
-            script.onload = function () {
-              window._dropdownScriptLoaded = true;
-              if (typeof window.initDropdowns === 'function') {
-                console.log('[Dropdown] initDropdowns found after script load (desktop)');
-                window.initDropdowns();
-              } else {
-                console.error('[Dropdown] initDropdowns NOT found after script load (desktop)');
-              }
-            };
-            script.onerror = function () {
-              console.error('[Dropdown] Error loading navbar-dropdown.js (desktop)');
-            };
-            document.body.appendChild(script);
-          } else {
-            if (typeof window.initDropdowns === 'function') {
-              console.log('[Dropdown] initDropdowns found (desktop)');
-              window.initDropdowns();
-            } else {
-              console.error('[Dropdown] initDropdowns NOT found (desktop)');
-            }
-          }
-        });
-    }
-    loadNavbarDesktop();
-
-    // Cargar navbar mobile solo en dispositivos pequeños
+    // Navbar adaptativa: solo carga la versión correspondiente
     function isMobile() {
       return window.innerWidth < 992;
     }
-    function loadNavbarMobile() {
-      const showNavbarMobile = () => {
-        fetch('./components/navbar-mobile.html')
-          .then(res => res.text())
-          .then(html => {
-            document.getElementById('navbar-mobile-placeholder').innerHTML = html;
-            // Asegurar que el script de dropdowns esté cargado y luego inicializar
-            if (window._dropdownScriptLoaded) {
-              if (typeof window.initDropdowns === 'function') {
-                console.log('[Dropdown] initDropdowns found (mobile)');
-                window.initDropdowns();
-              } else {
-                console.error('[Dropdown] initDropdowns NOT found (mobile)');
-              }
-            } else {
-              const script = document.createElement('script');
-              script.src = './js/navbar-dropdown.js';
-              script.onload = function () {
-                window._dropdownScriptLoaded = true;
-                if (typeof window.initDropdowns === 'function') {
-                  console.log('[Dropdown] initDropdowns found after script load (mobile)');
-                  window.initDropdowns();
-                } else {
-                  console.error('[Dropdown] initDropdowns NOT found after script load (mobile)');
-                }
-              };
-              script.onerror = function () {
-                console.error('[Dropdown] Error loading navbar-dropdown.js (mobile)');
-              };
-              document.body.appendChild(script);
-            }
-          });
-      };
-      const hideNavbarMobile = () => {
-        document.getElementById('navbar-mobile-placeholder').innerHTML = '';
-      };
-      const hero = document.querySelector('.hero-reveal');
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
       if (isMobile()) {
-        if (!hero || getComputedStyle(hero).opacity === '0' || hero.style.display === 'none') {
-          showNavbarMobile();
-          setTimeout(() => {
-            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
-            if (navMobile) navMobile.style.display = '';
-          }, 300);
-        } else {
-          hideNavbarMobile();
-          const observer = new IntersectionObserver(function (entries) {
-            if (!entries[0].isIntersecting) {
-              showNavbarMobile();
-              setTimeout(() => {
-                const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
-                if (navMobile) navMobile.style.display = '';
-              }, 300);
-              observer.disconnect();
-            }
-          }, { threshold: 0.1 });
-          observer.observe(hero);
+        // Elimina navbar desktop si existe
+        desktopPlaceholder.innerHTML = '';
+        // Carga navbar mobile si no está cargada
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('./components/navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = './js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
         }
       } else {
-        hideNavbarMobile();
+        // Elimina navbar mobile si existe
+        mobilePlaceholder.innerHTML = '';
+        // Carga navbar desktop si no está cargada
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('./components/navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = './js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
       }
     }
-    window.addEventListener('resize', loadNavbarMobile);
-    window.addEventListener('DOMContentLoaded', loadNavbarMobile);
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
 
     // Cargar dinámicamente las cards
     fetch('./components/cards.html')

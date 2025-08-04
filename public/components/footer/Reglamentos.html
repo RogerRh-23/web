@@ -30,8 +30,9 @@
 </head>
 
 <body>
-  <div id="navbar-container"></div>
+  <div id="navbar-placeholder"></div>
   <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
   <div class="reglamentos-container">
     <h1 class="section-title">Reglamentos</h1>
     <div class="reglamento-section">
@@ -62,56 +63,65 @@
       document.body.appendChild(script);
     }
 
-    // Navbar Desktop y Mobile: unificar carga y inicialización
-    function loadNavbar(type) {
-      const url = type === 'mobile' ? '../navbar-mobile.html' : '../navbar.html';
-      fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
-          const containerId = type === 'mobile' ? 'navbar-mobile-placeholder' : 'navbar-container';
-          document.getElementById(containerId).innerHTML = html;
-          // Corrige los enlaces de la navbar para evitar rutas duplicadas
-          const navbarLinks = document.querySelectorAll(`#${containerId} a`);
-          navbarLinks.forEach(link => {
-            if (link.href.includes('/components/components/')) {
-              link.href = link.href.replace('/components/components/', '/components/');
-            }
-          });
-          if (type === 'mobile') {
-            const navMobile = document.getElementById('navbar-mobile-placeholder').firstElementChild;
-            if (navMobile) {
-              navMobile.classList.remove('fixed-top');
-              navMobile.classList.add('fixed-bottom');
-              navMobile.style.top = 'auto';
-              navMobile.style.bottom = '0';
-              navMobile.style.width = '100%';
-              navMobile.style.zIndex = '1050';
-            }
-          }
-          // Inicializar dropdowns solo después de cargar el script (una sola vez)
-          if (!window._navbarDropdownLoaded) {
-            window._navbarDropdownLoaded = true;
-            loadExternalScript('../../js/navbar-dropdown.js', function () {
-              if (typeof window.initDropdowns === 'function') window.initDropdowns();
-            });
-          } else {
-            if (typeof window.initDropdowns === 'function') window.initDropdowns();
-          }
-        });
-    }
-
+    // Navbar adaptativa: solo carga la versión correspondiente
     function isMobile() {
       return window.innerWidth < 992;
     }
-    window.addEventListener('resize', function () {
-      if (isMobile()) loadNavbar('mobile');
-      else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
-    });
-    window.addEventListener('DOMContentLoaded', function () {
-      if (isMobile()) loadNavbar('mobile');
-      else loadNavbar('desktop');
-    });
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('../navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('../navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
 
     // Footer
     fetch('../footer.html')

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +11,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- Los estilos específicos del formulario de contacto están en _contacto.scss -->
 </head>
+
 <body>
   <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
   <main class="main-content-navbar-padding">
     <section class="dynamic-section contacto-section">
       <div class="info-box">
         <h1 class="contacto-title">Contacto</h1>
-        <p class="contacto-desc">Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
+        <p class="contacto-desc">Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.
+          Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
         <div class="contacto-flex">
           <form class="contact-form" autocomplete="off">
             <label for="nombre">Nombre</label>
@@ -43,7 +48,9 @@
             <div id="contacto-msg"></div>
           </form>
           <div class="contacto-mapa">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d60198.526708976824!2d-99.245381!3d19.4379718!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8cacfed927d%3A0xe15def05386cd6d4!2sLatin%20American%20Certification%20%26%20Systems%2C%20A.C.!5e0!3m2!1ses-419!2smx!4v1754062096349!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d60198.526708976824!2d-99.245381!3d19.4379718!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8cacfed927d%3A0xe15def05386cd6d4!2sLatin%20American%20Certification%20%26%20Systems%2C%20A.C.!5e0!3m2!1ses-419!2smx!4v1754062096349!5m2!1ses-419!2smx"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>
@@ -57,11 +64,11 @@
   <script src="../js/footer.js"></script>
   <script>
     // Envío real del formulario de contacto
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const form = document.querySelector('.contact-form');
       const msg = document.getElementById('contacto-msg');
       if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
           e.preventDefault();
           msg.textContent = '';
           const data = {
@@ -84,39 +91,84 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
           })
-          .then(res => {
-            if (!res.ok) throw new Error('Error en el envío');
-            return res.json();
-          })
-          .then(resp => {
-            msg.textContent = '¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.';
-            msg.style.color = '#1877f3';
-            form.reset();
-          })
-          .catch(() => {
-            msg.textContent = 'Ocurrió un error al enviar el mensaje. Intenta de nuevo más tarde.';
-            msg.style.color = '#c00';
-          })
-          .finally(() => {
-            form.querySelector('button[type="submit"]').disabled = false;
-          });
+            .then(res => {
+              if (!res.ok) throw new Error('Error en el envío');
+              return res.json();
+            })
+            .then(resp => {
+              msg.textContent = '¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.';
+              msg.style.color = '#1877f3';
+              form.reset();
+            })
+            .catch(() => {
+              msg.textContent = 'Ocurrió un error al enviar el mensaje. Intenta de nuevo más tarde.';
+              msg.style.color = '#c00';
+            })
+            .finally(() => {
+              form.querySelector('button[type="submit"]').disabled = false;
+            });
         });
       }
     });
-    // Cargar navbar desktop
-    fetch('./navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-      });
-    // Cargar navbar mobile
-    fetch('./navbar-mobile.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-      });
+    // Navbar adaptativa: solo carga la versión correspondiente
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('./navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('./navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
     // Cargar footer
     fetch('./footer.html')
       .then(res => res.text())
@@ -126,4 +178,5 @@
       });
   </script>
 </body>
+
 </html>

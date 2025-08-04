@@ -31,6 +31,7 @@
 <body>
   <div id="navbar-placeholder"></div>
   <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
   <div class="info-box">
     <div class="section-content">
       <div class="error-container">
@@ -48,20 +49,65 @@
   <script src="../../js/navbar-dropdown.js"></script>
   <script src="../../js/footer.js"></script>
   <script>
-    // Cargar navbar desktop
-    fetch('../navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-      });
-    // Cargar navbar mobile
-    fetch('../navbar-mobile.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-      });
+    // Navbar adaptativa: solo carga la versión correspondiente
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('../navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('../navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
     // Cargar footer
     fetch('../footer.html')
       .then(res => res.text())
