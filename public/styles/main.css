@@ -1892,6 +1892,10 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   transition: background 0.18s, color 0.18s;
   cursor: pointer;
 }
+.dropdown-gsap a:hover {
+  background: rgb(51, 145, 170) !important;
+  color: #e1dfea !important;
+}
 
 .dropdown-gsap-mobile {
   z-index: 9999;

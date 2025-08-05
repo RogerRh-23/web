@@ -56,6 +56,11 @@
   border-radius: 0.5rem;
   transition: background 0.18s, color 0.18s;
   cursor: pointer;
+
+  &:hover {
+    background: $pantone-p120-5u !important;
+    color: $color-white !important;
+  }
 }
 
 .dropdown-gsap-mobile {
