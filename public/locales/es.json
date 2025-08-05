@@ -79,13 +79,17 @@
     "password": "Contraseña",
     "login_button": "Iniciar Sesión",
     "forgot_password": "¿Olvidaste tu contraseña?",
-    "no_account": "¿No tienes una cuenta?",
-    "register_here": "Regístrate aquí"
+    "recover_password": "Recuperar contraseña",
+    "registered_email": "Correo electrónico registrado",
+    "send_link": "Enviar enlace"
   },
   "contact": {
     "title": "Contacto",
+    "desc": "Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.",
     "name": "Nombre",
     "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "subject": "Asunto",
     "message": "Mensaje",
     "send_button": "Enviar",
     "success_message": "Tu mensaje ha sido enviado con éxito.",

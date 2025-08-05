@@ -94,12 +94,16 @@
     "forgot_password": "Forgot Password?",
     "recover_password": "Recover your password",
     "registered_email": "registered email address",
-    "send_button": "Send link"
+    "send_link": "Send link"
   },
   "contact": {
     "title": "Contact Us",
+    "desc": "If you have any questions or need more information, please fill out the form below and we will get back to you as soon as possible.",
     "name": "Name",
     "email": "Email",
+    "phone": "Phone",
+    "subject": "Subject",
+    "company": "Company",
     "message": "Message",
     "send_button": "Send",
     "success_message": "Your message has been sent successfully.",

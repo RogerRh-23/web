@@ -19,31 +19,32 @@
   <main class="main-content-navbar-padding">
     <section class="dynamic-section contacto-section">
       <div class="info-box">
-        <h1 class="contacto-title">Contacto</h1>
-        <p class="contacto-desc">Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.
+        <h1 class="contacto-title" data-i18n="title">Contacto</h1>
+        <p class="contacto-desc" data-i18n="desc">Si tienes alguna pregunta o necesitas más información, no dudes en
+          contactarnos.
           Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
         <div class="contacto-flex">
           <form class="contact-form" autocomplete="off">
-            <label for="nombre">Nombre</label>
+            <label for="nombre" data-i18n="name">Nombre</label>
             <input type="text" id="nombre" name="nombre" required>
 
-            <label for="email">Email</label>
+            <label for="email" data-i18n="email">Email</label>
             <input type="email" id="email" name="email" required>
 
-            <label for="telefono">Teléfono</label>
+            <label for="telefono" data-i18n="phone">Teléfono</label>
             <input type="tel" id="telefono" name="telefono" required>
 
-            <label for="asunto">Asunto</label>
+            <label for="asunto" data-i18n="subject">Asunto</label>
             <input type="text" id="asunto" name="asunto">
 
-            <label for="empresa">Empresa</label>
+            <label for="empresa" data-i18n="company">Empresa</label>
             <input type="text" id="empresa" name="empresa">
 
-            <label for="mensaje">Mensaje</label>
+            <label for="mensaje" data-i18n="mensaje">Mensaje</label>
             <textarea id="mensaje" name="mensaje" rows="4"></textarea>
 
             <button type="submit" class="btn-enviar-contacto">
-              <i class="bi bi-envelope-fill"></i>Enviar mensaje
+              <i class="bi bi-envelope-fill" data-i18n="send_button"></i>Enviar mensaje
             </button>
             <div id="contacto-msg"></div>
           </form>
