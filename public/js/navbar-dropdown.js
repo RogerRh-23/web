@@ -229,21 +229,12 @@ function robustInitDropdowns() {
 
 // Inicialización reactiva usando MutationObserver para SPA y recarga parcial
 function startDropdownObserver() {
-  let initialized = false;
-  function safeInit() {
-    if (!initialized) {
-      robustInitDropdowns();
-      initialized = true;
-    }
-  }
-  safeInit();
+  robustInitDropdowns();
   const observer = new MutationObserver(() => {
     const hasDesktopNav = document.querySelector('.nav-link[data-dropdown]');
     const hasMobileNav = document.querySelector('.navbar-mobile-link[aria-label]');
-    if ((hasDesktopNav || hasMobileNav) && !initialized) {
+    if (hasDesktopNav || hasMobileNav) {
       robustInitDropdowns();
-      initialized = true;
-      observer.disconnect();
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
