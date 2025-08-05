@@ -41,5 +41,48 @@
     "admin_created": "Admin created successfully.",
     "admin_updated": "Admin updated successfully.",
     "admin_deleted": "Admin deleted successfully."
+  },
+  "cards": {
+    "who_are_we": "Who are we?",
+    "who_are_we_text": "Since the beginning of our operations in 2013 at Latin American Certification & Systems (LACS), we have been committed to supporting organizations in Mexico through our management system certification and training services to facilitate their access to new markets and help them achieve their strategic objectives. Our staff has extensive experience in the application of conformity assessment standards and management systems. We stand out for our close approach to the client, providing active listening for timely attention to their needs. Through our service portfolio, we offer solutions that we are sure will contribute to the success of your organization.",
+    "mission": "Mission",
+    "mission_text": "At LACS, we are a multidisciplinary and experienced team that provides evaluation and knowledge transfer services, creating trust, value, and driving the development of our clients.",
+    "vision": "Vision",
+    "vision_text": "At LACS, we seek sustainable growth in national and international markets by implementing the best available technological practices, adhering to our institutional values.",
+    "values": "Values",
+    "values_list": {
+      "ethics": "Ethics",
+      "ethics_desc": "Defined as human conduct, what is right and wrong, good living, morality, and duty. At LACS, integrity and responsibility are guidelines we establish as the basis of our actions.",
+      "responsibility": "Responsibility",
+      "responsibility_desc": "The ability to fulfill obligations, assuming the commitments derived from our decision-making.",
+      "impartiality": "Impartiality",
+      "impartiality_desc": "Our services and decisions are based on objective evidence and are not influenced by any particular interest.",
+      "non_discrimination": "Non-discrimination",
+      "non_discrimination_desc": "We treat suppliers or anyone related to LACS equally and provide our services guided by the values that govern us.",
+      "persistence": "Persistence",
+      "persistence_desc": "At LACS, we are firm and constant in our actions, with drive and effort despite obstacles and difficulties.",
+      "passion": "Passion",
+      "passion_desc": "At LACS, we are characterized by interest, motivation, and teamwork to face each project and challenge.",
+      "confidentiality": "Confidentiality",
+      "confidentiality_desc": "We guarantee that sensitive information from our suppliers and other stakeholders related to our services is used appropriately and responsibly and is not disclosed without authorization."
+    },
+    "sectors": "Sectors",
+    "sectors_text": "This accreditation scope list is based on the statistical nomenclature of economic activities (NACE Rev. 2), published by the Commission of the European Community in the official journal L 393/1, dated 30.12.2006, which will be used for Quality Management Systems and Occupational Health and Safety Management Systems (OHSMS).",
+    "sectors_list_1": [
+      "12 Chemicals, chemical products and fibers",
+      "14 Rubber and plastic products",
+      "17 Basic metals and fabricated metal products",
+      "18 Machinery and equipment",
+      "22 Other transport equipment",
+      "28 Construction"
+    ],
+    "sectors_list_2": [
+      "29 Wholesale and retail trade; Repair of motor vehicles, motorcycles and personal and household goods",
+      "31 Transport, storage and communication",
+      "34 Engineering services",
+      "35 Other services",
+      "36 Public administration",
+      "37 Education"
+    ]
   }
 }
