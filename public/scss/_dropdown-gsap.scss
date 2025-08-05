@@ -1,17 +1,26 @@
 // Estilos para los dropdown animados de la navbar
+
 .dropdown-gsap-container {
   z-index: 9999;
   position: fixed;
-  pointer-events: none;
-  display: none;
+
+  /* El display lo controla el JS */
   /* Más separación desde la navbar */
   &.dropdown-gsap-container {
     margin-top: 18px;
   }
 }
-.dropdown-gsap-container[style*="display: block"] {
-  pointer-events: auto !important;
-  display: block !important;
+
+.dropdown-gsap-container {
+  pointer-events: auto;
+}
+
+.dropdown-gsap-container[style*="display: none"] {
+  pointer-events: none !important;
+}
+
+.dropdown-gsap-container {
+  pointer-events: auto;
 }
 
 .dropdown-gsap {
@@ -20,7 +29,7 @@
   padding: 0.5rem 0;
   background: $color-white;
   border-radius: 1.2rem !important; // Refuerzo para evitar que JS/GSAP lo sobrescriba
-  box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.18);
   min-width: 180px;
   max-width: 260px;
   display: flex;
@@ -49,40 +58,18 @@
   cursor: pointer;
 }
 
-.dropdown-gsap a:hover,
-.dropdown-gsap a:focus {
-  background: #1877f3;
-  color: $color-white;
-}
-// Animación extra para el dropdown
-.dropdown-gsap {
-  will-change: opacity, transform, height;
-}
-
-// Estilos y animación para dropdowns en mobile
-// Dropdown mobile: oculto por defecto, visible solo cuando se muestra
 .dropdown-gsap-mobile {
   z-index: 9999;
   position: fixed;
-  pointer-events: none;
-  box-shadow: 0 8px 32px -8px rgba(20,30,60,0.18);
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.18);
   border-radius: 1.2rem !important; // Refuerzo para evitar que JS/GSAP lo sobrescriba
   background: $color-white;
   min-width: 180px;
   max-width: 260px;
-  display: none;
+  /* El display lo controla el JS */
   flex-direction: column;
   gap: 0.2rem;
   will-change: opacity, transform, height;
   transition: opacity 0.32s, transform 0.32s;
-}
-.dropdown-gsap-mobile[style*="display: block"] {
-  display: flex !important;
-  pointer-events: auto !important;
-}
-
-.dropdown-gsap-container,
-.dropdown-gsap-mobile {
-  z-index: 99999 !important;
-  display: block !important;
+  pointer-events: auto;
 }
