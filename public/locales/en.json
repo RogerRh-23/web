@@ -108,5 +108,71 @@
     "send_button": "Send",
     "success_message": "Your message has been sent successfully.",
     "error_message": "There was an error sending your message. Please try again later."
+  },
+  "certificates": {
+    "title": "Certificates",
+    "search_placeholder": "Search by Name or Certificate No.",
+    "search_button": "Search",
+    "company_name": "Company Name",
+    "standard": "Standard",
+    "status": "Status",
+    "certificate_number": "Certificate Number",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "add_certificate": {
+      "title": "Add new certificate",
+      "company_name": "Company Name",
+      "standard": "Standard",
+      "status": "Status",
+      "status_list": [
+        "Valid",
+        "Expired"
+      ],
+      "certificate_number": "Certificate Number",
+      "start_date": "Start Date",
+      "end_date": "End Date",
+      "certificate_file": "Certificate file (PNG, JPG, JPEG, PDF)",
+      "add_button": "Save"
+    },
+    "edit_certificate": {
+      "title": "Edit certificate",
+      "company_name": "Company Name",
+      "standard": "Standard",
+      "status": "Status",
+      "status_list": [
+        "Valid",
+        "Expired"
+      ],
+      "certificate_number": "Certificate Number",
+      "start_date": "Start Date",
+      "end_date": "End Date",
+      "certificate_file": "Certificate file (PNG, JPG, JPEG, PDF)",
+      "save_button": "Save Changes"
+    }
+  },
+  "dropdown": {
+    "services": {
+      "label": "Services",
+      "items": [
+        "Management System Certification",
+        "Training",
+        "Sorting and Rework"
+      ]
+    },
+    "processes": {
+      "label": "Processes",
+      "items": [
+        "Certification Process",
+        "Certification Validity",
+        "Complaint Handling Procedure"
+      ]
+    },
+    "training": {
+      "label": "Training Center",
+      "items": [
+        "Courses",
+        "Webinars"
+      ]
+    }
   }
 }

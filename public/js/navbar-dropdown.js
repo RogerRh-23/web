@@ -98,32 +98,35 @@ window.initDropdowns = function initDropdowns() {
     return null;
   }
 
-  // Estructura de los dropdowns
-  const dropdowns = [
-    {
-      label: 'Servicios',
-      items: [
-        { name: 'Certificación de Sistemas de Gestión', path: 'Servicios/Certificación de Sistemas de Gestión.html' },
-        { name: 'Capacitación', path: 'Servicios/Capacitación.html' },
-        { name: 'Sorteo y Retrabajo', path: 'Servicios/Sorteo y Retrabajo.html' }
-      ]
-    },
-    {
-      label: 'Procesos',
-      items: [
-        { name: 'Proceso de Certificación', path: 'Procesos/Proceso de Certificación.html' },
-        { name: 'Vigencia de la Certificación', path: 'Procesos/Vigencia de la Certificación.html' },
-        { name: 'Procedimiento de atención de quejas', path: 'Procesos/Procedimiento de atención de quejas.html' }
-      ]
-    },
-    {
-      label: 'Centro de formación',
-      items: [
-        { name: 'Cursos', path: 'Centro de formación/Cursos.html' },
-        { name: 'Webinars', path: 'Centro de formación/Webinars.html' }
-      ]
-    }
-  ];
+  // Estructura de los dropdowns usando textos del JSON/i18n
+  function getDropdownConfig() {
+    const t = window.i18next ? window.i18next.t.bind(window.i18next) : (k) => k;
+    return [
+      {
+        label: t('dropdown.services.label'),
+        items: [
+          { name: t('dropdown.services.items.0'), path: 'Servicios/Certificación de Sistemas de Gestión.html' },
+          { name: t('dropdown.services.items.1'), path: 'Servicios/Capacitación.html' },
+          { name: t('dropdown.services.items.2'), path: 'Servicios/Sorteo y Retrabajo.html' }
+        ]
+      },
+      {
+        label: t('dropdown.processes.label'),
+        items: [
+          { name: t('dropdown.processes.items.0'), path: 'Procesos/Proceso de Certificación.html' },
+          { name: t('dropdown.processes.items.1'), path: 'Procesos/Vigencia de la Certificación.html' },
+          { name: t('dropdown.processes.items.2'), path: 'Procesos/Procedimiento de atención de quejas.html' }
+        ]
+      },
+      {
+        label: t('dropdown.training.label'),
+        items: [
+          { name: t('dropdown.training.items.0'), path: 'Centro de formación/Cursos.html' },
+          { name: t('dropdown.training.items.1'), path: 'Centro de formación/Webinars.html' }
+        ]
+      }
+    ];
+  }
 
   // Lógica para crear y animar los dropdowns para desktop y mobile
   // --- Cerrar todos los dropdowns al hacer scroll, resize o clic fuera ---
@@ -148,6 +151,8 @@ window.initDropdowns = function initDropdowns() {
   window.addEventListener('scroll', closeAllDropdownsGlobal);
   window.addEventListener('resize', closeAllDropdownsGlobal);
   // (Eliminado: duplicado innecesario de event listener para cerrar dropdowns)
+
+  const dropdowns = getDropdownConfig();
 
   dropdowns.forEach(drop => {
     // Desktop: solo si no es móvil

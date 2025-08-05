@@ -2,26 +2,30 @@
 <div class="certificados-modal" id="modalEditarCertificado" style="display:none;">
   <div class="certificados-modal-content">
     <button class="close-modal" id="cerrarModalEditar" title="Cerrar">&times;</button>
-    <h3>Editar certificado</h3>
+    <h3 data-i18n="certificates.edit_certificate.title">Editar certificado</h3>
     <form id="formEditarCertificado">
-      <label for="edit-nombreOrg">Nombre de la organización</label>
+      <label for="edit-nombreOrg" data-i18n="certificates.edit_certificate.company_name">Nombre de la
+        organización</label>
       <input type="text" id="edit-nombreOrg" name="nombreOrg" required>
-      <label for="edit-estandar">Estándar</label>
+      <label for="edit-estandar" data-i18n="certificates.edit_certificate.standard">Estándar</label>
       <input type="text" id="edit-estandar" name="estandar" required>
-      <label for="edit-estatus">Estatus</label>
+      <label for="edit-estatus" data-i18n="certificates.edit_certificate.status">Estatus</label>
       <select id="edit-estatus" name="estatus" required>
-        <option value="Vigente">Vigente</option>
-        <option value="Vencido">Vencido</option>
+        <option value="Vigente" data-i18n="certificates.edit_certificate.status_list.0">Vigente</option>
+        <option value="Vencido" data-i18n="certificates.edit_certificate.status_list.1">Vencido</option>
       </select>
-      <label for="edit-numeroCertificado">No. Certificado</label>
+      <label for="edit-numeroCertificado" data-i18n="certificates.edit_certificate.certificate_number">No.
+        Certificado</label>
       <input type="text" id="edit-numeroCertificado" name="numeroCertificado" required>
-      <label for="edit-fechaInicio">Fecha de inicio</label>
+      <label for="edit-fechaInicio" data-i18n="certificates.edit_certificate.start_date">Fecha de inicio</label>
       <input type="date" id="edit-fechaInicio" name="fechaInicio" required>
-      <label for="edit-fechaFin">Fecha de finalización</label>
+      <label for="edit-fechaFin" data-i18n="certificates.edit_certificate.end_date">Fecha de finalización</label>
       <input type="date" id="edit-fechaFin" name="fechaFin" required>
-      <label for="archivoCertificado">Archivo del certificado (PNG, JPG, JPEG, PDF)</label>
+      <label for="archivoCertificado" data-i18n="certificates.edit_certificate.certificate_file">Archivo del certificado
+        (PNG, JPG, JPEG, PDF)</label>
       <input type="file" id="archivoCertificado" name="archivoCertificado" accept=".png,.jpg,.jpeg,.pdf">
-      <button type="submit" class="btn btn-success">Guardar cambios</button>
+      <button type="submit" class="btn btn-success" data-i18n="certificates.edit_certificate.save_button">Guardar
+        cambios</button>
     </form>
   </div>
 </div>
@@ -29,26 +33,27 @@
 <div class="certificados-modal" id="modalAgregarCertificado" style="display:none;">
   <div class="certificados-modal-content">
     <button class="close-modal" id="cerrarModalCertificado" title="Cerrar">&times;</button>
-    <h3>Agregar nuevo certificado</h3>
+    <h3 data-i18n="certificates.add_certificate.title">Agregar nuevo certificado</h3>
     <form id="formAgregarCertificado">
-      <label for="nombreOrg">Nombre de la organización</label>
+      <label for="nombreOrg" data-i18n="certificates.add_certificate.company_name">Nombre de la organización</label>
       <input type="text" id="nombreOrg" name="nombreOrg" required>
-      <label for="estandar">Estándar</label>
+      <label for="estandar" data-i18n="certificates.add_certificate.standard">Estándar</label>
       <input type="text" id="estandar" name="estandar" required>
-      <label for="estatus">Estatus</label>
+      <label for="estatus" data-i18n="certificates.add_certificate.status">Estatus</label>
       <select id="estatus" name="estatus" required>
-        <option value="Vigente">Vigente</option>
-        <option value="Vencido">Vencido</option>
+        <option value="Vigente" data-i18n="certificates.add_certificate.status_list.0">Vigente</option>
+        <option value="Vencido" data-i18n="certificates.add_certificate.status_list.1">Vencido</option>
       </select>
-      <label for="numeroCertificado">No. Certificado</label>
+      <label for="numeroCertificado" data-i18n="certificates.add_certificate.certificate_number">No. Certificado</label>
       <input type="text" id="numeroCertificado" name="numeroCertificado" required>
-      <label for="fechaInicio">Fecha de inicio</label>
+      <label for="fechaInicio" data-i18n="certificates.add_certificate.start_date">Fecha de inicio</label>
       <input type="date" id="fechaInicio" name="fechaInicio" required>
-      <label for="fechaFin">Fecha de finalización</label>
+      <label for="fechaFin" data-i18n="certificates.add_certificate.end_date">Fecha de finalización</label>
       <input type="date" id="fechaFin" name="fechaFin" required>
-      <label for="archivoCertificado">Archivo del certificado (PNG, JPG, JPEG, PDF)</label>
+      <label for="archivoCertificado" data-i18n="certificates.add_certificate.certificate_file">Archivo del certificado
+        (PNG, JPG, JPEG, PDF)</label>
       <input type="file" id="archivoCertificado" name="archivoCertificado" accept=".png,.jpg,.jpeg,.pdf" required>
-      <button type="submit" class="btn btn-success">Guardar</button>
+      <button type="submit" class="btn btn-success" data-i18n="certificates.add_certificate.add_button">Guardar</button>
     </form>
   </div>
 </div>
@@ -72,29 +77,33 @@
       <form class="certificados-search-form" autocomplete="off" style="margin-bottom: 2rem;">
         <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
           <div class="form-group" style="flex: 1 1 300px;">
-            <label for="search-cert">Buscar por Nombre o No. de Certificado</label>
+            <label for="search-cert" data-i18n="certificates.search_placeholder">Buscar por Nombre o No. de
+              Certificado</label>
             <input type="text" id="search-cert" name="search-cert" class="form-control"
               placeholder="Ej: LACS S.A. de C.V. o 2024-00123">
           </div>
-          <button type="submit" class="btn btn-primary">Buscar</button>
+          <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
         </div>
       </form>
       <div class="admin-certificados-actions" style="margin-bottom:2rem; display:flex; gap:1rem;"></div>
       <div class="info-box">
         <!-- Vista cliente: información del certificado -->
         <div class="certificado-info">
-          <h2 class="certificado-titulo"><i class="bi bi-patch-check-fill" style="color:#1976a5"></i> Certificado</h2>
+          <h2 class="certificado-titulo"><i class="bi bi-patch-check-fill" style="color:#1976a5"></i> <span
+              data-i18n="certificates.title">Certificado</span></h2>
           <div class="certificado-datos">
-            <div><strong>Nombre de la organización:</strong> <span id="cert-org">LACS S.A. de C.V.</span></div>
-            <div><strong>Estándar:</strong> <span id="cert-estandar">ISO 9001</span></div>
-            <div><strong>Estado/Estatus:</strong> <span id="cert-estado">Vigente</span></div>
-            <div><strong>No. de certificado:</strong> <span id="cert-num">2024-00123</span></div>
-            <div><strong>Fecha de inicio:</strong> <span id="cert-inicio">2024-01-01</span></div>
-            <div><strong>Fecha de finalización:</strong> <span id="cert-fin">2025-01-01</span></div>
-            <div><strong>Alcance:</strong> <span id="cert-alcance">Certificación de sistemas de gestión de
-                calidad</span></div>
-            <div><strong>Sitio (ubicación):</strong> <span id="cert-sitio">CDMX, México</span></div>
-            <div><strong>Sectores:</strong> <span id="cert-sectores">Servicios, Manufactura</span></div>
+            <div><strong data-i18n="certificates.company_name">Nombre de la organización:</strong> <span
+                id="cert-org">LACS S.A. de C.V.</span></div>
+            <div><strong data-i18n="certificates.standard">Estándar:</strong> <span id="cert-estandar">ISO 9001</span>
+            </div>
+            <div><strong data-i18n="certificates.status">Estado/Estatus:</strong> <span id="cert-estado">Vigente</span>
+            </div>
+            <div><strong data-i18n="certificates.certificate_number">No. de certificado:</strong> <span
+                id="cert-num">2024-00123</span></div>
+            <div><strong data-i18n="certificates.start_date">Fecha de inicio:</strong> <span
+                id="cert-inicio">2024-01-01</span></div>
+            <div><strong data-i18n="certificates.end_date">Fecha de finalización:</strong> <span
+                id="cert-fin">2025-01-01</span></div>
           </div>
         </div>
       </div>

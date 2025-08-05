@@ -98,6 +98,67 @@
   "certificates": {
     "title": "Certificados",
     "search_placeholder": "Buscar por Nombre o No. de Certificado",
-    "search_button": "Buscar"
+    "search_button": "Buscar",
+    "company_name": "Nombre de la Empresa",
+    "standard": "Estándar",
+    "status": "Estado/Estatus",
+    "certificate_number": "Número de Certificado",
+    "start_date": "Fecha de Inicio",
+    "end_date": "Fecha de Finalización",
+    "add_certificate": {
+      "title": "Agregar nuevo certificado",
+      "company_name": "Nombre de la organización",
+      "standard": "Estándar",
+      "status": "Estatus",
+      "status_list": [
+        "Vigente",
+        "Vencido"
+      ],
+      "certificate_number": "Número de Certificado",
+      "start_date": "Fecha de Inicio",
+      "end_date": "Fecha de Finalización",
+      "certificate_file": "Archivo del certificado (PNG, JPG, JPEG, PDF)",
+      "add_button": "Guardar"
+    },
+    "edit_certificate": {
+      "title": "Editar certificado",
+      "company_name": "Nombre de la organización",
+      "standard": "Estándar",
+      "status": "Estatus",
+      "status_list": [
+        "Vigente",
+        "Vencido"
+      ],
+      "certificate_number": "Número de Certificado",
+      "start_date": "Fecha de Inicio",
+      "end_date": "Fecha de Finalización",
+      "certificate_file": "Archivo del certificado (PNG, JPG, JPEG, PDF)",
+      "save_button": "Guardar Cambios"
+    }
+  },
+  "dropdown": {
+    "services": {
+      "label": "Servicios",
+      "items": [
+        "Certificación de Sistemas de Gestión",
+        "Capacitación",
+        "Sorteo y Retrabajo"
+      ]
+    },
+    "processes": {
+      "label": "Procesos",
+      "items": [
+        "Proceso de Certificación",
+        "Vigencia de Certificación",
+        "Proceso de atención de quejas"
+      ]
+    },
+    "training": {
+      "label": "Centro de formación",
+      "items": [
+        "Cursos",
+        "Webinars"
+      ]
+    }
   }
 }
