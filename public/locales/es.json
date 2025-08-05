@@ -94,5 +94,10 @@
     "send_button": "Enviar",
     "success_message": "Tu mensaje ha sido enviado con éxito.",
     "error_message": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo."
+  },
+  "certificates": {
+    "title": "Certificados",
+    "search_placeholder": "Buscar por Nombre o No. de Certificado",
+    "search_button": "Buscar"
   }
 }

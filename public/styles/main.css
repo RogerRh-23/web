@@ -2962,54 +2962,58 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 
 .reglamentos-container {
   max-width: 900px;
-  margin: 2.5rem auto;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3.5rem 1.5rem;
   background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 4px 24px rgba(51, 145, 170, 0.08);
-  padding: 2.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px rgba(51, 145, 170, 0.08);
 }
-
-.reglamento-section {
-  background: #f8fafc;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(25, 118, 165, 0.06);
-  padding: 2rem 1.5rem;
-  margin-bottom: 0;
+.reglamentos-container h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #14323f;
+  margin-bottom: 2.2rem;
+  text-align: center;
+  letter-spacing: -1px;
 }
-
-.reglamento-section h2 {
-  color: #1976a5;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.reglamentos-container h2 {
+  font-size: 1.35rem;
   font-weight: 700;
+  color: #1976a5;
+  margin-bottom: 1.1rem;
+  margin-top: 2.2rem;
+  letter-spacing: -0.5px;
 }
-
-.reglamento-section p,
-.reglamento-section ul {
-  color: #222;
-  font-size: 1.08rem;
-  margin-bottom: 0.7rem;
+.reglamentos-container section {
+  margin-bottom: 2.5rem;
+  background: #f7fafc;
+  border-radius: 1rem;
+  padding: 1.5rem 1rem 2rem 1rem;
+  box-shadow: 0 2px 12px rgba(51, 145, 170, 0.04);
+  border: 1px solid #e3e9ef;
 }
-
-.reglamento-section ul {
-  padding-left: 1.5rem;
-  margin-top: 0.5rem;
+.reglamentos-container section iframe {
+  margin-top: 1.2rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(51, 145, 170, 0.06);
+  border: 1px solid #e3e9ef;
 }
-
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   .reglamentos-container {
-    padding: 1.2rem 0.5rem;
+    padding: 1.2rem 0.2rem 2rem 0.2rem;
   }
-  .reglamento-section {
-    padding: 1.2rem 0.7rem;
+  .reglamentos-container h1 {
+    font-size: 1.3rem;
   }
-  .reglamento-section h2 {
-    font-size: 1.15rem;
+  .reglamentos-container h2 {
+    font-size: 1.05rem;
+  }
+  .reglamentos-container section {
+    padding: 1rem 0.2rem 1.2rem 0.2rem;
   }
 }
+
 .dev-certs-count {
   text-align: center;
   font-size: 1.25rem;
