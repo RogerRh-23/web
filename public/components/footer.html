@@ -34,29 +34,34 @@
     </div>
     <div class="footer-options">
       <div class="footer-options-col">
-        <h3>Más sobre nosotros</h3>
+        <h3 data-i18n="about">Más sobre nosotros</h3>
         <ul class="footer-options-list">
-          <li><a href="/public/components/footer/Nosotros.html">Preguntas frecuentes</a></li>
-          <li><a href="/public/components/footer/Nosotros.html">Nuestras acreditaciones</a></li>
+          <li><a href="/public/components/footer/Nosotros.html" data-i18n="faq">Preguntas frecuentes</a></li>
+          <li><a href="/public/components/footer/Nosotros.html" data-i18n="accreditations">Nuestras acreditaciones</a>
+          </li>
         </ul>
       </div>
       <div class="footer-options-col">
-        <h3>Reglamentos</h3>
+        <h3 data-i18n="regulations">Reglamentos</h3>
         <ul class="footer-options-list">
-          <li><a href="/public/components/footer/Reglamentos.html">Reglamento de uso de marca</a></li>
-          <li><a href="/public/components/footer/Reglamentos.html">Reglamento de empresa certificada</a></li>
+          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="brand_use">Reglamento de uso de marca</a>
+          </li>
+          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="certified_company">Reglamento de empresa
+              certificada</a></li>
         </ul>
       </div>
       <div class="footer-options-col">
-        <h3>Políticas</h3>
+        <h3 data-i18n="policies">Políticas</h3>
         <ul class="footer-options-list">
-          <li><a href="/public/components/footer/Politicas.html">Aviso de privacidad</a></li>
-          <li><a href="/public/components/footer/Politicas.html">Política de confidencialidad</a></li>
-          <li><a href="/public/components/footer/Politicas.html">Política de Imparcialidad</a></li>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="privacy">Aviso de privacidad</a></li>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="confidentiality">Política de
+              confidencialidad</a></li>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="impartiality">Política de Imparcialidad</a>
+          </li>
         </ul>
       </div>
       <div class="footer-options-col">
-        <h3>Contacto</h3>
+        <h3 data-i18n="contact">Contacto</h3>
         <ul class="footer-options-list">
           <li>
             <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp">
@@ -64,7 +69,7 @@
             </a>
           </li>
           <li>
-            <a href="/public/components/contacto.html">
+            <a href="/public/components/contacto.html" data-i18n="mail">
               <i class="fa-regular fa-envelope"></i> Correo: <span style="font-style:italic;">info@lacs.org.mx</span>
             </a>
           </li>
@@ -72,16 +77,24 @@
       </div>
     </div>
     <div class="footer-copy">
-      <span>&copy; 2025 Latin America Certification & Systems. Todos los derechos reservados.</span>
+      <span data-i18n="copyright">&copy; 2025 Latin America Certification & Systems. Todos los derechos
+        reservados.</span>
     </div>
   </div>
 </footer>
 <script>
-  // Actualiza el año automáticamente en el footer
+  // Actualiza el año automáticamente en el footer y preserva la traducción
+  function updateFooterCopyright() {
+    var year = new Date().getFullYear();
+    var copySpan = document.querySelector('.footer-copy span');
+    if (copySpan && window.i18next) {
+      copySpan.innerHTML = i18next.t('copyright', { year: year });
+    }
+  }
   document.addEventListener('DOMContentLoaded', function () {
-    var yearSpan = document.querySelector('.footer-copy span');
-    if (yearSpan) {
-      yearSpan.innerHTML = `&copy; ${new Date().getFullYear()} Latin America Certification & Systems. Todos los derechos reservados.`;
+    updateFooterCopyright();
+    if (window.i18next) {
+      i18next.on('languageChanged', updateFooterCopyright);
     }
   });
 </script>

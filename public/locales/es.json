@@ -12,8 +12,6 @@
     "about": "Más sobre nosotros",
     "faq": "Preguntas frecuentes",
     "accreditations": "Nuestras acreditaciones",
-    "clients": "Clientes",
-    "certified_clients": "Clientes certificados",
     "regulations": "Reglamentos",
     "brand_use": "Reglamento de uso de marca",
     "certified_company": "Reglamento de empresa certificada",
@@ -21,7 +19,9 @@
     "privacy": "Aviso de privacidad",
     "confidentiality": "Política de confidencialidad",
     "impartiality": "Política de Imparcialidad",
-    "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados.",
+    "contact": "Contacto",
+    "mail": "Correo"
   },
   "ema": {
     "title": "Acreditaciones EMA",
