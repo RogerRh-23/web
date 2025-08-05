@@ -40,14 +40,14 @@
         </div>
         <form class="login-form" autocomplete="off">
           <div class="login-header">
-            <h2>¡Bienvenido!</h2>
-            <p>Accede a tu cuenta</p>
+            <h2 data-i18n="welcome_message">¡Bienvenido!</h2>
+            <p data-i18n="access">Accede a tu cuenta</p>
           </div>
           <div class="login-field">
             <span class="login-icon"><i class="bi bi-person"></i></span>
             <div class="login-input-group" style="flex:1;">
               <input type="text" id="usuario" name="usuario" required placeholder=" " autocomplete="username">
-              <label for="usuario" class="login-label">Usuario</label>
+              <label for="usuario" class="login-label" data-i18n="username">Usuario</label>
             </div>
           </div>
           <div class="login-field">
@@ -55,55 +55,28 @@
             <div class="login-input-group" style="flex:1;">
               <input type="password" id="password" name="password" required placeholder=" "
                 autocomplete="current-password">
-              <label for="password" class="login-label">Contraseña</label>
+              <label for="password" class="login-label" data-i18n="password">Contraseña</label>
             </div>
           </div>
-          <button type="submit" class="login-btn">Iniciar sesión</button>
+          <button type="submit" class="login-btn" data-i18n="login_button">Iniciar sesión</button>
           <div style="text-align:center; margin-top:0.7rem;">
-            <a href="#" class="login-forgot-link" id="forgot-password-link">¿Olvidaste tu contraseña?</a>
+            <a href="#" class="login-forgot-link" id="forgot-password-link" data-i18n="forgot_password">¿Olvidaste tu
+              contraseña?</a>
             <!-- Modal para recuperación de contraseña -->
             <div class="modal" id="modal-forgot-password">
               <div class="modal-content forgot-modal-content">
                 <button class="close-modal" id="close-forgot-modal" title="Cerrar">&times;</button>
-                <h3 class="forgot-modal-title">Recuperar contraseña</h3>
+                <h3 class="forgot-modal-title" data-i18n="recover_password">Recupere su contraseña</h3>
                 <form id="forgot-password-form" autocomplete="off">
-                  <label for="forgot-email">Correo electrónico registrado</label>
+                  <label for="forgot-email" data-i18n="registered_email">Correo electrónico registrado</label>
                   <input type="email" id="forgot-email" name="email" required placeholder="correo@ejemplo.com"
                     class="forgot-modal-input">
-                  <button type="submit" class="login-btn forgot-modal-btn">Enviar enlace</button>
+                  <button type="submit" class="login-btn forgot-modal-btn" data-i18n="send_button">Enviar
+                    enlace</button>
                   <div id="forgot-message" class="forgot-modal-message"></div>
                 </form>
               </div>
             </div>
-            <script>
-              // Modal recuperación de contraseña
-              const forgotLink = document.getElementById('forgot-password-link');
-              const forgotModal = document.getElementById('modal-forgot-password');
-              const closeForgot = document.getElementById('close-forgot-modal');
-              if (forgotLink && forgotModal && closeForgot) {
-                forgotLink.addEventListener('click', function (e) {
-                  e.preventDefault();
-                  forgotModal.style.display = 'block';
-                });
-                closeForgot.addEventListener('click', function () {
-                  forgotModal.style.display = 'none';
-                });
-                window.addEventListener('click', function (e) {
-                  if (e.target === forgotModal) forgotModal.style.display = 'none';
-                });
-              }
-              // Aquí puedes agregar lógica para enviar el correo de recuperación
-              const forgotForm = document.getElementById('forgot-password-form');
-              const forgotMsg = document.getElementById('forgot-message');
-              if (forgotForm && forgotMsg) {
-                forgotForm.addEventListener('submit', function (e) {
-                  e.preventDefault();
-                  forgotMsg.textContent = 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.';
-                  forgotMsg.style.color = '#1976d2';
-                  // Aquí iría la llamada real al backend
-                });
-              }
-            </script>
           </div>
           <div id="login-message"></div>
         </form>
@@ -183,6 +156,35 @@
         document.getElementById('footer').innerHTML = html;
         window.initFooter && window.initFooter();
       });
+  </script>
+  <script>
+    // Modal recuperación de contraseña
+    const forgotLink = document.getElementById('forgot-password-link');
+    const forgotModal = document.getElementById('modal-forgot-password');
+    const closeForgot = document.getElementById('close-forgot-modal');
+    if (forgotLink && forgotModal && closeForgot) {
+      forgotLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        forgotModal.style.display = 'block';
+      });
+      closeForgot.addEventListener('click', function () {
+        forgotModal.style.display = 'none';
+      });
+      window.addEventListener('click', function (e) {
+        if (e.target === forgotModal) forgotModal.style.display = 'none';
+      });
+    }
+    // Aquí puedes agregar lógica para enviar el correo de recuperación
+    const forgotForm = document.getElementById('forgot-password-form');
+    const forgotMsg = document.getElementById('forgot-message');
+    if (forgotForm && forgotMsg) {
+      forgotForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        forgotMsg.textContent = 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.';
+        forgotMsg.style.color = '#1976d2';
+        // Aquí iría la llamada real al backend
+      });
+    }
   </script>
 </body>
 
