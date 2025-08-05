@@ -4,16 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.info-card');
     if (cards.length) {
       observer.disconnect();
+      if (window.updateI18nContent) window.updateI18nContent();
       animateInfoCards(cards);
     }
   });
-  observer.observe(document.getElementById('cards'), { childList: true, subtree: true });
+  const cardsContainer = document.getElementById('cards') || document.querySelector('.cards-section');
+  if (cardsContainer) {
+    observer.observe(cardsContainer, { childList: true, subtree: true });
+  } else {
+    // fallback: traduce y anima si ya están presentes
+    if (window.updateI18nContent) window.updateI18nContent();
+    const cards = document.querySelectorAll('.info-card');
+    if (cards.length) animateInfoCards(cards);
+  }
 });
 
 // --- Animación SplitText para #chars ---
 
 function animateInfoCards(cards) {
   const isMobile = window.innerWidth <= 991;
+  if (window.updateI18nContent) window.updateI18nContent();
   cards.forEach((card, i) => {
     let xFrom = card.classList.contains('from-left')
       ? (isMobile ? '-60vw' : '-100vw')
@@ -104,9 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (btn !== exceptBtn && btn.getAttribute('aria-expanded') === 'true') {
           btn.setAttribute('aria-expanded', 'false');
           // Icono gira a +
-          gsap.to(icon, {rotate: 0, duration: 0.05, ease: 'power2.inOut', onComplete: () => {
-            icon.className = 'bi bi-plus';
-          }});
+          gsap.to(icon, {
+            rotate: 0, duration: 0.05, ease: 'power2.inOut', onComplete: () => {
+              icon.className = 'bi bi-plus';
+            }
+          });
           // Oculta descripción con animación
           gsap.to(desc, {
             height: 0,
@@ -132,9 +144,11 @@ document.addEventListener('DOMContentLoaded', function () {
           closeAllExcept(btn);
           btn.setAttribute('aria-expanded', 'true');
           // Icono gira a -
-          gsap.to(icon, {rotate: 180, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
-            icon.className = 'bi bi-dash';
-          }});
+          gsap.to(icon, {
+            rotate: 180, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
+              icon.className = 'bi bi-dash';
+            }
+          });
           // Mostrar descripción con animación de altura y SplitText
           desc.style.display = 'block';
           desc.hidden = false;
@@ -160,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
             duration: 0.4,
             ease: 'power2.out',
             onStart: () => {
-              gsap.fromTo(desc, {clipPath: 'inset(0 0 100% 0)'}, {clipPath: 'inset(0 0 0% 0)', duration: 0.4, ease: 'power2.out'});
+              gsap.fromTo(desc, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.4, ease: 'power2.out' });
               if (window.SplitText && desc._split) {
                 gsap.to(desc._split.chars, {
                   x: 0,
@@ -176,13 +190,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
           // Adaptar la card al nuevo tamaño
-          gsap.to(card, {height: 'auto', duration: 0.4, ease: 'power2.out'});
+          gsap.to(card, { height: 'auto', duration: 0.4, ease: 'power2.out' });
         } else {
           btn.setAttribute('aria-expanded', 'false');
           // Icono gira a +
-          gsap.to(icon, {rotate: 0, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
-            icon.className = 'bi bi-plus';
-          }});
+          gsap.to(icon, {
+            rotate: 0, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
+              icon.className = 'bi bi-plus';
+            }
+          });
           // Oculta descripción con animación
           gsap.to(desc, {
             height: 0,
@@ -195,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
           // Adaptar la card al nuevo tamaño
-          gsap.to(card, {height: 'auto', duration: 0.4, ease: 'power2.out'});
+          gsap.to(card, { height: 'auto', duration: 0.4, ease: 'power2.out' });
         }
       });
     });

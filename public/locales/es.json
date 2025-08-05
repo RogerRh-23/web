@@ -30,47 +30,70 @@
     "iso37001": "Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno"
   },
   "cards": {
-    "who_are_we": "¿Quiénes somos?",
-    "who_are_we_text": "Desde el inicio de nuestras operaciones en 2013 en Latin American Certification & Systems (LACS) nos hemos comprometido en apoyar a las organizaciones en México a través de nuestros servicios de certificación de sistemas de gestión y capacitación para facilitar su acceso a nuevos mercados y coadyuvar al logro de sus objetivos estratégicos. Nuestro personal tiene amplia experiencia en la aplicación de normas de evaluación de la conformidad y sistemas de gestión, nos diferenciamos por tener un estrecho acercamiento con el cliente brindándole una escucha activa para la atención oportuna a sus necesidades. A través de nuestro portafolio de servicios ofrecemos soluciones que estamos seguros contribuirán al éxito de su organización.",
-    "mission": "Misión",
-    "mission_text": "En LACS somos un equipo multidisciplinario y experimentado que brindamos servicios de evaluación y transferencia de conocimientos, creando confianza, valor e impulsando el desarrollo de nuestros clientes.",
-    "vision": "Visión",
-    "vision_text": "En LACS buscamos un crecimiento sostenible en los mercados nacionales e internacionales implementando las mejores prácticas tecnológicas disponibles apegados a nuestros valores institucionales.",
-    "values": "Valores",
-    "values_list": {
-      "ethics": "Ética",
-      "ethics_desc": "Definida como la conducta humana, lo correcto e incorrecto, el buen vivir, la moral y el deber. En LACS, la integridad y responsabilidad son lineamientos que establecemos como base de nuestra actuación.",
-      "responsibility": "Responsabilidad",
-      "responsibility_desc": "La capacidad de cumplir con las obligaciones, asumiendo los compromisos derivados de nuestra toma de decisiones.",
-      "impartiality": "Imparcialidad",
-      "impartiality_desc": "Nuestros servicios y decisiones están basadas en evidencias objetivas y no son influidas por ningún interés particular.",
-      "non_discrimination": "No discriminación",
-      "non_discrimination_desc": "Damos un trato equitativo a proveedores o cualquier persona relacionada con LACS y brindamos nuestros servicios guiados por los valores que nos rigen.",
-      "persistence": "Persistencia",
-      "persistence_desc": "En LACS somos firmes y constantes en nuestro actuar con impulso y esfuerzo a pesar de los obstáculos y dificultades que se presenten.",
-      "passion": "Pasión",
-      "passion_desc": "En LACS nos caracterizamos por tener interés, motivación, trabajo en equipo para enfrentar cada proyecto y desafío.",
-      "confidentiality": "Confidencialidad",
-      "confidentiality_desc": "Garantizamos que la información sensible de nuestros proveedores y demás partes interesadas relacionadas con nuestros servicios sea utilizada de manera adecuada y responsable y no sea divulgada de manera no autorizada."
+    "who": {
+      "title": "¿Quiénes somos?",
+      "text": "Desde el inicio de nuestras operaciones en 2013 en Latin American Certification & Systems (LACS) nos hemos comprometido en apoyar a las organizaciones en México a través de nuestros servicios de certificación de sistemas de gestión y capacitación para facilitar su acceso a nuevos mercados y coadyuvar al logro de sus objetivos estratégicos. Nuestro personal tiene amplia experiencia en la aplicación de normas de evaluación de la conformidad y sistemas de gestión, nos diferenciamos por tener un estrecho acercamiento con el cliente brindándole una escucha activa para la atención oportuna a sus necesidades. A través de nuestro portafolio de servicios ofrecemos soluciones que estamos seguros contribuirán al éxito de su organización."
     },
-    "sectors": "Sectores",
-    "sectors_text": "Esta lista de alcances de Acreditación se basa en la nomenclatura estadística de actividades económicas (NACE Rev. 2), publicada por la Comisión de la Comunidad Europea en el periódico oficial L 393/1, del 30.12.2006, la cual se ocupará para los Sistemas de Gestión de Calidad y los Sistemas de Gestión de Seguridad y Salud en el Trabajo (SASST)",
-    "sectors_list_1": [
-      "12 Químicos, productos químicos y fibras",
-      "14 Hule y productos de plástico",
-      "17 Metales básicos y productos de metal fabricados",
-      "18 Maquinaria y equipo",
-      "22 Otro equipo de transporte",
-      "28 Construcción"
-    ],
-    "sectors_list_2": [
-      "29 Comercio al mayoreo y menudeo; Reparación de vehículos de motor, motocicletas y bienes personales y domésticos",
-      "31 Transporte, almacenamiento y comunicación",
-      "34 Servicios de ingeniería",
-      "35 Otros servicios",
-      "36 Administración pública",
-      "37 Educación"
-    ]
+    "mission": {
+      "title": "Misión",
+      "text": "En LACS somos un equipo multidisciplinario y experimentado que brindamos servicios de evaluación y transferencia de conocimientos, creando confianza, valor e impulsando el desarrollo de nuestros clientes."
+    },
+    "vision": {
+      "title": "Visión",
+      "text": "En LACS buscamos un crecimiento sostenible en los mercados nacionales e internacionales implementando las mejores prácticas tecnológicas disponibles apegados a nuestros valores institucionales."
+    },
+    "values": {
+      "title": "Valores",
+      "list": {
+        "0": {
+          "title": "Ética",
+          "desc": "Definida como la conducta humana, lo correcto e incorrecto, el buen vivir, la moral y el deber. En LACS, la integridad y responsabilidad son lineamientos que establecemos como base de nuestra actuación."
+        },
+        "1": {
+          "title": "Responsabilidad",
+          "desc": "La capacidad de cumplir con las obligaciones, asumiendo los compromisos derivados de nuestra toma de decisiones."
+        },
+        "2": {
+          "title": "Imparcialidad",
+          "desc": "Nuestros servicios y decisiones están basadas en evidencias objetivas y no son influidas por ningún interés particular."
+        },
+        "3": {
+          "title": "No discriminación",
+          "desc": "Damos un trato equitativo a proveedores o cualquier persona relacionada con LACS y brindamos nuestros servicios guiados por los valores que nos rigen."
+        },
+        "4": {
+          "title": "Persistencia",
+          "desc": "En LACS somos firmes y constantes en nuestro actuar con impulso y esfuerzo a pesar de los obstáculos y dificultades que se presenten."
+        },
+        "5": {
+          "title": "Pasión",
+          "desc": "En LACS nos caracterizamos por tener interés, motivación, trabajo en equipo para enfrentar cada proyecto y desafío."
+        },
+        "6": {
+          "title": "Confidencialidad",
+          "desc": "Garantizamos que la información sensible de nuestros proveedores y demás partes interesadas relacionadas con nuestros servicios sea utilizada de manera adecuada y responsable y no sea divulgada de manera no autorizada."
+        }
+      }
+    },
+    "sectors": {
+      "label": "Sectores",
+      "title": "ALCANCES DE LA ACREDITACIÓN",
+      "desc": "Esta lista de alcances de Acreditación se basa en la nomenclatura estadística de actividades económicas (NACE Rev. 2), publicada por la Comisión de la Comunidad Europea en el periódico oficial L 393/1, del 30.12.2006, la cual se ocupará para los Sistemas de Gestión de Calidad y los Sistemas de Gestión de Seguridad y Salud en el Trabajo (SASST)",
+      "list": {
+        "0": "12 Químicos, productos químicos y fibras",
+        "1": "14 Hule y productos de plástico",
+        "2": "17 Metales básicos y productos de metal fabricados",
+        "3": "18 Maquinaria y equipo",
+        "4": "22 Otro equipo de transporte",
+        "5": "28 Construcción",
+        "6": "29 Comercio al mayoreo y menudeo; Reparación de vehículos de motor, motocicletas y bienes personales y domésticos",
+        "7": "31 Transporte, almacenamiento y comunicación",
+        "8": "34 Servicios de ingeniería",
+        "9": "35 Otros servicios",
+        "10": "36 Administración pública",
+        "11": "37 Educación"
+      }
+    }
   },
   "login": {
     "welcome_message": "¡Bienvenido!",

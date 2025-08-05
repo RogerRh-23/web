@@ -229,12 +229,22 @@ function robustInitDropdowns() {
 
 // Inicialización reactiva usando MutationObserver para SPA y recarga parcial
 function startDropdownObserver() {
-  robustInitDropdowns();
+  let initialized = false;
+  function safeInit() {
+    if (!initialized) {
+      robustInitDropdowns();
+      initialized = true;
+    }
+  }
+  safeInit();
   const observer = new MutationObserver(() => {
     const hasDesktopNav = document.querySelector('.nav-link[data-dropdown]');
     const hasMobileNav = document.querySelector('.navbar-mobile-link[aria-label]');
-    if (hasDesktopNav || hasMobileNav) {
+    const hasDropdowns = document.querySelector('.dropdown-gsap-container');
+    if ((hasDesktopNav || hasMobileNav) && !initialized && !hasDropdowns) {
       robustInitDropdowns();
+      initialized = true;
+      observer.disconnect();
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
