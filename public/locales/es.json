@@ -129,7 +129,14 @@
     "message": "Mensaje",
     "send_button": "Enviar",
     "success_message": "Tu mensaje ha sido enviado con éxito.",
-    "error_message": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo."
+    "error_message": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.",
+    "directory_title": "Directorio de Personal",
+    "member1_role": "Director",
+    "member2_role": "Gerente",
+    "member3_role": "Ventas y Marketing",
+    "member4_role": "Soporte Técnico",
+    "member5_role": "Administración",
+    "member6_role": "Recursos Humanos"
   },
   "certificates": {
     "title": "Certificados",
@@ -196,5 +203,12 @@
         "Webinars"
       ]
     }
+  },
+  "snackbar": {
+    "success": "Operación exitosa.",
+    "error": "Error al procesar la solicitud.",
+    "info": "Información importante.",
+    "warning": "Advertencia: Verifica los datos ingresados.",
+    "file": "Archivo cargado correctamente."
   }
 }

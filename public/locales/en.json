@@ -130,7 +130,14 @@
     "message": "Message",
     "send_button": "Send",
     "success_message": "Your message has been sent successfully.",
-    "error_message": "There was an error sending your message. Please try again later."
+    "error_message": "There was an error sending your message. Please try again later.",
+    "directory_title": "Staff Directory",
+    "member1_role": "Director",
+    "member2_role": "Manager",
+    "member3_role": "Sales and Marketing",
+    "member4_role": "Technical Support",
+    "member5_role": "Administration",
+    "member6_role": "Human Resources"
   },
   "certificates": {
     "title": "Certificates",
