@@ -4,31 +4,30 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Observa cambios en el DOM para inicializar los botones de idioma tras cargar navbars dinámicamente
   var langBtnInit = false;
-  // function initLangSwitchers() {
-  //   var btnDesktop = document.getElementById('lang-switcher');
-  //   var btnMobile = document.getElementById('lang-switcher-mobile');
-  //   if (btnDesktop) {
-  //     btnDesktop.onclick = handleLangSwitch;
-  //   }
-  //   if (btnMobile) {
-  //     btnMobile.onclick = handleLangSwitch;
-  //   }
-  // }
-  // (MutationObserver desactivado para descartar ciclos infinitos)
-  // Inicializa por si ya están presentes
-  // setTimeout(function () {
-  //   updateLangBtnAll();
-  //   initLangSwitchers();
-  // }, 300);
+  function initLangSwitchers() {
+    var btnDesktop = document.getElementById('lang-switcher');
+    var btnMobile = document.getElementById('lang-switcher-mobile');
+    if (btnDesktop) btnDesktop.onclick = handleLangSwitch;
+    if (btnMobile) btnMobile.onclick = handleLangSwitch;
+  }
+  window.initLangSwitchers = initLangSwitchers;
+
+  // Leer idioma guardado en localStorage, si existe
+  var savedLang = localStorage.getItem('selectedLang') || 'es';
   i18next.use(i18nextXHRBackend).init({
-    lng: 'es',
+    lng: savedLang,
     fallbackLng: 'es',
     debug: false,
     backend: {
       loadPath: './locales/{{lng}}.json'
+    },
+    interpolation: {
+      escapeValue: false // Permite HTML y símbolos
     }
   }, function (err, t) {
     updateContent();
+    updateLangBtnAll();
+    initLangSwitchers();
   });
 
   // Traducir cuando i18next esté listo o cargue recursos (para cards dinámicas)
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
       var value = i18next.t(key, { defaultValue: key });
-      el.innerText = value;
+      el.innerHTML = value;
       console.log('Clave:', key, '| Valor:', value, '| Idioma:', i18next.language);
     });
     if (window.updateI18nContent && window.updateI18nContent !== updateContent) window.updateI18nContent();
@@ -57,11 +56,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var btnMobile = document.getElementById('lang-switcher-mobile');
     if (btnDesktop) btnDesktop.innerHTML = '<i class="bi bi-translate"></i> ' + nextLang;
     if (btnMobile) btnMobile.innerHTML = '<i class="bi bi-translate"></i> ' + nextLang;
+    updateContent();
   }
   updateLangBtnAll();
   function handleLangSwitch() {
     var newLang = i18next.language === 'es' ? 'en' : 'es';
     console.log('Cambiando idioma a:', newLang);
+    // Guardar idioma en localStorage
+    localStorage.setItem('selectedLang', newLang);
     i18next.changeLanguage(newLang, function (err) {
       if (err) {
         alert('No se pudo cargar el idioma: ' + newLang + '. ¿Existe locales/' + newLang + '.json?');
@@ -74,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (window.updateI18nContent) window.updateI18nContent();
         updateLangBtnAll();
       });
+      updateContent();
     });
   }
   // (No agregar listeners aquí, solo en initLangSwitchers)

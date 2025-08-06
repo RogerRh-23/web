@@ -34,34 +34,38 @@
     </div>
     <div class="footer-options">
       <div class="footer-options-col">
-        <h3 data-i18n="about">Más sobre nosotros</h3>
+        <h3 data-i18n="footer.about">Más sobre nosotros</h3>
         <ul class="footer-options-list">
-          <li><a href="/public/components/footer/Nosotros.html" data-i18n="faq">Preguntas frecuentes</a></li>
-          <li><a href="/public/components/footer/Nosotros.html" data-i18n="accreditations">Nuestras acreditaciones</a>
+          <li><a href="/public/components/footer/Nosotros.html" data-i18n="footer.faq">Preguntas frecuentes</a></li>
+          <li><a href="/public/components/footer/Nosotros.html" data-i18n="footer.accreditations">Nuestras
+              acreditaciones</a>
           </li>
         </ul>
       </div>
       <div class="footer-options-col">
-        <h3 data-i18n="regulations">Reglamentos</h3>
+        <h3 data-i18n="footer.regulations">Reglamentos</h3>
         <ul class="footer-options-list">
-          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="brand_use">Reglamento de uso de marca</a>
+          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="footer.brand_use">Reglamento de uso de
+              marca</a>
           </li>
-          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="certified_company">Reglamento de empresa
+          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="footer.certified_company">Reglamento de
+              empresa
               certificada</a></li>
         </ul>
       </div>
       <div class="footer-options-col">
-        <h3 data-i18n="policies">Políticas</h3>
+        <h3 data-i18n="footer.policies">Políticas</h3>
         <ul class="footer-options-list">
-          <li><a href="/public/components/footer/Politicas.html" data-i18n="privacy">Aviso de privacidad</a></li>
-          <li><a href="/public/components/footer/Politicas.html" data-i18n="confidentiality">Política de
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="footer.confidentiality">Política de
               confidencialidad</a></li>
-          <li><a href="/public/components/footer/Politicas.html" data-i18n="impartiality">Política de Imparcialidad</a>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="footer.impartiality">Política de
+              Imparcialidad</a>
           </li>
         </ul>
       </div>
       <div class="footer-options-col">
-        <h3 data-i18n="contact">Contacto</h3>
+        <h3 data-i18n="footer.contact">Contacto</h3>
         <ul class="footer-options-list">
           <li>
             <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp">
@@ -69,7 +73,7 @@
             </a>
           </li>
           <li>
-            <a href="/public/components/contacto.html" data-i18n="mail">
+            <a href="/public/components/contacto.html" data-i18n="footer.mail">
               <i class="fa-regular fa-envelope"></i> Correo: <span style="font-style:italic;">info@lacs.org.mx</span>
             </a>
           </li>
@@ -77,7 +81,7 @@
       </div>
     </div>
     <div class="footer-copy">
-      <span data-i18n="copyright">&copy; 2025 Latin America Certification & Systems. Todos los derechos
+      <span data-i18n="footer.copyright">&copy; 2025 Latin America Certification & Systems. Todos los derechos
         reservados.</span>
     </div>
   </div>
@@ -88,7 +92,7 @@
     var year = new Date().getFullYear();
     var copySpan = document.querySelector('.footer-copy span');
     if (copySpan && window.i18next) {
-      copySpan.innerHTML = i18next.t('copyright', { year: year });
+      copySpan.innerHTML = i18next.t('footer.copyright', { year });
     }
   }
   document.addEventListener('DOMContentLoaded', function () {
@@ -97,4 +101,13 @@
       i18next.on('languageChanged', updateFooterCopyright);
     }
   });
+
+  // Evitar que updateContent de i18n.js sobrescriba el copyright dinámico
+  if (window.updateI18nContent) {
+    var originalUpdateI18nContent = window.updateI18nContent;
+    window.updateI18nContent = function () {
+      originalUpdateI18nContent();
+      updateFooterCopyright();
+    };
+  }
 </script>

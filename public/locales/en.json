@@ -19,9 +19,9 @@
     "privacy": "Privacy notice",
     "confidentiality": "Confidentiality policy",
     "impartiality": "Impartiality policy",
-    "copyright": "All rights reserved.",
+    "copyright": "© {{year}} Latin America Certification & Systems. All rights reserved.",
     "contact": "Contact",
-    "mail": "Mail"
+    "mail": "Email: info@lacs.org.mx"
   },
   "ema": {
     "title": "EMA Accreditations",
@@ -29,8 +29,8 @@
     "iso27001": "ISO 27001:2013 Information Security Management Accreditation",
     "iso37001": "ISO 37001:2016 Anti-bribery Management Accreditation"
   },
-  "novedades": {
-    "title": "News"
+  "news": {
+    "news_title": "News"
   },
   "dev_panel": {
     "title": "Developer Panel",

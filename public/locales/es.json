@@ -19,15 +19,28 @@
     "privacy": "Aviso de privacidad",
     "confidentiality": "Política de confidencialidad",
     "impartiality": "Política de Imparcialidad",
-    "copyright": "Todos los derechos reservados.",
+    "copyright": "© {{year}} Latin America Certification & Systems. Todos los derechos reservados.",
     "contact": "Contacto",
-    "mail": "Correo"
+    "mail": "Correo: info@lacs.org.mx"
   },
   "ema": {
     "title": "Acreditaciones EMA",
     "iso9001": "Acreditación ISO 9001:2015 Sistemas de Gestion de Calidad",
     "iso27001": "Acreditación ISO 27001:2013 Sistemas de Gestión de Seguridad de la Información",
     "iso37001": "Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno"
+  },
+  "news": {
+    "news_title": "Novedades"
+  },
+  "dev_panel": {
+    "title": "Panel de Desarrollador",
+    "create_admin": "Crear Administrador",
+    "edit_admin": "Editar Administrador",
+    "delete_admin": "Eliminar Administrador",
+    "admin_list": "Lista de Administradores",
+    "admin_created": "Administrador creado exitosamente.",
+    "admin_updated": "Administrador actualizado exitosamente.",
+    "admin_deleted": "Administrador eliminado exitosamente."
   },
   "cards": {
     "who": {

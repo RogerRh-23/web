@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +11,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     @media (max-width: 991.98px) {
-      #footer { margin-bottom: 90px !important; }
-      .main-content-navbar-padding { padding-top: 0 !important; }
+      #footer {
+        margin-bottom: 90px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
     }
+
     @media (min-width: 992px) {
-      .main-content-navbar-padding { padding-top: 70px; }
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div id="navbar-container"></div>
   <div id="navbar-mobile-placeholder"></div>
@@ -25,12 +35,14 @@
     <section class="dev-panel-section">
       <h2>Panel de Desarrollador</h2>
       <div class="dev-panel-actions">
-        <button id="btn-logout-dev" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i> Cerrar sesión dev</button>
+        <button id="btn-logout-dev" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i> Cerrar sesión
+          dev</button>
       </div>
       <div class="dev-panel-cards">
         <div class="dev-panel-card">
           <h3><i class="bi bi-archive"></i> Certificados cargados</h3>
-          <button id="btn-refresh-certs" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
+          <button id="btn-refresh-certs" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i>
+            Actualizar</button>
           <div id="certs-count" class="dev-certs-count">Cargando...</div>
         </div>
         <div class="dev-panel-card">
@@ -53,12 +65,14 @@
         </div>
         <div class="dev-panel-card">
           <h3><i class="bi bi-shield-lock"></i> Probar token actual</h3>
-          <button id="btn-check-token" class="btn btn-info"><i class="bi bi-shield-check"></i> Ver datos de mi token</button>
+          <button id="btn-check-token" class="btn btn-info"><i class="bi bi-shield-check"></i> Ver datos de mi
+            token</button>
           <div id="token-info" class="dev-token-info"></div>
         </div>
         <div class="dev-panel-card">
           <h3><i class="bi bi-clipboard-data"></i> Registro de logs</h3>
-          <button id="btn-refresh-logs" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i> Actualizar logs</button>
+          <button id="btn-refresh-logs" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i> Actualizar
+            logs</button>
           <ul id="dev-logs-list" class="dev-logs-list"></ul>
         </div>
       </div>
@@ -69,13 +83,15 @@
   <script src="../js/gsap.js"></script>
   <script src="../js/navbar-dropdown.js"></script>
   <script src="../js/footer.js"></script>
+  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
   <script>
     // Carga dinámica de navbar, navbar-mobile y footer
     function loadExternalScript(src, callback) {
       var script = document.createElement('script');
       script.src = src;
       script.async = false;
-      script.onload = function() {
+      script.onload = function () {
         if (typeof callback === 'function') callback();
       };
       document.body.appendChild(script);
@@ -96,7 +112,7 @@
           });
           if (!window._navbarDropdownLoaded) {
             window._navbarDropdownLoaded = true;
-            loadExternalScript('../../js/navbar-dropdown.js', function() {
+            loadExternalScript('../../js/navbar-dropdown.js', function () {
               if (typeof window.initDropdowns === 'function') window.initDropdowns();
             });
           } else {
@@ -107,11 +123,11 @@
     function isMobile() {
       return window.innerWidth < 992;
     }
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       if (isMobile()) loadNavbar('mobile');
       else document.getElementById('navbar-mobile-placeholder').innerHTML = '';
     });
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
       if (isMobile()) loadNavbar('mobile');
       else loadNavbar('desktop');
       fetch('./footer.html')
@@ -125,19 +141,19 @@
               link.href = link.href.replace('/components/components/', '/components/');
             }
           });
-          loadExternalScript('../../js/footer.js', function() {
+          loadExternalScript('../../js/footer.js', function () {
             if (typeof window.initFooter === 'function') window.initFooter();
           });
         });
     });
 
     // Funcionalidad extra para el panel dev
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Crear admin
       const form = document.getElementById('create-admin-form');
       const msg = document.getElementById('msg-create-admin');
       if (form) {
-        form.addEventListener('submit', async function(e) {
+        form.addEventListener('submit', async function (e) {
           e.preventDefault();
           msg.textContent = '';
           msg.className = 'msg';
@@ -177,7 +193,7 @@
       const btnListUsers = document.getElementById('btn-list-users');
       const usersList = document.getElementById('users-list');
       if (btnListUsers && usersList) {
-        btnListUsers.addEventListener('click', async function() {
+        btnListUsers.addEventListener('click', async function () {
           usersList.innerHTML = '';
           const devToken = localStorage.getItem('dev_token');
           if (!devToken) {
@@ -204,7 +220,7 @@
       const btnCheckToken = document.getElementById('btn-check-token');
       const tokenInfo = document.getElementById('token-info');
       if (btnCheckToken && tokenInfo) {
-        btnCheckToken.addEventListener('click', async function() {
+        btnCheckToken.addEventListener('click', async function () {
           tokenInfo.textContent = '';
           const devToken = localStorage.getItem('dev_token');
           if (!devToken) {
@@ -297,12 +313,14 @@
       // Logout dev
       const btnLogoutDev = document.getElementById('btn-logout-dev');
       if (btnLogoutDev) {
-        btnLogoutDev.addEventListener('click', function() {
+        btnLogoutDev.addEventListener('click', function () {
           localStorage.removeItem('dev_token');
           window.location.reload();
         });
       }
     });
   </script>
+  <script src="../js/i18n.js"></script>
 </body>
+
 </html>
