@@ -83,9 +83,12 @@ body {
   color: #222;
   height: auto;
   overflow-y: scroll;
-  overflow-x: hidden; /* Evita scroll lateral */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  overflow-x: hidden;
+  /* Evita scroll lateral */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 #google_translate_element {
@@ -2669,7 +2672,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   }
 }
 .politicas-main {
-  max-width: 900px;
+  max-width: 80rem;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 3.5rem 1.5rem;
   background: #fff;
@@ -2679,18 +2682,11 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 .politicas-main h1 {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #14323f;
+  color: #1976a5;
   margin-bottom: 2.2rem;
+  margin-top: 2.2rem;
   text-align: center;
   letter-spacing: -1px;
-}
-.politicas-main h2 {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #1976a5;
-  margin-bottom: 1.1rem;
-  margin-top: 2.2rem;
-  letter-spacing: -0.5px;
 }
 .politicas-main section {
   margin-bottom: 2.5rem;
@@ -2713,9 +2709,6 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   }
   .politicas-main h1 {
     font-size: 1.3rem;
-  }
-  .politicas-main h2 {
-    font-size: 1.05rem;
   }
   .politicas-main section {
     padding: 1rem 0.2rem 1.2rem 0.2rem;
@@ -2775,18 +2768,10 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 .reglamentos-container h1 {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #14323f;
+  color: #1976a5;
   margin-bottom: 2.2rem;
   text-align: center;
   letter-spacing: -1px;
-}
-.reglamentos-container h2 {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #1976a5;
-  margin-bottom: 1.1rem;
-  margin-top: 2.2rem;
-  letter-spacing: -0.5px;
 }
 .reglamentos-container section {
   margin-bottom: 2.5rem;
@@ -2809,9 +2794,6 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   }
   .reglamentos-container h1 {
     font-size: 1.3rem;
-  }
-  .reglamentos-container h2 {
-    font-size: 1.05rem;
   }
   .reglamentos-container section {
     padding: 1rem 0.2rem 1.2rem 0.2rem;
