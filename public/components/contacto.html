@@ -26,26 +26,26 @@
           Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
         <div class="contacto-flex">
           <form class="contact-form" autocomplete="off">
-            <label for="nombre" data-i18n="contactname">Nombre</label>
+            <label for="nombre" data-i18n="contact.name">Nombre</label>
             <input type="text" id="nombre" name="nombre" required>
 
-            <label for="email" data-i18n="contactemail">Email</label>
+            <label for="email" data-i18n="contact.email">Email</label>
             <input type="email" id="email" name="email" required>
 
-            <label for="telefono" data-i18n="contactphone">Teléfono</label>
+            <label for="telefono" data-i18n="contact.phone">Teléfono</label>
             <input type="tel" id="telefono" name="telefono" required>
 
-            <label for="asunto" data-i18n="contactsubject">Asunto</label>
+            <label for="asunto" data-i18n="contact.subject">Asunto</label>
             <input type="text" id="asunto" name="asunto">
 
-            <label for="empresa" data-i18n="contactcompany">Empresa</label>
+            <label for="empresa" data-i18n="contact.company">Empresa</label>
             <input type="text" id="empresa" name="empresa">
 
-            <label for="mensaje" data-i18n="contactmensaje">Mensaje</label>
+            <label for="mensaje" data-i18n="contact.message">Mensaje</label>
             <textarea id="mensaje" name="mensaje" rows="4"></textarea>
 
             <button type="submit" class="btn-enviar-contacto">
-              <i class="bi bi-envelope-fill" data-i18n="contactsend_button"></i>Enviar mensaje
+              <i class="bi bi-envelope-fill"></i> <span data-i18n="contact.send_button">Enviar mensaje</span>
             </button>
             <div id="contacto-msg"></div>
           </form>
@@ -128,6 +128,8 @@
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.initLangSwitchers) window.initLangSwitchers();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
@@ -152,6 +154,8 @@
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.initLangSwitchers) window.initLangSwitchers();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
@@ -178,6 +182,8 @@
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
+        if (window.updateI18nContent) window.updateI18nContent();
+        if (window.initLangSwitchers) window.initLangSwitchers();
         window.initFooter && window.initFooter();
       });
   </script>

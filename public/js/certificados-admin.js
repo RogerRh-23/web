@@ -4,24 +4,24 @@ document.addEventListener('DOMContentLoaded', function () {
   let certificados = [];
 
   function animateButton(btn) {
-    btn.addEventListener('mouseenter', function() {
+    btn.addEventListener('mouseenter', function () {
       if (window.gsap) {
-        gsap.to(btn, {scale: 1.08, boxShadow: '0 6px 18px rgba(20,30,60,0.18)', duration: 0.18, ease: 'power2.out'});
+        gsap.to(btn, { scale: 1.08, boxShadow: '0 6px 18px rgba(20,30,60,0.18)', duration: 0.18, ease: 'power2.out' });
       }
     });
-    btn.addEventListener('mouseleave', function() {
+    btn.addEventListener('mouseleave', function () {
       if (window.gsap) {
-        gsap.to(btn, {scale: 1, boxShadow: '0 2px 8px rgba(20,30,60,0.10)', duration: 0.18, ease: 'power2.out'});
+        gsap.to(btn, { scale: 1, boxShadow: '0 2px 8px rgba(20,30,60,0.10)', duration: 0.18, ease: 'power2.out' });
       }
     });
-    btn.addEventListener('mousedown', function() {
+    btn.addEventListener('mousedown', function () {
       if (window.gsap) {
-        gsap.to(btn, {scale: 0.93, duration: 0.12, ease: 'power2.in'});
+        gsap.to(btn, { scale: 0.93, duration: 0.12, ease: 'power2.in' });
       }
     });
-    btn.addEventListener('mouseup', function() {
+    btn.addEventListener('mouseup', function () {
       if (window.gsap) {
-        gsap.to(btn, {scale: 1.08, duration: 0.12, ease: 'power2.out'});
+        gsap.to(btn, { scale: 1.08, duration: 0.12, ease: 'power2.out' });
       }
     });
   }
@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
     `;
     if (window.gsap) {
-      gsap.from('.admin-certificados-header', {opacity: 0, y: 40, duration: 0.7, ease: 'power2.out'});
-      gsap.from('.admin-certificados-list', {opacity: 0, y: 40, duration: 0.7, delay: 0.2, ease: 'power2.out'});
+      gsap.from('.admin-certificados-header', { opacity: 0, y: 40, duration: 0.7, ease: 'power2.out' });
+      gsap.from('.admin-certificados-list', { opacity: 0, y: 40, duration: 0.7, delay: 0.2, ease: 'power2.out' });
     }
 
     const rows = document.querySelectorAll('.cert-row');
     let detalleRow = null;
     let detalleIdx = null;
     rows.forEach(row => {
-      row.addEventListener('click', function(e) {
+      row.addEventListener('click', function (e) {
         const idx = row.getAttribute('data-index');
         if (detalleRow && detalleIdx === idx) {
           detalleRow.remove();
@@ -109,15 +109,15 @@ document.addEventListener('DOMContentLoaded', function () {
             ease: 'power2.out'
           });
           gsap.from(rule, {
-            cssRule: {borderRadius: '2.5rem', boxShadow: '0 0 0 rgba(0,0,0,0)'},
+            cssRule: { borderRadius: '2.5rem', boxShadow: '0 0 0 rgba(0,0,0,0)' },
             duration: 0.5,
             ease: 'power2.out'
           });
         } else if (window.gsap) {
-          gsap.from('.admin-certificados-detalle-box', {opacity: 0, y: 30, duration: 0.5, ease: 'power2.out'});
+          gsap.from('.admin-certificados-detalle-box', { opacity: 0, y: 30, duration: 0.5, ease: 'power2.out' });
         }
         if (btnEdit) {
-          btnEdit.onclick = function(e) {
+          btnEdit.onclick = function (e) {
             e.preventDefault();
             mostrarModalEditar(idx);
           };
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const isRow = e.target.closest('.cert-row');
       const isDetalle = e.target.closest('.admin-certificados-detalle-row');
       if (!isRow && !isDetalle && detalleRow) {
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
       const btnAgregar = document.getElementById('btn-add');
       if (btnAgregar) {
-        btnAgregar.onclick = function(e) {
+        btnAgregar.onclick = function (e) {
           e.preventDefault();
           mostrarModal();
         };
@@ -205,12 +205,12 @@ document.addEventListener('DOMContentLoaded', function () {
     cerrarModalEditar.addEventListener('click', ocultarModalEditar);
   }
   if (modalEditar) {
-    modalEditar.addEventListener('click', function(e) {
+    modalEditar.addEventListener('click', function (e) {
       if (e.target === modalEditar) ocultarModalEditar();
     });
   }
   if (formEditar) {
-    formEditar.addEventListener('submit', function(e) {
+    formEditar.addEventListener('submit', function (e) {
       e.preventDefault();
       if (editIdx === null) return;
       const certEditado = {
@@ -235,30 +235,32 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: JSON.stringify(certEditado)
       })
-      .then(res => {
-        if (!res.ok) throw new Error('Error al actualizar certificado');
-        return res.json();
-      })
-      .then(() => {
-        ocultarModalEditar();
-        renderCertificados();
-      })
-      .catch(err => {
-        alert(err.message);
-      });
+        .then(res => {
+          if (!res.ok) throw new Error('Error al actualizar certificado');
+          return res.json();
+        })
+        .then(() => {
+          ocultarModalEditar();
+          renderCertificados();
+          if (window.snackbarCambiosGuardados) window.snackbarCambiosGuardados();
+        })
+        .catch(err => {
+          if (window.snackbarCertificadoError) window.snackbarCertificadoError();
+          alert(err.message);
+        });
     });
   }
 
-    // Ocultar detalle al hacer clic fuera de la tabla
-    document.addEventListener('click', function(e) {
-      const isRow = e.target.closest('.cert-row');
-      const isDetalle = e.target.closest('.admin-certificados-detalle-row');
-      if (!isRow && !isDetalle && detalleRow) {
-        detalleRow.remove();
-        detalleRow = null;
-        detalleIdx = null;
-      }
-    });
+  // Ocultar detalle al hacer clic fuera de la tabla
+  document.addEventListener('click', function (e) {
+    const isRow = e.target.closest('.cert-row');
+    const isDetalle = e.target.closest('.admin-certificados-detalle-row');
+    if (!isRow && !isDetalle && detalleRow) {
+      detalleRow.remove();
+      detalleRow = null;
+      detalleIdx = null;
+    }
+  });
 
   // Modal agregar certificado
   const modal = document.getElementById('modalAgregarCertificado');
@@ -283,13 +285,13 @@ document.addEventListener('DOMContentLoaded', function () {
     cerrarModal.addEventListener('click', ocultarModal);
   }
   if (modal) {
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
       if (e.target === modal) ocultarModal();
     });
   }
 
   if (formAgregar) {
-    formAgregar.addEventListener('submit', function(e) {
+    formAgregar.addEventListener('submit', function (e) {
       e.preventDefault();
       const archivoInput = formAgregar.archivoCertificado;
       const archivo = archivoInput && archivoInput.files[0];
@@ -313,17 +315,21 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: formData
       })
-      .then(res => {
-        if (!res.ok) throw new Error('Error al agregar certificado');
-        return res.json();
-      })
-      .then(() => {
-        ocultarModal();
-        renderCertificados();
-      })
-      .catch(err => {
-        alert(err.message);
-      });
+        .then(res => {
+          if (!res.ok) throw new Error('Error al agregar certificado');
+          return res.json();
+        })
+        .then(() => {
+          ocultarModal();
+          renderCertificados();
+          if (window.snackbarCertificadoAgregado) window.snackbarCertificadoAgregado();
+          if (window.snackbarArchivoCargado) window.snackbarArchivoCargado();
+        })
+        .catch(err => {
+          if (window.snackbarCertificadoError) window.snackbarCertificadoError();
+          if (window.snackbarArchivoError) window.snackbarArchivoError();
+          alert(err.message);
+        });
     });
   }
 

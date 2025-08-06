@@ -40,14 +40,14 @@
         </div>
         <form class="login-form" autocomplete="off">
           <div class="login-header">
-            <h2 data-i18n="welcome_message">¡Bienvenido!</h2>
-            <p data-i18n="access">Accede a tu cuenta</p>
+            <h2 data-i18n="login.welcome_message">¡Bienvenido!</h2>
+            <p data-i18n="login.access">Accede a tu cuenta</p>
           </div>
           <div class="login-field">
             <span class="login-icon"><i class="bi bi-person"></i></span>
             <div class="login-input-group" style="flex:1;">
               <input type="text" id="usuario" name="usuario" required placeholder=" " autocomplete="username">
-              <label for="usuario" class="login-label" data-i18n="username">Usuario</label>
+              <label for="usuario" class="login-label" data-i18n="login.username">Usuario</label>
             </div>
           </div>
           <div class="login-field">
@@ -55,23 +55,24 @@
             <div class="login-input-group" style="flex:1;">
               <input type="password" id="password" name="password" required placeholder=" "
                 autocomplete="current-password">
-              <label for="password" class="login-label" data-i18n="password">Contraseña</label>
+              <label for="password" class="login-label" data-i18n="login.password">Contraseña</label>
             </div>
           </div>
-          <button type="submit" class="login-btn" data-i18n="login_button">Iniciar sesión</button>
+          <button type="submit" class="login-btn" data-i18n="login.login_button">Iniciar sesión</button>
           <div style="text-align:center; margin-top:0.7rem;">
-            <a href="#" class="login-forgot-link" id="forgot-password-link" data-i18n="forgot_password">¿Olvidaste tu
+            <a href="#" class="login-forgot-link" id="forgot-password-link" data-i18n="login.forgot_password">¿Olvidaste
+              tu
               contraseña?</a>
             <!-- Modal para recuperación de contraseña -->
             <div class="modal" id="modal-forgot-password">
               <div class="modal-content forgot-modal-content">
                 <button class="close-modal" id="close-forgot-modal" title="Cerrar">&times;</button>
-                <h3 class="forgot-modal-title" data-i18n="recover_password">Recupere su contraseña</h3>
+                <h3 class="forgot-modal-title" data-i18n="login.recover_password">Recupere su contraseña</h3>
                 <form id="forgot-password-form" autocomplete="off">
-                  <label for="forgot-email" data-i18n="registered_email">Correo electrónico registrado</label>
+                  <label for="forgot-email" data-i18n="login.registered_email">Correo electrónico registrado</label>
                   <input type="email" id="forgot-email" name="email" required placeholder="correo@ejemplo.com"
                     class="forgot-modal-input">
-                  <button type="submit" class="login-btn forgot-modal-btn" data-i18n="send_link">Enviar
+                  <button type="submit" class="login-btn forgot-modal-btn" data-i18n="login.send_link">Enviar
                     enlace</button>
                   <div id="forgot-message" class="forgot-modal-message"></div>
                 </form>
@@ -106,6 +107,7 @@
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
@@ -130,6 +132,7 @@
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
@@ -156,6 +159,7 @@
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
+        if (window.updateI18nContent) window.updateI18nContent();
         window.initFooter && window.initFooter();
       });
   </script>

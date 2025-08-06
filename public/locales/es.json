@@ -111,7 +111,7 @@
   "login": {
     "welcome_message": "¡Bienvenido!",
     "access": "Accede a tu cuenta",
-    "email": "Correo electrónico",
+    "username": "Usuario",
     "password": "Contraseña",
     "login_button": "Iniciar Sesión",
     "forgot_password": "¿Olvidaste tu contraseña?",

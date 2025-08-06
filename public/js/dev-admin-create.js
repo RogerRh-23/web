@@ -2,7 +2,7 @@
 const form = document.getElementById('create-admin-form');
 const msg = document.getElementById('msg');
 if (form) {
-  form.addEventListener('submit', async function(e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
     msg.textContent = '';
     msg.className = 'msg';
@@ -28,13 +28,16 @@ if (form) {
         msg.textContent = data.msg || 'Administrador creado correctamente.';
         msg.classList.add('success');
         form.reset();
+        if (window.snackbarUsuarioCreado) window.snackbarUsuarioCreado();
       } else {
         msg.textContent = data.detail || 'Error al crear administrador.';
         msg.classList.add('error');
+        if (window.snackbarUsuarioError) window.snackbarUsuarioError();
       }
     } catch (err) {
       msg.textContent = 'Error de red o servidor.';
       msg.classList.add('error');
+      if (window.snackbarUsuarioError) window.snackbarUsuarioError();
     }
   });
 }

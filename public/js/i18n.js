@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fallbackLng: 'es',
     debug: false,
     backend: {
-      loadPath: './locales/{{lng}}.json'
+      loadPath: '../locales/{{lng}}.json'
     },
     interpolation: {
       escapeValue: false // Permite HTML y símbolos
@@ -41,9 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateContent() {
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
-      var value = i18next.t(key, { defaultValue: key });
-      el.innerHTML = value;
-      console.log('Clave:', key, '| Valor:', value, '| Idioma:', i18next.language);
+      // Si es el copyright, pasar el año actual como parámetro
+      if (key === 'footer.copyright') {
+        var year = new Date().getFullYear();
+        var value = i18next.t(key, { year, defaultValue: key });
+        el.innerHTML = value;
+        console.log('Clave:', key, '| Valor:', value, '| Idioma:', i18next.language);
+      } else {
+        var value = i18next.t(key, { defaultValue: key });
+        el.innerHTML = value;
+        console.log('Clave:', key, '| Valor:', value, '| Idioma:', i18next.language);
+      }
     });
     if (window.updateI18nContent && window.updateI18nContent !== updateContent) window.updateI18nContent();
     console.log('Idioma actual (updateContent):', i18next.language);

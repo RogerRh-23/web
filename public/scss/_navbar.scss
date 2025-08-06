@@ -47,6 +47,7 @@
 }
 
 .navbar-mobile-link {
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,12 +179,8 @@
   }
 
   .navbar-actions .btn-lang-switcher {
-    border: 1.2px solid $pantone-p120-5u;
-    background: $pantone-p120-5u33;
-  }
-
-  .navbar-actions .btn-outline-light {
-    border: 1.2px solid $pantone-b7693u;
+    background: transparent;
+    border: none;
   }
 
   background: $pantone-b7693u;
@@ -295,21 +292,16 @@
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    background: $pantone-p120-5u33;
     color: $color-white;
-    border: 1.5px solid $pantone-p120-5u;
     border-radius: 6px;
     padding: 0.45rem 1.1rem;
     margin: 0 0.5rem;
     font-size: 1rem;
     cursor: pointer;
     z-index: 1200;
-    transition: background 0.18s, color 0.18s;
 
     &:hover {
-      background: $pantone-p120-5u;
-      color: $pantone-b7693u;
-      border-color: $pantone-b7693u;
+      color: $pantone-p120-5u;
     }
   }
 }

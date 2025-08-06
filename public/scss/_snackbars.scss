@@ -1,0 +1,118 @@
+// Snackbars/Notifications styles
+.notification {
+    display: flex;
+    align-items: center;
+    background: $color-white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    min-width: 320px;
+    max-width: 420px;
+    font-family: inherit;
+    border: none;
+}
+
+.notification__body {
+    display: flex;
+    align-items: center;
+}
+
+.notification__icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 1rem;
+}
+
+.notification__message {
+    font-size: 1rem;
+    color: #222;
+}
+
+.notification__progress {
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    background: $color-white;
+    margin-top: 0.5rem;
+}
+
+// Success
+.notification--success {
+    background: $color-white;
+    color: #1a7f37;
+}
+
+.notification--success .notification__progress {
+    background: #1a7f37;
+}
+
+// Error
+.notification--error {
+    background: $color-white;
+    color: #c00;
+}
+
+.notification--error .notification__progress {
+    background: #c00;
+}
+
+// Info
+.notification--info {
+    background: $color-white;
+    color: #1769aa;
+}
+
+.notification--info .notification__progress {
+    background: #1769aa;
+}
+
+// Warning
+.notification--warning {
+    background: $color-white;
+    color: #b8860b;
+}
+
+.notification--warning .notification__progress {
+    background: #b8860b;
+}
+
+// File
+.notification--file {
+    background: $color-white;
+    color: #333;
+}
+
+.notification--file .notification__progress {
+    background: #333;
+}
+
+// Error file
+.notification--file-error {
+    background: $color-white;
+    color: #c00;
+}
+
+.notification--file-error .notification__progress {
+    background: #c00;
+}
+
+// User created
+.notification--user-created {
+    background: $color-white;
+    color: #1a7f37;
+}
+
+.notification--user-created .notification__progress {
+    background: #1a7f37;
+}
+
+// User error
+.notification--user-error {
+    background: $color-white;
+    color: #c00;
+}
+
+.notification--user-error .notification__progress {
+    background: #c00;
+}
