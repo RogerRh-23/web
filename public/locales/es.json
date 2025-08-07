@@ -8,6 +8,11 @@
     "contact": "Contacto",
     "login": "Iniciar Sesión"
   },
+  "navbar_mobile": {
+    "menu_button": "Menú",
+    "home_button": "Inicio",
+    "login_button": "Iniciar Sesión"
+  },
   "footer": {
     "about": "Más sobre nosotros",
     "faq": "Preguntas frecuentes",

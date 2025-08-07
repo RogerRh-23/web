@@ -240,6 +240,7 @@
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = './js/navbar-dropdown.js';
@@ -355,10 +356,9 @@
   </script>
   <!-- navbar-dropdown.js se importa dinámicamente después de cargar la navbar -->
   <script src="./js/footer.js"></script>
-  <script src="./js/navbar-dropdown.js"></script>
   <script src="./js/cards-anim.js"></script>
-  <script src="./js/valores-toggle.js"></script>
   <script src="./js/i18n.js"></script>
+  <script src="./js/navbar-mobile-accordion.js"></script>
 </body>
 
 </html>

@@ -122,10 +122,16 @@ h1 {
         gap: 1.5rem;
     }
 
-    .carousel-inner,
-    .fb-page {
-        max-width: 100%;
+    .carousel-inner {
+        max-width: 83%;
         min-width: 0;
         margin-right: 0 !important;
+        height: 460px !important;
+        max-height: 460px !important;
+        min-height: 120px !important;
+    }
+
+    .news-image {
+        height: 300px;
     }
 }

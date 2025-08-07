@@ -3,50 +3,94 @@
   <ul class="navbar-mobile-list">
     <li class="navbar-mobile-dropdown">
       <button class="navbar-mobile-menu" aria-label="Menú" aria-haspopup="true" aria-expanded="false">
-        <i class="bi bi-list"></i>
+        <div class="navbar-mobile-icon-text navbar-mobile-icon-text--vertical">
+          <i class="bi bi-list"></i>
+          <span class="navbar-mobile-text" data-i18n="navbar_mobile.menu_button">Menú</span>
+        </div>
       </button>
-      <ul class="navbar-mobile-dropdown-menu" style="display: none;">
-        <li>
-          <a class="navbar-mobile-link" aria-label="Servicios">
-            <i class="bi bi-briefcase"></i>
-          </a>
+      <ul class="navbar-mobile-dropdown-menu">
+        <li class="navbar-mobile-accordion">
+          <div class="navbar-mobile-accordion-header">
+            <div class="navbar-mobile-icon-text navbar-mobile-icon-text--center">
+              <i class="bi bi-briefcase"></i>
+              <span class="navbar-mobile-text">Servicios</span>
+            </div>
+          </div>
+          <ul class="navbar-mobile-accordion-panel">
+            <li><a href="/public/components/Servicios/Certificación de Sistemas de Gestión.html">Certificación de
+                Sistemas de Gestión</a></li>
+            <li><a href="/public/components/Servicios/Capacitación.html">Capacitación</a></li>
+            <li><a href="/public/components/Servicios/Sorteo y Retrabajo.html">Sorteo y Retrabajo</a></li>
+          </ul>
         </li>
-        <li>
-          <a class="navbar-mobile-link" aria-label="Procesos">
-            <i class="bi bi-diagram-3"></i>
-          </a>
+        <li class="navbar-mobile-accordion">
+          <div class="navbar-mobile-accordion-header">
+            <div class="navbar-mobile-icon-text navbar-mobile-icon-text--center">
+              <i class="bi bi-diagram-3"></i>
+              <span class="navbar-mobile-text">Procesos</span>
+            </div>
+          </div>
+          <ul class="navbar-mobile-accordion-panel">
+            <li><a href="/public/components/Procesos/Proceso de Certificación.html">Proceso de Certificación</a></li>
+            <li><a href="/public/components/Procesos/Vigencia de la Certificación.html">Vigencia de la Certificación</a>
+            </li>
+            <li><a href="/public/components/Procesos/Procedimiento de atención de quejas.html">Procedimiento de atención
+                de quejas</a></li>
+          </ul>
         </li>
-        <li>
-          <a class="navbar-mobile-link" aria-label="Centro de formación">
-            <i class="bi bi-mortarboard"></i>
-          </a>
+        <li class="navbar-mobile-accordion">
+          <div class="navbar-mobile-accordion-header">
+            <div class="navbar-mobile-icon-text navbar-mobile-icon-text--center">
+              <i class="bi bi-mortarboard"></i>
+              <span class="navbar-mobile-text">Centro de formación</span>
+            </div>
+          </div>
+          <ul class="navbar-mobile-accordion-panel">
+            <li><a href="/public/components/Centro de formación/Cursos.html">Cursos</a></li>
+            <li><a href="/public/components/Centro de formación/Webinars.html">Webinars</a></li>
+          </ul>
         </li>
         <li>
           <a href="/public/components/certificados.html" class="navbar-mobile-link" aria-label="Certificados">
-            <i class="bi bi-award"></i>
+            <div class="navbar-mobile-icon-text navbar-mobile-icon-text--center">
+              <i class="bi bi-award"></i>
+              <span class="navbar-mobile-text">Certificados</span>
+            </div>
           </a>
         </li>
         <li>
           <a href="/public/components/contacto.html" class="navbar-mobile-link" aria-label="Contacto">
-            <i class="bi bi-envelope"></i>
+            <div class="navbar-mobile-icon-text navbar-mobile-icon-text--center">
+              <i class="bi bi-envelope"></i>
+              <span class="navbar-mobile-text">Contacto</span>
+            </div>
           </a>
         </li>
         <li>
           <button id="lang-switcher-mobile" class="navbar-mobile-link" aria-label="Cambiar idioma">
-            <i class="bi bi-translate"></i>
+            <div class="navbar-mobile-icon-text navbar-mobile-icon-text--center">
+              <i class="bi bi-translate"></i>
+              <span class="navbar-mobile-text">Idioma</span>
+            </div>
           </button>
         </li>
       </ul>
     </li>
     <li>
       <a href="/public/index.html" class="navbar-mobile-link" aria-label="Inicio" id="navbar-mobile-home-link">
-        <img src="/public/assets/img/LACS-Logo.png" alt="Inicio" class="navbar-mobile-logo" />
+        <div class="navbar-mobile-icon-text navbar-mobile-icon-text--vertical">
+          <img src="/public/assets/img/LACS-Logo.png" alt="Inicio" class="navbar-mobile-logo" />
+          <span class="navbar-mobile-text" data-i18n="navbar_mobile.home_button">Inicio</span>
+        </div>
       </a>
     </li>
     <li>
       <a href="/public/components/login.html" class="navbar-mobile-link" aria-label="Login"
         id="navbar-mobile-login-link">
-        <i class="bi bi-person"></i>
+        <div class="navbar-mobile-icon-text navbar-mobile-icon-text--vertical">
+          <i class="bi bi-person"></i>
+          <span class="navbar-mobile-text" data-i18n="navbar_mobile.login_button">Iniciar sesión</span>
+        </div>
       </a>
     </li>
   </ul>
