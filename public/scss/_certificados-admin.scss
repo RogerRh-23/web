@@ -5,17 +5,18 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30,40,60,0.18);
+  background: rgba(30, 40, 60, 0.18);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s;
 }
+
 .admin-certificados-modal-content {
   background: #fff;
   border-radius: 1.2rem;
-  box-shadow: 0 8px 32px rgba(20,30,60,0.18);
+  box-shadow: 0 8px 32px rgba(20, 30, 60, 0.18);
   padding: 2.2rem 2rem 1.5rem 2rem;
   min-width: 340px;
   max-width: 95vw;
@@ -25,12 +26,14 @@
   flex-direction: column;
   gap: 1.1rem;
 }
+
 .admin-certificados-modal-content h3 {
   font-size: 1.3rem;
   font-weight: 700;
   color: #1976a5;
   margin-bottom: 0.7rem;
 }
+
 .admin-certificados-modal-content .close-modal {
   position: absolute;
   top: 1.1rem;
@@ -41,16 +44,19 @@
   color: #1976a5;
   cursor: pointer;
 }
+
 .admin-certificados-modal-content form {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
+
 .admin-certificados-modal-content label {
   font-weight: 600;
   color: #234;
   margin-bottom: 0.2rem;
 }
+
 .admin-certificados-modal-content input,
 .admin-certificados-modal-content select {
   padding: 0.5rem 0.7rem;
@@ -59,10 +65,12 @@
   font-size: 1rem;
   background: #f7fbfd;
 }
+
 .admin-certificados-modal-content .btn {
   margin-top: 1.1rem;
   align-self: flex-end;
 }
+
 // certificados-admin.scss
 // Estilos para la vista de administración de certificados
 
@@ -71,6 +79,7 @@
   flex-direction: column;
   gap: 1.2rem;
   margin-bottom: 1.5rem;
+
   h2 {
     font-size: 2rem;
     font-weight: 800;
@@ -78,6 +87,7 @@
     margin-bottom: 0.5rem;
     text-align: left;
     letter-spacing: 0.02em;
+
     i {
       margin-right: 0.5rem;
     }
@@ -85,52 +95,60 @@
 }
 
 .admin-certificados-actions {
-display: flex;
-gap: 1rem;
-flex-wrap: wrap;
-justify-content: flex-end;
-align-items: flex-start;
-margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-bottom: 2rem;
 }
+
 .admin-certificados-actions .btn {
   font-weight: 700;
   font-size: 0.95rem;
   border-radius: 0.5rem;
   padding: 0.45rem 1.1rem;
-  box-shadow: 0 2px 8px rgba(20,30,60,0.10);
+  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.10);
   transition: box-shadow 0.25s, background 0.25s, transform 0.18s;
   display: flex;
   align-items: center;
   gap: 0.4rem;
   border: none;
 }
+
 .admin-certificados-actions .btn-success {
   background: linear-gradient(90deg, #1976a5 0%, #5ec6e7 100%);
   color: #fff;
 }
+
 .admin-certificados-actions .btn-success:hover {
   background: linear-gradient(90deg, #5ec6e7 0%, #1976a5 100%);
-  box-shadow: 0 4px 16px rgba(20,30,60,0.13);
+  box-shadow: 0 4px 16px rgba(20, 30, 60, 0.13);
   transform: translateY(-2px) scale(1.04);
 }
+
 .admin-certificados-actions .btn-warning {
   background: linear-gradient(90deg, #f7b731 0%, #f5e6a2 100%);
   color: #234;
 }
+
 .admin-certificados-actions .btn-warning:hover {
   background: linear-gradient(90deg, #f5e6a2 0%, #f7b731 100%);
-  box-shadow: 0 4px 16px rgba(247,183,49,0.13);
+  box-shadow: 0 4px 16px rgba(247, 183, 49, 0.13);
   transform: translateY(-2px) scale(1.04);
 }
+
 .admin-certificados-actions .btn-danger {
   background: linear-gradient(90deg, #e74c3c 0%, #f7b7a3 100%);
   color: #fff;
 }
+
 .admin-certificados-actions .btn-danger:hover {
   background: linear-gradient(90deg, #f7b7a3 0%, #e74c3c 100%);
-  box-shadow: 0 4px 16px rgba(231,76,60,0.13);
+  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.13);
   transform: translateY(-2px) scale(1.04);
 }
+
 .admin-certificados-actions i {
   margin-right: 0.5rem;
   font-size: 1.2em;
@@ -139,26 +157,32 @@ margin-bottom: 2rem;
 .admin-certificados-list {
   background: #fff;
   border-radius: 1.1rem;
-  box-shadow: 0 4px 16px -4px rgba(20,30,60,0.10);
+  box-shadow: 0 4px 16px -4px rgba(20, 30, 60, 0.10);
   padding: 1.5rem 1.2rem;
   border: 1px solid #cbe7f6;
+
   table {
     width: 100%;
     border-collapse: collapse;
-    th, td {
+
+    th,
+    td {
       padding: 0.7rem 0.5rem;
       text-align: left;
       font-size: 1rem;
       border-bottom: 1px solid #e0e7ef;
     }
+
     th {
       background: #eaf6fb;
       color: #1976a5;
       font-weight: 700;
     }
+
     tr:last-child td {
       border-bottom: none;
     }
+
     input[type="radio"] {
       accent-color: #1976a5;
       transform: scale(1.2);
@@ -166,18 +190,22 @@ margin-bottom: 2rem;
   }
 }
 
-@media (max-width: 700px) {
+@include media('(max-width: 700px)') {
   .admin-certificados-header h2 {
     font-size: 1.3rem;
   }
+
   .admin-certificados-list {
     padding: 1rem 0.5rem;
     border-radius: 0.7rem;
-    table th, table td {
+
+    table th,
+    table td {
       font-size: 0.95rem;
       padding: 0.5rem 0.3rem;
     }
   }
+
   .admin-certificados-actions button {
     font-size: 0.95rem;
     padding: 0.5rem 1rem;

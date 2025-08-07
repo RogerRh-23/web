@@ -62,7 +62,7 @@
   display: block;
 }
 
-@media (max-width: 800px) {
+@include media('(max-width: 800px)') {
   .contacto-flex {
     flex-direction: column;
     gap: 1.5rem;
@@ -222,7 +222,7 @@
   transition: background 0.2s, box-shadow 0.2s;
 }
 
-@media (max-width: 800px) {
+@include media('(max-width: 800px)') {
   .directory-list {
     flex-direction: column;
     gap: 1.2rem;
@@ -235,7 +235,7 @@
   }
 }
 
-@media (max-width: 991.98px) {
+@include media('(max-width: 991.98px)') {
   #footer {
     margin-bottom: 90px !important;
   }
@@ -245,7 +245,7 @@
   }
 }
 
-@media (min-width: 992px) {
+@include media('(min-width: 992px)') {
   .main-content-navbar-padding {
     padding-top: 70px;
   }

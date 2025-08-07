@@ -46,15 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
         var year = new Date().getFullYear();
         var value = i18next.t(key, { year, defaultValue: key });
         el.innerHTML = value;
-        console.log('Clave:', key, '| Valor:', value, '| Idioma:', i18next.language);
       } else {
         var value = i18next.t(key, { defaultValue: key });
         el.innerHTML = value;
-        console.log('Clave:', key, '| Valor:', value, '| Idioma:', i18next.language);
       }
     });
     if (window.updateI18nContent && window.updateI18nContent !== updateContent) window.updateI18nContent();
-    console.log('Idioma actual (updateContent):', i18next.language);
   }
   // Language switcher (debe estar dentro del DOMContentLoaded)
   var langBtn = document.getElementById('lang-switcher');
@@ -69,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
   updateLangBtnAll();
   function handleLangSwitch() {
     var newLang = i18next.language === 'es' ? 'en' : 'es';
-    console.log('Cambiando idioma a:', newLang);
     // Guardar idioma en localStorage
     localStorage.setItem('selectedLang', newLang);
     i18next.changeLanguage(newLang, function (err) {
@@ -77,9 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('No se pudo cargar el idioma: ' + newLang + '. ¿Existe locales/' + newLang + '.json?');
         return;
       }
-      console.log('Idioma después de changeLanguage:', i18next.language);
       i18next.reloadResources([newLang], function () {
-        console.log('Recursos recargados para:', newLang);
         updateContent();
         if (window.updateI18nContent) window.updateI18nContent();
         updateLangBtnAll();

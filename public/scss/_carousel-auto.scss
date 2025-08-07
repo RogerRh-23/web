@@ -1,0 +1,131 @@
+// Estilos para el carousel automático de novedades
+
+.news-container {
+    max-width: 100%;
+    width: 100vw;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.carousel-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.carousel-inner {
+    flex: 1 1 750px;
+    min-width: 590px;
+    max-width: 1465px;
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 1.2rem;
+    box-shadow: $shadow-4layer;
+    background: #fff;
+    border: 1px solid #e3e9ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
+}
+
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1;
+    display: none;
+    transition: opacity 0.5s;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    z-index: 2;
+    display: block;
+}
+
+
+.social-media {
+    width: 100%;
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    padding: 0 1.5rem;
+    align-items: flex-start;
+}
+
+.social-icon {
+    text-decoration: none;
+    font-size: 2.1rem;
+    color: #3386a9;
+    background: #f5fafd;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: $shadow-4layer;
+}
+
+.social-icon:hover {
+    background: #3386a9;
+    color: #fff;
+}
+
+.news-image {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 0.8rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(51, 145, 170, 0.08);
+}
+
+.news-caption {
+    text-align: left;
+    margin-top: 0.5rem;
+}
+
+.news-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3386a9;
+    margin-bottom: 0.5rem;
+}
+
+h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3386a9;
+    margin-bottom: 1rem;
+}
+
+@include media('(max-width: 900px)') {
+    .carousel-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+    }
+
+    .carousel-inner,
+    .fb-page {
+        max-width: 100%;
+        min-width: 0;
+        margin-right: 0 !important;
+    }
+}

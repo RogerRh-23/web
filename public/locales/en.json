@@ -43,6 +43,8 @@
     "admin_deleted": "Admin deleted successfully."
   },
   "cards": {
+    "title": "Get to know us",
+    "subtitle": "Learn more about us, our mission, vision, and values.",
     "who": {
       "title": "Who are we?",
       "text": "Since the beginning of our operations in 2013 at Latin American Certification & Systems (LACS), we have been committed to supporting organizations in Mexico through our management system certification and training services to facilitate their access to new markets and help them achieve their strategic objectives. Our staff has extensive experience in the application of conformity assessment standards and management systems. We stand out for our close approach to the client, providing active listening for timely attention to their needs. Through our service portfolio, we offer solutions that we are sure will contribute to the success of your organization."

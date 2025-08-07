@@ -5,17 +5,18 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30,40,60,0.18);
+  background: rgba(30, 40, 60, 0.18);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s;
 }
+
 .certificados-modal-content {
   background: linear-gradient(120deg, #eaf6fb 0%, #dbeaf6 100%);
   border-radius: 1.6rem;
-  box-shadow: 0 8px 32px -8px rgba(20,30,60,0.13);
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.13);
   padding: 2.5rem 2.2rem 2.2rem 2.2rem;
   min-width: 340px;
   max-width: 95vw;
@@ -28,12 +29,14 @@
   max-height: 90vh;
   overflow-y: auto;
 }
+
 .certificados-modal-content h3 {
   font-size: 1.3rem;
   font-weight: 700;
   color: #1976a5;
   margin-bottom: 0.7rem;
 }
+
 .certificados-modal-content .close-modal {
   position: absolute;
   top: 1.1rem;
@@ -44,16 +47,19 @@
   color: #1976a5;
   cursor: pointer;
 }
+
 .certificados-modal-content form {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
+
 .certificados-modal-content label {
   font-weight: 700;
   color: #1976a5;
   margin-bottom: 0.2rem;
 }
+
 .certificados-modal-content input,
 .certificados-modal-content select {
   padding: 0.7rem 1rem;
@@ -61,13 +67,15 @@
   border: 1px solid #cbe7f6;
   font-size: 1.08rem;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(20,30,60,0.07);
+  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.07);
 }
+
 .certificados-modal-content input:focus,
 .certificados-modal-content select:focus {
   border-color: #5ec6e7;
   outline: none;
 }
+
 .certificados-modal-content .btn {
   margin-top: 1.1rem;
   align-self: flex-end;
@@ -77,15 +85,16 @@
   font-weight: 700;
   color: #fff;
   padding: 0.7rem 2.2rem;
-  box-shadow: 0 2px 8px rgba(20,30,60,0.10);
+  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.10);
   transition: background 0.2s, box-shadow 0.2s;
 }
+
 .certificados-modal-content .btn:hover {
   background: linear-gradient(90deg, #5ec6e7 0%, #1976a5 100%);
-  box-shadow: 0 4px 16px rgba(20,30,60,0.13);
+  box-shadow: 0 4px 16px rgba(20, 30, 60, 0.13);
 }
 
-@media (max-width: 700px) {
+@include media('(max-width: 700px)') {
   .certificados-modal-content {
     padding: 1.2rem 0.5rem 1rem 0.5rem;
     max-width: 100vw;
@@ -93,11 +102,12 @@
     border-radius: 1.1rem;
   }
 }
+
 // Estilos exclusivos para la sección de certificados
 .certificados-section {
   background: linear-gradient(120deg, #eaf6fb 0%, #dbeaf6 100%);
   border-radius: 1.6rem;
-  box-shadow: 0 8px 32px -8px rgba(20,30,60,0.13);
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.13);
   padding: 2.5rem 2.2rem 2.2rem 2.2rem;
   margin: 2.5rem auto 0 auto;
   max-width: 980px;
@@ -114,7 +124,7 @@
 .certificados-search-form {
   background: #fff;
   border-radius: 1.1rem;
-  box-shadow: 0 4px 16px -4px rgba(20,30,60,0.10);
+  box-shadow: 0 4px 16px -4px rgba(20, 30, 60, 0.10);
   padding: 1.5rem 1.2rem;
   margin-bottom: 2rem;
   display: flex;
@@ -132,11 +142,12 @@
 .certificados-search-form .form-control {
   border-radius: 0.7rem;
   border: 1px solid #cbe7f6;
-  box-shadow: 0 2px 8px rgba(20,30,60,0.07);
+  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.07);
   font-size: 1.08rem;
   padding: 0.7rem 1rem;
   transition: border-color 0.2s;
 }
+
 .certificados-search-form .form-control:focus {
   border-color: #5ec6e7;
   outline: none;
@@ -149,35 +160,38 @@
   font-weight: 700;
   color: #fff;
   padding: 0.7rem 2.2rem;
-  box-shadow: 0 2px 8px rgba(20,30,60,0.10);
+  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.10);
   transition: background 0.2s, box-shadow 0.2s;
 }
+
 .certificados-search-form .btn-primary:hover {
   background: linear-gradient(90deg, #5ec6e7 0%, #1976a5 100%);
-  box-shadow: 0 4px 16px rgba(20,30,60,0.13);
+  box-shadow: 0 4px 16px rgba(20, 30, 60, 0.13);
 }
 
 .info-box {
   background: #fff;
   border-radius: 1.1rem;
-  box-shadow: 0 4px 16px -4px rgba(20,30,60,0.10);
+  box-shadow: 0 4px 16px -4px rgba(20, 30, 60, 0.10);
   padding: 2rem 1.5rem;
   border: 1px solid #cbe7f6;
   min-height: 180px;
   margin-bottom: 1.5rem;
 }
 
-@media (max-width: 700px) {
+@include media('(max-width: 700px)') {
   .certificados-section {
     padding: 1.2rem 0.5rem 1rem 0.5rem;
     max-width: 100vw;
     gap: 1.2rem;
     border-radius: 1.1rem;
   }
+
   .certificados-search-form {
     padding: 1rem 0.5rem;
     border-radius: 0.7rem;
   }
+
   .info-box {
     padding: 1rem 0.5rem;
     border-radius: 0.7rem;

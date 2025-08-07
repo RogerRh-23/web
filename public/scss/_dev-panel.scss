@@ -7,6 +7,7 @@
   margin-bottom: 0.5rem;
   letter-spacing: 0.01em;
 }
+
 .dev-logs-list {
   list-style: none;
   padding: 0;
@@ -15,6 +16,7 @@
   max-height: 260px;
   overflow-y: auto;
 }
+
 .dev-logs-list li {
   background: #fafdff;
   border-radius: 0.5rem;
@@ -29,27 +31,32 @@
   align-items: center;
   gap: 0.5rem;
 }
+
 .dev-logs-list .log-action {
   color: #1976a5;
   font-weight: 700;
   margin-right: 0.5rem;
 }
+
 .dev-logs-list .log-user {
   color: #388e3c;
   font-weight: 600;
   margin-right: 0.5rem;
 }
+
 .dev-logs-list .log-detail {
   color: #555;
   font-weight: 400;
   font-size: 0.95em;
 }
+
 // Panel principal
 .dev-panel-section {
   max-width: 1100px;
   margin: 2.5rem auto 2.5rem auto;
   padding: 0 1.2rem;
 }
+
 .dev-panel-section h2 {
   text-align: center;
   color: #1976a5;
@@ -58,12 +65,14 @@
   font-weight: 800;
   letter-spacing: 0.01em;
 }
+
 // Botón de cerrar sesión dev
 .dev-panel-actions {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1.5rem;
 }
+
 .dev-panel-actions .btn-danger {
   background: linear-gradient(90deg, #c62828 60%, #e57373 100%);
   color: #fff;
@@ -72,23 +81,26 @@
   font-size: 1.08rem;
   font-weight: 700;
   padding: 0.7rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(198,40,40,0.08);
+  box-shadow: 0 2px 8px rgba(198, 40, 40, 0.08);
   letter-spacing: 0.01em;
   transition: background 0.2s, box-shadow 0.2s;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
+
 .dev-panel-actions .btn-danger:hover {
   background: linear-gradient(90deg, #b71c1c 60%, #c62828 100%);
-  box-shadow: 0 4px 16px rgba(198,40,40,0.13);
+  box-shadow: 0 4px 16px rgba(198, 40, 40, 0.13);
 }
+
 .dev-panel-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 2.2rem;
   justify-content: center;
 }
+
 .dev-panel-card {
   background: linear-gradient(135deg, #e3f0fa 0%, #fafdff 100%);
   border-radius: 1.5rem;
@@ -105,9 +117,11 @@
   z-index: 2;
   transition: box-shadow 0.2s;
 }
+
 .dev-panel-card:hover {
   box-shadow: 0 12px 40px rgba(25, 118, 165, 0.18), 0 2px 12px rgba(25, 118, 165, 0.10);
 }
+
 .dev-panel-card h3 {
   color: #1976a5;
   font-size: 1.18rem;
@@ -117,12 +131,14 @@
   align-items: center;
   gap: 0.5rem;
 }
+
 .dev-panel-card form label {
   font-weight: 600;
   margin-bottom: 0.3rem;
   color: #1976a5;
   letter-spacing: 0.01em;
 }
+
 .dev-panel-card form input {
   width: 100%;
   padding: 0.7rem 1rem;
@@ -133,11 +149,13 @@
   background: #fafdff;
   transition: border 0.2s, box-shadow 0.2s;
 }
+
 .dev-panel-card form input:focus {
   border: 1.5px solid #1976a5;
   outline: none;
   box-shadow: 0 0 0 2px #b3e0ff44;
 }
+
 .dev-panel-card button {
   width: 100%;
   padding: 0.8rem;
@@ -153,28 +171,34 @@
   letter-spacing: 0.01em;
   margin-bottom: 0.5rem;
 }
+
 .dev-panel-card button:hover {
   background: linear-gradient(90deg, #145a8a 60%, #1976a5 100%);
   box-shadow: 0 4px 16px rgba(25, 118, 165, 0.13);
 }
+
 .dev-panel-card .msg {
   text-align: center;
   margin-top: 0.7rem;
   font-weight: 600;
   font-size: 1.05rem;
 }
+
 .dev-panel-card .msg.success {
   color: #2e7d32;
 }
+
 .dev-panel-card .msg.error {
   color: #c62828;
 }
+
 .dev-users-list {
   list-style: none;
   padding: 0;
   margin: 0.5rem 0 0 0;
   font-size: 1rem;
 }
+
 .dev-users-list li {
   background: #fafdff;
   border-radius: 0.5rem;
@@ -186,32 +210,38 @@
   align-items: center;
   gap: 0.5rem;
 }
+
 .dev-token-info {
   margin-top: 0.7rem;
   font-size: 1.05rem;
   text-align: center;
 }
-@media (max-width: 900px) {
+
+@include media('(max-width: 900px)') {
   .dev-panel-cards {
     flex-direction: column;
     align-items: center;
     gap: 2.5rem;
   }
+
   .dev-panel-card {
     max-width: 100%;
     min-width: 0;
     width: 100%;
   }
 }
+
 .dev-create-admin-container h2 {
   text-align: center;
   color: #1976a5;
   margin-bottom: 1.5rem;
 }
+
 .dev-create-admin-container label {
   font-weight: 600;
   margin-bottom: 0.3rem;
 }
+
 .dev-create-admin-container input {
   width: 100%;
   padding: 0.6rem;
@@ -219,6 +249,7 @@
   border: 1px solid #b0c4d6;
   margin-bottom: 1rem;
 }
+
 .dev-create-admin-container button {
   width: 100%;
   padding: 0.7rem;
@@ -231,17 +262,21 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .dev-create-admin-container button:hover {
   background: #145a8a;
 }
+
 .dev-create-admin-container .msg {
   text-align: center;
   margin-top: 1rem;
   font-weight: 600;
 }
+
 .dev-create-admin-container .msg.success {
   color: #2e7d32;
 }
+
 .dev-create-admin-container .msg.error {
   color: #c62828;
 }

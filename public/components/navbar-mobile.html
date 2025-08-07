@@ -1,45 +1,53 @@
 <!-- Navbar mobile solo con iconos -->
 <nav class="navbar-mobile">
   <ul class="navbar-mobile-list">
+    <li class="navbar-mobile-dropdown">
+      <button class="navbar-mobile-menu" aria-label="Menú" aria-haspopup="true" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <ul class="navbar-mobile-dropdown-menu" style="display: none;">
+        <li>
+          <a class="navbar-mobile-link" aria-label="Servicios">
+            <i class="bi bi-briefcase"></i>
+          </a>
+        </li>
+        <li>
+          <a class="navbar-mobile-link" aria-label="Procesos">
+            <i class="bi bi-diagram-3"></i>
+          </a>
+        </li>
+        <li>
+          <a class="navbar-mobile-link" aria-label="Centro de formación">
+            <i class="bi bi-mortarboard"></i>
+          </a>
+        </li>
+        <li>
+          <a href="/public/components/certificados.html" class="navbar-mobile-link" aria-label="Certificados">
+            <i class="bi bi-award"></i>
+          </a>
+        </li>
+        <li>
+          <a href="/public/components/contacto.html" class="navbar-mobile-link" aria-label="Contacto">
+            <i class="bi bi-envelope"></i>
+          </a>
+        </li>
+        <li>
+          <button id="lang-switcher-mobile" class="navbar-mobile-link" aria-label="Cambiar idioma">
+            <i class="bi bi-translate"></i>
+          </button>
+        </li>
+      </ul>
+    </li>
     <li>
-      <a href="/public/index.html" class="navbar-mobile-link" aria-label="Inicio">
+      <a href="/public/index.html" class="navbar-mobile-link" aria-label="Inicio" id="navbar-mobile-home-link">
         <img src="/public/assets/img/LACS-Logo.png" alt="Inicio" class="navbar-mobile-logo" />
       </a>
     </li>
     <li>
-      <a class="navbar-mobile-link" aria-label="Servicios">
-        <i class="bi bi-briefcase"></i>
-      </a>
-    </li>
-    <li>
-      <a class="navbar-mobile-link" aria-label="Procesos">
-        <i class="bi bi-diagram-3"></i>
-      </a>
-    </li>
-    <li>
-      <a class="navbar-mobile-link" aria-label="Centro de formación">
-        <i class="bi bi-mortarboard"></i>
-      </a>
-    </li>
-    <li>
-      <a href="/public/components/certificados.html" class="navbar-mobile-link" aria-label="Certificados">
-        <i class="bi bi-award"></i>
-      </a>
-    </li>
-    <li>
-      <a href="/public/components/contacto.html" class="navbar-mobile-link" aria-label="Contacto">
-        <i class="bi bi-envelope"></i>
-      </a>
-    </li>
-    <li>
-      <a href="/public/components/login.html" class="navbar-mobile-link" aria-label="Login">
+      <a href="/public/components/login.html" class="navbar-mobile-link" aria-label="Login"
+        id="navbar-mobile-login-link">
         <i class="bi bi-person"></i>
       </a>
-    </li>
-    <li>
-      <button id="lang-switcher-mobile" class="navbar-mobile-link" aria-label="Cambiar idioma">
-        <i class="bi bi-translate"></i>
-      </button>
     </li>
   </ul>
 </nav>
