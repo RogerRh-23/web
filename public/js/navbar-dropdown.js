@@ -1,3 +1,11 @@
+// Reconstruye los dropdowns al cambiar el idioma
+if (window.i18next) {
+  window.i18next.on('languageChanged', function () {
+    setTimeout(() => {
+      robustInitDropdowns();
+    }, 100);
+  });
+}
 // navbar-dropdown.js - Nueva implementación funcional
 
 // Traducción y configuración de menús
@@ -5,6 +13,7 @@ function getDropdownConfig() {
   const t = window.i18next ? window.i18next.t.bind(window.i18next) : (k) => k;
   return [
     {
+      key: 'services',
       label: t('dropdown.services.label'),
       items: [
         { name: t('dropdown.services.items.0'), path: 'Servicios/Certificación de Sistemas de Gestión.html' },
@@ -13,6 +22,7 @@ function getDropdownConfig() {
       ]
     },
     {
+      key: 'processes',
       label: t('dropdown.processes.label'),
       items: [
         { name: t('dropdown.processes.items.0'), path: 'Procesos/Proceso de Certificación.html' },
@@ -21,6 +31,7 @@ function getDropdownConfig() {
       ]
     },
     {
+      key: 'training',
       label: t('dropdown.training.label'),
       items: [
         { name: t('dropdown.training.items.0'), path: 'Centro de formación/Cursos.html' },
@@ -76,7 +87,7 @@ function initDropdowns() {
   if (!window.matchMedia('(max-width: 991px)').matches) {
     dropdowns.forEach(drop => {
       // Buscar el navItem en todo el documento, no solo en la página principal
-      const navItem = document.querySelector('.nav-link[data-dropdown="' + drop.label + '"]');
+      const navItem = document.querySelector('.nav-link[data-dropdown="' + drop.key + '"]');
       if (navItem) {
         let dropdownContainer = document.createElement('div');
         dropdownContainer.className = 'dropdown-gsap-container';

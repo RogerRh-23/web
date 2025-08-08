@@ -81,11 +81,10 @@
       <img class="lacs-logo-overlay" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
     </div>
     <!-- Novedades -->
-    <section id="novedades" class="section-gsap novedades-section" style="margin-top: 2.5rem; margin-bottom: 2.5rem;">
-      <div class="news-container">
+    <section id="novedades" class="section-gsap novedades-section">
+      <div class="index info-box">
         <h2 class="section-title" data-i18n="news.news_title">Novedades</h2>
         <div class="carousel-container">
-          <!-- Facebook widget eliminado -->
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img src="./assets/img/img1.png" alt="Novedad 1" class="news-image">
@@ -117,61 +116,90 @@
           <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" rel="noopener"
             class="social-icon facebook">
             <i class="fab fa-facebook-f"></i>
+            <span class="social-icon-label">Sigue nuestra pagina de Facebook</span>
           </a>
           <a href="https://www.instagram.com/lacs.mx/#" target="_blank" rel="noopener" class="social-icon instagram">
             <i class="fab fa-instagram"></i>
+            <span class="social-icon-label">Sigue nuestro perfil de Instagram</span>
           </a>
           <a href="https://www.tiktok.com/@lacs_mx" target="_blank" rel="noopener" class="social-icon tiktok">
             <i class="fab fa-tiktok"></i>
+            <span class="social-icon-label">Visita nuestro perfil de TikTok</span>
           </a>
           <a href="https://wa.me/5215570472422" target="_blank" rel="noopener" class="social-icon whatsapp">
             <i class="fab fa-whatsapp"></i>
+            <span class="social-icon-label">Contáctanos por WhatsApp</span>
           </a>
         </div>
       </div>
     </section>
-    <section class="cards-section">
-      <div class="cards-header">
-        <h1 class="title" data-i18n="cards.title">Conócenos</h1>
-        <p class="subtitle" data-i18n="cards.subtitle">Conoce más sobre nosotros, nuestra misión, visión y valores.</p>
+    <!-- Tarjetas de Conócenos -->
+    <div class="index info-box">
+      <section class="cards-section">
+        <div class="cards-header">
+          <h1 class="title" data-i18n="cards.title">Conócenos</h1>
+          <p class="subtitle" data-i18n="cards.subtitle">Conoce más sobre nosotros, nuestra misión, visión y valores.
+          </p>
+        </div>
+      </section>
+      <div id="cards" class="section-gsap"></div>
+    </div>
+    <div class="index info-box">
+      <div id="ema" class="section-gsap">
+        <div class="ema-container">
+          <section class="ema-section">
+            <h1 class="section-title" data-i18n="ema.title">Acreditaciones EMA</h1>
+            <div class="section-content">
+              <div class="ema-96-13">
+                <a href="./assets/docs/ACREDITACION ISO 9001  17021-1.pdf" target="_blank" rel="noopener">
+                  <button>
+                    <img src="./assets/img/96-13.png" alt="EMA 96-13" class="ema-logo" />
+                  </button>
+                </a>
+                <strong><span class="ema-text" data-i18n="ema.iso9001">Acreditación ISO 9001:2015 Sistemas de Gestion de
+                    Calidad</span></strong>
+              </div>
+              <div class="ema-96-20">
+                <a href="./assets/docs/ACREDITACION ISO 27001  17021-1.pdf" target="_blank" rel="noopener">
+                  <button>
+                    <img src="./assets/img/96_20.png" alt="EMA 96-20" class="ema-logo" />
+                  </button>
+                </a>
+                <strong><span class="ema-text" data-i18n="ema.iso27001">Acreditación ISO 27001:2022 Sistemas de Gestión
+                    de
+                    Seguridad de la Información</span></strong>
+              </div>
+              <div class="ema-96-2IAF">
+                <a href="./assets/docs/ACREDITACION ISO 37001.pdf" target="_blank" rel="noopener">
+                  <button>
+                    <img src="./assets/img/96_20IAF.png" alt="EMA 96-20IAF" class="ema-logo" />
+                  </button>
+                </a>
+                <strong><span class="ema-text" data-i18n="ema.iso37001">Acreditación ISO 37001:2016 Sistemas de Gestión
+                    Antisoborno</span></strong>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-    </section>
-    <!-- SVG animado y contenedor eliminados -->
-    <div id="cards" class="section-gsap"></div>
-    <div id="ema" class="section-gsap">
-      <div class="ema-container">
-        <section class="ema-section">
-          <h1 class="section-title" data-i18n="ema.title">Acreditaciones EMA</h1>
-          <div class="section-content">
-            <div class="ema-96-13">
-              <a href="./assets/docs/ACREDITACION ISO 9001  17021-1.pdf" target="_blank" rel="noopener">
-                <button>
-                  <img src="./assets/img/96-13.png" alt="EMA 96-13" class="ema-logo" />
-                </button>
-              </a>
-              <strong><span class="ema-text" data-i18n="ema.iso9001">Acreditación ISO 9001:2015 Sistemas de Gestion de
-                  Calidad</span></strong>
+    </div>
+    <div class="index info-box">
+      <div id="certified-clients" class="section-clients">
+        <div class="certified-clients-container">
+          <h1 class="title" data-i18n="certified_clients.title">Clientes
+            Certificados</h1>
+          <div class="certified-clients-content">
+            <div class="certified-client-card">
+              <img src="#" alt="Cliente 1" class="client-logo">
             </div>
-            <div class="ema-96-20">
-              <a href="./assets/docs/ACREDITACION ISO 27001  17021-1.pdf" target="_blank" rel="noopener">
-                <button>
-                  <img src="./assets/img/96_20.png" alt="EMA 96-20" class="ema-logo" />
-                </button>
-              </a>
-              <strong><span class="ema-text" data-i18n="ema.iso27001">Acreditación ISO 27001:2013 Sistemas de Gestión de
-                  Seguridad de la Información</span></strong>
+            <div class="certified-client-card">
+              <img src="#" alt="Cliente 2" class="client-logo">
             </div>
-            <div class="ema-96-2IAF">
-              <a href="./assets/docs/ACREDITACION ISO 37001.pdf" target="_blank" rel="noopener">
-                <button>
-                  <img src="./assets/img/96_20IAF.png" alt="EMA 96-20IAF" class="ema-logo" />
-                </button>
-              </a>
-              <strong><span class="ema-text" data-i18n="ema.iso37001">Acreditación ISO 37001:2016 Sistemas de Gestión
-                  Antisoborno</span></strong>
+            <div class="certified-client-card">
+              <img src="#" alt="Cliente 3" class="client-logo">
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   </main>

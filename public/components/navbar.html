@@ -8,11 +8,11 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link active" aria-current="page" href="/public/index.html"><i
                 class="bi bi-house-door"></i> <span data-i18n="navbar.home">Inicio</span></a></li>
-          <li class="nav-item"><a class="nav-link" data-dropdown="Servicios"><i class="bi bi-briefcase"></i> <span
+          <li class="nav-item"><a class="nav-link" data-dropdown="services"><i class="bi bi-briefcase"></i> <span
                 data-i18n="navbar.services">Servicios</span></a></li>
-          <li class="nav-item"><a class="nav-link" data-dropdown="Procesos"><i class="bi bi-diagram-3"></i> <span
+          <li class="nav-item"><a class="nav-link" data-dropdown="processes"><i class="bi bi-diagram-3"></i> <span
                 data-i18n="navbar.processes">Procesos</span></a></li>
-          <li class="nav-item"><a class="nav-link" data-dropdown="Centro de formación"><i class="bi bi-mortarboard"></i>
+          <li class="nav-item"><a class="nav-link" data-dropdown="training"><i class="bi bi-mortarboard"></i>
               <span data-i18n="navbar.training">Centro de formación</span></a></li>
           <li class="nav-item"><a class="nav-link" href="/public/components/certificados.html"><i
                 class="bi bi-award"></i> <span data-i18n="navbar.certificates">Certificados</span></a></li>
@@ -30,3 +30,17 @@
     </div>
   </nav>
 </div>
+<script>
+  // Sincroniza el texto del botón de idioma con el idioma actual
+  function updateLangBtn() {
+    var btn = document.getElementById('lang-switcher');
+    if (!btn || !window.i18next) return;
+    var current = window.i18next.language || 'es';
+    btn.innerHTML = '<i class="bi bi-translate"></i> ' + (current === 'en' ? 'ES' : 'EN');
+  }
+  if (window.i18next) {
+    window.i18next.on('languageChanged', updateLangBtn);
+    document.addEventListener('DOMContentLoaded', updateLangBtn);
+    setTimeout(updateLangBtn, 100); // Por si la navbar se carga dinámicamente
+  }
+</script>

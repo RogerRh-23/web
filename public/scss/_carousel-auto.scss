@@ -12,23 +12,21 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
 .carousel-inner {
-    flex: 1 1 750px;
+    flex: 1 1 700px;
     min-width: 590px;
-    max-width: 1465px;
+    max-width: 1300px;
     position: relative;
     height: 500px;
     overflow: hidden;
     border-radius: 1.2rem;
-    box-shadow: $shadow-4layer;
     background: #fff;
-    border: 1px solid #e3e9ef;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,23 +61,57 @@
     display: flex;
     gap: 1.2rem;
     margin-bottom: 2.5rem;
+    margin-left: 5px;
     padding: 0 1.5rem;
     align-items: flex-start;
 }
 
+// Social icon con texto expandible al hover
 .social-icon {
     text-decoration: none;
     font-size: 2.1rem;
     color: #3386a9;
     background: #f5fafd;
-    border-radius: 50%;
+    border-radius: 50px;
     width: 48px;
     height: 48px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: background 0.2s, color 0.2s;
-    box-shadow: $shadow-4layer;
+    justify-content: flex-start;
+    transition: background 0.2s, color 0.2s, width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    cursor: pointer;
+}
+
+.social-icon-label {
+    opacity: 0;
+    max-width: 0;
+    margin-left: 0.7rem;
+    white-space: nowrap;
+    font-size: 1rem;
+    color: #3386a9;
+    font-weight: 500;
+    transition: opacity 0.18s, max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.18s;
+    pointer-events: none;
+}
+
+.social-icon:hover,
+.social-icon:focus {
+    background: #3386a9;
+    color: #fff;
+    width: 300px;
+    justify-content: flex-start;
+}
+
+.social-icon:hover .social-icon-label,
+.social-icon:focus .social-icon-label {
+    opacity: 1;
+    max-width: 200px;
+    margin-left: 1.1rem;
+    color: #fff;
 }
 
 .social-icon:hover {

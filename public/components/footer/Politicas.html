@@ -36,23 +36,23 @@
 
   <section id="aviso-privacidad" style="margin-bottom:2.5rem;">
     <div class="info-box">
-      <h1>Aviso de privacidad</h2>
-        <iframe src="../../assets/docs/aviso de privacidad.pdf"
-          style="width: 100%; height: 45rem; border: none;"></iframe>
+      <h1 data-i18n="footer_politicas.privacy">Aviso de privacidad</h1>
+      <iframe src="../../assets/docs/aviso de privacidad.pdf"
+        style="width: 100%; height: 45rem; border: none;"></iframe>
     </div>
   </section>
   <section id="politica-confidencialidad" style="margin-bottom:2.5rem;">
     <div class="info-box">
-      <h1>Política de confidencialidad</h2>
-        <iframe src="../../assets/docs/PoRDG-03 Código de ética y confidencialidad Ver 08.pdf"
-          style="width: 100%; height: 45rem; border: none;"></iframe>
+      <h1 data-i18n="footer_politicas.confidentiality">Política de confidencialidad</h1>
+      <iframe src="../../assets/docs/PoRDG-03 Código de ética y confidencialidad Ver 08.pdf"
+        style="width: 100%; height: 45rem; border: none;"></iframe>
     </div>
   </section>
   <section id="politica-imparcialidad" style="margin-bottom:2.5rem;">
     <div class="info-box">
-      <h1>Política de Imparcialidad</h2>
-        <iframe src="../../assets/docs/PoRDG-05 Politica de Imparcialidad Ver.04 firmada.pdf"
-          style="width: 100%; height: 45rem; border: none;"></iframe>
+      <h1 data-i18n="footer_politicas.impartiality">Política de Imparcialidad</h1>
+      <iframe src="../../assets/docs/PoRDG-05 Politica de Imparcialidad Ver.04 firmada.pdf"
+        style="width: 100%; height: 45rem; border: none;"></iframe>
     </div>
   </section>
 
@@ -153,6 +153,12 @@
         loadExternalScript('../../js/footer.js', function () {
           if (typeof window.initFooter === 'function') window.initFooter();
         });
+
+        // Sincroniza el botón de idioma tras cargar la navbar
+        setTimeout(function () {
+          if (window.updateLangBtnAll) window.updateLangBtnAll();
+          if (window.updateI18nContent) window.updateI18nContent();
+        }, 200);
       });
 
     // Cargar GSAP solo una vez (si lo necesitas en la página)

@@ -35,26 +35,28 @@
   <div id="navbar-mobile-dropdown-placeholder"></div>
   <section class="dynamic-section nosotros-section">
     <div class="info-box">
-      <h1>Más sobre nosotros</h1>
+      <h1 data-i18n="footer_nosotros.title">Más sobre nosotros</h1>
       <div class="faq-content">
-        <h2>Preguntas frecuentes</h2>
+        <h2 data-i18n="footer_nosotros.faq">Preguntas frecuentes</h2>
       </div>
     </div>
     <div class="info-box">
       <div class="acreditaciones-content">
-        <h2>Acreditaciones</h2>
-        <p>Información sobre nuestras acreditaciones y certificaciones.</p>
+        <h2 data-i18n="footer_nosotros.accreditations">Acreditaciones</h2>
+        <p data-i18n="footer_nosotros.accreditations_info">Información sobre nuestras acreditaciones y certificaciones.
+        </p>
         <div class="EMA-9001-Sectores">
-          <h3>Acreditacion ISO 9001 Sectores</h3>
+          <h3 data-i18n="footer_nosotros.9001_sectors">Acreditacion ISO 9001 Sectores</h3>
           <img src="../../assets/img/EMA-9001-Sectores.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="EMA-9001-Sistemas">
-          <h3>Acreditacion ISO 9001 como Organismo de Certificacion de Sistemas de Gestión de Calidad</h3>
+          <h3 data-i18n="footer_nosotros.9001_systems">Acreditacion ISO 9001 como Organismo de Certificacion de Sistemas
+            de Gestión de Calidad</h3>
           <img src="../../assets/img/ISO-9001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="EMA-27001-Sistemas">
-          <h3>Acreditacion ISO 27001 como Organismo de Certificacion de Sistemas de Gestión de Seguridad de la
-            Información</h3>
+          <h3 data-i18n="footer_nosotros.27001_systems">Acreditacion ISO 27001 como Organismo de Certificacion de
+            Sistemas de Gestión de Seguridad de la Información</h3>
           <img src="../../assets/img/ISO-27001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="EMA-27001-2022">
@@ -177,6 +179,12 @@
         loadExternalScript('../../js/footer.js', function () {
           if (typeof window.initFooter === 'function') window.initFooter();
         });
+
+        // Sincroniza el botón de idioma tras cargar la navbar
+        setTimeout(function () {
+          if (window.updateLangBtnAll) window.updateLangBtnAll();
+          if (window.updateI18nContent) window.updateI18nContent();
+        }, 200);
       });
 
     // Cargar GSAP solo una vez (si lo necesitas en la página)

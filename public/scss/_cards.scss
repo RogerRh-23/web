@@ -73,8 +73,8 @@
   height: auto;
   flex-shrink: 0;
   display: flex;
-  align-items: stretch;
-  justify-content: center;
+  align-items: center !important;
+  justify-content: center !important;
   box-sizing: border-box;
   overflow: hidden;
   padding: 0;
@@ -88,11 +88,11 @@
   color: $color-white;
   letter-spacing: 0.08em;
   text-align: center;
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .right-bar {
@@ -158,6 +158,7 @@
   color: $color-white;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .info-card:nth-child(4) .info-card-content {
@@ -195,8 +196,8 @@
 
 // --- Card 4: compacta y crece con contenido ---
 .info-card:nth-child(4) {
-  height: 380px;
-  max-height: 450px;
+  height: auto !important;
+  max-height: none !important;
   align-items: stretch;
   margin-bottom: 32px;
 }
@@ -271,6 +272,8 @@
   text-align: left;
   word-break: break-word;
   white-space: normal;
+  overflow: hidden;
+  /* height, max-height, min-height y transiciones eliminadas para que GSAP controle la expansión */
 }
 
 /* SplitText: los spans deben ser inline-block y sin saltos artificiales */
@@ -314,9 +317,9 @@
 // --- Responsive ---
 @include media('(max-width: 991px)') {
   .info-card {
-    width: 98vw;
+    width: 88vw;
     min-width: 0;
-    max-width: 100vw;
+    max-width: 90vw;
     flex-direction: row;
     align-items: stretch;
     height: auto;
@@ -330,7 +333,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100%;
+    /* height: 100%; */
   }
 
   .info-card-bar {
@@ -340,17 +343,19 @@
     height: auto;
     flex-shrink: 0;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     padding: 0;
+    z-index: 10;
+    position: relative;
   }
 
   .info-card-bar-text {
-    font-size: 0.98rem;
-    height: 100%;
+    font-size: 1rem;
+    /* height: 100%; */
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: center !important;
     justify-content: center;
   }
 
@@ -362,40 +367,28 @@
     font-size: 0.98rem;
   }
 
-  .info-card:nth-child(1) {
-    max-height: 350px;
-    height: 70%;
-  }
-
-  .info-card:nth-child(2) {
-    max-height: 150px;
-    height: 70%;
-  }
-
-  .info-card:nth-child(3) {
-    max-height: 150px;
-    height: 70%;
-  }
-
-  .info-card:nth-child(4) {
-    height: 380px;
-    max-height: 400px;
-    align-items: stretch;
-  }
-
+  // Eliminar restricciones de altura para que las cards crezcan según el contenido en mobile
+  .info-card:nth-child(1),
+  .info-card:nth-child(2),
+  .info-card:nth-child(3),
+  .info-card:nth-child(4),
   .info-card:nth-child(5) {
-    max-height: 415px;
-    height: 70%;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    align-items: stretch;
   }
 }
 
 @include media('(max-width: 575px)') {
   .info-card {
     min-width: 0;
-    width: 100vw;
-    max-width: 100vw;
-    height: auto;
-    align-items: stretch;
+    width: 90vw;
+    max-width: 90vw;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    align-items: flex-start;
     display: flex;
     flex-direction: row;
     gap: 0;
@@ -405,29 +398,34 @@
     padding: 0.8rem 0.3rem;
     font-size: 0.95rem;
     min-width: 0;
-    height: 100%;
+    min-height: 0;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    /* flex: 1 1 0; */
   }
 
   .info-card-bar {
     width: 32px;
     min-width: 0;
     max-width: 32px;
-    height: auto;
+    height: auto !important;
     flex-shrink: 0;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
-    align-self: stretch;
+    /* align-self: stretch; */
     padding: 0;
+    z-index: 10;
+    position: relative;
   }
 
   .info-card-bar-text {
-    font-size: 0.98rem;
-    height: 100%;
-    width: 100%;
+    font-size: 1rem;
+    height: auto !important;
+    /* height: 100%; */
+    /* width: 100%; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -435,11 +433,7 @@
     text-orientation: mixed;
   }
 
-  .info-card:nth-child(4) {
-    height: 400px;
-    max-height: 400px;
-    align-items: stretch;
-  }
+  /* Eliminar height/max-height/min-height de las cards específicas en mobile para evitar conflicto */
 
   .info-card:nth-child(4) .info-card-content {
     align-items: flex-start;

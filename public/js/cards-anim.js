@@ -81,9 +81,10 @@ function animateInfoCards(cards) {
 // Animación de valores en la Card 4 usando GSAP
 // Requiere GSAP 3.x
 document.addEventListener('DOMContentLoaded', function () {
-  // Esperar a que las cards estén en el DOM
+  // Solo animar la card de valores (card 4)
   const waitForValores = setInterval(() => {
-    const card = document.querySelector('.info-card-bar.left-bar + .info-card-content .valores-list')?.closest('.info-card');
+    // Busca solo la card 4 (de valores)
+    const card = document.querySelector('.info-card:nth-child(4)');
     if (!card) return;
     clearInterval(waitForValores);
     const rows = card.querySelectorAll('.valor-row');
@@ -121,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
           });
           // Oculta descripción con animación
           gsap.to(desc, {
-            height: 0,
+            maxHeight: 0,
             opacity: 0,
             duration: 0.1,
             ease: 'power2.in',
@@ -152,15 +153,12 @@ document.addEventListener('DOMContentLoaded', function () {
           // Mostrar descripción con animación de altura y SplitText
           desc.style.display = 'block';
           desc.hidden = false;
-          desc.style.height = 'auto';
+          desc.style.maxHeight = '0px';
+          void desc.offsetHeight;
           const h = desc.scrollHeight;
-          desc.style.height = '0px';
-          // SplitText animación por letra
           if (window.SplitText) {
-            // Limpia splits previos
             if (desc._split) desc._split.revert();
             desc._split = new SplitText(desc, { type: 'chars' });
-            // Corrige visualmente los spans para evitar cortes raros
             desc._split.chars.forEach(span => {
               span.style.display = 'inline';
               span.style.wordBreak = 'break-word';
@@ -169,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
             gsap.set(desc._split.chars, { x: 60, opacity: 0 });
           }
           gsap.to(desc, {
-            height: h,
+            maxHeight: h,
             opacity: 1,
             duration: 0.4,
             ease: 'power2.out',
@@ -179,29 +177,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 gsap.to(desc._split.chars, {
                   x: 0,
                   opacity: 1,
-                  duration: 0.35, // más rápido
+                  duration: 0.35,
                   ease: 'power4',
-                  stagger: 0.015 // más rápido
+                  stagger: 0.015
                 });
               }
             },
             onComplete: () => {
-              desc.style.height = 'auto';
+              desc.style.maxHeight = 'none';
             }
           });
-          // Adaptar la card al nuevo tamaño
-          gsap.to(card, { height: 'auto', duration: 0.4, ease: 'power2.out' });
         } else {
           btn.setAttribute('aria-expanded', 'false');
-          // Icono gira a +
           gsap.to(icon, {
             rotate: 0, duration: 0.3, ease: 'power2.inOut', onComplete: () => {
               icon.className = 'bi bi-plus';
             }
           });
-          // Oculta descripción con animación
           gsap.to(desc, {
-            height: 0,
+            maxHeight: 0,
             opacity: 0,
             duration: 0.35,
             ease: 'power2.in',
@@ -210,8 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
               desc.hidden = true;
             }
           });
-          // Adaptar la card al nuevo tamaño
-          gsap.to(card, { height: 'auto', duration: 0.4, ease: 'power2.out' });
         }
       });
     });

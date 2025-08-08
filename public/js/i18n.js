@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     fallbackLng: 'es',
     debug: false,
     backend: {
-      loadPath: '../locales/{{lng}}.json'
+      // Ruta absoluta desde la raíz pública para evitar problemas de subcarpetas
+      loadPath: '/locales/{{lng}}.json'
     },
     interpolation: {
       escapeValue: false // Permite HTML y símbolos

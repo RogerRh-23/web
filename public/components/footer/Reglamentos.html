@@ -34,7 +34,7 @@
   <div id="navbar-mobile-placeholder"></div>
   <div id="navbar-mobile-dropdown-placeholder"></div>
   <div class="reglamentos-container">
-    <h1 class="section-title">Reglamento de uso de marca</h1>
+    <h1 class="section-title" data-i18n="footer_reglamentos.title">Reglamento de uso de marca</h1>
     <div class="reglamento-section">
       <iframe
         src="../../assets/docs/RCTED-02 Reglamento de uso de marca para sistema de gestion certificado LACS ver 10.pdf"
@@ -138,6 +138,12 @@
         loadExternalScript('../../js/footer.js', function () {
           if (typeof window.initFooter === 'function') window.initFooter();
         });
+
+        // Sincroniza el botón de idioma tras cargar la navbar
+        setTimeout(function () {
+          if (window.updateLangBtnAll) window.updateLangBtnAll();
+          if (window.updateI18nContent) window.updateI18nContent();
+        }, 200);
       });
 
     // Cargar GSAP solo una vez (si lo necesitas en la página)
