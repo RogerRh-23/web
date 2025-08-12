@@ -39,16 +39,13 @@
   </div>
   <div class="info-box">
     <h1 class="section-title" data-i18n="certs.title">Certificación de Sistemas de Gestión</h1>
-    <button class="carousel-arrow prev" aria-label="Anterior" tabindex="0">
-      <span aria-hidden="true">&#10094;</span>
-    </button>
     <div class="carousel-track" role="listbox" aria-live="polite">
       <div class="card-certificacion active" role="option" aria-selected="true">
         <div class="card-certificacion-img">
           <img class="iso-logo" src="../../assets/img/iso-9001.jpeg" alt="ISO 9001 Logo" id="iso-9001">
         </div>
         <div class="card-certificacion-content">
-          <h2>ISO 9001</h2>
+          <h2 data-i18n="certs.iso9001.9001_title">ISO 9001 Sistemas de Gestión de Calidad</h2>
           <p data-i18n="certs.iso9001.desc">
             ISO 9001 reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a
             cumplir con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su
@@ -72,7 +69,8 @@
           <img class="iso-logo" src="../../assets/img/iso-27001.jpeg" alt="ISO/IEC 27001 Logo" id="iso-27001">
         </div>
         <div class="card-certificacion-content">
-          <h2>ISO/IEC 27001</h2>
+          <h2 data-i18n="certs.iso27001.27001_title">ISO/IEC 27001 Sistemas de Gestiónde la Seguridad de la Información
+          </h2>
           <p data-i18n="certs.iso27001.desc">
             La ISO/IEC 27001 es la norma más conocida del mundo para sistemas de gestión de la seguridad de la
             información (SGSI). Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para
@@ -97,7 +95,7 @@
           <img class="iso-logo" src="../../assets/img/iso-37001.jpeg" alt="ISO 37001 Logo" id="iso-37001">
         </div>
         <div class="card-certificacion-content">
-          <h2>ISO 37001</h2>
+          <h2 data-i18n="certs.iso37001.37001_title">ISO 37001 Sistemas de Gestión Antisoborno</h2>
           <p data-i18n="certs.iso37001.desc">
             ISO 37001 es una norma dedicada establecer un sistema de gestión que ayude a las organizaciones a prevenir,
             detectar y responder al soborno, así como a cumplir las leyes antisoborno y los compromisos voluntarios
@@ -119,15 +117,20 @@
         </div>
       </div>
     </div>
-    <button class="carousel-arrow next" aria-label="Siguiente" tabindex="0">
-      <span aria-hidden="true">&#10095;</span>
-    </button>
-    <div class="carousel-indicators" aria-label="Indicadores de carrusel" role="tablist">
-      <button class="carousel-dot active" aria-label="Ver ISO 9001" role="tab" aria-selected="true"
-        tabindex="0"></button>
-      <button class="carousel-dot" aria-label="Ver ISO/IEC 27001" role="tab" aria-selected="false"
-        tabindex="0"></button>
-      <button class="carousel-dot" aria-label="Ver ISO 37001" role="tab" aria-selected="false" tabindex="0"></button>
+    <div class="carousel-controls-row">
+      <button class="carousel-arrow prev" aria-label="Anterior" tabindex="0">
+        <span aria-hidden="true">&#10094;</span>
+      </button>
+      <div class="carousel-indicators" aria-label="Indicadores de carrusel" role="tablist">
+        <button class="carousel-dot active" aria-label="Ver ISO 9001" role="tab" aria-selected="true"
+          tabindex="0"></button>
+        <button class="carousel-dot" aria-label="Ver ISO/IEC 27001" role="tab" aria-selected="false"
+          tabindex="0"></button>
+        <button class="carousel-dot" aria-label="Ver ISO 37001" role="tab" aria-selected="false" tabindex="0"></button>
+      </div>
+      <button class="carousel-arrow next" aria-label="Siguiente" tabindex="0">
+        <span aria-hidden="true">&#10095;</span>
+      </button>
     </div>
   </div>
   <div id="footer"></div>

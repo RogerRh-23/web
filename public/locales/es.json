@@ -11,7 +11,23 @@
   "navbar_mobile": {
     "menu_button": "Menú",
     "home_button": "Inicio",
-    "login_button": "Iniciar Sesión"
+    "login_button": "Iniciar Sesión",
+    "services": "Servicios",
+    "services_certification": "Certificación de Sistemas de Gestión",
+    "services_training": "Capacitación",
+    "services_sorting": "Sorteo y Retrabajo",
+    "processes": "Procesos",
+    "process_certification": "Proceso de Certificación",
+    "process_validity": "Vigencia de la Certificación",
+    "process_complaints": "Procedimiento de atención de quejas",
+    "training": "Centro de formación",
+    "training_courses": "Cursos",
+    "training_webinars": "Webinars",
+    "certificates": "Certificados",
+    "contact": "Contacto",
+    "language": "Idioma",
+    "lang_es": "Español",
+    "lang_en": "Inglés"
   },
   "footer": {
     "about": "Más sobre nosotros",
@@ -330,6 +346,7 @@
   "certs": {
     "title": "Certificación de Sistemas de Gestión",
     "iso9001": {
+      "9001_title": "ISO 9001 Sistemas de Gestión de Calidad",
       "desc": "ISO 9001 reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a logro de objetivos y metas.<br><br>Con la implementación de ISO 9001, su organización a través del liderazgo de la alta dirección implementa procesos eficaces y promueve la capacitación del personal para brindar productos o servicios con la confianza de cumplir con las necesidades de sus clientes.<br><br>",
       "benefits_title": "Los beneficios de implementar esta norma son:",
       "benefit1": "Confianza de los clientes",
@@ -338,6 +355,7 @@
       "benefit4": "Mejora continua"
     },
     "iso27001": {
+      "27001_title": "ISO/IEC 27001 Sistemas de Gestión de la Seguridad de la Información",
       "desc": "La ISO/IEC 27001 es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI). Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o maneja a fin de generar confianza con sus clientes, socios y publico en general.<br><br>",
       "benefits_title": "Los beneficios de implementar esta norma son los siguientes:",
       "benefit1": "Mantener una resistencia a los ciberataques",
@@ -348,6 +366,7 @@
       "benefit6": "Ahorro de costos por extracción de información"
     },
     "iso37001": {
+      "37001_title": "ISO 37001 Sistemas de Gestión Antisoborno",
       "desc": "Es una norma dedicada establecer un sistema de gestión que ayude a las organizaciones a prevenir, detectar y responder al soborno, así como a cumplir las leyes antisoborno y los compromisos voluntarios aplicables a sus actividades. Abarca diversas formas de soborno (directo e indirecto) en los sectores público, privado y sin ánimo de lucro.<br><br>El enfoque sistemático de ISO 37001 brinda a las organizaciones un enfoque sistemático para combatir el soborno, no solo con el cumplimiento normativo, sino también con el fomento de una cultura de integridad, transparencia y confianza dentro de las organizaciones.<br><br>",
       "benefits_title": "Los beneficios de implementar esta norma son:",
       "benefit1": "Reducir los riesgos de soborno y sus costos asociados",

@@ -100,7 +100,14 @@
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 var lang = btn.getAttribute('data-lang');
-                if (window.changeLanguage) window.changeLanguage(lang);
+                if (window.i18next && typeof window.i18next.changeLanguage === 'function') {
+                    window.i18next.changeLanguage(lang, function () {
+                        if (window.updateI18nContent) window.updateI18nContent();
+                        if (window.updateLangBtnAll) window.updateLangBtnAll();
+                    });
+                } else if (window.changeLanguage) {
+                    window.changeLanguage(lang);
+                }
             });
         });
     }
