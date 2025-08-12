@@ -20,10 +20,11 @@
         menuBtn.onclick = null;
         menuBtn.addEventListener('click', function (e) {
             e.stopPropagation();
-            // Mueve la barra de iconos hacia arriba y muestra el menú como acordeón
             var expanded = dropdownMenu.classList.toggle('expanded');
             iconsBar.classList.toggle('move-up', expanded);
             menuBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            // Ajustar altura al abrir/cerrar
+            adjustNavbarMobileHeight();
         });
         // Cerrar al hacer click fuera
         document.addEventListener('click', function closeMenu(e) {
@@ -32,6 +33,8 @@
                 dropdownMenu.classList.remove('expanded');
                 iconsBar.classList.remove('move-up');
                 menuBtn.setAttribute('aria-expanded', 'false');
+                // Limpiar altura al cerrar
+                adjustNavbarMobileHeight();
             }
         });
     }
@@ -40,6 +43,9 @@
     function setupMobileAccordion() {
         if (window.innerWidth > 991) return;
         const accordions = document.querySelectorAll('.navbar-mobile-accordion');
+        const navbarMobile = document.querySelector('.navbar-mobile');
+        const iconsBar = document.querySelector('.navbar-mobile-icons');
+        const dropdownMenu = document.querySelector('.navbar-mobile-dropdown-menu');
         accordions.forEach(acc => {
             const header = acc.querySelector('.navbar-mobile-accordion-header');
             if (!header) return;
@@ -48,9 +54,43 @@
             header.onclick = function () {
                 accordions.forEach(a => { if (a !== acc) a.classList.remove('active'); });
                 acc.classList.toggle('active');
+                setTimeout(adjustNavbarMobileHeight, 10); // Espera animación CSS si existe
             };
             acc.classList.remove('active');
         });
+        // Ajustar altura al inicio
+        setTimeout(adjustNavbarMobileHeight, 10);
+
+        function adjustNavbarMobileHeight() {
+            if (!navbarMobile) return;
+            if (!dropdownMenu || !iconsBar) return;
+            if (!dropdownMenu.classList.contains('expanded')) {
+                navbarMobile.style.height = '';
+                return;
+            }
+            // Suma la altura de los hijos visibles del dropdown
+            let dropdownHeight = 0;
+            Array.from(dropdownMenu.children).forEach(child => {
+                if (child.offsetParent !== null) {
+                    dropdownHeight += child.offsetHeight;
+                }
+            });
+            // Suma la altura de la barra de iconos
+            const iconsBarHeight = iconsBar.offsetHeight;
+            // Ajusta la altura del contenedor principal
+            navbarMobile.style.height = (dropdownHeight + iconsBarHeight) + 'px';
+        }
+
+        // Ajustar altura al contraer/expandir acordeones por transición CSS
+        accordions.forEach(acc => {
+            acc.addEventListener('transitionend', function (e) {
+                if (e.propertyName === 'max-height' || e.propertyName === 'height') {
+                    adjustNavbarMobileHeight();
+                }
+            });
+        });
+        // Hacer la función accesible globalmente para el dropdown
+        window.adjustNavbarMobileHeight = adjustNavbarMobileHeight;
     }
 
     // Cambio de idioma

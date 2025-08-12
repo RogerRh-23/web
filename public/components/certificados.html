@@ -137,29 +137,53 @@
   <script src="../js/certificados-cliente.js"></script>
   <script src="../js/certificados-admin.js"></script>
   <script src="../js/footer.js"></script>
+
   <script>
-    // Cargar navbar desktop
-    fetch('./navbar.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-        setTimeout(function () {
-          if (window.updateLangBtnAll) window.updateLangBtnAll();
-          if (window.updateI18nContent) window.updateI18nContent();
-        }, 200);
-      });
-    // Cargar navbar mobile
-    fetch('./navbar-mobile.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-mobile-placeholder').innerHTML = html;
-        window.initDropdowns && window.initDropdowns();
-        setTimeout(function () {
-          if (window.updateLangBtnAll) window.updateLangBtnAll();
-          if (window.updateI18nContent) window.updateI18nContent();
-        }, 200);
-      });
+    function loadNavbars() {
+      const isMobile = window.innerWidth <= 991;
+      const navbarPlaceholder = document.getElementById('navbar-placeholder');
+      const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      // Limpia ambos contenedores
+      navbarPlaceholder.innerHTML = '';
+      navbarMobilePlaceholder.innerHTML = '';
+      if (isMobile) {
+        // Solo navbar mobile
+        fetch('./navbar-mobile.html')
+          .then(res => res.text())
+          .then(html => {
+            navbarMobilePlaceholder.innerHTML = html;
+            window.initDropdowns && window.initDropdowns();
+            setTimeout(function () {
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (window.updateI18nContent) window.updateI18nContent();
+            }, 200);
+          });
+      } else {
+        // Solo navbar desktop
+        fetch('./navbar.html')
+          .then(res => res.text())
+          .then(html => {
+            navbarPlaceholder.innerHTML = html;
+            window.initDropdowns && window.initDropdowns();
+            setTimeout(function () {
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (window.updateI18nContent) window.updateI18nContent();
+            }, 200);
+          });
+      }
+    }
+    // Inicial
+    loadNavbars();
+    // Al cambiar tamaño de pantalla
+    window.addEventListener('resize', function () {
+      // Solo recargar si cambia de mobile a desktop o viceversa
+      const wasMobile = window._wasMobile;
+      const isMobile = window.innerWidth <= 991;
+      if (wasMobile !== isMobile) {
+        loadNavbars();
+      }
+      window._wasMobile = isMobile;
+    });
     // Cargar footer
     fetch('./footer.html')
       .then(res => res.text())
@@ -178,6 +202,7 @@
       });
     }
   </script>
+  <script src="../js/navbar-mobile-accordion.js"></script>
 
 </body>
 
