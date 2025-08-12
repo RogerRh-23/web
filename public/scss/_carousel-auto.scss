@@ -19,7 +19,7 @@
 .carousel-inner {
     width: 100%;
     max-width: 1200px;
-    min-width: 1200px !important;
+    min-width: 1200px;
     margin: 0 auto;
     position: relative;
     height: 500px;
@@ -152,8 +152,9 @@ h1 {
     }
 
     .carousel-inner {
-        max-width: 50%;
-        min-width: 0;
+        width: 100% !important;
+        max-width: 300px !important;
+        min-width: 300px;
         margin-right: 0 !important;
         height: 460px !important;
         max-height: 460px !important;

@@ -224,6 +224,92 @@
         window.initFooter && window.initFooter();
       });
   </script>
+  </script>
+  <script>
+    // Mostrar navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function () {
+      const hero = document.querySelector('.hero-reveal');
+      const body = document.body;
+      if (!hero) {
+        body.classList.add('navbar-visible');
+        return;
+      }
+      function updateNavbar(entries) {
+        if (!entries[0].isIntersecting) {
+          body.classList.add('navbar-visible');
+        } else {
+          body.classList.remove('navbar-visible');
+        }
+      }
+      const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
+      observer.observe(hero);
+    });
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('../navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('../navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
   <script src="../../js/i18n.js"></script>
   <script src="../../js/navbar-mobile-accordion.js"></script>
 </body>

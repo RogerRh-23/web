@@ -136,14 +136,26 @@
   <div id="footer"></div>
   <div id="navbar-mobile-placeholder"></div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="../../js/gsap.js"></script>
-  <script src="../../js/navbar-dropdown.js"></script>
-  <script src="../../js/footer.js"></script>
-  <script src="../../js/carousel-gsap.js"></script>
-  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
-  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  </script>
   <script>
-    // Navbar adaptativa: solo carga la versión correspondiente
+    // Mostrar navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function () {
+      const hero = document.querySelector('.hero-reveal');
+      const body = document.body;
+      if (!hero) {
+        body.classList.add('navbar-visible');
+        return;
+      }
+      function updateNavbar(entries) {
+        if (!entries[0].isIntersecting) {
+          body.classList.add('navbar-visible');
+        } else {
+          body.classList.remove('navbar-visible');
+        }
+      }
+      const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
+      observer.observe(hero);
+    });
     function isMobile() {
       return window.innerWidth < 992;
     }
@@ -157,6 +169,10 @@
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../../js/navbar-dropdown.js';
@@ -181,6 +197,9 @@
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../../js/navbar-dropdown.js';
@@ -202,50 +221,10 @@
     }
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
-    // Cargar footer
-    fetch('../footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
-        window.initFooter && window.initFooter();
-      });
   </script>
   <script src="../../js/i18n.js"></script>
-  <script>
-    // Inicializar el botón de idioma en mobile y desktop correctamente, solo cuando i18n.js esté listo
-    function ensureLangSwitchers() {
-      // Mobile button
-      if (!document.getElementById('lang-switcher-mobile')) {
-        var mobileBtn = document.createElement('button');
-        mobileBtn.id = 'lang-switcher-mobile';
-        mobileBtn.className = 'lang-btn';
-        mobileBtn.type = 'button';
-        mobileBtn.setAttribute('aria-label', 'Cambiar idioma');
-        mobileBtn.style.background = 'none';
-        mobileBtn.style.border = 'none';
-        mobileBtn.style.cursor = 'pointer';
-        mobileBtn.style.fontSize = '1.1rem';
-        document.body.appendChild(mobileBtn);
-      }
-      // Siempre inicializar listeners después de crear los botones
-      if (window.initLangSwitchers) window.initLangSwitchers();
-      // Forzar actualización de los botones
-      if (window.updateLangBtnAll) window.updateLangBtnAll();
-    }
-    // Esperar a que i18n.js esté cargado y luego inicializar
-    if (window.i18next) {
-      ensureLangSwitchers();
-    } else {
-      document.addEventListener('DOMContentLoaded', ensureLangSwitchers);
-    }
-    // También actualizar botones tras cambio de idioma
-    if (window.i18next) {
-      window.i18next.on && window.i18next.on('languageChanged', function () {
-        if (window.updateLangBtnAll) window.updateLangBtnAll();
-      });
-    }
-  </script>
   <script src="../../js/navbar-mobile-accordion.js"></script>
+
 </body>
 
 </html>

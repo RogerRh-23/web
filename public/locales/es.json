@@ -53,6 +53,12 @@
   "news": {
     "news_title": "Novedades"
   },
+  "social": {
+    "facebook": "Sigue nuestra pagina de Facebook",
+    "instagram": "Sigue nuestro perfil de Instagram",
+    "tiktok": "Visita nuestro perfil de TikTok",
+    "whatsapp": "Contáctanos por WhatsApp"
+  },
   "certified_clients": {
     "title": "Clientes Certificados"
   },

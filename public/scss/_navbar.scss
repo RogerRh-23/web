@@ -1,4 +1,6 @@
 // --- Navbar mobile contenedor principal ---
+
+// Oculta la navbar mobile por defecto, solo se muestra cuando el body tiene .navbar-visible
 .navbar-mobile {
   position: fixed;
   left: 0;
@@ -6,12 +8,16 @@
   width: 100vw;
   z-index: 20001;
   background: $pantone-b7693u;
-  display: block;
+  display: none;
   height: auto;
   box-shadow: none;
   border-top-left-radius: 0.8rem;
   border-top-right-radius: 0.8rem;
   transition: height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.navbar-visible .navbar-mobile {
+  display: block;
 }
 
 // Scrollable area for menu
@@ -352,9 +358,11 @@
 }
 
 .navbar-mobile-logo {
-  width: 42px;
-  height: 42px;
-  padding: 4px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: block;
+  margin: 0 auto;
   filter: brightness(0) invert(1);
 }
 

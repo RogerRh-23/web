@@ -109,12 +109,16 @@ body {
   width: 100vw;
   z-index: 20001;
   background: rgb(20, 50, 63);
-  display: block;
+  display: none;
   height: auto;
   box-shadow: none;
   border-top-left-radius: 0.8rem;
   border-top-right-radius: 0.8rem;
   transition: height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.navbar-visible .navbar-mobile {
+  display: block;
 }
 
 .navbar-mobile-scroll {
@@ -438,9 +442,11 @@ body {
 }
 
 .navbar-mobile-logo {
-  width: 42px;
-  height: 42px;
-  padding: 4px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: block;
+  margin: 0 auto;
   filter: brightness(0) invert(1);
 }
 
@@ -4719,7 +4725,7 @@ h1.section-title {
 .carousel-inner {
   width: 100%;
   max-width: 1200px;
-  min-width: 1200px !important;
+  min-width: 1200px;
   margin: 0 auto;
   position: relative;
   height: 500px;
@@ -4849,8 +4855,9 @@ h1 {
     gap: 1.5rem;
   }
   .carousel-inner {
-    max-width: 50%;
-    min-width: 0;
+    width: 100% !important;
+    max-width: 300px !important;
+    min-width: 300px;
     margin-right: 0 !important;
     height: 460px !important;
     max-height: 460px !important;
