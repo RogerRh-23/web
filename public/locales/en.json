@@ -330,7 +330,7 @@
   "certs": {
     "title": "Management System Certification",
     "iso9001": {
-      "desc": "Recognized worldwide as the standard for quality management, it is mainly aimed at meeting the expectations of customers of organizations of any size and sector, demonstrating their commitment to quality and continuously improving a management system that helps achieve objectives and goals.<br><br>With the implementation of ISO 9001, your organization, through the leadership of top management, implements effective processes and promotes staff training to provide products or services with the confidence of meeting your customers' needs.<br><br>",
+      "desc": "ISO 9001 is recognized worldwide as the standard for quality management. It is mainly aimed at meeting the expectations of customers of organizations of any size and sector, demonstrating their commitment to quality and continuously improving a management system that helps achieve objectives and goals.<br><br>With the implementation of ISO 9001, your organization, through the leadership of top management, implements effective processes and promotes staff training to provide products or services with the confidence of meeting your customers' needs.<br><br>",
       "benefits_title": "The benefits of implementing this standard are:",
       "benefit1": "Customer confidence",
       "benefit2": "Effective complaint resolution",
@@ -338,7 +338,7 @@
       "benefit4": "Continuous improvement"
     },
     "iso27001": {
-      "desc": "It is the world's best-known standard for information security management systems (ISMS). It provides companies of any size and sector with a framework to establish and implement actions to manage risks related to the security of the data they own or handle, in order to generate trust with their customers, partners, and the public in general.<br><br>",
+      "desc": "ISO/IEC 27001 is the world's best-known standard for information security management systems (ISMS). It provides companies of any size and sector with a framework to establish and implement actions to manage risks related to the security of the data they own or handle, in order to generate trust with their customers, partners, and the general public.<br><br>",
       "benefits_title": "The benefits of implementing this standard are:",
       "benefit1": "Maintain resilience to cyberattacks",
       "benefit2": "Preparation for new threats",
@@ -348,7 +348,7 @@
       "benefit6": "Cost savings from information extraction"
     },
     "iso37001": {
-      "desc": "It is a standard dedicated to establishing a management system that helps organizations prevent, detect, and respond to bribery, as well as comply with anti-bribery laws and voluntary commitments applicable to their activities. It covers various forms of bribery (direct and indirect) in the public, private, and non-profit sectors.<br><br>The systematic approach of ISO 37001 provides organizations with a systematic approach to combating bribery, not only through regulatory compliance but also by fostering a culture of integrity, transparency, and trust within organizations.<br><br>",
+      "desc": "ISO 37001 is a standard dedicated to establishing a management system that helps organizations prevent, detect, and respond to bribery, as well as comply with anti-bribery laws and voluntary commitments applicable to their activities. It covers various forms of bribery (direct and indirect) in the public, private, and non-profit sectors.<br><br>The systematic approach of ISO 37001 provides organizations with a framework to combat bribery, not only through regulatory compliance but also by fostering a culture of integrity, transparency, and trust within organizations.<br><br>",
       "benefits_title": "The benefits of implementing this standard are:",
       "benefit1": "Reduce the risks of bribery and its associated costs",
       "benefit2": "Improve compliance with international anti-bribery laws",

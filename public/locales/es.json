@@ -330,7 +330,7 @@
   "certs": {
     "title": "Certificación de Sistemas de Gestión",
     "iso9001": {
-      "desc": "Reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a logro de objetivos y metas.<br><br>Con la implementación de ISO 9001, su organización a través del liderazgo de la alta dirección implementa procesos eficaces y promueve la capacitación del personal para brindar productos o servicios con la confianza de cumplir con las necesidades de sus clientes.<br><br>",
+      "desc": "ISO 9001 reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a logro de objetivos y metas.<br><br>Con la implementación de ISO 9001, su organización a través del liderazgo de la alta dirección implementa procesos eficaces y promueve la capacitación del personal para brindar productos o servicios con la confianza de cumplir con las necesidades de sus clientes.<br><br>",
       "benefits_title": "Los beneficios de implementar esta norma son:",
       "benefit1": "Confianza de los clientes",
       "benefit2": "Resolución efectiva de las quejas",
@@ -338,7 +338,7 @@
       "benefit4": "Mejora continua"
     },
     "iso27001": {
-      "desc": "Es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI). Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o maneja a fin de generar confianza con sus clientes, socios y público en general.<br><br>",
+      "desc": "La ISO/IEC 27001 es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI). Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o maneja a fin de generar confianza con sus clientes, socios y publico en general.<br><br>",
       "benefits_title": "Los beneficios de implementar esta norma son los siguientes:",
       "benefit1": "Mantener una resistencia a los ciberataques",
       "benefit2": "Preparación ante nuevas amenazas",
