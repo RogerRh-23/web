@@ -3,11 +3,12 @@
     // Mostrar/ocultar el menú debajo de los iconos al hacer click en el botón de menú
     function setupMobileMenuDropdown() {
         var menuBtn = document.querySelector('.navbar-mobile-menu');
-        if (!menuBtn) {
-            console.log('[navbar-mobile] Botón de menú NO encontrado');
+        var iconsBar = document.querySelector('.navbar-mobile-icons');
+        var dropdownMenu = document.querySelector('.navbar-mobile-dropdown-menu');
+        if (!menuBtn || !iconsBar || !dropdownMenu) {
+            console.log('[navbar-mobile] Elementos clave no encontrados');
             return;
         }
-        console.log('[navbar-mobile] Botón de menú encontrado:', menuBtn);
         // Forzar pointer-events solo por JS para evitar problemas de CSS heredado
         menuBtn.style.pointerEvents = 'auto';
         var iconText = menuBtn.querySelector('.navbar-mobile-icon-text');
@@ -15,28 +16,22 @@
         var text = menuBtn.querySelector('.navbar-mobile-text');
         if (text) text.style.pointerEvents = 'auto';
 
-        // Ahora el menú está fuera, lo buscamos globalmente
-        var dropdownMenu = document.querySelector('.navbar-mobile-dropdown-menu');
-        if (!dropdownMenu) {
-            console.log('[navbar-mobile] Menú desplegable NO encontrado');
-            return;
-        }
-        console.log('[navbar-mobile] Menú desplegable encontrado:', dropdownMenu);
         // Elimina listeners previos
         menuBtn.onclick = null;
         menuBtn.addEventListener('click', function (e) {
             e.stopPropagation();
+            // Mueve la barra de iconos hacia arriba y muestra el menú como acordeón
             var expanded = dropdownMenu.classList.toggle('expanded');
+            iconsBar.classList.toggle('move-up', expanded);
             menuBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-            console.log('[navbar-mobile] Click en menú. expanded:', expanded);
         });
         // Cerrar al hacer click fuera
         document.addEventListener('click', function closeMenu(e) {
             if (!dropdownMenu.classList.contains('expanded')) return;
             if (!dropdownMenu.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
                 dropdownMenu.classList.remove('expanded');
+                iconsBar.classList.remove('move-up');
                 menuBtn.setAttribute('aria-expanded', 'false');
-                console.log('[navbar-mobile] Click fuera, menú cerrado');
             }
         });
     }
