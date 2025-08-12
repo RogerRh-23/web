@@ -60,23 +60,25 @@
           <img src="../../assets/img/ISO-27001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="EMA-27001-2022">
-          <h3>Acreditacion ISO 27001:2022 Sistemas de Gestión de Seguridad de la Información</h3>
+          <h3 data-i18n="footer_nosotros.27001_2022">Acreditacion ISO 27001:2022 Sistemas de Gestión de Seguridad de la
+            Información</h3>
           <img src="../../assets/img/ISO-27001-2022.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="EMA-37001-Sistemas">
-          <h3>Acreditacion ISO 37001 Sistemas de Gestión Antisoborno</h3>
+          <h3 data-i18n="footer_nosotros.37001_systems">Acreditacion ISO 37001 Sistemas de Gestión Antisoborno</h3>
           <img src="../../assets/img/iso_37001.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="SGSI-Diploma">
-          <h3>Diploma de Sistemas de Gestión de Seguridad de la Información</h3>
+          <h3 data-i18n="footer_nosotros.sgsi_diploma">Diploma de Sistemas de Gestión de Seguridad de la Información
+          </h3>
           <img src="../../assets/img/SGSI-DIPLOMA-LACS.jpg" alt="Acreditación 9001" class="acreditacion-img" />
         </div>
         <div class="consulta">
-          <h3>Consulta de Acreditaciones</h3>
-          <p>Para consultar nuestras acreditaciones, puedes ingresar al sitio web de IAF, o bien escanear el codigo
-            QR.</p>
+          <h3 data-i18n="footer_nosotros.consulta_title">Consulta de Acreditaciones</h3>
+          <p data-i18n="footer_nosotros.consulta_desc">Para consultar nuestras acreditaciones, puedes ingresar al sitio
+            web de IAF, o bien escanear el codigo QR.</p>
           <p><a href="https://www.iafcertsearch.org/certification-body/1d030e59-47e6-562d-a033-e14fd42d6040"
-              target="_blank">Consulta de Acreditaciones LACS</a></p>
+              target="_blank" data-i18n="footer_nosotros.consulta_link">Consulta de Acreditaciones LACS</a></p>
           <img src="../../assets/img/iaf-qr.png" alt="Código QR de LACS"
             style="max-width: 200px; width: 30vw; min-width: 150px; display: block; margin: 0 auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));">
         </div>
@@ -124,12 +126,16 @@
                   if (typeof window.initDropdowns === 'function') {
                     window.initDropdowns();
                   }
+                  // Forzar listeners de idioma tras cargar navbar
+                  if (window.initLangSwitchers) window.initLangSwitchers();
                 };
                 document.body.appendChild(script);
               } else {
                 if (typeof window.initDropdowns === 'function') {
                   window.initDropdowns();
                 }
+                // Forzar listeners de idioma tras cargar navbar
+                if (window.initLangSwitchers) window.initLangSwitchers();
               }
             });
         }
@@ -148,12 +154,16 @@
                   if (typeof window.initDropdowns === 'function') {
                     window.initDropdowns();
                   }
+                  // Forzar listeners de idioma tras cargar navbar
+                  if (window.initLangSwitchers) window.initLangSwitchers();
                 };
                 document.body.appendChild(script);
               } else {
                 if (typeof window.initDropdowns === 'function') {
                   window.initDropdowns();
                 }
+                // Forzar listeners de idioma tras cargar navbar
+                if (window.initLangSwitchers) window.initLangSwitchers();
               }
             });
         }

@@ -1,79 +1,125 @@
-// Carousel GSAP animation using the Draggable plugin
-// Requires GSAP and Draggable (https://greensock.com/draggable/)
+// Carousel funcional, accesible y responsivo
+document.addEventListener('DOMContentLoaded', function () {
+  const carouselTrack = document.querySelector('.carousel-track');
+  const cards = Array.from(document.querySelectorAll('.card-certificacion'));
+  const prevArrow = document.querySelector('.carousel-arrow.prev');
+  const nextArrow = document.querySelector('.carousel-arrow.next');
+  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+  let currentIndex = 0;
+  let isAnimating = false;
 
-// Make sure GSAP and Draggable are loaded in your HTML before this script
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+  function updateARIA(index) {
+    cards.forEach((card, i) => {
+      card.setAttribute('aria-selected', i === index ? 'true' : 'false');
+    });
+    dots.forEach((dot, i) => {
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      dot.classList.toggle('active', i === index);
+    });
+  }
 
-const carouselTrack = document.querySelector('.carousel-track');
-const cards = Array.from(document.querySelectorAll('.card-certificacion'));
-let currentIndex = 0;
+  function showCard(index, animate = true) {
+    if (isAnimating || index === currentIndex) return;
+    isAnimating = true;
+    cards.forEach((card, i) => {
+      card.classList.remove('active');
+      card.style.transform = `translateX(${(i - index) * 100}%)`;
+      card.style.transition = 'transform 0.6s cubic-bezier(.77,.2,.32,1)';
+      card.style.opacity = 0;
+    });
+    // Solo la card activa debe tener la clase y opacidad 1
+    const activeCard = cards[index];
+    activeCard.classList.add('active');
+    gsap.fromTo(activeCard, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: animate ? 0.5 : 0,
+      ease: 'power2.out',
+      onComplete: () => {
+        isAnimating = false;
+      }
+    });
+    updateARIA(index);
+    currentIndex = index;
+  }
 
-function showCard(index) {
+  // Inicializar posición de las cards
   cards.forEach((card, i) => {
-    card.classList.toggle('active', i === index);
-    // Posiciona cada card horizontalmente
-    card.style.transform = `translateX(${(i - index) * 100}%)`;
+    card.style.transform = `translateX(${(i - currentIndex) * 100}%)`;
     card.style.transition = 'transform 0.6s cubic-bezier(.77,.2,.32,1)';
+    card.style.opacity = i === currentIndex ? 1 : 0;
+    if (i === currentIndex) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
   });
-}
+  updateARIA(currentIndex);
 
-function animateToCard(index) {
-  const prevIndex = currentIndex;
-  const direction = index > prevIndex ? 1 : -1;
-  const prevCard = cards[prevIndex];
-  const nextCard = cards[index];
-
-  // Fade out la card actual
-  gsap.to(prevCard, {
-    opacity: 0,
-    duration: 0.3,
-    onComplete: () => {
-      prevCard.classList.remove('active');
-      // Posiciona la siguiente card y la muestra
-      nextCard.classList.add('active');
-      nextCard.style.transform = `translateX(0)`;
-      nextCard.style.transition = 'transform 0.6s cubic-bezier(.77,.2,.32,1)';
-      gsap.fromTo(nextCard, {
-        opacity: 0
-      }, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.out'
-      });
-      // Reposiciona el resto de las cards
-      cards.forEach((card, i) => {
-        if (card !== nextCard && card !== prevCard) {
-          card.classList.remove('active');
-          card.style.opacity = 0;
-          card.style.transform = `translateX(${(i - index) * 100}%)`;
+  // Flechas
+  if (prevArrow && nextArrow) {
+    prevArrow.addEventListener('click', () => {
+      if (currentIndex > 0 && !isAnimating) {
+        showCard(currentIndex - 1);
+      }
+    });
+    nextArrow.addEventListener('click', () => {
+      if (currentIndex < cards.length - 1 && !isAnimating) {
+        showCard(currentIndex + 1);
+      }
+    });
+    // Accesibilidad teclado
+    [prevArrow, nextArrow].forEach(btn => {
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          btn.click();
         }
       });
+    });
+  }
+
+  // Dots
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      if (!isAnimating) showCard(i);
+    });
+    dot.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && !isAnimating) {
+        showCard(i);
+      }
+    });
+  });
+
+  // Swipe para mobile
+  let startX = null;
+  carouselTrack.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX;
     }
   });
-  currentIndex = index;
-}
+  carouselTrack.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    if (Math.abs(diff) > 40 && !isAnimating) {
+      if (diff < 0 && currentIndex < cards.length - 1) {
+        showCard(currentIndex + 1);
+      } else if (diff > 0 && currentIndex > 0) {
+        showCard(currentIndex - 1);
+      }
+    }
+    startX = null;
+  });
 
-// Arrow navigation
-const prevArrow = document.querySelector('.carousel-arrow.prev');
-const nextArrow = document.querySelector('.carousel-arrow.next');
-
-if (prevArrow && nextArrow) {
-  prevArrow.addEventListener('click', () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      animateToCard(currentIndex);
+  // Accesibilidad: flechas izquierda/derecha
+  document.addEventListener('keydown', e => {
+    if (document.activeElement.closest('.carousel-track')) {
+      if (e.key === 'ArrowLeft' && currentIndex > 0 && !isAnimating) {
+        showCard(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' && currentIndex < cards.length - 1 && !isAnimating) {
+        showCard(currentIndex + 1);
+      }
     }
   });
-  nextArrow.addEventListener('click', () => {
-    if (currentIndex < cards.length - 1) {
-      currentIndex++;
-      animateToCard(currentIndex);
-    }
-  });
-}
-
-// Draggable carousel
-
-// Init
-showCard(currentIndex);
+});

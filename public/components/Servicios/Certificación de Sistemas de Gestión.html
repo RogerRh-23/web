@@ -32,93 +32,102 @@
   <div id="navbar-placeholder"></div>
   <div id="navbar-mobile-placeholder"></div>
   <div id="navbar-mobile-dropdown-placeholder"></div>
+  <div class="lang-switcher-container"
+    style="display: flex; justify-content: flex-end; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+    <button id="lang-switcher" class="lang-btn" type="button" aria-label="Cambiar idioma"
+      style="background: none; border: none; cursor: pointer; font-size: 1.1rem;"></button>
+  </div>
   <div class="info-box">
-    <div class="section-content">
-      <h1 class="section-title">Certificación de Sistemas de Gestión</h1>
-    </div>
-    <div class="carousel-certificacion">
-      <button class="carousel-arrow prev" aria-label="Anterior">&#10094;</button>
-      <div class="carousel-track">
-        <div class="card-certificacion">
-          <div class="card-certificacion-body">
-            <div class="card-certificacion-img">
-              <img class="iso-logo" src="../../assets/img/iso-9001.jpeg" alt="ISO 9001 Logo" id="iso-9001">
-            </div>
-            <div class="card-certificacion-content">
-              <h2>ISO 9001</h2>
-              <p>
-                Reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir
-                con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su
-                compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a
-                logro de objetivos y metas.<br><br>
-                Con la implementación de ISO 9001, su organización a través del liderazgo de la alta dirección
-                implementa procesos eficaces y promueve la capacitación del personal para brindar productos o servicios
-                con la confianza de cumplir con las necesidades de sus clientes.<br><br>
-                <strong>Los beneficios de implementar esta norma son:</strong>
-              </p>
-              <ul>
-                <li>Confianza de los clientes</li>
-                <li>Resolución efectiva de las quejas</li>
-                <li>Mejora del proceso</li>
-                <li>Mejora continua</li>
-              </ul>
-            </div>
-          </div>
+    <h1 class="section-title" data-i18n="certs.title">Certificación de Sistemas de Gestión</h1>
+    <button class="carousel-arrow prev" aria-label="Anterior" tabindex="0">
+      <span aria-hidden="true">&#10094;</span>
+    </button>
+    <div class="carousel-track" role="listbox" aria-live="polite">
+      <div class="card-certificacion active" role="option" aria-selected="true">
+        <div class="card-certificacion-img">
+          <img class="iso-logo" src="../../assets/img/iso-9001.jpeg" alt="ISO 9001 Logo" id="iso-9001">
         </div>
-        <div class="card-certificacion">
-          <div class="card-certificacion-body">
-            <div class="card-certificacion-img">
-              <img class="iso-logo" src="../../assets/img/iso-27001.jpeg" alt="ISO/IEC 27001 Logo" id="iso-27001">
-            </div>
-            <div class="card-certificacion-content">
-              <h2>ISO/IEC 27001</h2>
-              <p>
-                Es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI).
-                Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e
-                implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o
-                maneja a fin de generar confianza con sus clientes, socios y público en general.<br><br>
-                <strong>Los beneficios de implementar esta norma son los siguientes:</strong>
-              </p>
-              <ul>
-                <li>Mantener una resistencia a los ciberataques</li>
-                <li>Preparación ante nuevas amenazas</li>
-                <li>Mantener la Integridad, confidencialidad y disponibilidad de la información</li>
-                <li>Establece controles de seguridad en todos los soportes</li>
-                <li>Protección en toda la empresa de la información que maneja</li>
-                <li>Ahorro de costos por extracción de información</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="card-certificacion">
-          <div class="card-certificacion-body">
-            <div class="card-certificacion-img">
-              <img class="iso-logo" src="../../assets/img/iso-37001.jpeg" alt="ISO 37001 Logo" id="iso-37001"
-                class="iso-logo">
-            </div>
-            <div class="card-certificacion-content">
-              <h2>ISO 37001</h2>
-              <p>
-                Es una norma dedicada establecer un sistema de gestión que ayude a las organizaciones a prevenir,
-                detectar y responder al soborno, así como a cumplir las leyes antisoborno y los compromisos voluntarios
-                aplicables a sus actividades. Abarca diversas formas de soborno (directo e indirecto) en los sectores
-                público, privado y sin ánimo de lucro.<br><br>
-                El enfoque sistemático de ISO 37001 brinda a las organizaciones un enfoque sistemático para combatir el
-                soborno, no solo con el cumplimiento normativo, sino también con el fomento de una cultura de
-                integridad, transparencia y confianza dentro de las organizaciones.<br><br>
-                <strong>Los beneficios de implementar esta norma son:</strong>
-              </p>
-              <ul>
-                <li>Reducir los riesgos de soborno y sus costos asociados</li>
-                <li>Mejorar el cumplimiento de las leyes antisoborno internacionales</li>
-                <li>Aumentar la confianza de las partes interesadas en las operaciones comerciales</li>
-                <li>Reforza la reputación y la integridad de la organización</li>
-              </ul>
-            </div>
-          </div>
+        <div class="card-certificacion-content">
+          <h2>ISO 9001</h2>
+          <p data-i18n="certs.iso9001.desc">
+            Reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir
+            con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su
+            compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a
+            logro de objetivos y metas.<br><br>
+            Con la implementación de ISO 9001, su organización a través del liderazgo de la alta dirección
+            implementa procesos eficaces y promueve la capacitación del personal para brindar productos o servicios
+            con la confianza de cumplir con las necesidades de sus clientes.<br><br>
+            <strong data-i18n="certs.iso9001.benefits_title">Los beneficios de implementar esta norma son:</strong>
+          </p>
+          <ul>
+            <li data-i18n="certs.iso9001.benefit1">Confianza de los clientes</li>
+            <li data-i18n="certs.iso9001.benefit2">Resolución efectiva de las quejas</li>
+            <li data-i18n="certs.iso9001.benefit3">Mejora del proceso</li>
+            <li data-i18n="certs.iso9001.benefit4">Mejora continua</li>
+          </ul>
         </div>
       </div>
-      <button class="carousel-arrow next" aria-label="Siguiente">&#10095;</button>
+      <div class="card-certificacion" role="option" aria-selected="false">
+        <div class="card-certificacion-img">
+          <img class="iso-logo" src="../../assets/img/iso-27001.jpeg" alt="ISO/IEC 27001 Logo" id="iso-27001">
+        </div>
+        <div class="card-certificacion-content">
+          <h2>ISO/IEC 27001</h2>
+          <p data-i18n="certs.iso27001.desc">
+            Es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI).
+            Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e
+            implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o
+            maneja a fin de generar confianza con sus clientes, socios y público en general.<br><br>
+            <strong data-i18n="certs.iso27001.benefits_title">Los beneficios de implementar esta norma son los
+              siguientes:</strong>
+          </p>
+          <ul>
+            <li data-i18n="certs.iso27001.benefit1">Mantener una resistencia a los ciberataques</li>
+            <li data-i18n="certs.iso27001.benefit2">Preparación ante nuevas amenazas</li>
+            <li data-i18n="certs.iso27001.benefit3">Mantener la Integridad, confidencialidad y disponibilidad de la
+              información</li>
+            <li data-i18n="certs.iso27001.benefit4">Establece controles de seguridad en todos los soportes</li>
+            <li data-i18n="certs.iso27001.benefit5">Protección en toda la empresa de la información que maneja</li>
+            <li data-i18n="certs.iso27001.benefit6">Ahorro de costos por extracción de información</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-certificacion" role="option" aria-selected="false">
+        <div class="card-certificacion-img">
+          <img class="iso-logo" src="../../assets/img/iso-37001.jpeg" alt="ISO 37001 Logo" id="iso-37001">
+        </div>
+        <div class="card-certificacion-content">
+          <h2>ISO 37001</h2>
+          <p data-i18n="certs.iso37001.desc">
+            Es una norma dedicada establecer un sistema de gestión que ayude a las organizaciones a prevenir,
+            detectar y responder al soborno, así como a cumplir las leyes antisoborno y los compromisos voluntarios
+            aplicables a sus actividades. Abarca diversas formas de soborno (directo e indirecto) en los sectores
+            público, privado y sin ánimo de lucro.<br><br>
+            El enfoque sistemático de ISO 37001 brinda a las organizaciones un enfoque sistemático para combatir el
+            soborno, no solo con el cumplimiento normativo, sino también con el fomento de una cultura de
+            integridad, transparencia y confianza dentro de las organizaciones.<br><br>
+            <strong data-i18n="certs.iso37001.benefits_title">Los beneficios de implementar esta norma son:</strong>
+          </p>
+          <ul>
+            <li data-i18n="certs.iso37001.benefit1">Reducir los riesgos de soborno y sus costos asociados</li>
+            <li data-i18n="certs.iso37001.benefit2">Mejorar el cumplimiento de las leyes antisoborno internacionales
+            </li>
+            <li data-i18n="certs.iso37001.benefit3">Aumentar la confianza de las partes interesadas en las operaciones
+              comerciales</li>
+            <li data-i18n="certs.iso37001.benefit4">Reforza la reputación y la integridad de la organización</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-arrow next" aria-label="Siguiente" tabindex="0">
+      <span aria-hidden="true">&#10095;</span>
+    </button>
+    <div class="carousel-indicators" aria-label="Indicadores de carrusel" role="tablist">
+      <button class="carousel-dot active" aria-label="Ver ISO 9001" role="tab" aria-selected="true"
+        tabindex="0"></button>
+      <button class="carousel-dot" aria-label="Ver ISO/IEC 27001" role="tab" aria-selected="false"
+        tabindex="0"></button>
+      <button class="carousel-dot" aria-label="Ver ISO 37001" role="tab" aria-selected="false" tabindex="0"></button>
     </div>
   </div>
   <div id="footer"></div>
@@ -127,6 +136,7 @@
   <script src="../../js/gsap.js"></script>
   <script src="../../js/navbar-dropdown.js"></script>
   <script src="../../js/footer.js"></script>
+  <script src="../../js/carousel-gsap.js"></script>
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
   <script>
@@ -198,6 +208,40 @@
       });
   </script>
   <script src="../../js/i18n.js"></script>
+  <script>
+    // Inicializar el botón de idioma en mobile y desktop correctamente, solo cuando i18n.js esté listo
+    function ensureLangSwitchers() {
+      // Mobile button
+      if (!document.getElementById('lang-switcher-mobile')) {
+        var mobileBtn = document.createElement('button');
+        mobileBtn.id = 'lang-switcher-mobile';
+        mobileBtn.className = 'lang-btn';
+        mobileBtn.type = 'button';
+        mobileBtn.setAttribute('aria-label', 'Cambiar idioma');
+        mobileBtn.style.background = 'none';
+        mobileBtn.style.border = 'none';
+        mobileBtn.style.cursor = 'pointer';
+        mobileBtn.style.fontSize = '1.1rem';
+        document.body.appendChild(mobileBtn);
+      }
+      // Siempre inicializar listeners después de crear los botones
+      if (window.initLangSwitchers) window.initLangSwitchers();
+      // Forzar actualización de los botones
+      if (window.updateLangBtnAll) window.updateLangBtnAll();
+    }
+    // Esperar a que i18n.js esté cargado y luego inicializar
+    if (window.i18next) {
+      ensureLangSwitchers();
+    } else {
+      document.addEventListener('DOMContentLoaded', ensureLangSwitchers);
+    }
+    // También actualizar botones tras cambio de idioma
+    if (window.i18next) {
+      window.i18next.on && window.i18next.on('languageChanged', function () {
+        if (window.updateLangBtnAll) window.updateLangBtnAll();
+      });
+    }
+  </script>
 </body>
 
 </html>

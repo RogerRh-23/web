@@ -1,3 +1,55 @@
+// Ajuste visual para los iconos principales de la navbar mobile
+.navbar-mobile-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  background: $pantone-b7693u;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
+  pointer-events: auto;
+  width: 100vw;
+  gap: 0.8rem;
+}
+
+.navbar-mobile-icons .navbar-mobile-link,
+.navbar-mobile-icons .navbar-mobile-menu {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 100%;
+  background: none;
+  border: none;
+  color: $color-white;
+  font-size: 1.7rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.navbar-mobile-icons .navbar-mobile-icon-text--vertical {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1em;
+}
+
+.navbar-mobile-icons .navbar-mobile-text {
+  margin: 0.15em 0 0 0;
+  font-size: 0.85rem;
+  color: $color-white;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: center;
+  line-height: 1.1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 // --- Navbar mobile accordion (submenús) ---
 .navbar-mobile-accordion {
   width: 100%;
@@ -105,32 +157,55 @@
   white-space: nowrap;
 }
 
-// --- Navbar mobile dropdown expand/collapse ---
+.navbar-mobile {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  background: $pantone-b7693u;
+  z-index: 20000;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+  overflow-y: hidden;
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
+  transition: bottom 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-.navbar-mobile-dropdown-menu {
-  position: absolute;
+.navbar-mobile.menu-open {
+  bottom: 60vh;
+}
+
+
+// --- Navbar mobile dropdown expand/collapse ---
+.navbar-mobile .navbar-mobile-dropdown-menu {
+  position: fixed;
   left: 0;
   right: 0;
-  top: auto;
-  bottom: 100%;
+  bottom: 80px;
   width: 100vw;
   background: $pantone-b7693u;
+  border-top: 2.5px solid #fff;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.22), 0 2px 12px rgba(0, 0, 0, 0.12);
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  z-index: 10001;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
+  z-index: 19999;
+  transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
   display: block;
   pointer-events: none;
 }
 
-.navbar-mobile-dropdown.expanded>.navbar-mobile-dropdown-menu,
-.navbar-mobile-dropdown-menu.expanded {
-  max-height: 80vh;
+.navbar-mobile .navbar-mobile-dropdown-menu.expanded {
+  max-height: 60vh;
   opacity: 1;
   overflow: visible;
   pointer-events: auto;
+  border-top: 2.5px solid #fff;
+  box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.28), 0 2px 12px rgba(0, 0, 0, 0.12);
   transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
 }
 
@@ -151,31 +226,26 @@
 
 // Google Translate container hidden but accessible
 #google_translate_element {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  width: 1px;
-  height: 1px;
-  z-index: -1;
-}
-
-// Estilos para la navbar mobile solo con iconos
-.navbar-mobile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  background: $pantone-b7693u;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  z-index: 9998;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+  transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
+  display: block;
+  pointer-events: none;
   bottom: 0;
   left: 0;
-  width: 100vw;
-  height: 80px;
-  background: $pantone-b7693u;
-  z-index: 9999;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
-  overflow-y: hidden;
-  border-top-left-radius: 0.8rem;
-  border-top-right-radius: 0.8rem;
 }
+
+// Solo depende de la clase .expanded en el propio menú
+
 
 
 .navbar-mobile-list {

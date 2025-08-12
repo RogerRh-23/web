@@ -189,9 +189,11 @@
   height: 70%;
 }
 
+// Card 5: debe crecer según el contenido, sin restricciones de altura ni overflow oculto
 .info-card:nth-child(5) {
-  max-height: 380px;
-  height: 70%;
+  height: auto !important;
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 
 // --- Card 4: compacta y crece con contenido ---
@@ -202,8 +204,10 @@
   margin-bottom: 32px;
 }
 
-.info-card:nth-child(4) .info-card-content {
-  height: auto;
+.info-card:nth-child(5) .info-card-content {
+  height: auto !important;
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 
 // --- Card 5: lista de valores ---
@@ -273,7 +277,6 @@
   word-break: break-word;
   white-space: normal;
   overflow: hidden;
-  /* height, max-height, min-height y transiciones eliminadas para que GSAP controle la expansión */
 }
 
 /* SplitText: los spans deben ser inline-block y sin saltos artificiales */
@@ -333,7 +336,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* height: 100%; */
   }
 
   .info-card-bar {
@@ -352,7 +354,6 @@
 
   .info-card-bar-text {
     font-size: 1rem;
-    /* height: 100%; */
     width: 100%;
     display: flex;
     align-items: center !important;
@@ -367,7 +368,6 @@
     font-size: 0.98rem;
   }
 
-  // Eliminar restricciones de altura para que las cards crezcan según el contenido en mobile
   .info-card:nth-child(1),
   .info-card:nth-child(2),
   .info-card:nth-child(3),
@@ -403,7 +403,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* flex: 1 1 0; */
   }
 
   .info-card-bar {
@@ -415,7 +414,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* align-self: stretch; */
     padding: 0;
     z-index: 10;
     position: relative;
@@ -424,16 +422,12 @@
   .info-card-bar-text {
     font-size: 1rem;
     height: auto !important;
-    /* height: 100%; */
-    /* width: 100%; */
     display: flex;
     align-items: center;
     justify-content: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
-
-  /* Eliminar height/max-height/min-height de las cards específicas en mobile para evitar conflicto */
 
   .info-card:nth-child(4) .info-card-content {
     align-items: flex-start;

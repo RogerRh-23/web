@@ -19,6 +19,7 @@
 }
 
 // Layout para formulario y mapa en contacto
+// Caja principal para la página de contacto
 .info-box {
   background: #fff;
   border-radius: 1.2rem;
@@ -30,22 +31,24 @@
 
 .contacto-flex {
   display: flex;
-  gap: 2rem;
+  flex-direction: row;
+  gap: 2.2rem;
   align-items: flex-start;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .contacto-flex .contact-form {
-  flex: 1 1 48rem;
-  max-width: 43rem;
+  flex: 1 1 72%;
+  max-width: 100px;
+  min-width: 550px;
   margin: 0;
 }
 
 .contacto-flex .contacto-mapa {
-  flex: 1 1 320px;
-  max-width: 350px;
-  min-width: 220px;
+  flex: 0 1 480px;
+  max-width: 480px;
+  min-width: 480px;
   margin: 0;
   display: flex;
   align-items: flex-start;
@@ -66,10 +69,17 @@
   .contacto-flex {
     flex-direction: column;
     gap: 1.5rem;
+    align-items: stretch;
   }
 
   .info-box {
     padding: 1.2rem 0.5rem;
+  }
+
+  .contacto-flex .contact-form,
+  .contacto-flex .contacto-mapa {
+    max-width: 100%;
+    min-width: 0;
   }
 }
 
@@ -107,16 +117,7 @@
   box-shadow: 0 4px 16px -4px rgba(24, 119, 243, 0.13);
 }
 
-// Estilos dedicados para el formulario de contacto
-// Caja del formulario
-.info-box {
-  background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.13);
-  padding: 2.2rem 2.5rem 2rem 2.5rem;
-  max-width: 420px;
-  margin: 2.5rem auto 2.5rem auto;
-}
+// (Eliminada la segunda definición de .info-box que era para un formulario compacto)
 
 .contact-form {
   display: flex;
@@ -199,38 +200,98 @@
   margin-bottom: 1.2rem;
 }
 
+
 .directory-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin-top: 1.2rem;
-  padding: 0 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 2.5rem;
+  margin-top: 2px;
+  padding: 0;
+  align-items: stretch;
+  width: 90%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .directory-item {
-  flex: 1 1 300px;
-  min-width: 250px;
-  max-width: 350px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.7rem;
-  padding: 1rem;
+  gap: 0.4rem;
+  padding: 0.9rem 0.7rem 0.9rem 0.7rem;
   background: $color-white;
-  border-radius: 0.8rem;
+  border-radius: 0.6rem;
   box-shadow: $shadow-4layer;
+  border: 1px solid #f0f0f0;
   transition: background 0.2s, box-shadow 0.2s;
 }
 
+// Títulos y negritas más discretos en las tarjetas del directorio
+.directory-item strong,
+.directory-item b {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #222;
+}
+
+// Iconos más pequeños y alineados
+.directory-item i {
+  margin-right: 0.35em;
+  color: #1877f3;
+  font-size: 1.05em;
+}
+
 @include media('(max-width: 800px)') {
+  .info-box {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    border-radius: 0;
+    padding: 1.2rem 0;
+    box-sizing: border-box;
+  }
+
+  .directory-title {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+
   .directory-list {
+    display: flex;
     flex-direction: column;
     gap: 1.2rem;
     padding: 0;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
   }
 
   .directory-item {
-    max-width: 100%;
+    max-width: 100vw;
+    min-width: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    border-radius: 0;
+  }
+
+  .contacto-flex {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .contacto-flex .contact-form,
+  .contacto-flex .contacto-mapa {
+    max-width: 100vw;
     min-width: 0;
   }
 }

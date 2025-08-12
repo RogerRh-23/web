@@ -1,3 +1,376 @@
+// --- MOBILE LAYOUT ---
+@media (max-width: 700px) {
+  .info-box {
+    padding-bottom: 80px;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    opacity: 0.65;
+    background: #1976a5cc;
+    transition: opacity 0.2s, background 0.2s;
+  }
+
+  .carousel-arrow:hover,
+  .carousel-arrow:focus {
+    opacity: 1;
+    background: #1976a5;
+  }
+
+  .carousel-arrow.prev {
+    left: 0;
+  }
+
+  .carousel-arrow.next {
+    right: 0;
+  }
+
+  .carousel-track {
+    flex-direction: row;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    min-width: 100vw;
+    max-width: 100vw;
+    padding: 0 0 0 0;
+    background: transparent;
+    box-shadow: none;
+    align-items: flex-start;
+    position: relative;
+    height: auto;
+  }
+
+  .card-certificacion {
+    min-width: 90vw;
+    max-width: 90vw;
+    margin: 0 2vw;
+    scroll-snap-align: center;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    min-height: 420px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible !important;
+    box-sizing: border-box;
+    word-break: break-word;
+    z-index: 1;
+  }
+
+  .card-certificacion-content {
+    order: 1;
+    max-width: 98vw;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    overflow: visible !important;
+    box-sizing: border-box;
+    word-break: break-word;
+    z-index: 2;
+  }
+
+  .card-certificacion-img {
+    order: 2;
+    width: 80vw;
+    max-width: 320px;
+    min-height: 90px;
+    margin: 0 auto 0.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-certificacion-img img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .carousel-indicators {
+    bottom: 0;
+  }
+}
+
+// Forzar visibilidad de texto y stacking correcto en carrusel
+.card-certificacion-content {
+  position: relative;
+  z-index: 2;
+}
+
+.card-certificacion-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.card-certificacion-content * {
+  color: #222 !important;
+}
+
+.card-certificacion-img {
+  z-index: 1;
+}
+
+// Mejora visual para el carrusel de certificación
+.card-certificacion-img {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.5rem;
+}
+
+.card-certificacion-img {
+  margin: 0 auto 1.5rem auto;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  min-height: 140px;
+  display: flex;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.card-certificacion-img img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.card-certificacion {
+  min-width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 570px !important;
+  box-sizing: border-box;
+  color: #222;
+}
+
+.carousel-track {
+  position: relative;
+  z-index: 1;
+}
+
+.card-certificacion img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0;
+}
+
+.card-certificacion-content {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}
+
+.card-certificacion h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #1976a5;
+  font-weight: bold;
+  overflow: visible;
+  word-break: break-word;
+  z-index: 3;
+}
+
+.card-certificacion p {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  color: #333;
+}
+
+.card-certificacion ul {
+  margin: 0 auto 0.5rem auto;
+  padding: 0 0 0 1.2em;
+  text-align: left;
+  max-width: 420px;
+  font-size: 0.95rem;
+  color: #1976a5;
+}
+
+.card-certificacion li {
+  margin-bottom: 0.4em;
+  font-size: 1em;
+}
+
+@media (max-width: 700px) {
+  .card-certificacion-img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1rem;
+  }
+
+  .card-certificacion h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-certificacion-content {
+    max-width: 98vw;
+    font-size: 1rem;
+  }
+}
+
+
+// Layout principal para el carrusel dentro de .info-box
+.info-box {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 650px;
+  padding-bottom: 60px;
+}
+
+.carousel-track {
+  width: 100%;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: unset;
+  box-sizing: border-box;
+  color: inherit;
+  z-index: 20;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-certificacion:hover {
+  box-shadow: 0 4px 16px rgba(25, 118, 165, 0.15);
+}
+
+.carousel-arrow {
+  background: #1976a5;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(25, 118, 165, 0.08);
+  z-index: 10;
+}
+
+.carousel-arrow:focus {
+  outline: 2px solid #1976a5;
+  background: #145a86;
+}
+
+.carousel-arrow[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.carousel-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: $color-white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(25, 118, 165, 0.08);
+  outline: none;
+}
+
+.carousel-dot.active,
+.carousel-dot:focus {
+  background: #1976a5;
+  box-shadow: 0 0 0 2px #1976a544;
+}
+
+@media (max-width: 700px) {
+  .card-certificacion {
+    min-width: 100%;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+    padding: 3.5rem 3rem 3.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 520px;
+    box-sizing: border-box;
+    color: #222;
+  }
+
+  .carousel-arrow {
+    height: 38px;
+    font-size: 1.5rem;
+  }
+}
+
+// Estilos para la sección de Capacitación
+h1.section-title {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1976a5;
+  word-break: break-word;
+  max-width: 100vw;
+  box-sizing: border-box;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 // Estilos para el contenido expandible de la card ISO 9001
 .training-card-extra {
   margin-top: 1rem;
@@ -43,63 +416,6 @@
 
 .training-card-header.expandable:focus {
   box-shadow: 0 0 0 2px #1976a544;
-}
-
-// Estilos para Certificación de Sistemas de Gestión
-.cards-certificacion-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.card-certificacion {
-  flex: 1 1 300px;
-  max-width: 400px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: box-shadow 0.2s;
-}
-
-.card-certificacion:hover {
-  box-shadow: 0 4px 16px rgba(25, 118, 165, 0.15);
-}
-
-.card-certificacion img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
-
-.card-certificacion h2 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  color: #1976a5;
-}
-
-.card-certificacion p {
-  text-align: center;
-}
-
-// Estilos para la sección de Capacitación
-h1.section-title {
-  text-align: center;
-  margin-top: 1.5rem;
-  font-size: 3rem;
-  font-weight: bold;
-  color: #1976a5;
-  word-break: break-word;
-  max-width: 100vw;
-  box-sizing: border-box;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .section-description {
