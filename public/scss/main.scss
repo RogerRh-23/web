@@ -1,3 +1,31 @@
+// Evita overflow horizontal en la navbar móvil
+.navbar-mobile {
+  overflow-x: hidden !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+}
+
+// Oculta scrollbar flotante y nativa en mobile
+@media (hover: none) and (pointer: coarse),
+screen and (max-width: 991px) {
+  .floating-scrollbar {
+    display: none !important;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0 !important;
+    display: none !important;
+    background: transparent !important;
+  }
+
+  html,
+  body {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+}
+
 // Fix for index page info-box overflow
 .index.info-box {
   box-sizing: border-box;
@@ -10,65 +38,6 @@
 }
 
 @import 'variables';
-
-html,
-body {
-  scrollbar-width: none !important;
-  /* Firefox */
-  -ms-overflow-style: none !important;
-  /* IE y Edge Legacy */
-  overflow: auto !important;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-*::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-  display: none !important;
-  background: transparent !important;
-}
-
-body {
-  scrollbar-width: none; // Firefox
-  -ms-overflow-style: none; // IE y Edge Legacy
-}
-
-body::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-  display: none !important;
-  background: transparent !important;
-}
-
-body {
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE 10+ */
-}
-
-body::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari, Opera, Edge Chromium */
-}
-
-body::-ms-scrollbar {
-  display: none;
-  /* Edge Legacy */
-}
-
-body {
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE 10+ */
-}
-
-body::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari, Opera */
-}
 
 html,
 body {
@@ -117,9 +86,67 @@ img {
 @import 'snackbars';
 @import 'carousel-auto';
 
-body::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari, Opera */
+@media (hover: hover) and (pointer: fine) {
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0 !important;
+    background: transparent !important;
+    display: none !important;
+  }
+
+  /* Scrollbar flotante personalizada */
+  .floating-scrollbar {
+    position: fixed;
+    top: 0;
+    right: 0.2rem;
+    width: 10px;
+    height: 100vh;
+    z-index: 100;
+    pointer-events: auto;
+    background: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    /* Glass effect */
+    backdrop-filter: blur(6px) brightness(1.1);
+    -webkit-backdrop-filter: blur(6px) brightness(1.1);
+  }
+
+  .floating-scrollbar-thumb {
+    width: 100%;
+    min-height: 40px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 4px 24px rgba(51, 134, 169, 0.18), 0 1px 8px rgba(0, 0, 0, 0.08);
+    border: 1.5px solid rgba(51, 134, 169, 0.25);
+    cursor: pointer;
+    transition: background 0.25s, box-shadow 0.25s, transform 0.18s;
+    position: absolute;
+    left: 0;
+    backdrop-filter: blur(2px) brightness(1.2);
+    -webkit-backdrop-filter: blur(2px) brightness(1.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .floating-scrollbar-thumb::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 60%;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3386a9 60%, #45aaf2 100%);
+    opacity: 0.7;
+    box-shadow: 0 2px 8px rgba(51, 134, 169, 0.18);
+  }
+
+  .floating-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.32);
+    box-shadow: 0 8px 32px rgba(51, 134, 169, 0.28), 0 2px 16px rgba(0, 0, 0, 0.12);
+    transform: scale(1.05);
+  }
 }
 
 // Evita overflow horizontal en elementos de ancho completo

@@ -1,15 +1,16 @@
 // Estilos base
+
 body {
   font-family: "Montserrat", sans-serif;
   background: $color-white;
   color: $color-black;
   height: auto;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  /* Evita scroll lateral */
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE 10+ */
-  overflow-x: hidden !important;
+  min-height: 100vh;
+  /* Sin overflow forzado, solo en desktop */
+}
+
+
+html {
+  min-height: 100vh;
+  /* Sin overflow forzado, solo en desktop */
 }

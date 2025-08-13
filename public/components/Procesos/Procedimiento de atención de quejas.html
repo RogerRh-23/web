@@ -247,6 +247,47 @@
   </script>
   <script src="../../js/i18n.js"></script>
   <script src="../../js/navbar-mobile-accordion.js"></script>
+  <script>
+    // Scrollbar flotante funcional
+    document.addEventListener('DOMContentLoaded', () => {
+      const thumb = document.querySelector('.floating-scrollbar-thumb');
+      const scrollbar = document.querySelector('.floating-scrollbar');
+      function updateThumb() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
+        thumb.style.height = thumbHeight + 'px';
+        thumb.style.top = thumbTop + 'px';
+      }
+      window.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      updateThumb();
+      // Drag to scroll
+      let isDragging = false, startY = 0, startScroll = 0;
+      thumb.addEventListener('mousedown', e => {
+        isDragging = true;
+        startY = e.clientY;
+        startScroll = window.scrollY;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const delta = e.clientY - startY;
+        const thumbHeight = thumb.offsetHeight;
+        const scrollDelta = (delta / (window.innerHeight - thumbHeight)) * docHeight;
+        window.scrollTo(0, startScroll + scrollDelta);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    });
+  </script>
+  <div class="floating-scrollbar">
+    <div class="floating-scrollbar-thumb"></div>
+  </div>
 </body>
 
 </html>

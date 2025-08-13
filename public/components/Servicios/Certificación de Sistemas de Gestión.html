@@ -134,9 +134,24 @@
     </div>
   </div>
   <div id="footer"></div>
+  <script src="../../js/footer.js"></script>
+  <script>
+    // Cargar footer dinámicamente
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('../footer.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('footer').innerHTML = html;
+          window.initFooter && window.initFooter();
+        });
+    });
+  </script>
   <div id="navbar-mobile-placeholder"></div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  </script>
+  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <script src="../../js/gsap.js"></script>
+  <script src="../../js/navbar-dropdown.js"></script>
   <script>
     // Mostrar navbar solo cuando el hero no es visible
     document.addEventListener('DOMContentLoaded', function () {
@@ -224,7 +239,47 @@
   </script>
   <script src="../../js/i18n.js"></script>
   <script src="../../js/navbar-mobile-accordion.js"></script>
-
+  <script>
+    // Scrollbar flotante funcional
+    document.addEventListener('DOMContentLoaded', () => {
+      const thumb = document.querySelector('.floating-scrollbar-thumb');
+      const scrollbar = document.querySelector('.floating-scrollbar');
+      function updateThumb() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
+        thumb.style.height = thumbHeight + 'px';
+        thumb.style.top = thumbTop + 'px';
+      }
+      window.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      updateThumb();
+      // Drag to scroll
+      let isDragging = false, startY = 0, startScroll = 0;
+      thumb.addEventListener('mousedown', e => {
+        isDragging = true;
+        startY = e.clientY;
+        startScroll = window.scrollY;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const delta = e.clientY - startY;
+        const thumbHeight = thumb.offsetHeight;
+        const scrollDelta = (delta / (window.innerHeight - thumbHeight)) * docHeight;
+        window.scrollTo(0, startScroll + scrollDelta);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    });
+  </script>
+  <div class="floating-scrollbar">
+    <div class="floating-scrollbar-thumb"></div>
+  </div>
 </body>
 
 </html>

@@ -32,15 +32,53 @@
   <div id="navbar-placeholder"></div>
   <div id="navbar-mobile-placeholder"></div>
   <div id="navbar-mobile-dropdown-placeholder"></div>
-  <div class="info-box">
-    <div class="section-content">
-      <div class="error-container">
-        <h1>¡Volvemos pronto!</h1>
-        <img src="../../assets/img/LACS-V.png" alt="Mantenimiento" class="maintenance-image" />
-        <p class="maintenance-text">Estamos realizando tareas de mantenimiento.<br>Por favor, vuelve en unos minutos.
-        </p>
-      </div>
+  <div class="info-box cards-section">
+    <h1 class="section-title">Sorteo y Retrabajo</h1>
+    <div class="card-servicio">
+      <h2 style="font-size:1.3rem; margin-bottom:1rem; color:#3386a9;">Servicios de Inspección de tercera parte</h2>
+      <ul style="padding-left:0; list-style:none;">
+        <li>✔ Contenciones.</li>
+        <li>✔ Inspección 100% PT y Componentes.</li>
+        <li>✔ Retrabajo.</li>
+        <li>✔ Safe Launch.</li>
+        <li>✔ GP-12.</li>
+        <li>✔ CS1.</li>
+      </ul>
     </div>
+    <div class="card-servicio">
+      <h2 style="font-size:1.3rem; margin-bottom:1rem; color:#3386a9;">Servicios Administrativos</h2>
+      <ul style="padding-left:0; list-style:none;">
+        <li>✔ Reclutamiento De Personal Interno.</li>
+        <li>✔ Soporte De Calidad.</li>
+        <li>✔ Personal Para Retrabajos – Inspección De Calidad.</li>
+        <li>✔ Personal Para Soporte De Ingeniería.</li>
+        <li>✔ Auditorias De Proceso.</li>
+      </ul>
+    </div>
+    <div class="card-servicio">
+      <h2 style="font-size:1.3rem; margin-bottom:1rem; color:#3386a9;">Capacitación</h2>
+      <ul style="padding-left:0; list-style:none;">
+        <li>✔ Core Tools.</li>
+        <li>✔ Metodología 8 D’s.</li>
+        <li>✔ Mejora Continua.</li>
+        <li>✔ Desarrollo Humano.</li>
+        <li>✔ 5 S’s.</li>
+        <li>✔ Sistemas de Gestión en ISO-9001 : 2015.</li>
+        <li>✔ Formación de Supervisores.</li>
+      </ul>
+    </div>
+    <div class="card-servicio">
+      <h2 style="font-size:1.3rem; margin-bottom:1rem; color:#3386a9;">Ventajas Competitivas</h2>
+      <ul style="padding-left:0; list-style:none;">
+        <li>✔ Guía por Ingeniero.</li>
+        <li>✔ Supervisión en planta.</li>
+        <li>✔ Sistema de reportes.</li>
+        <li>✔ Inspección, re-trabajos.</li>
+        <li>✔ Liderazgo por turno.</li>
+        <li>✔ Capacitaciones al personal.</li>
+      </ul>
+    </div>
+  </div>
   </div>
   <div id="footer"></div>
   <div id="navbar-mobile-placeholder"></div>
@@ -206,6 +244,47 @@
   </script>
   <script src="../../js/i18n.js"></script>
   <script src="../../js/navbar-mobile-accordion.js"></script>
+  <script>
+    // Scrollbar flotante funcional
+    document.addEventListener('DOMContentLoaded', () => {
+      const thumb = document.querySelector('.floating-scrollbar-thumb');
+      const scrollbar = document.querySelector('.floating-scrollbar');
+      function updateThumb() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
+        thumb.style.height = thumbHeight + 'px';
+        thumb.style.top = thumbTop + 'px';
+      }
+      window.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      updateThumb();
+      // Drag to scroll
+      let isDragging = false, startY = 0, startScroll = 0;
+      thumb.addEventListener('mousedown', e => {
+        isDragging = true;
+        startY = e.clientY;
+        startScroll = window.scrollY;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const delta = e.clientY - startY;
+        const thumbHeight = thumb.offsetHeight;
+        const scrollDelta = (delta / (window.innerHeight - thumbHeight)) * docHeight;
+        window.scrollTo(0, startScroll + scrollDelta);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    });
+  </script>
+  <div class="floating-scrollbar">
+    <div class="floating-scrollbar-thumb"></div>
+  </div>
 </body>
 
 </html>
