@@ -3045,7 +3045,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 .card-servicio img {
   width: 100%;
   max-width: 420px;
-  height: 180px;
+  height: 250px;
   object-fit: cover;
   border-radius: 14px 14px 0 0;
   margin-bottom: 1.2rem;
