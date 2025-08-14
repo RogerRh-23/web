@@ -270,7 +270,7 @@
     "file": "Archivo cargado correctamente."
   },
   "courses_section": {
-    "title": "CAPACITACIÓN",
+    "title": "CURSOS",
     "desc": "Ofrecemos una variedad de cursos de capacitación diseñados para ayudar a las organizaciones a comprender e implementar sistemas de gestión basados en normas internacionales. Nuestros cursos son impartidos por expertos en la materia y están diseñados para proporcionar conocimientos prácticos y aplicables.",
     "9001_title": "Sistemas de Gestión de Calidad",
     "9001_desc": "Contexto de la organización y riesgos en el sistema de gestión.",
@@ -380,5 +380,56 @@
       "benefit3": "Aumentar la confianza de las partes interesadas en las operaciones comerciales",
       "benefit4": "Reforza la reputación y la integridad de la organización"
     }
+  },
+  "certification_process": {
+    "title": "Proceso de Certificación",
+    "step1": {
+      "title": "Solicitar información",
+      "desc": "Usted puede solicitar información sobre nuestros servicios de certificación de sistemas de gestión por medio de nuestros canales de comunicación."
+    },
+    "step2": {
+      "title": "Propuesta de servicios",
+      "desc": "Con la información que nos proporcione, le enviaremos a la brevedad nuestra propuesta de servicios, indicando los conceptos de nuestros servicios: etapa 1 y 2, emisión de certificado y auditorías de vigilancia.<br><br>El ejecutivo dará seguimiento a nuestra propuesta de servicios para conocer sus comentarios y determinar si colaboraremos con su organización. En este seguimiento si la propuesta de servicios es aceptada le pedimos que la envíe firmada, en caso contrario háganoslo saber."
+    },
+    "step3": {
+      "title": "Contrato",
+      "desc": "Una vez que la propuesta es aceptada, nuestro ejecutivo le enviará para su firma un contrato de servicios, el cual antes de su firma le pedimos lo revise."
+    },
+    "step4": {
+      "title": "Auditoría Etapa 1",
+      "desc": "<b>Programación de servicios</b><br>Una vez aceptada nuestra propuesta de servicios y de manera simultanea a la firma del contrato, nuestro personal operativo (coordinador de Operaciones) inicia con las actividades del servicio haciendo contacto con usted para establecer las fechas para la Etapa 1 y 2.<br><br><b>Etapa 1</b><br>En esta etapa, le solicitaremos información de su sistema de gestión, le enviaremos una notificación de la fecha del servicio y la Agenda de Trabajo con los horarios y procesos a evaluar. Esta etapa 1 consta de la revisión de los documentos de planificación del sistema de gestión, Al finalizar la auditoría le entregaremos un informe con los hallazgos encontrados."
+    },
+    "step5": {
+      "title": "Auditoría Etapa 2",
+      "desc": "En la etapa 2, haremos la evaluación completa de su sistema de gestión para determinar el cumplimiento con los requisitos de la norma. En esta etapa nuestro personal realiza entrevistas al personal, revisa los registros de las actividades, cumplimiento de objetivos, implementación de políticas, etc.<br><br>Al final de la auditoría nuestros auditores le enviarán un informe con los resultados de la evaluación. Si hay no conformidades le comunicaremos el tiempo de atención."
+    },
+    "step6": {
+      "title": "Hallazgos",
+      "desc": "Al concluir la auditoría de Etapa 2, en caso de existir hallazgos, la organización deberá realizar y presentar el Plan de acción dentro de los primeros 15 días naturales, se revisa por el Auditor Líder y 40 días naturales posteriores la organización envía las acciones implementadas para el cierre de los hallazgos."
+    },
+    "step7": {
+      "title": "Toma de decisión",
+      "desc": "Una vez realizadas las etapas 1 y 2, su expediente se turnara al Comité Técnico de Evaluación y Dictamen para su evaluación y toma de decisión de la certificación del sistema de gestión de su organización mediante un dictamen."
+    },
+    "step8": {
+      "title": "Otorgamiento de la certificación",
+      "desc": "El Organismo de Certificación emite el certificado con vigencia de 3 años, con la decisión asentada en el dictamen, nuestro personal le comunicará esta resolución, de ser positiva, también le enviaremos un boceto de certificado para su visto bueno y con una vigencia de 3 años."
+    },
+    "step9": {
+      "title": "Auditorías de Mantenimiento",
+      "desc": "A lo largo de la vigencia de la certificación, realizaremos auditorías anuales para confirmar el cumplimiento del sistema de gestión con los requisitos de la norma implementada en su organización."
+    },
+    "step10": {
+      "title": "Auditorías de Renovación",
+      "desc": "La organización puede renovar su certificación por 3 años más, el proceso es similar a la certificación inicial.<br>Es recomendable realizar la auditoria 3 meses antes de la fecha de vencimiento del certificado<br>- Se realiza la Auditoria de Renovación<br>- Atención de hallazgos (cuando aplique)<br>- Se obtiene retroalimentación del equipo auditor<br>- Se realiza revisión del expediente<br>- Se toma la decisión de Renovar la certificación<br>- Se emite un nuevo certificado con fechas actualizadas al ciclo correspondiente"
+    },
+    "step11": {
+      "title": "Auditorías de Restauración",
+      "desc": "Cuando la organización no realice la Renovación en los plazos establecidos o bien se encuentre en estatus de suspendido por más de 6 meses o cancelado conforme a las condiciones descritas en el RCTED-02 Reglamento de uso de marca para sistema de gestión certificado LACS<br>La certificación podrá ser restaurada dentro de los 6 meses siguientes:<br><br>- Se realiza la Auditoria de Restauración<br>- Atención de hallazgos (cuando aplique)<br>- Se obtiene retroalimentación del equipo auditor<br>- Se realiza revisión del expediente<br>- Se toma la decisión de Restaurar la certificación<br>- Se emite un nuevo certificado. (La fecha de vigencia del certificado debe ser la fecha de la Toma de decisión de la Restauración y la fecha de la expiración se deberá basar en el ciclo de la certificación anterior)"
+    }
+  },
+  "maintenance": {
+    "title": "¡Volvemos pronto!",
+    "desc": "Estamos realizando tareas de mantenimiento en nuestro sitio web para mejorar tu experiencia.<br>Por favor, vuelve a visitarnos más tarde."
   }
 }

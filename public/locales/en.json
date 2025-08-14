@@ -270,8 +270,8 @@
     "warning": "Warning"
   },
   "courses_section": {
-    "title": "TRAINING",
-    "desc": "We offer a variety of training courses designed to help organisations understand and implement management systems based on international standards. Our courses are taught by subject matter experts and are designed to provide practical, applicable knowledge.",
+    "title": "COURSES",
+    "desc": "We offer a variety of courses designed to help organisations understand and implement management systems based on international standards. Our courses are taught by subject matter experts and are designed to provide practical, applicable knowledge.",
     "9001_title": "Quality Management System",
     "9001_desc": "Context of the organisation and risks in the management system.",
     "9001_duration": "Duration: 16 hours",
@@ -380,5 +380,56 @@
       "benefit3": "Increase stakeholder confidence in business operations",
       "benefit4": "Strengthen the organization's reputation and integrity"
     }
+  },
+  "certification_process": {
+    "title": "Certification Process",
+    "step1": {
+      "title": "Request information",
+      "desc": "You can request information about our management system certification services through our communication channels."
+    },
+    "step2": {
+      "title": "Service proposal",
+      "desc": "With the information you provide, we will promptly send you our service proposal, indicating the concepts of our services: stage 1 and 2, certificate issuance, and surveillance audits.<br><br>The executive will follow up on our service proposal to learn your comments and determine if we will collaborate with your organization. If the service proposal is accepted, please send it signed; otherwise, let us know."
+    },
+    "step3": {
+      "title": "Contract",
+      "desc": "Once the proposal is accepted, our executive will send you a service contract for your signature, which we ask you to review before signing."
+    },
+    "step4": {
+      "title": "Stage 1 Audit",
+      "desc": "<b>Service scheduling</b><br>Once our service proposal is accepted and simultaneously with the signing of the contract, our operations coordinator will begin service activities by contacting you to set the dates for Stage 1 and 2.<br><br><b>Stage 1</b><br>In this stage, we will request information about your management system, send you a notification of the service date, and the Work Agenda with the schedules and processes to be evaluated. This stage consists of reviewing the planning documents of the management system. At the end of the audit, we will provide you with a report with the findings."
+    },
+    "step5": {
+      "title": "Stage 2 Audit",
+      "desc": "In stage 2, we will conduct a complete evaluation of your management system to determine compliance with the standard requirements. Our staff will interview personnel, review activity records, achievement of objectives, implementation of policies, etc.<br><br>At the end of the audit, our auditors will send you a report with the evaluation results. If there are non-conformities, we will inform you of the response time."
+    },
+    "step6": {
+      "title": "Findings",
+      "desc": "At the end of the Stage 2 audit, if there are findings, the organization must prepare and submit the Action Plan within the first 15 calendar days, which is reviewed by the Lead Auditor, and 40 calendar days later, the organization sends the implemented actions for closing the findings."
+    },
+    "step7": {
+      "title": "Decision making",
+      "desc": "Once stages 1 and 2 are completed, your file will be forwarded to the Technical Evaluation and Decision Committee for evaluation and decision on the certification of your organization's management system through a resolution."
+    },
+    "step8": {
+      "title": "Issuance of certification",
+      "desc": "The Certification Body issues the certificate valid for 3 years, with the decision recorded in the resolution. Our staff will communicate this resolution to you. If positive, we will also send you a certificate draft for your approval, valid for 3 years."
+    },
+    "step9": {
+      "title": "Maintenance audits",
+      "desc": "Throughout the validity of the certification, we will conduct annual audits to confirm the management system's compliance with the requirements of the standard implemented in your organization."
+    },
+    "step10": {
+      "title": "Renewal audits",
+      "desc": "The organization can renew its certification for another 3 years; the process is similar to the initial certification.<br>It is recommended to conduct the audit 3 months before the certificate's expiration date<br>- Renewal Audit is performed<br>- Findings are addressed (when applicable)<br>- Feedback is obtained from the audit team<br>- File is reviewed<br>- Decision to renew the certification is made<br>- A new certificate is issued with dates updated to the corresponding cycle"
+    },
+    "step11": {
+      "title": "Restoration audits",
+      "desc": "When the organization does not renew within the established deadlines or is suspended for more than 6 months or canceled according to the conditions described in RCTED-02 Brand Use Regulation for LACS certified management systems<br>The certification may be restored within the following 6 months:<br><br>- Restoration Audit is performed<br>- Findings are addressed (when applicable)<br>- Feedback is obtained from the audit team<br>- File is reviewed<br>- Decision to restore the certification is made<br>- A new certificate is issued. (The certificate's validity date must be the date of the Restoration Decision, and the expiration date should be based on the previous certification cycle)"
+    }
+  },
+  "maintenance": {
+    "title": "We'll be back soon!",
+    "desc": "We are currently performing maintenance on our website to improve your experience.<br>Please check back later to access our services."
   }
 }
