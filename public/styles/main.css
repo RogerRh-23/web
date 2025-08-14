@@ -2989,12 +2989,40 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 
 .info-box.cards-section {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, auto);
-  gap: 2.5rem 2.5rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 2.5rem;
   justify-items: center;
-  align-items: start;
-  padding: 2.5rem 0 2.5rem 0;
+  align-items: stretch;
+  padding: 2.5rem 0;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.info-box.cards-section .section-title {
+  grid-column: 1/span 2;
+  grid-row: 1;
+}
+
+.info-box.cards-section .card-servicio:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.info-box.cards-section .card-servicio:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.info-box.cards-section .card-servicio:nth-child(4) {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.info-box.cards-section .card-servicio:nth-child(5) {
+  grid-column: 2;
+  grid-row: 3;
 }
 
 @media (max-width: 900px) {
@@ -3006,28 +3034,56 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 @media (max-width: 700px) {
   .info-box.cards-section {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     gap: 1.2rem;
   }
-  .card-servicio {
+  .info-box.cards-section .section-title {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 1.35rem !important;
+    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+    text-align: center;
+    word-break: break-word;
+    max-width: 98vw;
+    margin: 0 auto 1.2rem auto;
+  }
+  .info-box.cards-section .card-servicio {
     max-width: 98vw;
     width: 100%;
+    grid-column: 1;
+  }
+  .info-box.cards-section .card-servicio:nth-child(2) {
+    grid-row: 2;
+  }
+  .info-box.cards-section .card-servicio:nth-child(3) {
+    grid-row: 3;
+  }
+  .info-box.cards-section .card-servicio:nth-child(4) {
+    grid-row: 4;
+  }
+  .info-box.cards-section .card-servicio:nth-child(5) {
+    grid-row: 5;
   }
 }
 .section-title {
   text-align: center;
-  margin: 2rem 0 1.5rem 0;
+  margin: 0 0 1.5rem 0;
   color: #1976a5;
   font-size: 2.3rem;
   font-weight: bold;
+  width: 100%;
+  max-width: 100%;
+  top: 30px;
 }
 
 .card-servicio {
   max-width: 420px;
   width: 100%;
+  margin: 0 auto;
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(51, 134, 169, 0.13);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s, transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
   padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   margin: 0;
   display: flex;
@@ -3039,7 +3095,9 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
 }
 
 .card-servicio:hover {
-  box-shadow: 0 12px 36px rgba(51, 134, 169, 0.18);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.16), 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08), 0 16px 24px rgba(0, 0, 0, 0.1), 0 24px 32px rgba(0, 0, 0, 0.08), 0 32px 40px rgba(0, 0, 0, 0.06), 0 40px 48px rgba(0, 0, 0, 0.04);
+  transform: scale(1.035);
+  border: rgb(51, 145, 170) 1px solid;
 }
 
 .card-servicio img {
@@ -3248,21 +3306,15 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
     object-fit: contain;
   }
   .card-certificacion-content {
-    order: 2;
     width: 100%;
-    max-width: 98vw;
-    font-size: 0.97rem;
-    margin-bottom: 1rem;
-    overflow: visible !important;
-    box-sizing: border-box;
-    word-break: break-word;
-    z-index: 2;
-    text-align: center;
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    max-width: 700px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    box-sizing: border-box;
   }
   .card-certificacion-content * {
     text-align: center !important;
@@ -3347,21 +3399,6 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   margin: 0;
 }
 
-.card-certificacion-content {
-  width: 100%;
-  max-width: 1000px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 2.5rem;
-  justify-content: center;
-  align-items: stretch;
-  padding: 2.5rem 0;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
 .card-certificacion h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -3420,8 +3457,8 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 650px;
-  padding-bottom: 60px;
+  min-height: 900px;
+  padding-bottom: 120px;
 }
 
 .carousel-track {
@@ -3613,6 +3650,8 @@ h1.section-title {
   gap: 2rem 1.5rem;
   max-width: 1100px;
   margin: 0 auto;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .training-card {
