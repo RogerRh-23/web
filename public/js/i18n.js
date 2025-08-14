@@ -9,6 +9,35 @@ document.addEventListener('DOMContentLoaded', function () {
     var btnMobile = document.getElementById('lang-switcher-mobile');
     if (btnDesktop) btnDesktop.onclick = handleLangSwitch;
     if (btnMobile) btnMobile.onclick = handleLangSwitch;
+
+    // Mobile navbar custom language options
+    var langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(function (btn) {
+      btn.onclick = function (e) {
+        var lang = btn.getAttribute('data-lang');
+        if (lang && i18next.language !== lang) {
+          localStorage.setItem('selectedLang', lang);
+          i18next.changeLanguage(lang, function (err) {
+            if (err) {
+              alert('No se pudo cargar el idioma: ' + lang + '. ¿Existe locales/' + lang + '.json?');
+              return;
+            }
+            i18next.reloadResources([lang], function () {
+              updateContent();
+              if (window.updateI18nContent) window.updateI18nContent();
+              updateLangBtnAll();
+              // Solo recargar si el idioma realmente cambió
+              if (i18next.language === lang) {
+                setTimeout(function () {
+                  window.location.reload();
+                }, 100);
+              }
+            });
+            updateContent();
+          });
+        }
+      };
+    });
   }
   window.initLangSwitchers = initLangSwitchers;
 
@@ -26,9 +55,18 @@ document.addEventListener('DOMContentLoaded', function () {
       escapeValue: false // Permite HTML y símbolos
     }
   }, function (err, t) {
-    updateContent();
-    updateLangBtnAll();
-    initLangSwitchers();
+    // Solo forzar el cambio si el idioma actual es distinto al guardado
+    if (i18next.language !== savedLang) {
+      i18next.changeLanguage(savedLang, function () {
+        updateContent();
+        updateLangBtnAll();
+        initLangSwitchers();
+      });
+    } else {
+      updateContent();
+      updateLangBtnAll();
+      initLangSwitchers();
+    }
   });
 
   // Traducir cuando i18next esté listo o cargue recursos (para cards dinámicas)
@@ -62,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var btnMobile = document.getElementById('lang-switcher-mobile');
     if (btnDesktop) btnDesktop.innerHTML = '<i class="bi bi-translate"></i> ' + nextLang;
     if (btnMobile) btnMobile.innerHTML = '<i class="bi bi-translate"></i> ' + nextLang;
-    updateContent();
+    // Forzar traducción en mobile también
+    setTimeout(updateContent, 50);
   }
   updateLangBtnAll();
   function handleLangSwitch() {
@@ -78,8 +117,11 @@ document.addEventListener('DOMContentLoaded', function () {
         updateContent();
         if (window.updateI18nContent) window.updateI18nContent();
         updateLangBtnAll();
+        // Forzar traducción en mobile tras cambio de idioma
+        setTimeout(updateContent, 50);
       });
       updateContent();
+      setTimeout(updateContent, 50);
     });
   }
   // (No agregar listeners aquí, solo en initLangSwitchers)

@@ -85,7 +85,7 @@ img {
 @import 'procesos';
 @import 'snackbars';
 @import 'centro-formacion';
-@import 'maintenance';
+@import 'carousel-auto';
 
 @media (hover: hover) and (pointer: fine) {
 
@@ -109,7 +109,6 @@ img {
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
-    /* Glass effect */
     backdrop-filter: blur(6px) brightness(1.1);
     -webkit-backdrop-filter: blur(6px) brightness(1.1);
   }

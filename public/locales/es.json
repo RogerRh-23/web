@@ -242,7 +242,6 @@
       "label": "Servicios",
       "items": [
         "Certificación de Sistemas de Gestión",
-        "Capacitación",
         "Sorteo y Retrabajo"
       ]
     },
@@ -383,6 +382,7 @@
   },
   "certification_process": {
     "title": "Proceso de Certificación",
+    "validity_title": "Vigencia de la Certificación",
     "step1": {
       "title": "Solicitar información",
       "desc": "Usted puede solicitar información sobre nuestros servicios de certificación de sistemas de gestión por medio de nuestros canales de comunicación."

@@ -72,7 +72,7 @@ document.querySelectorAll('.step-image').forEach(image => {
     scrollTrigger: {
       trigger: image,
       start: 'top 80%',
-      toggleActions: 'play reverse play reverse'
+      toggleActions: 'play none none reverse'
     },
     opacity: 0,
     y: 40,
@@ -87,7 +87,7 @@ document.querySelectorAll('.step h2').forEach(title => {
     scrollTrigger: {
       trigger: title,
       start: 'top 80%',
-      toggleActions: 'play reverse play reverse'
+      toggleActions: 'play none none reverse'
     },
     opacity: 0,
     y: -40,
@@ -102,7 +102,7 @@ document.querySelectorAll('.step p').forEach(desc => {
     scrollTrigger: {
       trigger: desc,
       start: 'top 80%',
-      toggleActions: 'play reverse play reverse'
+      toggleActions: 'play none none reverse'
     },
     opacity: 0,
     y: 40,
@@ -155,3 +155,38 @@ document.querySelectorAll('.step p').forEach(desc => {
     markers: false
   });
 });
+
+
+// Formato Mobile
+const isMobile = window.innerWidth <= 768;
+
+if (isMobile) {
+  // Ajustar el tamaño de las imágenes y textos para mobile
+  document.querySelectorAll('.step-image').forEach(image => {
+    image.style.width = '100%';
+    image.style.height = 'auto';
+    image.style.opacity = '1';
+    image.style.transform = 'none';
+  });
+
+  document.querySelectorAll('.step h2').forEach(title => {
+    title.style.fontSize = '1.2rem';
+    title.style.opacity = '1';
+    title.style.transform = 'none';
+  });
+
+  document.querySelectorAll('.step p').forEach(desc => {
+    desc.style.fontSize = '1rem';
+    desc.style.opacity = '1';
+    desc.style.transform = 'none';
+  });
+
+  // Mostrar todos los pasos fijos y visibles
+  document.querySelectorAll('.step').forEach(step => {
+    step.style.opacity = '1';
+    step.classList.add('active');
+    step.style.transform = 'none';
+  });
+  // No ejecutar ninguna animación ni ScrollTrigger en mobile
+  return;
+}

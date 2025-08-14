@@ -243,7 +243,6 @@
       "label": "Services",
       "items": [
         "Management System Certification",
-        "Training",
         "Sorting and Rework"
       ]
     },
@@ -383,6 +382,7 @@
   },
   "certification_process": {
     "title": "Certification Process",
+    "validity_title": "Certification Validity",
     "step1": {
       "title": "Request information",
       "desc": "You can request information about our management system certification services through our communication channels."

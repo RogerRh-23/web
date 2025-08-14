@@ -17,8 +17,7 @@ function getDropdownConfig() {
       label: t('dropdown.services.label'),
       items: [
         { name: t('dropdown.services.items.0'), path: 'Servicios/Certificación de Sistemas de Gestión.html' },
-        { name: t('dropdown.services.items.1'), path: 'Servicios/Capacitación.html' },
-        { name: t('dropdown.services.items.2'), path: 'Servicios/Sorteo y Retrabajo.html' }
+        { name: t('dropdown.services.items.1'), path: 'Servicios/Sorteo y Retrabajo.html' }
       ]
     },
     {
