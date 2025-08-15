@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin America Certification & Systems</title>
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="icon" type="image/png" href="./assets/img/LACS-V.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* Oculta la navbar por defecto, se muestra solo cuando .navbar-visible está en el body */
+    #navbar-placeholder {
+      display: none;
+      transition: opacity 0.3s;
+    }
+
+    body.navbar-visible #navbar-placeholder {
+      display: block;
+      opacity: 1;
+    }
+
+    body:not(.navbar-visible) #navbar-placeholder {
+      opacity: 0;
+    }
+  </style>
+  <style>
+    @media (max-width: 991.98px) {
+      #footer {
+        margin-bottom: 65px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero Reveal Overlay -->
+  <div class="hero-reveal">
+    <div class="hero-reveal-rects">
+      <div class="hero-rect" style="left:calc(0 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:1"></div>
+      <div class="hero-rect" style="left:calc(1 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:2"></div>
+      <div class="hero-rect" style="left:calc(2 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:3"></div>
+      <div class="hero-rect" style="left:calc(3 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:4"></div>
+      <div class="hero-rect" style="left:calc(4 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:5"></div>
+      <div class="hero-rect" style="left:calc(5 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:6"></div>
+      <div class="hero-rect" style="left:calc(6 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:7"></div>
+      <div class="hero-rect" style="left:calc(7 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:8"></div>
+      <div class="hero-rect" style="left:calc(8 * (100vw / 9 - 1px));width:calc(100vw / 9 + 8px);z-index:9"></div>
+    </div>
+    <div class="hero-reveal-logo-fixed">
+      <img class="hero-logo-img" src="./assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
+    </div>
+    <button class="hero-reveal-arrow" id="hero-reveal-arrow" aria-label="Scroll">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M12 16.5c-.3 0-.5-.1-.7-.3l-6-6a1 1 0 1 1 1.4-1.4l5.3 5.3 5.3-5.3a1 1 0 1 1 1.4 1.4l-6 6c-.2.2-.4.3-.7.3z" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
+  <main class="pt-5" style="min-height: 80vh;">
+    <div id="dynamic-content"></div>
+    <div class="head-img-container">
+      <img class="main-head-img" src="/public/assets/img/img2.png" alt="img1.png" />
+      <div class="lacs-mask"></div>
+      <img class="lacs-logo-overlay" src="/public/assets/img/LACS-Comp.png" alt="LACS-Comp.png" />
+    </div>
+    <!-- Novedades -->
+    <section id="novedades" class="section-gsap novedades-section">
+      <div class="index info-box" style="overflow-x: hidden;">
+        <h2 class="section-title" data-i18n="news.news_title">Novedades</h2>
+        <div class="carousel-container">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="/public/assets/img/img1.png" alt="Novedad 1" class="news-image">
+              <div class="news-caption">
+                <h3 class="news-title">¡Bienvenidos a nuestro sitio web!</h3>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="/public/assets/img/img2.png" alt="Novedad 2" class="news-image">
+              <div class="news-caption">
+                <h3 class="news-title">Nueva acreditación ISO 9001:2015</h3>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="/public/assets/img/img5.jpg" alt="Novedad 3" class="news-image">
+              <div class="news-caption">
+                <h3 class="news-title">Certificación de Sistemas de Gestión de Seguridad de la Información</h3>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="/public/assets/img/img1.png" alt="Novedad 4" class="news-image">
+              <div class="news-caption">
+                <h3 class="news-title">Acreditación ISO 37001:2016</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="social-media">
+          <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" rel="noopener"
+            class="social-icon facebook">
+            <i class="fab fa-facebook-f"></i>
+            <span class="social-icon-label" data-i18n="social.facebook">Sigue nuestra pagina de Facebook</span>
+          </a>
+          <a href="https://www.instagram.com/lacs.mx/#" target="_blank" rel="noopener" class="social-icon instagram">
+            <i class="fab fa-instagram"></i>
+            <span class="social-icon-label" data-i18n="social.instagram">Sigue nuestro perfil de Instagram</span>
+          </a>
+          <a href="https://www.tiktok.com/@lacs_mx" target="_blank" rel="noopener" class="social-icon tiktok">
+            <i class="fab fa-tiktok"></i>
+            <span class="social-icon-label" data-i18n="social.tiktok">Visita nuestro perfil de TikTok</span>
+          </a>
+          <a href="https://wa.me/5215570472422" target="_blank" rel="noopener" class="social-icon whatsapp">
+            <i class="fab fa-whatsapp"></i>
+            <span class="social-icon-label" data-i18n="social.whatsapp">Contáctanos por WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- Tarjetas de Conócenos -->
+    <div class="index info-box">
+      <section class="cards-section">
+        <div class="cards-header">
+          <h1 class="title" data-i18n="cards.title">Conócenos</h1>
+          <p class="subtitle" data-i18n="cards.subtitle">Conoce más sobre nosotros, nuestra misión, visión y valores.
+          </p>
+        </div>
+      </section>
+      <div id="cards" class="section-gsap"></div>
+    </div>
+    <div class="index info-box">
+      <div id="ema" class="section-gsap" style="overflow: hidden;">
+        <div class="ema-container">
+          <section class="ema-section">
+            <h1 class="section-title" data-i18n="ema.title">Acreditaciones EMA</h1>
+            <div class="section-content">
+              <div class="ema-96-13">
+                <a href="/public/assets/docs/ACREDITACION ISO 9001  17021-1.pdf" target="_blank" rel="noopener">
+                  <button>
+                    <img src="/public/assets/img/96-13.png" alt="EMA 96-13" class="ema-logo" />
+                  </button>
+                </a>
+                <strong><span class="ema-text" data-i18n="ema.iso9001">Acreditación ISO 9001:2015 Sistemas de Gestion de
+                    Calidad</span></strong>
+              </div>
+              <div class="ema-96-20">
+                <a href="/public/assets/docs/ACREDITACION ISO 27001  17021-1.pdf" target="_blank" rel="noopener">
+                  <button>
+                    <img src="/public/assets/img/96_20.png" alt="EMA 96-20" class="ema-logo" />
+                  </button>
+                </a>
+                <strong><span class="ema-text" data-i18n="ema.iso27001">Acreditación ISO 27001:2022 Sistemas de Gestión
+                    de
+                    Seguridad de la Información</span></strong>
+              </div>
+              <div class="ema-96-2IAF">
+                <a href="/public/assets/docs/ACREDITACION ISO 37001.pdf" target="_blank" rel="noopener">
+                  <button>
+                    <img src="/public/assets/img/96_20IAF.png" alt="EMA 96-20IAF" class="ema-logo" />
+                  </button>
+                </a>
+                <strong><span class="ema-text" data-i18n="ema.iso37001">Acreditación ISO 37001:2016 Sistemas de Gestión
+                    Antisoborno</span></strong>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="index info-box">
+      <div id="certified-clients" class="section-clients">
+        <div class="certified-clients-container">
+          <h1 class="title" data-i18n="certified_clients.title">Clientes
+            Certificados</h1>
+          <div class="certified-clients-content">
+            <div class="certified-client-card">
+              <img src="#" alt="Cliente 1" class="client-logo">
+            </div>
+            <div class="certified-client-card">
+              <img src="#" alt="Cliente 2" class="client-logo">
+            </div>
+            <div class="certified-client-card">
+              <img src="#" alt="Cliente 3" class="client-logo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <div id="navbar-mobile-placeholder"></div>
+
+  <!-- GSAP core y plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CSSRulePlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <!-- i18next y backend CDN -->
+  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <script src="/public/js/i18n.js"></script>
+  <!-- Facebook SDK -->
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v19.0"></script>
+  <!-- JS principales del proyecto -->
+  <script src="/public/js/main.js"></script>
+  <script src="/public/js/gsap.js"></script>
+  <script src="/public/js/hero-reveal.js"></script>
+  <script src="/public/js/hero-reveal-fix.js"></script>
+  <script src="/public/js/ema-gsap.js"></script>
+  <script src="/public/js/carousel-auto-gsap.js"></script>
+  <script>
+    // Mostrar navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function () {
+      const hero = document.querySelector('.hero-reveal');
+      const body = document.body;
+      if (!hero) {
+        body.classList.add('navbar-visible');
+        return;
+      }
+      function updateNavbar(entries) {
+        if (!entries[0].isIntersecting) {
+          body.classList.add('navbar-visible');
+        } else {
+          body.classList.remove('navbar-visible');
+        }
+      }
+      const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
+      observer.observe(hero);
+    });
+  </script>
+  <script>
+    // Navbar adaptativa: solo carga la versión correspondiente
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        // Elimina navbar desktop si existe
+        desktopPlaceholder.innerHTML = '';
+        // Carga navbar mobile si no está cargada
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('/public/components/navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = './js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        // Elimina navbar mobile si existe
+        mobilePlaceholder.innerHTML = '';
+        // Carga navbar desktop si no está cargada
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('/public/components/navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '/public/js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
+
+    // Cargar dinámicamente las cards
+    fetch('/public/components/cards.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('cards').innerHTML = html;
+        if (window.updateI18nContent) window.updateI18nContent();
+        if (window.updateLangBtnAll) window.updateLangBtnAll();
+      });
+
+    // Función para mostrar/ocultar portada según navegación SPA o acceso directo
+    function showHomeSections(show) {
+      const cards = document.getElementById('cards');
+      const main = document.querySelector('main');
+      // Seleccionar solo los elementos dentro de main
+      const headImg = main ? main.querySelector('.head-img-container') : null;
+      const ema = main ? main.querySelector('#ema') : null;
+      const hero = document.querySelector('.hero-reveal');
+      if (cards) cards.style.setProperty('display', show ? '' : 'none', 'important');
+      if (headImg) headImg.style.setProperty('display', show ? '' : 'none', 'important');
+      if (hero) hero.style.setProperty('display', show ? '' : 'none', 'important');
+      if (ema) ema.style.setProperty('display', show ? '' : 'none', 'important');
+    }
+
+    // Oculta portada si no estamos en la home (acceso directo o recarga)
+    // Ejecutar inmediatamente para cubrir carga temprana
+    (function () {
+      const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html';
+      showHomeSections(isHome);
+    })();
+    document.addEventListener('DOMContentLoaded', function () {
+      const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '/public/' || window.location.pathname === '/public/index.html';
+      showHomeSections(isHome);
+    });
+
+    // Escucha eventos de navegación SPA (cuando se carga contenido dinámico)
+    window.addEventListener('show-home-sections', function (e) {
+      showHomeSections(true);
+      // Limpia el contenido dinámico
+      const dyn = document.getElementById('dynamic-content');
+      if (dyn) {
+        dyn.innerHTML = '';
+        dyn.style.display = 'none';
+      }
+      // Actualiza el botón de idioma y traducción al volver a la home
+      if (window.updateI18nContent) window.updateI18nContent();
+      if (window.updateLangBtnAll) window.updateLangBtnAll();
+    });
+    window.addEventListener('hide-home-sections', function (e) {
+      showHomeSections(false);
+    });
+
+    // Cargar footer
+    fetch('/public/components/footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+        if (window.updateI18nContent) window.updateI18nContent();
+        if (window.updateLangBtnAll) window.updateLangBtnAll();
+        if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+        window.initFooter && window.initFooter();
+      });
+  </script>
+  <!-- navbar-dropdown.js se importa dinámicamente después de cargar la navbar -->
+  <script src="/public/js/footer.js"></script>
+  <script src="/public/js/cards-anim.js"></script>
+  <script src="/public/js/i18n.js"></script>
+  <script src="/public/js/navbar-mobile-accordion.js"></script>
+
+  </script>
+  <script>
+    // Scrollbar flotante funcional
+    document.addEventListener('DOMContentLoaded', () => {
+      const thumb = document.querySelector('.floating-scrollbar-thumb');
+      const scrollbar = document.querySelector('.floating-scrollbar');
+      function updateThumb() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
+        thumb.style.height = thumbHeight + 'px';
+        thumb.style.top = thumbTop + 'px';
+      }
+      window.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      updateThumb();
+      // Drag to scroll
+      let isDragging = false, startY = 0, startScroll = 0;
+      thumb.addEventListener('mousedown', e => {
+        isDragging = true;
+        startY = e.clientY;
+        startScroll = window.scrollY;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const delta = e.clientY - startY;
+        const thumbHeight = thumb.offsetHeight;
+        const scrollDelta = (delta / (window.innerHeight - thumbHeight)) * docHeight;
+        window.scrollTo(0, startScroll + scrollDelta);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    });
+  </script>
+  <div class="floating-scrollbar">
+    <div class="floating-scrollbar-thumb"></div>
+  </div>
+</body>
+
+</html>

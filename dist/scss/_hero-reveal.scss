@@ -1,0 +1,122 @@
+.hero-reveal-arrow,
+.hero-reveal-arrow:focus,
+.hero-reveal-arrow:active,
+.hero-reveal-arrow:hover,
+.hero-reveal-arrow:visited,
+.hero-reveal-arrow svg,
+.hero-reveal-arrow svg:focus,
+.hero-reveal-arrow svg:active,
+.hero-reveal-arrow svg:hover,
+.hero-reveal-arrow svg:visited,
+.hero-reveal-arrow svg path,
+.hero-reveal-arrow svg path:focus,
+.hero-reveal-arrow svg path:active,
+.hero-reveal-arrow svg path:hover,
+.hero-reveal-arrow svg path:visited {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+.hero-reveal-arrow svg, .hero-reveal-arrow svg path {
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  fill: #111 !important;
+}
+.hero-reveal-arrow, .hero-reveal-arrow:focus, .hero-reveal-arrow:active, .hero-reveal-arrow svg {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+// Refuerzo global para evitar líneas residuales
+body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .main-head-img {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-clip: padding-box;
+}
+// Logo fijo, centrado y siempre visible
+.hero-reveal-logo-fixed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95vw;
+  height: 95vh;
+  max-width: 95vw;
+  max-height: 95vh;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+@import 'variables';
+
+.hero-reveal-logo { display: none; }
+
+
+.hero-reveal-rects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 10px);
+  height: 100vh;
+  pointer-events: none;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.hero-rect {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: $pantone-p120-5u;
+  will-change: transform, opacity;
+  pointer-events: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  box-sizing: border-box !important;
+  overflow: hidden;
+  background-clip: padding-box;
+  outline: none !important;
+}
+// .hero-reveal-logo eliminado, ahora es fijo y fuera de los slices
+.hero-logo-slice { display: none; }
+.hero-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1) grayscale(1) contrast(1000%);
+}
+.hero-reveal-arrow {
+  position: absolute;
+  left: 50%;
+  bottom: 5vh;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  background: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.2s;
+  animation: arrow-bounce 1.2s infinite;
+  border: none;
+}
+.hero-reveal-arrow svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: #111;
+}

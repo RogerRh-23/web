@@ -1,0 +1,327 @@
+<!-- Modal para editar certificado -->
+<div class="certificados-modal" id="modalEditarCertificado" style="display:none;">
+  <div class="certificados-modal-content">
+    <button class="close-modal" id="cerrarModalEditar" title="Cerrar">&times;</button>
+    <h3 data-i18n="certificates.edit_certificate.title">Editar certificado</h3>
+    <form id="formEditarCertificado">
+      <label for="edit-nombreOrg" data-i18n="certificates.edit_certificate.company_name">Nombre de la
+        organización</label>
+      <input type="text" id="edit-nombreOrg" name="nombreOrg" required>
+      <label for="edit-estandar" data-i18n="certificates.edit_certificate.standard">Estándar</label>
+      <input type="text" id="edit-estandar" name="estandar" required>
+      <label for="edit-estatus" data-i18n="certificates.edit_certificate.status">Estatus</label>
+      <select id="edit-estatus" name="estatus" required>
+        <option value="Vigente" data-i18n="certificates.edit_certificate.status_list.0">Vigente</option>
+        <option value="Vencido" data-i18n="certificates.edit_certificate.status_list.1">Vencido</option>
+      </select>
+      <label for="edit-numeroCertificado" data-i18n="certificates.edit_certificate.certificate_number">No.
+        Certificado</label>
+      <input type="text" id="edit-numeroCertificado" name="numeroCertificado" required>
+      <label for="edit-fechaInicio" data-i18n="certificates.edit_certificate.start_date">Fecha de inicio</label>
+      <input type="date" id="edit-fechaInicio" name="fechaInicio" required>
+      <label for="edit-fechaFin" data-i18n="certificates.edit_certificate.end_date">Fecha de finalización</label>
+      <input type="date" id="edit-fechaFin" name="fechaFin" required>
+      <label for="archivoCertificado" data-i18n="certificates.edit_certificate.certificate_file">Archivo del certificado
+        (PNG, JPG, JPEG, PDF)</label>
+      <input type="file" id="archivoCertificado" name="archivoCertificado" accept=".png,.jpg,.jpeg,.pdf">
+      <button type="submit" class="btn btn-success" data-i18n="certificates.edit_certificate.save_button">Guardar
+        cambios</button>
+    </form>
+  </div>
+</div>
+<!-- Modal para agregar certificado -->
+<div class="certificados-modal" id="modalAgregarCertificado" style="display:none;">
+  <div class="certificados-modal-content">
+    <button class="close-modal" id="cerrarModalCertificado" title="Cerrar">&times;</button>
+    <h3 data-i18n="certificates.add_certificate.title">Agregar nuevo certificado</h3>
+    <form id="formAgregarCertificado">
+      <label for="nombreOrg" data-i18n="certificates.add_certificate.company_name">Nombre de la organización</label>
+      <input type="text" id="nombreOrg" name="nombreOrg" required>
+      <label for="estandar" data-i18n="certificates.add_certificate.standard">Estándar</label>
+      <input type="text" id="estandar" name="estandar" required>
+      <label for="estatus" data-i18n="certificates.add_certificate.status">Estatus</label>
+      <select id="estatus" name="estatus" required>
+        <option value="Vigente" data-i18n="certificates.add_certificate.status_list.0">Vigente</option>
+        <option value="Vencido" data-i18n="certificates.add_certificate.status_list.1">Vencido</option>
+      </select>
+      <label for="numeroCertificado" data-i18n="certificates.add_certificate.certificate_number">No. Certificado</label>
+      <input type="text" id="numeroCertificado" name="numeroCertificado" required>
+      <label for="fechaInicio" data-i18n="certificates.add_certificate.start_date">Fecha de inicio</label>
+      <input type="date" id="fechaInicio" name="fechaInicio" required>
+      <label for="fechaFin" data-i18n="certificates.add_certificate.end_date">Fecha de finalización</label>
+      <input type="date" id="fechaFin" name="fechaFin" required>
+      <label for="archivoCertificado" data-i18n="certificates.add_certificate.certificate_file">Archivo del certificado
+        (PNG, JPG, JPEG, PDF)</label>
+      <input type="file" id="archivoCertificado" name="archivoCertificado" accept=".png,.jpg,.jpeg,.pdf" required>
+      <button type="submit" class="btn btn-success" data-i18n="certificates.add_certificate.add_button">Guardar</button>
+    </form>
+  </div>
+</div>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latin America Certification & Systems | Certificados</title>
+  <link rel="stylesheet" href="/public/styles/main.css">
+  <link rel="icon" type="image/png" href="/public/assets/img/LACS-V.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <style>
+    @media (max-width: 991.98px) {
+      #footer {
+        margin-bottom: 65px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbar-placeholder"></div>
+  <main class="main-content-navbar-padding">
+    <section class="dynamic-section certificados-section">
+      <form class="certificados-search-form" autocomplete="off" style="margin-bottom: 2rem;">
+        <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
+          <div class="form-group" style="flex: 1 1 300px;">
+            <label for="search-cert" data-i18n="certificates.search_placeholder">Buscar por Nombre o No. de
+              Certificado</label>
+            <input type="text" id="search-cert" name="search-cert" class="form-control"
+              placeholder="Ej: LACS S.A. de C.V. o 2024-00123">
+          </div>
+          <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
+        </div>
+      </form>
+      <div class="admin-certificados-actions" style="margin-bottom:2rem; display:flex; gap:1rem;"></div>
+      <div class="info-box">
+        <!-- Vista cliente: información del certificado -->
+        <div class="certificado-info">
+          <h2 class="certificado-titulo"><i class="bi bi-patch-check-fill" style="color:#1976a5"></i> <span
+              data-i18n="certificates.title">Certificado</span></h2>
+          <div class="certificado-datos">
+            <div><strong data-i18n="certificates.company_name">Nombre de la organización:</strong> <span
+                id="cert-org">LACS S.A. de C.V.</span></div>
+            <div><strong data-i18n="certificates.standard">Estándar:</strong> <span id="cert-estandar">ISO 9001</span>
+            </div>
+            <div><strong data-i18n="certificates.status">Estado/Estatus:</strong> <span id="cert-estado">Vigente</span>
+            </div>
+            <div><strong data-i18n="certificates.certificate_number">No. de certificado:</strong> <span
+                id="cert-num">2024-00123</span></div>
+            <div><strong data-i18n="certificates.start_date">Fecha de inicio:</strong> <span
+                id="cert-inicio">2024-01-01</span></div>
+            <div><strong data-i18n="certificates.end_date">Fecha de finalización:</strong> <span
+                id="cert-fin">2025-01-01</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="../js/gsap.js"></script>
+  <script src="../js/navbar-dropdown.js"></script>
+  <script src="../js/certificados-cliente.js"></script>
+  <script src="../js/certificados-admin.js"></script>
+  <script src="../js/footer.js"></script>
+
+  <script>
+    function loadNavbars() {
+      const isMobile = window.innerWidth <= 991;
+      const navbarPlaceholder = document.getElementById('navbar-placeholder');
+      const navbarMobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      // Limpia ambos contenedores
+      navbarPlaceholder.innerHTML = '';
+      navbarMobilePlaceholder.innerHTML = '';
+      if (isMobile) {
+        // Solo navbar mobile
+        fetch('./navbar-mobile.html')
+          .then(res => res.text())
+          .then(html => {
+            navbarMobilePlaceholder.innerHTML = html;
+            window.initDropdowns && window.initDropdowns();
+            setTimeout(function () {
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (window.updateI18nContent) window.updateI18nContent();
+            }, 200);
+          });
+      } else {
+        // Solo navbar desktop
+        fetch('./navbar.html')
+          .then(res => res.text())
+          .then(html => {
+            navbarPlaceholder.innerHTML = html;
+            window.initDropdowns && window.initDropdowns();
+            setTimeout(function () {
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (window.updateI18nContent) window.updateI18nContent();
+            }, 200);
+          });
+      }
+    }
+    // Inicial
+    loadNavbars();
+    // Al cambiar tamaño de pantalla
+    window.addEventListener('resize', function () {
+      // Solo recargar si cambia de mobile a desktop o viceversa
+      const wasMobile = window._wasMobile;
+      const isMobile = window.innerWidth <= 991;
+      if (wasMobile !== isMobile) {
+        loadNavbars();
+      }
+      window._wasMobile = isMobile;
+    });
+    // Cargar footer
+    fetch('./footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+        window.initFooter && window.initFooter();
+      });
+  </script>
+
+
+  <script>
+    // Mostrar navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function () {
+      const hero = document.querySelector('.hero-reveal');
+      const body = document.body;
+      if (!hero) {
+        body.classList.add('navbar-visible');
+        return;
+      }
+      function updateNavbar(entries) {
+        if (!entries[0].isIntersecting) {
+          body.classList.add('navbar-visible');
+        } else {
+          body.classList.remove('navbar-visible');
+        }
+      }
+      const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
+      observer.observe(hero);
+    });
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('../components/navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('../components/navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+  <script src="../js/i18n.js"></script>
+  <script src="../js/navbar-mobile-accordion.js"></script>
+  <script>
+    // Scrollbar flotante funcional
+    document.addEventListener('DOMContentLoaded', () => {
+      const thumb = document.querySelector('.floating-scrollbar-thumb');
+      const scrollbar = document.querySelector('.floating-scrollbar');
+      function updateThumb() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
+        thumb.style.height = thumbHeight + 'px';
+        thumb.style.top = thumbTop + 'px';
+      }
+      window.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      updateThumb();
+      // Drag to scroll
+      let isDragging = false, startY = 0, startScroll = 0;
+      thumb.addEventListener('mousedown', e => {
+        isDragging = true;
+        startY = e.clientY;
+        startScroll = window.scrollY;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const delta = e.clientY - startY;
+        const thumbHeight = thumb.offsetHeight;
+        const scrollDelta = (delta / (window.innerHeight - thumbHeight)) * docHeight;
+        window.scrollTo(0, startScroll + scrollDelta);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    });
+  </script>
+  <div class="floating-scrollbar">
+    <div class="floating-scrollbar-thumb"></div>
+  </div>
+</body>
+
+</html>

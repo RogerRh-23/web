@@ -1,0 +1,80 @@
+// Estilos para los dropdown animados de la navbar
+
+.dropdown-gsap-container {
+  z-index: 9999;
+  position: fixed;
+
+  /* El display lo controla el JS */
+  /* Más separación desde la navbar */
+  &.dropdown-gsap-container {
+    margin-top: 18px;
+  }
+}
+
+.dropdown-gsap-container {
+  pointer-events: auto;
+}
+
+.dropdown-gsap-container[style*="display: none"] {
+  pointer-events: none !important;
+}
+
+.dropdown-gsap-container {
+  pointer-events: auto;
+}
+
+.dropdown-gsap {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  background: $color-white;
+  border-radius: 1.2rem !important; // Refuerzo para evitar que JS/GSAP lo sobrescriba
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.18);
+  min-width: 180px;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+.dropdown-gsap li {
+  width: 100%;
+}
+
+.dropdown-gsap a {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 1.2rem;
+  color: $color-black;
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+
+  &:hover {
+    background: $pantone-p120-5u !important;
+    color: $color-white !important;
+  }
+}
+
+.dropdown-gsap-mobile {
+  z-index: 9999;
+  position: fixed;
+  box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.18);
+  border-radius: 1.2rem !important; // Refuerzo para evitar que JS/GSAP lo sobrescriba
+  background: $color-white;
+  min-width: 180px;
+  max-width: 260px;
+  /* El display lo controla el JS */
+  flex-direction: column;
+  gap: 0.2rem;
+  will-change: opacity, transform, height;
+  transition: opacity 0.32s, transform 0.32s;
+  pointer-events: auto;
+}

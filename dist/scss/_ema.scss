@@ -1,0 +1,137 @@
+// Estilos para la sección de acreditaciones EMA adaptados al HTML actual
+.ema-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: $color-white;
+}
+
+.ema-section {
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a4c5a;
+  text-align: center;
+  margin-bottom: 0;
+  cursor: default;
+}
+
+.section-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 100%;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-top: 2rem;
+  overflow: hidden;
+}
+
+.ema-96-13,
+.ema-96-20,
+.ema-96-2IAF {
+  background: #fff;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 340px;
+  height: 250px;
+  box-sizing: border-box;
+  border-radius: 0.8rem;
+
+  .ema-logo {
+    width: 250px;
+    height: 100px;
+    max-width: 250px;
+    max-height: 100px;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  .ema-text {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    font-size: 0.95rem;
+    color: $pantone-p120-5u;
+    width: 100%;
+    cursor: default;
+  }
+}
+
+.ema-96-13 button,
+.ema-96-20 button,
+.ema-96-2IAF button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.2s;
+}
+
+
+// Por defecto, sin blur
+.ema-logo,
+.ema-text {
+  filter: none;
+  transition: filter 0.25s;
+}
+
+// Cuando cualquier botón de certificación está en hover, aplica blur a los otros logos
+.section-content:hover .ema-logo {
+  filter: blur(3px);
+}
+
+.ema-96-13 button:hover .ema-logo,
+.ema-96-20 button:hover .ema-logo,
+.ema-96-2IAF button:hover .ema-logo {
+  filter: none;
+}
+
+@include media('(max-width: 767.98px)') {
+  .section-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .ema-96-13,
+  .ema-96-20,
+  .ema-96-2IAF {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  .ema-logo {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 90px;
+  }
+}

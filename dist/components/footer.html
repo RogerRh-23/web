@@ -1,0 +1,110 @@
+<footer class="footer-section">
+  <div class="footer-triangle"></div>
+  <div class="footer-content container">
+    <div class="footer-logo-social">
+      <div class="footer-logo-col">
+        <img src="/public/assets/img/LACS-Footer.png" alt="LACS Logo" class="footer-logo" />
+        <ul class="footer-social">
+          <li class="icon facebook" data-tooltip="Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61574336477937" target="_blank" aria-label="Facebook"
+              class="footer-social-link"><i class="fa-brands fa-facebook-f"></i></i></a>
+          </li>
+          <li class="icon instagram" data-tooltip="Instagram">
+            <a href="https://www.instagram.com/lacs.mx/#" target="_blank" aria-label="Instagram"
+              class="footer-social-link"><i class="fa-brands fa-instagram"></i></i></a>
+          </li>
+          <li class="icon linkedin" data-tooltip="LinkedIn">
+            <a href="https://www.linkedin.com/company/latin-american-certification-systems" target="_blank"
+              aria-label="LinkedIn" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></i></a>
+          </li>
+          <li class="icon tiktok" data-tooltip="TikTok">
+            <a href="https://www.tiktok.com/@lacs_mx" target="_blank" aria-label="TikTok" class="footer-social-link"><i
+                class="fa-brands fa-tiktok"></i></i></a>
+          </li>
+          <li class="icon whatsapp" data-tooltip="WhatsApp">
+            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp" class="footer-social-link"><i
+                class="fa-brands fa-whatsapp"></i></i></a>
+          </li>
+          <li class="icon google-maps" data-tooltip="Google Maps">
+            <a href="https://maps.app.goo.gl/3KpCwUMfCdGTCgCE9" target="_blank" aria-label="Google Maps"
+              class="footer-social-link"><i class="bi bi-geo-alt-fill"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-options">
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.about">Más sobre nosotros</h3>
+        <ul class="footer-options-list">
+          <li><a href="/public/components/footer/Nosotros.html" data-i18n="footer.faq">Preguntas frecuentes</a></li>
+          <li><a href="/public/components/footer/Nosotros.html" data-i18n="footer.accreditations">Nuestras
+              acreditaciones</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.regulations">Reglamentos</h3>
+        <ul class="footer-options-list">
+          <li><a href="/public/components/footer/Reglamentos.html" data-i18n="footer.brand_use">Reglamento de uso de
+              marca</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.policies">Políticas</h3>
+        <ul class="footer-options-list">
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="footer.confidentiality">Política de
+              confidencialidad</a></li>
+          <li><a href="/public/components/footer/Politicas.html" data-i18n="footer.impartiality">Política de
+              Imparcialidad</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-options-col">
+        <h3 data-i18n="footer.contact">Contacto</h3>
+        <ul class="footer-options-list">
+          <li>
+            <a href="https://wa.me/5215570472422" target="_blank" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp: <span>+52 1 55 7047 2422</span>
+            </a>
+          </li>
+          <li>
+            <a href="/public/components/contacto.html" data-i18n="footer.mail">
+              <i class="fa-regular fa-envelope"></i> Correo: <span style="font-style:italic;">info@lacs.org.mx</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <span data-i18n="footer.copyright">&copy; 2025 Latin America Certification & Systems. Todos los derechos
+        reservados.</span>
+    </div>
+  </div>
+</footer>
+<script>
+  // Actualiza el año automáticamente en el footer y preserva la traducción
+  function updateFooterCopyright() {
+    var year = new Date().getFullYear();
+    var copySpan = document.querySelector('.footer-copy span');
+    if (copySpan && window.i18next) {
+      copySpan.innerHTML = i18next.t('footer.copyright', { year });
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    updateFooterCopyright();
+    if (window.i18next) {
+      i18next.on('languageChanged', updateFooterCopyright);
+    }
+  });
+
+  // Evitar que updateContent de i18n.js sobrescriba el copyright dinámico
+  if (window.updateI18nContent) {
+    var originalUpdateI18nContent = window.updateI18nContent;
+    window.updateI18nContent = function () {
+      originalUpdateI18nContent();
+      updateFooterCopyright();
+    };
+  }
+</script>

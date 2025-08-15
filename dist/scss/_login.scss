@@ -1,0 +1,321 @@
+// Logo principal en login
+.login-logo-img {
+  max-width: 80px;
+  width: 35vw;
+  min-width: 60px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 100%;
+  box-shadow: $shadow-4layer;
+}
+
+// Modal recuperación de contraseña
+.modal#modal-forgot-password {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal#modal-forgot-password[style*="display: block"] {
+  display: flex !important;
+}
+
+.forgot-modal-content {
+  max-width: 350px;
+  width: 90vw;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.13);
+  padding: 2rem 1.5rem;
+  position: relative;
+  margin: auto;
+}
+
+.close-modal#close-forgot-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.forgot-modal-title {
+  margin-bottom: 1.2rem;
+}
+
+.forgot-modal-input {
+  width: 100%;
+  margin-bottom: 1.2rem;
+  padding: 0.6rem;
+  border-radius: 0.7rem;
+  border: 1px solid #ccc;
+}
+
+.forgot-modal-btn {
+  width: 100%;
+}
+
+.forgot-modal-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.98rem;
+}
+
+// Enlace para '¿Olvidaste tu contraseña?'
+.login-forgot-link {
+  color: #1976d2;
+  font-size: 0.98rem;
+  text-decoration: underline;
+  transition: color 0.18s;
+}
+
+.login-forgot-link:hover,
+.login-forgot-link:focus {
+  color: darken(#1976d2, 10%);
+}
+
+.login-success-logo {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  animation: logoFadeIn 0.7s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+}
+
+.login-success-logo img {
+  max-width: 120px;
+  width: 40vw;
+  min-width: 80px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+  transform: scale(0.7);
+  transition: transform 0.7s cubic-bezier(.68, -0.55, .27, 1.55);
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-success-message {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #3b3b3b;
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.7s cubic-bezier(.68, -0.55, .27, 1.55), transform 0.7s cubic-bezier(.68, -0.55, .27, 1.55);
+}
+
+.login-header-title,
+.login-header-desc {
+  transition: color 0.7s cubic-bezier(.68, -0.55, .27, 1.55);
+}
+
+// Círculos animados para el efecto de bienvenida
+.login-success-circles {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s, transform 0.7s cubic-bezier(.68, -0.55, .27, 1.55);
+}
+
+.circle-1 {
+  width: 120px;
+  height: 120px;
+  background: lighten($pantone-p120-5u, 30%);
+  left: 20%;
+  top: 30%;
+}
+
+.circle-2 {
+  width: 80px;
+  height: 80px;
+  background: lighten($pantone-b7693u, 40%);
+  left: 60%;
+  top: 60%;
+}
+
+.login-card.success {
+  background: lighten($pantone-p120-5u, 38%);
+  transition: background 0.5s;
+}
+
+.login-success-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: $pantone-b7693u;
+  text-align: center;
+  z-index: 20;
+  background: transparent;
+}
+
+.login-input-group {
+  position: relative;
+  width: 100%;
+}
+
+.login-label {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-label;
+  font-size: 1.08rem;
+  pointer-events: none;
+  transition: 0.18s;
+  background: transparent;
+}
+
+.login-input-group input:focus+.login-label,
+.login-input-group input:not(:placeholder-shown):not([value=""])+.login-label {
+  top: 0.2rem;
+  left: 0.6rem;
+  font-size: 0.85rem;
+  color: $pantone-p120-5u;
+  background: transparent;
+  padding: 0 0.2rem;
+}
+
+.login-input-group input {
+  background: transparent;
+  border: none;
+  font-size: 1.08rem;
+  color: $pantone-b7693u;
+  padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+  width: 100%;
+  outline: none;
+}
+
+// Estilos para el login visual tipo card
+.login-bg {
+  min-height: 100vh;
+  background: linear-gradient(120deg, $pantone-p120-5u 0%, $pantone-mix-1-dark 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  background: $color-white;
+  border-radius: 1.2rem;
+  box-shadow: $shadow-4layer;
+  padding: 2.5rem 2.2rem 2rem 2.2rem;
+  min-width: 320px;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2.2rem;
+  position: relative;
+}
+
+.login-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: $pantone-p120-5u;
+  margin-bottom: 0.3rem;
+}
+
+.login-header p {
+  color: $pantone-b7693u;
+  font-size: 1.08rem;
+  margin-bottom: 0.2rem;
+}
+
+.login-field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: rgba($pantone-p120-5u, 0.08);
+  border-radius: 2rem;
+  margin-bottom: 1.2rem;
+  padding: 0.2rem 0.7rem 0.2rem 0.7rem;
+}
+
+.login-icon {
+  font-size: 1.3rem;
+  color: $pantone-p120-5u;
+  margin-right: 0.7rem;
+}
+
+.login-field input {
+  border: none;
+  background: transparent;
+  font-size: 1.08rem;
+  color: $pantone-b7693u;
+  padding: 0.7rem 0.2rem;
+  width: 100%;
+  outline: none;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.8rem 0;
+  border-radius: 2rem;
+  background: $pantone-p120-5u;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(24, 119, 243, 0.08);
+  margin-top: 0.7rem;
+  transition: background 0.18s;
+}
+
+.login-btn:hover,
+.login-btn:focus {
+  background: $pantone-p120-5u-dark;
+}
+
+#login-message {
+  margin-top: 1rem;
+  color: $pantone-p123-16u;
+  font-size: 1rem;
+  text-align: center;
+}

@@ -1,0 +1,435 @@
+{
+  "navbar": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "processes": "Procesos",
+    "training": "Centro de formación",
+    "certificates": "Certificados",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión"
+  },
+  "navbar_mobile": {
+    "menu_button": "Menú",
+    "home_button": "Inicio",
+    "login_button": "Iniciar Sesión",
+    "services": "Servicios",
+    "services_certification": "Certificación de Sistemas de Gestión",
+    "services_training": "Capacitación",
+    "services_sorting": "Sorteo y Retrabajo",
+    "processes": "Procesos",
+    "process_certification": "Proceso de Certificación",
+    "process_validity": "Vigencia de la Certificación",
+    "process_complaints": "Procedimiento de atención de quejas",
+    "training": "Centro de formación",
+    "training_courses": "Cursos",
+    "training_webinars": "Webinars",
+    "certificates": "Certificados",
+    "contact": "Contacto",
+    "language": "Idioma",
+    "lang_es": "Español",
+    "lang_en": "Inglés"
+  },
+  "footer": {
+    "about": "Más sobre nosotros",
+    "faq": "Preguntas frecuentes",
+    "accreditations": "Nuestras acreditaciones",
+    "regulations": "Reglamentos",
+    "brand_use": "Reglamento de uso de marca",
+    "certified_company": "Reglamento de empresa certificada",
+    "policies": "Politicas",
+    "privacy": "Aviso de privacidad",
+    "confidentiality": "Política de confidencialidad",
+    "impartiality": "Política de Imparcialidad",
+    "copyright": "© {{year}} Latin America Certification & Systems. Todos los derechos reservados.",
+    "contact": "Contacto",
+    "mail": "Correo: info@lacs.org.mx"
+  },
+  "ema": {
+    "title": "Acreditaciones EMA",
+    "iso9001": "Acreditación ISO 9001:2015 Sistemas de Gestion de Calidad",
+    "iso27001": "Acreditación ISO 27001:2022 Sistemas de Gestión de Seguridad de la Información",
+    "iso37001": "Acreditación ISO 37001:2016 Sistemas de Gestión Antisoborno"
+  },
+  "news": {
+    "news_title": "Novedades"
+  },
+  "social": {
+    "facebook": "Sigue nuestra pagina de Facebook",
+    "instagram": "Sigue nuestro perfil de Instagram",
+    "tiktok": "Visita nuestro perfil de TikTok",
+    "whatsapp": "Contáctanos por WhatsApp"
+  },
+  "certified_clients": {
+    "title": "Clientes Certificados"
+  },
+  "dev_panel": {
+    "title": "Panel de Desarrollador",
+    "create_admin": "Crear Administrador",
+    "edit_admin": "Editar Administrador",
+    "delete_admin": "Eliminar Administrador",
+    "admin_list": "Lista de Administradores",
+    "admin_created": "Administrador creado exitosamente.",
+    "admin_updated": "Administrador actualizado exitosamente.",
+    "admin_deleted": "Administrador eliminado exitosamente."
+  },
+  "footer_nosotros": {
+    "title": "Más sobre nosotros",
+    "faq": "Preguntas frecuentes",
+    "accreditations": "Acreditaciones",
+    "accreditations_info": "Información sobre nuestras acreditaciones y certificaciones.",
+    "9001_sectors": "Acreditacion ISO 9001 Sectores",
+    "9001_systems": "Acreditacion ISO 9001 como Organismo de Certificacion de Sistemas de Gestión de Calidad",
+    "27001_systems": "Acreditacion ISO 27001 como Organismo de Certificacion de Sistemas de Gestión de Seguridad de la Información",
+    "27001_2022": "Acreditacion ISO 27001:2022 Sistemas de Gestión de Seguridad de la Información",
+    "37001_systems": "Acreditacion ISO 37001 como Organismo de Certificacion de Sistemas de Gestión Antisoborno",
+    "sgsi_diploma": "Diplomado en Sistemas de Gestión de Seguridad de la Información",
+    "consulta_title": "Consulta de Acreditaciones",
+    "consulta_desc": "Para consultar nuestras acreditaciones, puedes visitar el sitio web de IAF o escanear el código QR.",
+    "consulta_link": "Consulta de Acreditaciones LACS"
+  },
+  "footer_reglamentos": {
+    "title": "Reglamento de uso de marca"
+  },
+  "footer_politicas": {
+    "privacy": "Aviso de privacidad",
+    "confidentiality": "Política de confidencialidad",
+    "impartiality": "Política de Imparcialidad"
+  },
+  "cards": {
+    "title": "Conócenos",
+    "subtitle": "Conoce más sobre nosotros, nuestra misión, visión y valores.",
+    "who": {
+      "title": "¿Quiénes somos?",
+      "text": "Desde el inicio de nuestras operaciones en 2013 en Latin American Certification & Systems (LACS) nos hemos comprometido en apoyar a las organizaciones en México a través de nuestros servicios de certificación de sistemas de gestión y capacitación para facilitar su acceso a nuevos mercados y coadyuvar al logro de sus objetivos estratégicos. Nuestro personal tiene amplia experiencia en la aplicación de normas de evaluación de la conformidad y sistemas de gestión, nos diferenciamos por tener un estrecho acercamiento con el cliente brindándole una escucha activa para la atención oportuna a sus necesidades. A través de nuestro portafolio de servicios ofrecemos soluciones que estamos seguros contribuirán al éxito de su organización."
+    },
+    "mission": {
+      "title": "Misión",
+      "text": "En LACS somos un equipo multidisciplinario y experimentado que brindamos servicios de evaluación y transferencia de conocimientos, creando confianza, valor e impulsando el desarrollo de nuestros clientes."
+    },
+    "vision": {
+      "title": "Visión",
+      "text": "En LACS buscamos un crecimiento sostenible en los mercados nacionales e internacionales implementando las mejores prácticas tecnológicas disponibles apegados a nuestros valores institucionales."
+    },
+    "values": {
+      "title": "Valores",
+      "list": {
+        "0": {
+          "title": "Ética",
+          "desc": "Definida como la conducta humana, lo correcto e incorrecto, el buen vivir, la moral y el deber. En LACS, la integridad y responsabilidad son lineamientos que establecemos como base de nuestra actuación."
+        },
+        "1": {
+          "title": "Responsabilidad",
+          "desc": "La capacidad de cumplir con las obligaciones, asumiendo los compromisos derivados de nuestra toma de decisiones."
+        },
+        "2": {
+          "title": "Imparcialidad",
+          "desc": "Nuestros servicios y decisiones están basadas en evidencias objetivas y no son influidas por ningún interés particular."
+        },
+        "3": {
+          "title": "No discriminación",
+          "desc": "Damos un trato equitativo a proveedores o cualquier persona relacionada con LACS y brindamos nuestros servicios guiados por los valores que nos rigen."
+        },
+        "4": {
+          "title": "Persistencia",
+          "desc": "En LACS somos firmes y constantes en nuestro actuar con impulso y esfuerzo a pesar de los obstáculos y dificultades que se presenten."
+        },
+        "5": {
+          "title": "Pasión",
+          "desc": "En LACS nos caracterizamos por tener interés, motivación, trabajo en equipo para enfrentar cada proyecto y desafío."
+        },
+        "6": {
+          "title": "Confidencialidad",
+          "desc": "Garantizamos que la información sensible de nuestros proveedores y demás partes interesadas relacionadas con nuestros servicios sea utilizada de manera adecuada y responsable y no sea divulgada de manera no autorizada."
+        }
+      }
+    },
+    "sectors": {
+      "label": "Sectores",
+      "title": "ALCANCES DE LA ACREDITACIÓN",
+      "desc": "Esta lista de alcances de Acreditación se basa en la nomenclatura estadística de actividades económicas (NACE Rev. 2), publicada por la Comisión de la Comunidad Europea en el periódico oficial L 393/1, del 30.12.2006, la cual se ocupará para los Sistemas de Gestión de Calidad y los Sistemas de Gestión de Seguridad y Salud en el Trabajo (SASST)",
+      "list": {
+        "0": "12 Químicos, productos químicos y fibras",
+        "1": "14 Hule y productos de plástico",
+        "2": "17 Metales básicos y productos de metal fabricados",
+        "3": "18 Maquinaria y equipo",
+        "4": "22 Otro equipo de transporte",
+        "5": "28 Construcción",
+        "6": "29 Comercio al mayoreo y menudeo; Reparación de vehículos de motor, motocicletas y bienes personales y domésticos",
+        "7": "31 Transporte, almacenamiento y comunicación",
+        "8": "34 Servicios de ingeniería",
+        "9": "35 Otros servicios",
+        "10": "36 Administración pública",
+        "11": "37 Educación"
+      }
+    }
+  },
+  "login": {
+    "welcome_message": "¡Bienvenido!",
+    "access": "Accede a tu cuenta",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "login_button": "Iniciar Sesión",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "recover_password": "Recuperar contraseña",
+    "registered_email": "Correo electrónico registrado",
+    "send_link": "Enviar enlace"
+  },
+  "contact": {
+    "title": "Contacto",
+    "desc": "Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "send_button": "Enviar",
+    "success_message": "Tu mensaje ha sido enviado con éxito.",
+    "error_message": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.",
+    "directory_title": "Directorio de Personal",
+    "member1_role": "Directora",
+    "member2_role": "Asistente de Aseguramiento",
+    "member3_role": "Coordinación de Capital Humano",
+    "member4_role": "Coordinador Administrativo",
+    "member5_role": "Facturación",
+    "member6_role": "Coordinación de Operacion",
+    "member7_role": "Capacitación",
+    "member8_role": "Ejecutivo de Ventas",
+    "member9_role": "Auxiliar de Competencias"
+  },
+  "certificates": {
+    "title": "Certificados",
+    "search_placeholder": "Buscar por Nombre o No. de Certificado",
+    "search_button": "Buscar",
+    "company_name": "Nombre de la Empresa",
+    "standard": "Estándar",
+    "status": "Estado/Estatus",
+    "certificate_number": "Número de Certificado",
+    "start_date": "Fecha de Inicio",
+    "end_date": "Fecha de Finalización",
+    "add_certificate": {
+      "title": "Agregar nuevo certificado",
+      "company_name": "Nombre de la organización",
+      "standard": "Estándar",
+      "status": "Estatus",
+      "status_list": [
+        "Vigente",
+        "Vencido"
+      ],
+      "certificate_number": "Número de Certificado",
+      "start_date": "Fecha de Inicio",
+      "end_date": "Fecha de Finalización",
+      "certificate_file": "Archivo del certificado (PNG, JPG, JPEG, PDF)",
+      "add_button": "Guardar"
+    },
+    "edit_certificate": {
+      "title": "Editar certificado",
+      "company_name": "Nombre de la organización",
+      "standard": "Estándar",
+      "status": "Estatus",
+      "status_list": [
+        "Vigente",
+        "Vencido"
+      ],
+      "certificate_number": "Número de Certificado",
+      "start_date": "Fecha de Inicio",
+      "end_date": "Fecha de Finalización",
+      "certificate_file": "Archivo del certificado (PNG, JPG, JPEG, PDF)",
+      "save_button": "Guardar Cambios"
+    }
+  },
+  "dropdown": {
+    "services": {
+      "label": "Servicios",
+      "items": [
+        "Certificación de Sistemas de Gestión",
+        "Sorteo y Retrabajo"
+      ]
+    },
+    "processes": {
+      "label": "Procesos",
+      "items": [
+        "Proceso de Certificación",
+        "Vigencia de Certificación",
+        "Procedimiento de atención de quejas"
+      ]
+    },
+    "training": {
+      "label": "Centro de formación",
+      "items": [
+        "Cursos",
+        "Webinars"
+      ]
+    }
+  },
+  "snackbar": {
+    "success": "Operación exitosa.",
+    "error": "Error al procesar la solicitud.",
+    "info": "Información importante.",
+    "warning": "Advertencia: Verifica los datos ingresados.",
+    "file": "Archivo cargado correctamente."
+  },
+  "courses_section": {
+    "title": "CURSOS",
+    "desc": "Ofrecemos una variedad de cursos de capacitación diseñados para ayudar a las organizaciones a comprender e implementar sistemas de gestión basados en normas internacionales. Nuestros cursos son impartidos por expertos en la materia y están diseñados para proporcionar conocimientos prácticos y aplicables.",
+    "9001_title": "Sistemas de Gestión de Calidad",
+    "9001_desc": "Contexto de la organización y riesgos en el sistema de gestión.",
+    "9001_duration": "Duración: 16 horas",
+    "9001_desc1": "Interpretación de los requisitos de la norma ISO 9001:2015.",
+    "9001_duration1": "Duración: 24 horas",
+    "9001_desc2": "Enfoque a procesos.",
+    "9001_duration2": "Duración: 12 horas",
+    "9001_desc3": "Atención a no conformidades.",
+    "9001_duration3": "Duración: 12 horas",
+    "9001_desc4": "Auditorías a sistemas de gestión de calidad ISO 19011:2018.",
+    "9001_duration4": "Duración: 24 horas",
+    "22000_title": "Sistemas de Gestión de Seguridad Alimentaria",
+    "22000_desc": "Análisis de peligros y puntos críticos HACCP",
+    "22000_duration": "Duración: 16 horas",
+    "22000_desc1": "Evaluación sensorial",
+    "22000_duration1": "Duración: 16 horas",
+    "22000_desc2": "Programas de prerrequisitos",
+    "22000_duration2": "Duración: 16 horas",
+    "22000_desc3": "Sistemas de gestión de seguridad alimentaria ISO 22000",
+    "22000_duration3": "Duración: 24 horas",
+    "22000_desc4": "Auditorías a sistemas de gestión de seguridad alimentaria",
+    "22000_duration4": "Duración: 24 horas",
+    "37001_title": "Sistemas de Gestión Antisoborno",
+    "37001_desc": "Contexto de la organización y riesgos en un sistema de gestión antisoborno",
+    "37001_duration": "Duración: 16 horas",
+    "37001_desc1": "Interpretación de los requisitos de la norma ISO 37001:2025",
+    "37001_duration1": "Duración: 24 horas",
+    "37001_desc2": "Gestión de cumplimiento ISO 37301:2021",
+    "37001_duration2": "Duración: 16 horas",
+    "37001_desc3": "Auditorías a sistemas de gestión antisoborno",
+    "37001_duration3": "Duración: 24 horas",
+    "14001_title": "Sistemas de Gestión Ambiental",
+    "14001_desc": "Contexto de la organización y riesgos en un sistema de gestión ambiental",
+    "14001_duration": "Duración: 16 horas",
+    "14001_desc1": "Interpretación de los requisitos de la norma ISO 14001:2015",
+    "14001_duration1": "Duración: 20 horas",
+    "14001_desc2": "Identificación de aspectos e impactos ambientales y perspectiva de ciclo de vida",
+    "14001_duration2": "Duración: 16 horas",
+    "14001_desc3": "Legislación ambiental e introducción a la evaluación de cumplimiento",
+    "14001_duration3": "Duración: 16 horas",
+    "14001_desc4": "Auditorías a sistemas de gestión ambiental ISO 19011:2018",
+    "14001_duration4": "Duración: 24 horas",
+    "14001_desc5": "Atención a no conformidades",
+    "14001_duration5": "Duración: 12 horas",
+    "27001_title": "Sistemas de Gestión de Seguridad de la Información",
+    "27001_desc": "Contexto de la organización y riesgos en un sistema de gestión de seguridad en la información",
+    "27001_duration": "Duración: 16 horas",
+    "27001_desc1": "Interpretación de los requisitos de la norma ISO/IEC 27001:2022",
+    "27001_duration1": "Duración: 24 horas",
+    "27001_desc2": "Riesgos en seguridad en la información",
+    "27001_duration2": "Duración: 16 horas",
+    "27001_desc3": "Implementación de controles en seguridad en la información",
+    "27001_duration3": "Duración: 20 horas",
+    "27001_desc4": "Auditorías a sistemas de gestión de seguridad en la información ISO 19011:2018",
+    "27001_duration4": "Duración: 24 horas",
+    "27001_desc5": "Atención a no conformidades",
+    "27001_duration5": "Duración: 12 horas",
+    "45001_title": "Sistemas de Gestión en Seguridad y Salud en el Trabajo",
+    "45001_desc": "Sistemas de gestión en seguridad y salud en el trabajo ISO 45001",
+    "45001_duration": "Duración: 16 horas",
+    "45001_desc1": "Identificación de peligros y evaluación de riesgos",
+    "45001_duration1": "Duración: 12 horas",
+    "45001_desc2": "Marco legal en seguridad y salud en el trabajo e introducción a la evaluación de cumplimiento",
+    "45001_duration2": "Duración: 12 horas",
+    "45001_desc3": "Auditorías a sistemas de gestión de seguridad y salud en el trabajo ISO 19011:2018",
+    "45001_duration3": "Duración: 24 horas",
+    "expand_card": "Expandir",
+    "collapse_card": "Colapsar"
+  },
+  "appeal": {
+    "title": "Procedimiento de atención de quejas y apelaciones",
+    "step1": "Cliente ingresa solicitud de apelación con la información de soporte al correo <br><b>info@lacs.org.mx</b>",
+    "step2": "Se confirma la recepción de la apelación y inicia su atención.",
+    "step3": "Se analiza la solicitud para determinar su procedencia. En caso de aceptarse se conforma grupo de análisis",
+    "step4": "Se analiza la situación por el grupo de análisis y de requerirse más información se solicita al grupo auditor o cliente. Se emite una resolución",
+    "step5": "La resolución es comunicada al cliente y al personal operativo de LACS."
+  },
+  "certs": {
+    "title": "Certificación de Sistemas de Gestión",
+    "iso9001": {
+      "9001_title": "ISO 9001 Sistemas de Gestión de Calidad",
+      "desc": "ISO 9001 reconocida mundialmente como la norma para la gestión de calidad está orientada principalmente a cumplir con las expectativas de los clientes de organizaciones de cualquier tamaño y sector, a demostrar su compromiso con la calidad y a mejorar de manera continua un sistema de gestión que permita coadyuvar a logro de objetivos y metas.<br><br>Con la implementación de ISO 9001, su organización a través del liderazgo de la alta dirección implementa procesos eficaces y promueve la capacitación del personal para brindar productos o servicios con la confianza de cumplir con las necesidades de sus clientes.<br><br>",
+      "benefits_title": "Los beneficios de implementar esta norma son:",
+      "benefit1": "Confianza de los clientes",
+      "benefit2": "Resolución efectiva de las quejas",
+      "benefit3": "Mejora del proceso",
+      "benefit4": "Mejora continua"
+    },
+    "iso27001": {
+      "27001_title": "ISO/IEC 27001 Sistemas de Gestión de la Seguridad de la Información",
+      "desc": "La ISO/IEC 27001 es la norma más conocida del mundo para sistemas de gestión de la seguridad de la información (SGSI). Proporciona a las empresas de cualquier tamaño y de todos los sectores un marco para establecer e implementar acciones para gestionar los riesgos relacionados con la seguridad de los datos que posee o maneja a fin de generar confianza con sus clientes, socios y publico en general.<br><br>",
+      "benefits_title": "Los beneficios de implementar esta norma son los siguientes:",
+      "benefit1": "Mantener una resistencia a los ciberataques",
+      "benefit2": "Preparación ante nuevas amenazas",
+      "benefit3": "Mantener la Integridad, confidencialidad y disponibilidad de la información",
+      "benefit4": "Establece controles de seguridad en todos los soportes",
+      "benefit5": "Protección en toda la empresa de la información que maneja",
+      "benefit6": "Ahorro de costos por extracción de información"
+    },
+    "iso37001": {
+      "37001_title": "ISO 37001 Sistemas de Gestión Antisoborno",
+      "desc": "Es una norma dedicada establecer un sistema de gestión que ayude a las organizaciones a prevenir, detectar y responder al soborno, así como a cumplir las leyes antisoborno y los compromisos voluntarios aplicables a sus actividades. Abarca diversas formas de soborno (directo e indirecto) en los sectores público, privado y sin ánimo de lucro.<br><br>El enfoque sistemático de ISO 37001 brinda a las organizaciones un enfoque sistemático para combatir el soborno, no solo con el cumplimiento normativo, sino también con el fomento de una cultura de integridad, transparencia y confianza dentro de las organizaciones.<br><br>",
+      "benefits_title": "Los beneficios de implementar esta norma son:",
+      "benefit1": "Reducir los riesgos de soborno y sus costos asociados",
+      "benefit2": "Mejorar el cumplimiento de las leyes antisoborno internacionales",
+      "benefit3": "Aumentar la confianza de las partes interesadas en las operaciones comerciales",
+      "benefit4": "Reforza la reputación y la integridad de la organización"
+    }
+  },
+  "certification_process": {
+    "title": "Proceso de Certificación",
+    "validity_title": "Vigencia de la Certificación",
+    "step1": {
+      "title": "Solicitar información",
+      "desc": "Usted puede solicitar información sobre nuestros servicios de certificación de sistemas de gestión por medio de nuestros canales de comunicación."
+    },
+    "step2": {
+      "title": "Propuesta de servicios",
+      "desc": "Con la información que nos proporcione, le enviaremos a la brevedad nuestra propuesta de servicios, indicando los conceptos de nuestros servicios: etapa 1 y 2, emisión de certificado y auditorías de vigilancia.<br><br>El ejecutivo dará seguimiento a nuestra propuesta de servicios para conocer sus comentarios y determinar si colaboraremos con su organización. En este seguimiento si la propuesta de servicios es aceptada le pedimos que la envíe firmada, en caso contrario háganoslo saber."
+    },
+    "step3": {
+      "title": "Contrato",
+      "desc": "Una vez que la propuesta es aceptada, nuestro ejecutivo le enviará para su firma un contrato de servicios, el cual antes de su firma le pedimos lo revise."
+    },
+    "step4": {
+      "title": "Auditoría Etapa 1",
+      "desc": "<b>Programación de servicios</b><br>Una vez aceptada nuestra propuesta de servicios y de manera simultanea a la firma del contrato, nuestro personal operativo (coordinador de Operaciones) inicia con las actividades del servicio haciendo contacto con usted para establecer las fechas para la Etapa 1 y 2.<br><br><b>Etapa 1</b><br>En esta etapa, le solicitaremos información de su sistema de gestión, le enviaremos una notificación de la fecha del servicio y la Agenda de Trabajo con los horarios y procesos a evaluar. Esta etapa 1 consta de la revisión de los documentos de planificación del sistema de gestión, Al finalizar la auditoría le entregaremos un informe con los hallazgos encontrados."
+    },
+    "step5": {
+      "title": "Auditoría Etapa 2",
+      "desc": "En la etapa 2, haremos la evaluación completa de su sistema de gestión para determinar el cumplimiento con los requisitos de la norma. En esta etapa nuestro personal realiza entrevistas al personal, revisa los registros de las actividades, cumplimiento de objetivos, implementación de políticas, etc.<br><br>Al final de la auditoría nuestros auditores le enviarán un informe con los resultados de la evaluación. Si hay no conformidades le comunicaremos el tiempo de atención."
+    },
+    "step6": {
+      "title": "Hallazgos",
+      "desc": "Al concluir la auditoría de Etapa 2, en caso de existir hallazgos, la organización deberá realizar y presentar el Plan de acción dentro de los primeros 15 días naturales, se revisa por el Auditor Líder y 40 días naturales posteriores la organización envía las acciones implementadas para el cierre de los hallazgos."
+    },
+    "step7": {
+      "title": "Toma de decisión",
+      "desc": "Una vez realizadas las etapas 1 y 2, su expediente se turnara al Comité Técnico de Evaluación y Dictamen para su evaluación y toma de decisión de la certificación del sistema de gestión de su organización mediante un dictamen."
+    },
+    "step8": {
+      "title": "Otorgamiento de la certificación",
+      "desc": "El Organismo de Certificación emite el certificado con vigencia de 3 años, con la decisión asentada en el dictamen, nuestro personal le comunicará esta resolución, de ser positiva, también le enviaremos un boceto de certificado para su visto bueno y con una vigencia de 3 años."
+    },
+    "step9": {
+      "title": "Auditorías de Mantenimiento",
+      "desc": "A lo largo de la vigencia de la certificación, realizaremos auditorías anuales para confirmar el cumplimiento del sistema de gestión con los requisitos de la norma implementada en su organización."
+    },
+    "step10": {
+      "title": "Auditorías de Renovación",
+      "desc": "La organización puede renovar su certificación por 3 años más, el proceso es similar a la certificación inicial.<br>Es recomendable realizar la auditoria 3 meses antes de la fecha de vencimiento del certificado<br>- Se realiza la Auditoria de Renovación<br>- Atención de hallazgos (cuando aplique)<br>- Se obtiene retroalimentación del equipo auditor<br>- Se realiza revisión del expediente<br>- Se toma la decisión de Renovar la certificación<br>- Se emite un nuevo certificado con fechas actualizadas al ciclo correspondiente"
+    },
+    "step11": {
+      "title": "Auditorías de Restauración",
+      "desc": "Cuando la organización no realice la Renovación en los plazos establecidos o bien se encuentre en estatus de suspendido por más de 6 meses o cancelado conforme a las condiciones descritas en el RCTED-02 Reglamento de uso de marca para sistema de gestión certificado LACS<br>La certificación podrá ser restaurada dentro de los 6 meses siguientes:<br><br>- Se realiza la Auditoria de Restauración<br>- Atención de hallazgos (cuando aplique)<br>- Se obtiene retroalimentación del equipo auditor<br>- Se realiza revisión del expediente<br>- Se toma la decisión de Restaurar la certificación<br>- Se emite un nuevo certificado. (La fecha de vigencia del certificado debe ser la fecha de la Toma de decisión de la Restauración y la fecha de la expiración se deberá basar en el ciclo de la certificación anterior)"
+    }
+  },
+  "maintenance": {
+    "title": "¡Volvemos pronto!",
+    "desc": "Estamos realizando tareas de mantenimiento en nuestro sitio web para mejorar tu experiencia.<br>Por favor, vuelve a visitarnos más tarde."
+  }
+}

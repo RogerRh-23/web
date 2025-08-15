@@ -1,0 +1,334 @@
+<!-- Página: Más sobre nosotros -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Más sobre nosotros</title>
+  <link rel="stylesheet" href="../../styles/main.css">
+  <link rel="icon" type="image/png" href="../../assets/img/LACS-V.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @media (max-width: 991.98px) {
+      #footer {
+        margin-bottom: 65px !important;
+      }
+
+      .main-content-navbar-padding {
+        padding-top: 0 !important;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .main-content-navbar-padding {
+        padding-top: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbar-placeholder"></div>
+  <div id="navbar-mobile-placeholder"></div>
+  <div id="navbar-mobile-dropdown-placeholder"></div>
+  <section class="dynamic-section nosotros-section">
+    <div class="info-box">
+      <h1 data-i18n="footer_nosotros.title">Más sobre nosotros</h1>
+      <div class="faq-content">
+        <h2 data-i18n="footer_nosotros.faq">Preguntas frecuentes</h2>
+      </div>
+    </div>
+    <div class="info-box">
+      <div class="acreditaciones-content">
+        <h2 data-i18n="footer_nosotros.accreditations">Acreditaciones</h2>
+        <p data-i18n="footer_nosotros.accreditations_info">Información sobre nuestras acreditaciones y certificaciones.
+        </p>
+        <div class="EMA-9001-Sectores">
+          <h3 data-i18n="footer_nosotros.9001_sectors">Acreditacion ISO 9001 Sectores</h3>
+          <img src="../../assets/img/EMA-9001-Sectores.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+        </div>
+        <div class="EMA-9001-Sistemas">
+          <h3 data-i18n="footer_nosotros.9001_systems">Acreditacion ISO 9001 como Organismo de Certificacion de Sistemas
+            de Gestión de Calidad</h3>
+          <img src="../../assets/img/ISO-9001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+        </div>
+        <div class="EMA-27001-Sistemas">
+          <h3 data-i18n="footer_nosotros.27001_systems">Acreditacion ISO 27001 como Organismo de Certificacion de
+            Sistemas de Gestión de Seguridad de la Información</h3>
+          <img src="../../assets/img/ISO-27001-17021.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+        </div>
+        <div class="EMA-27001-2022">
+          <h3 data-i18n="footer_nosotros.27001_2022">Acreditacion ISO 27001:2022 Sistemas de Gestión de Seguridad de la
+            Información</h3>
+          <img src="../../assets/img/ISO-27001-2022.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+        </div>
+        <div class="EMA-37001-Sistemas">
+          <h3 data-i18n="footer_nosotros.37001_systems">Acreditacion ISO 37001 Sistemas de Gestión Antisoborno</h3>
+          <img src="../../assets/img/iso_37001.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+        </div>
+        <div class="SGSI-Diploma">
+          <h3 data-i18n="footer_nosotros.sgsi_diploma">Diploma de Sistemas de Gestión de Seguridad de la Información
+          </h3>
+          <img src="../../assets/img/SGSI-DIPLOMA-LACS.jpg" alt="Acreditación 9001" class="acreditacion-img" />
+        </div>
+        <div class="consulta">
+          <h3 data-i18n="footer_nosotros.consulta_title">Consulta de Acreditaciones</h3>
+          <p data-i18n="footer_nosotros.consulta_desc">Para consultar nuestras acreditaciones, puedes ingresar al sitio
+            web de IAF, o bien escanear el codigo QR.</p>
+          <p><a href="https://www.iafcertsearch.org/certification-body/1d030e59-47e6-562d-a033-e14fd42d6040"
+              target="_blank" data-i18n="footer_nosotros.consulta_link">Consulta de Acreditaciones LACS</a></p>
+          <img src="../../assets/img/iaf-qr.png" alt="Código QR de LACS"
+            style="max-width: 200px; width: 30vw; min-width: 150px; display: block; margin: 0 auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));">
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <script src="../../js/gsap.js"></script>
+  <script src="../../js/navbar-dropdown.js"></script>
+
+  <script>
+    // Función para cargar scripts externos dinámicamente y ejecutar callback al terminar
+    function loadExternalScript(src, callback) {
+      var script = document.createElement('script');
+      script.src = src;
+      script.async = false;
+      script.onload = function () {
+        if (typeof callback === 'function') callback();
+      };
+      document.body.appendChild(script);
+    }
+
+    // Navbar adaptativa: solo carga la versión correspondiente
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('../navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                  // Forzar listeners de idioma tras cargar navbar
+                  if (window.initLangSwitchers) window.initLangSwitchers();
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+                // Forzar listeners de idioma tras cargar navbar
+                if (window.initLangSwitchers) window.initLangSwitchers();
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('../navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                  // Forzar listeners de idioma tras cargar navbar
+                  if (window.initLangSwitchers) window.initLangSwitchers();
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+                // Forzar listeners de idioma tras cargar navbar
+                if (window.initLangSwitchers) window.initLangSwitchers();
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
+
+    // Footer
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
+        document.getElementById('footer').innerHTML = html;
+        // Corrige los enlaces del footer para evitar rutas duplicadas
+        const footerLinks = document.querySelectorAll('#footer a');
+        footerLinks.forEach(link => {
+          if (link.href.includes('/components/components/')) {
+            link.href = link.href.replace('/components/components/', '/components/');
+          }
+        });
+        // Cargar script y luego inicializar footer
+        loadExternalScript('../../js/footer.js', function () {
+          if (typeof window.initFooter === 'function') window.initFooter();
+        });
+
+        // Sincroniza el botón de idioma tras cargar la navbar
+        setTimeout(function () {
+          if (window.updateLangBtnAll) window.updateLangBtnAll();
+          if (window.updateI18nContent) window.updateI18nContent();
+        }, 200);
+      });
+
+    // Cargar GSAP solo una vez (si lo necesitas en la página)
+    loadExternalScript('../../js/gsap.js');
+  </script>
+  </script>
+  <script>
+    // Mostrar navbar solo cuando el hero no es visible
+    document.addEventListener('DOMContentLoaded', function () {
+      const hero = document.querySelector('.hero-reveal');
+      const body = document.body;
+      if (!hero) {
+        body.classList.add('navbar-visible');
+        return;
+      }
+      function updateNavbar(entries) {
+        if (!entries[0].isIntersecting) {
+          body.classList.add('navbar-visible');
+        } else {
+          body.classList.remove('navbar-visible');
+        }
+      }
+      const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
+      observer.observe(hero);
+    });
+    function isMobile() {
+      return window.innerWidth < 992;
+    }
+    function loadNavbar() {
+      const desktopPlaceholder = document.getElementById('navbar-placeholder');
+      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
+      if (isMobile()) {
+        desktopPlaceholder.innerHTML = '';
+        if (!mobilePlaceholder.innerHTML) {
+          fetch('../navbar-mobile.html')
+            .then(res => res.text())
+            .then(html => {
+              mobilePlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      } else {
+        mobilePlaceholder.innerHTML = '';
+        if (!desktopPlaceholder.innerHTML) {
+          fetch('../navbar.html')
+            .then(res => res.text())
+            .then(html => {
+              desktopPlaceholder.innerHTML = html;
+              if (window.updateI18nContent) window.updateI18nContent();
+              if (window.updateLangBtnAll) window.updateLangBtnAll();
+              if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              if (!window._dropdownScriptLoaded) {
+                const script = document.createElement('script');
+                script.src = '../../js/navbar-dropdown.js';
+                script.onload = function () {
+                  window._dropdownScriptLoaded = true;
+                  if (typeof window.initDropdowns === 'function') {
+                    window.initDropdowns();
+                  }
+                };
+                document.body.appendChild(script);
+              } else {
+                if (typeof window.initDropdowns === 'function') {
+                  window.initDropdowns();
+                }
+              }
+            });
+        }
+      }
+    }
+    window.addEventListener('resize', loadNavbar);
+    window.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+  <script src="../../js/i18n.js"></script>
+  <script src="../../js/navbar-mobile-accordion.js"></script>
+  <script>
+    // Scrollbar flotante funcional
+    document.addEventListener('DOMContentLoaded', () => {
+      const thumb = document.querySelector('.floating-scrollbar-thumb');
+      const scrollbar = document.querySelector('.floating-scrollbar');
+      function updateThumb() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
+        thumb.style.height = thumbHeight + 'px';
+        thumb.style.top = thumbTop + 'px';
+      }
+      window.addEventListener('scroll', updateThumb);
+      window.addEventListener('resize', updateThumb);
+      updateThumb();
+      // Drag to scroll
+      let isDragging = false, startY = 0, startScroll = 0;
+      thumb.addEventListener('mousedown', e => {
+        isDragging = true;
+        startY = e.clientY;
+        startScroll = window.scrollY;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const delta = e.clientY - startY;
+        const thumbHeight = thumb.offsetHeight;
+        const scrollDelta = (delta / (window.innerHeight - thumbHeight)) * docHeight;
+        window.scrollTo(0, startScroll + scrollDelta);
+      });
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.userSelect = '';
+      });
+    });
+  </script>
+  <div class="floating-scrollbar">
+    <div class="floating-scrollbar-thumb"></div>
+  </div>
+</body>
+
+</html>
