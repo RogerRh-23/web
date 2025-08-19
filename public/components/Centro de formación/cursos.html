@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Cursos</title>
-  <link rel="stylesheet" href="../../styles/main.css">
-  <link rel="icon" type="image/png" href="../../assets/img/LACS-V.png">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="icon" type="image/png" href="/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
@@ -33,8 +33,7 @@
   <div id="navbar-mobile-placeholder"></div>
   <div id="navbar-mobile-dropdown-placeholder"></div>
   <div class="info-box">.
-    <img src="/public/assets/img/Logo_capacitación.jpeg" alt="Latin America Certification & Systems Logo"
-      class="logo-courses">
+    <img src="/assets/img/Logo_capacitación.jpeg" alt="Latin America Certification & Systems Logo" class="logo-courses">
     <h1 class="section-title" data-i18n="courses_section.title">CURSOS</h1>
     <p class="section-description" data-i18n="courses_section.desc">Ofrecemos una variedad de cursos de capacitación
       diseñados para ayudar a las
@@ -315,10 +314,10 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
-  <script src="../../js/gsap.js"></script>
-  <script src="../../js/navbar-dropdown.js"></script>
-  <script src="../../js/footer.js"></script>
-  <script src="../../js/i18n.js"></script>
+  <script src="/js/gsap.js"></script>
+  <script src="/js/navbar-dropdown.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/i18n.js"></script>
   <script>
     // Navbar adaptativa: solo carga la versión correspondiente
     function isMobile() {
@@ -330,13 +329,13 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('../navbar-mobile.html')
+          fetch('/navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../../js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -354,13 +353,13 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('../navbar.html')
+          fetch('/navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../../js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -380,7 +379,7 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
     // Cargar footer
-    fetch('../footer.html')
+    fetch('/footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
@@ -483,7 +482,7 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('../navbar-mobile.html')
+          fetch('/navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
@@ -493,7 +492,7 @@
               if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../../js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -511,7 +510,7 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('../navbar.html')
+          fetch('/navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
@@ -520,7 +519,7 @@
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../../js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -540,8 +539,8 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
-  <script src="../../js/i18n.js"></script>
-  <script src="../../js/navbar-mobile-accordion.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/navbar-mobile-accordion.js"></script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

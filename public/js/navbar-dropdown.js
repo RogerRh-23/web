@@ -44,8 +44,6 @@ function createDropdownMenu(drop) {
   const ul = document.createElement('ul');
   ul.className = 'dropdown-gsap';
   ul.style.background = '#fff';
-  ul.style.border = '1px solid #222';
-  ul.style.boxShadow = '0 8px 32px 8px #0008';
   ul.style.borderRadius = '10px';
   ul.style.padding = '8px 0';
   ul.style.margin = '0';
@@ -56,7 +54,9 @@ function createDropdownMenu(drop) {
     const li = document.createElement('li');
     li.style.padding = '0';
     const a = document.createElement('a');
-    a.href = `/public/components/${item.path}`;
+    // Encode the path to handle spaces and accents
+    const encodedPath = item.path.split('/').map(encodeURIComponent).join('/');
+    a.href = `/components/${encodedPath}`;
     a.textContent = item.name;
     a.style.display = 'block';
     a.style.padding = '8px 24px';
@@ -65,6 +65,14 @@ function createDropdownMenu(drop) {
     a.style.fontSize = '1rem';
     a.onmouseover = () => a.style.background = '#f0f0f0';
     a.onmouseout = () => a.style.background = 'none';
+    // En desktop, navega directamente a la URL del componente
+    a.addEventListener('click', function (e) {
+      if (!window.matchMedia('(max-width: 991px)').matches) {
+        // Permite la navegación normal del navegador
+        window.location.href = a.href;
+        e.stopPropagation();
+      }
+    });
     li.appendChild(a);
     ul.appendChild(li);
   });

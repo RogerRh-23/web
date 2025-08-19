@@ -8,8 +8,24 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "/components/**",
+        "destination": "/components/$1"
+      },
+      {
+        "source": "/components/Servicios/**",
+        "destination": "/components/Servicios/$1"
+      },
+      {
+        "source": "/components/Procesos/**",
+        "destination": "/components/Procesos/$1"
+      },
+      {
+        "source": "/components/Centro de formación/**",
+        "destination": "/components/Centro de formación/$1"
+      },
+      {
+        "source": "/components/footer/**",
+        "destination": "/components/footer/$1"
       }
     ]
   }
