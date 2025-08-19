@@ -33,8 +33,8 @@ function getDropdownConfig() {
       key: 'training',
       label: t('dropdown.training.label'),
       items: [
-        { name: t('dropdown.training.items.0'), path: 'Centro de formación/Cursos.html' },
-        { name: t('dropdown.training.items.1'), path: 'Centro de formación/Webinars.html' }
+        { name: t('dropdown.training.items.0'), path: 'CentroFormacion/Cursos.html' },
+        { name: t('dropdown.training.items.1'), path: 'CentroFormacion/Webinars.html' }
       ]
     }
   ];
@@ -54,9 +54,8 @@ function createDropdownMenu(drop) {
     const li = document.createElement('li');
     li.style.padding = '0';
     const a = document.createElement('a');
-    // Encode the path to handle spaces and accents
-    const encodedPath = item.path.split('/').map(encodeURIComponent).join('/');
-    a.href = `/components/${encodedPath}`;
+    // Usar la ruta tal cual, con espacios y acentos
+    a.href = `/components/${item.path}`;
     a.textContent = item.name;
     a.style.display = 'block';
     a.style.padding = '8px 24px';

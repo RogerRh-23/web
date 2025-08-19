@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Certificación de Sistemas de Gestión</title>
-  <link rel="stylesheet" href="/styles/main.css">
-  <link rel="icon" type="image/png" href="/assets/img/LACS-V.png">
+  <link rel="stylesheet" href="../../styles/main.css">
+  <link rel="icon" type="image/png" href="../../assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
@@ -36,7 +36,7 @@
     <div class="carousel-track" role="listbox" aria-live="polite">
       <div class="card-certificacion active" role="option" aria-selected="true">
         <div class="card-certificacion-img">
-          <img class="iso-logo" src="/assets/img/iso-9001.jpeg" alt="ISO 9001 Logo" id="iso-9001">
+          <img class="iso-logo" src="../../assets/img/iso-9001.jpeg" alt="ISO 9001 Logo" id="iso-9001">
         </div>
         <div class="card-certificacion-content">
           <h2 data-i18n="certs.iso9001.9001_title">ISO 9001 Sistemas de Gestión de Calidad</h2>
@@ -60,7 +60,7 @@
       </div>
       <div class="card-certificacion" role="option" aria-selected="false">
         <div class="card-certificacion-img">
-          <img class="iso-logo" src="/assets/img/iso-27001.jpeg" alt="ISO/IEC 27001 Logo" id="iso-27001">
+          <img class="iso-logo" src="../../assets/img/iso-27001.jpeg" alt="ISO/IEC 27001 Logo" id="iso-27001">
         </div>
         <div class="card-certificacion-content">
           <h2 data-i18n="certs.iso27001.27001_title">ISO/IEC 27001 Sistemas de Gestiónde la Seguridad de la Información
@@ -86,7 +86,7 @@
       </div>
       <div class="card-certificacion" role="option" aria-selected="false">
         <div class="card-certificacion-img">
-          <img class="iso-logo" src="/assets/img/iso-37001.jpeg" alt="ISO 37001 Logo" id="iso-37001">
+          <img class="iso-logo" src="../../assets/img/iso-37001.jpeg" alt="ISO 37001 Logo" id="iso-37001">
         </div>
         <div class="card-certificacion-content">
           <h2 data-i18n="certs.iso37001.37001_title">ISO 37001 Sistemas de Gestión Antisoborno</h2>
@@ -128,11 +128,11 @@
     </div>
   </div>
   <div id="footer"></div>
-  <script src="/js/footer.js"></script>
+  <script src="../../js/footer.js"></script>
   <script>
     // Cargar footer dinámicamente
     document.addEventListener('DOMContentLoaded', function () {
-      fetch('/footer.html')
+      fetch('../footer.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('footer').innerHTML = html;
@@ -175,7 +175,7 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('/navbar-mobile.html')
+          fetch('../navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
@@ -203,7 +203,7 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('/navbar.html')
+          fetch('../navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
@@ -232,8 +232,8 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
-  <script src="/js/i18n.js"></script>
-  <script src="/js/navbar-mobile-accordion.js"></script>
+  <script src="../../js/i18n.js"></script>
+  <script src="../../js/navbar-mobile-accordion.js"></script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

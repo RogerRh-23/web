@@ -82,13 +82,13 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('/navbar-mobile.html')
+          fetch('../navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '/js/navbar-dropdown.js';
+                script.src = '../js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -112,7 +112,7 @@
               desktopPlaceholder.innerHTML = html;
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '/js/navbar-dropdown.js';
+                script.src = '../js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -132,7 +132,7 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
     // Cargar footer
-    fetch('../../components/footer.html')
+    fetch('../components/footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
@@ -167,7 +167,7 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('/navbar-mobile.html')
+          fetch('../navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
@@ -177,7 +177,7 @@
               if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../../js/navbar-dropdown.js';
+                script.src = '../js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -195,7 +195,7 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('/navbar.html')
+          fetch('../navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
