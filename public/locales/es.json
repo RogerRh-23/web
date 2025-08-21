@@ -172,7 +172,17 @@
     "forgot_password": "¿Olvidaste tu contraseña?",
     "recover_password": "Recuperar contraseña",
     "registered_email": "Correo electrónico registrado",
-    "send_link": "Enviar enlace"
+    "send_link": "Enviar enlace",
+    "sign_up": "Registrarse"
+  },
+  "register": {
+    "title": "Registro de Usuario",
+    "access": "Crea una nueva cuenta",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "butting": "Registrarse",
+    "sign_in": "Inicia sesión"
   },
   "contact": {
     "title": "Contacto",

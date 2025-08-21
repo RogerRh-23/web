@@ -302,8 +302,18 @@
   list-style: disc;
   font-size: 1.1rem;
   line-height: 1.3;
-  padding-left: 3.5rem;
+  padding-left: 2em;
   margin: 1px 0;
+  text-indent: -1.2em;
+
+  li {
+    margin-bottom: 0.4em;
+    padding-left: 0;
+    text-indent: -1.2em;
+    display: list-item;
+    /* hanging indent for multiline */
+    white-space: pre-line;
+  }
 }
 
 // --- Animaciones de entrada ---

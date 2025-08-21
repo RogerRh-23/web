@@ -20,8 +20,8 @@
         "destination": "/components/Procesos/$1"
       },
       {
-        "source": "/components/Centro de formación/**",
-        "destination": "/components/Centro de formación/$1"
+        "source": "/components/CentroFormacion/**",
+        "destination": "/components/CentroFormacion/$1"
       },
       {
         "source": "/components/footer/**",
