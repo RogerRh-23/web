@@ -19,7 +19,13 @@ if MONGODB_URI:
 else:
     print("MONGODB_URI no está configurada en las variables de entorno.")
 
+
 app = FastAPI()
+
+# Ruta de prueba simple para verificar FastAPI
+@app.get("/ping")
+def ping():
+    return {"message": "pong"}
 
 # Servir archivos estáticos del frontend en /static
 from fastapi.staticfiles import StaticFiles
@@ -47,3 +53,7 @@ def db_status():
 @app.get("/")
 def root():
     return {"message": "API LACS funcionando"}
+
+@app.get("/routes")
+def get_routes():
+    return {"routes": [route.path for route in app.routes]}
