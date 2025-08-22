@@ -6,12 +6,12 @@
     "training": "Training Center",
     "certificates": "Certificates",
     "contact": "Contact",
-    "login": "Login"
+    "login": "Sign In"
   },
   "navbar_mobile": {
     "menu_button": "Menu",
     "home_button": "Home",
-    "login_button": "Login",
+    "login_button": "Sign In",
     "services": "Services",
     "services_certification": "Management System Certification",
     "services_training": "Training",
@@ -164,27 +164,32 @@
     }
   },
   "login": {
-    "welcome_message": "Login",
+    "title": "Sign In",
+    "welcome_message": "Welcome back!",
     "access": "Access your account",
     "username": "Username",
     "password": "Password",
-    "login_button": "Login",
+    "login_btn": "Sign In",
     "forgot_password": "Forgot Password?",
-    "recover_password": "Recover your password",
-    "registered_email": "registered email address",
-    "send_link": "Send link",
-    "sign_up": "Register"
+    "signup_title": "Don't have an account?",
+    "signup_message": "Create an account to access more features!",
+    "signup_swithch": "Sign Up"
   },
   "register": {
     "title": "Register",
-    "access": "Create a new account",
-    "use_social": "or use your social account",
-    "use_email": "or use your email address",
-    "name": "Name",
+    "welcome_message": "Welcome to LACS!",
+    "use_social": "Use your Google or Microsoft account to register",
+    "or": "Or use your email",
+    "username": "Username",
     "email": "Email",
     "password": "Password",
-    "button": "Sign Up",
-    "sign_in": "Sign In"
+    "terms": "By registering, you agree to our",
+    "terms_link": "Terms of Service",
+    "privacy_link": "Privacy Policy",
+    "register_btn": "Sign Up",
+    "sign_in": "Sign In",
+    "sign_in_title": "Already have an account?",
+    "sign_in_message": "Sign in and access more content"
   },
   "contact": {
     "title": "Contact Us",

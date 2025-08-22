@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Iniciar Sesión</title>
   <link rel="stylesheet" href="../styles/main.css">
-  <link rel="icon" type="image/png" href="../../assets/img/LACS-V.png">
+  <link rel="icon" type="image/png" href="../assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
@@ -19,96 +19,150 @@
     <label class="login-bg-label" for="login-bg">
       <div class="login-bg">
         <div class="login-card">
-          <div class="login-success-logo">
-            <img src="../assets/img/LACS-V.png" alt="LACS Logo" class="login-logo-img">
-          </div>
-          <form class="login-form" autocomplete="off">
-            <div class="login-header">
-              <h2 data-i18n="login.welcome_message">¡Bienvenido!</h2>
-              <p data-i18n="login.access">Accede a tu cuenta</p>
+          <form class="login-form">
+            <div class="login-img">
+              <img src="../assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
             </div>
-            <div class="login-field">
-              <span class="login-icon"><i class="bi bi-person"></i></span>
-              <div class="login-input-group">
-                <input type="text" id="usuario" name="usuario" required placeholder=" " autocomplete="username">
-                <label for="usuario" class="login-label" data-i18n="login.username">Usuario</label>
-              </div>
+            <h2 class="login-title" data-i18n="login.title"></h2>
+            <h3 class="login-welcome" data-i18n="login.welcome_message"></h3>
+            <p class="login-access" data-i18n="login.access"></p>
+            <div class="social-login">
+              <button class="social-btn google" aria-label="Login with Google">
+                <img src="../assets/img/icons/google.svg" alt="Google" />
+              </button>
+              <button class="social-btn microsoft" aria-label="Login with Microsoft">
+                <img src="../assets/img/icons/microsoft.svg" alt="Microsoft" />
+              </button>
             </div>
-            <div class="login-field">
-              <span class="login-icon"><i class="bi bi-lock"></i></span>
-              <div class="login-input-group">
-                <input type="password" id="password" name="password" required placeholder=" "
-                  autocomplete="current-password">
-                <label for="password" class="login-label" data-i18n="login.password">Contraseña</label>
-              </div>
+            <div class="login-input-group">
+              <input type="text" id="usuario" name="usuario" placeholder=" " required>
+              <label for="usuario" data-i18n="login.username"></label>
             </div>
-            <button type="submit" class="login-btn" data-i18n="login.login_button">Iniciar sesión</button>
-            <div style="text-align:center; margin-top:0.7rem;">
-              <a href="#" class="login-forgot-link" id="forgot-password-link"
-                data-i18n="login.forgot_password">¿Olvidaste tu contraseña?</a>
-              <!-- Modal para recuperación de contraseña -->
-              <div class="modal" id="modal-forgot-password">
-                <div class="modal-content forgot-modal-content">
-                  <button class="close-modal" id="close-forgot-modal" title="Cerrar">&times;</button>
-                  <h3 class="forgot-modal-title" data-i18n="login.recover_password">Recupere su contraseña</h3>
-                  <form id="forgot-password-form" autocomplete="off">
-                    <label for="forgot-email" data-i18n="login.registered_email">Correo electrónico registrado</label>
-                    <input type="email" id="forgot-email" name="email" required placeholder="correo@ejemplo.com"
-                      class="forgot-modal-input">
-                    <button type="submit" class="login-btn forgot-modal-btn" data-i18n="login.send_link">Enviar
-                      enlace</button>
-                    <div id="forgot-message" class="forgot-modal-message"></div>
-                  </form>
-                </div>
-              </div>
+            <div class="login-input-group">
+              <input type="password" id="password" name="password" placeholder=" " required>
+              <label for="password" data-i18n="login.password"></label>
             </div>
-            <div id="login-message"></div>
+            <a href="#" id="forgot-password-link" data-i18n="login.forgot_password">¿Olvidaste tu contraseña?</a>
+            <button type="submit" class="login-btn" data-i18n="login.login_btn">Iniciar Sesión</button>
           </form>
-          <div class="card-switcher-divider">
-            <button type="button" class="card-btn white" id="showRegister" style="margin-top: 1.2rem;"
-              data-i18n="login.sign_up"></button>
-            <button type="button" class="card-btn white" id="showLogin" style="display:none;"
-              data-i18n="register.sign_in"></button>
+          <div class="login-signup-cover">
+            <div class="login-signup-title">
+              <h2 data-i18n="login.signup_title"></h2>
+              <p data-i18n="login.signup_message"></p>
+              <button id="showRegister" class="login-signup-btn" data-i18n="login.signup_switch"></button>
+            </div>
           </div>
-          <form class="register-form" autocomplete="off" style="display:none;">
-            <div class="login-header">
-              <h2 data-i18n="register.title">Registro de Usuario</h2>
-              <p data-i18n="register.access">Crea una nueva cuenta</p>
+          <form class="register-form hide-signin">
+            <div class="register-img">
+              <img src="../assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
             </div>
-            <div class="register-social">
-              <div class="social-login">
-                <a href="#" class="social-btn google"><i class="fa-brands fa-google"></i></a>
-              </div>
+            <h2 class="register-title" data-i18n="register.title"></h2>
+            <h3 class="register-welcome" data-i18n="register.welcome_message"></h3>
+            <p class="register-use-social" data-i18n="register.use_social"></p>
+            <div class="register-social-login">
+              <button class="register-social-btn google" aria-label="Register with Google">
+                <img src="../assets/img/icons/google.svg" alt="Google" />
+              </button>
+              <button class="register-social-btn microsoft" aria-label="Register with Microsoft">
+                <img src="../assets/img/icons/microsoft.svg" alt="Microsoft" />
+              </button>
             </div>
-            <div class="login-field">
-              <span class="login-icon"><i class="bi bi-person"></i></span>
-              <div class="login-input-group">
-                <input type="text" id="register-username" name="username" required placeholder=" "
-                  autocomplete="new-username">
-                <label for="register-username" class="login-label" data-i18n="register.username">Nombre de
-                  usuario</label>
-              </div>
+            <p class="register-or" data-i18n="register.or"></p>
+            <div class="register-input-group">
+              <input type="text" id="register-username" name="register-username" placeholder=" " required>
+              <label for="register-username" data-i18n="register.username"></label>
             </div>
-            <div class="login-field">
-              <span class="login-icon"><i class="bi bi-envelope"></i></span>
-              <div class="login-input-group">
-                <input type="email" id="register-email" name="email" required placeholder=" " autocomplete="new-email">
-                <label for="register-email" class="login-label" data-i18n="register.email">Correo electrónico</label>
-              </div>
+            <div class="register-input-group">
+              <input type="email" id="register-email" name="register-email" placeholder=" " required>
+              <label for="register-email" data-i18n="register.email"></label>
             </div>
-            <div class="login-field">
-              <span class="login-icon"><i class="bi bi-lock"></i></span>
-              <div class="login-input-group">
-                <input type="password" id="register-password" name="password" required placeholder=""
-                  autocomplete="new-password">
-                <label for="register-password" class="login-label" data-i18n="register.password">Contraseña</label>
-              </div>
+            <div class="register-input-group">
+              <input type="password" id="register-password" name="register-password" placeholder=" " required>
+              <label for="register-password" data-i18n="register.password"></label>
             </div>
-            <button type="submit" class="login-btn" data-i18n="register.butting">Registrar</button>
+            <button type="submit" class="register-btn" data-i18n="register.register_btn"></button>
+            <p class="register-terms" data-i18n="register.terms">
+            </p>
           </form>
         </div>
       </div>
     </label>
+    <script>
+      // Animación cover y mostrar textos registro
+      document.addEventListener('DOMContentLoaded', function () {
+        const signupBtn = document.getElementById('showRegister');
+        const cover = document.querySelector('.login-signup-cover');
+        const signInTexts = document.querySelectorAll('.login-title, .login-welcome, .login-access, .social-login, .login-form');
+        const registerForm = document.querySelector('.register-form');
+        const registerTexts = registerForm ? registerForm.querySelectorAll('.register-title, .register-welcome, .register-access, .register-or, .register-terms, .register-input-group, .login-btn') : [];
+        const coverTitle = cover.querySelector('h2');
+        const coverMessage = cover.querySelector('p');
+        const coverSwitchBtn = cover.querySelector('button');
+        function showRegister() {
+          if (!cover.classList.contains('cover-move-left')) {
+            if (cover.classList.contains('cover-move-right')) {
+              cover.classList.remove('cover-move-right');
+              void cover.offsetWidth;
+            }
+            cover.classList.add('cover-move-left');
+          }
+          signInTexts.forEach(el => el.classList.add('hide-signin'));
+          if (registerForm) {
+            registerForm.classList.remove('hide-signin');
+            registerTexts.forEach(el => el.classList.remove('hide-signin'));
+          }
+          if (coverTitle) {
+            coverTitle.setAttribute('data-i18n', 'register.sign_in_title');
+            coverTitle.textContent = i18next.t('register.sign_in_title');
+          }
+          if (coverMessage) {
+            coverMessage.setAttribute('data-i18n', 'register.sign_in_message');
+            coverMessage.textContent = i18next.t('register.sign_in_message');
+          }
+          if (coverSwitchBtn) {
+            coverSwitchBtn.setAttribute('data-i18n', 'register.sign_in');
+            coverSwitchBtn.textContent = i18next.t('register.sign_in');
+            coverSwitchBtn.removeEventListener('click', showRegister);
+            coverSwitchBtn.addEventListener('click', showLogin);
+          }
+        }
+
+        function showLogin() {
+          if (!cover.classList.contains('cover-move-right')) {
+            if (cover.classList.contains('cover-move-left')) {
+              cover.classList.remove('cover-move-left');
+              void cover.offsetWidth;
+            }
+            cover.classList.add('cover-move-right');
+            setTimeout(() => {
+              cover.classList.remove('cover-move-right');
+            }, 600);
+          }
+          signInTexts.forEach(el => el.classList.remove('hide-signin'));
+          if (registerForm) {
+            registerForm.classList.add('hide-signin');
+            registerTexts.forEach(el => el.classList.add('hide-signin'));
+          }
+          if (coverTitle) {
+            coverTitle.setAttribute('data-i18n', 'login.signup_title');
+            coverTitle.textContent = i18next.t('login.signup_title');
+          }
+          if (coverMessage) {
+            coverMessage.setAttribute('data-i18n', 'login.signup_message');
+            coverMessage.textContent = i18next.t('login.signup_message');
+          }
+          if (coverSwitchBtn) {
+            coverSwitchBtn.setAttribute('data-i18n', 'login.signup_switch');
+            coverSwitchBtn.textContent = i18next.t('login.signup_switch');
+            coverSwitchBtn.removeEventListener('click', showLogin);
+            coverSwitchBtn.addEventListener('click', showRegister);
+          }
+        }
+
+        signupBtn.addEventListener('click', showRegister);
+        coverSwitchBtn.addEventListener('click', showRegister);
+      });
+    </script>
   </main>
   <div id="footer"></div>
   <script type="module">
@@ -173,7 +227,32 @@
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
   <script>
-    // Navbar adaptativa: solo carga la versión correspondiente
+    // Inicialización de i18next y traducción de elementos
+    document.addEventListener('DOMContentLoaded', function () {
+      i18next
+        .use(i18nextXHRBackend)
+        .init({
+          lng: 'es', // Idioma por defecto
+          fallbackLng: 'es',
+          debug: false,
+          backend: {
+            loadPath: '../locales/{{lng}}.json'
+          }
+        }, function (err, t) {
+          updateI18nContent();
+        });
+
+      window.updateI18nContent = function () {
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          var translation = i18next.t(key);
+          if (translation) {
+            el.innerHTML = translation;
+          }
+        });
+      };
+    });
+    // ...existing code...
     function isMobile() {
       return window.innerWidth < 992;
     }
@@ -397,80 +476,7 @@
       });
     });
   </script>
-  <!-- Switch entre sign up y sign in-->
-  <script>
-    document.getElementById('showRegister').addEventListener('click', function () {
-      document.querySelector('.login-form').style.display = 'none';
-      document.querySelector('.register-form').style.display = 'block';
-      this.style.display = 'none';
-      document.getElementById('showLogin').style.display = 'block';
-    });
-    document.getElementById('showLogin').addEventListener('click', function () {
-      document.querySelector('.login-form').style.display = 'block';
-      document.querySelector('.register-form').style.display = 'none';
-      this.style.display = 'none';
-      document.getElementById('showRegister').style.display = 'block';
-    });
-    // Manejo del formulario de registro
-    const registerForm = document.querySelector('.register-form');
-    if (registerForm) {
-      registerForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const username = document.getElementById('register-username').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        // Aquí puedes agregar la lógica para enviar los datos al servidor
-        console.log('Registro:', { username, email, password });
-        // Mostrar mensaje de éxito o error
-      });
-    }
-    // Manejo del formulario de inicio de sesión
-    const loginForm = document.querySelector('.login-form');
-    if (loginForm) {
-      loginForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const usuario = document.getElementById('usuario').value;
-        const password = document.getElementById('password').value;
-        // Aquí puedes agregar la lógica para enviar los datos al servidor
-        console.log('Inicio de sesión:', { usuario, password });
-        // Mostrar mensaje de éxito o error
-      });
-    }
-    // Manejo del enlace de recuperación de contraseña
-    const forgotPasswordLink = document.getElementById('forgot-password-link');
-    if (forgotPasswordLink) {
-      forgotPasswordLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        const modal = document.getElementById('modal-forgot-password');
-        if (modal) {
-          modal.style.display = 'block';
-        }
-      });
-    }
-    // Cerrar el modal de recuperación de contraseña
-    const closeForgotModal = document.getElementById('close-forgot-modal');
-    if (closeForgotModal) {
-      closeForgotModal.addEventListener('click', function () {
-        const modal = document.getElementById('modal-forgot-password');
-        if (modal) {
-          modal.style.display = 'none';
-        }
-      });
-    }
-    // Manejo del formulario de recuperación de contraseña
-    const forgotPasswordForm = document.getElementById('forgot-password-form');
-    const forgotMessage = document.getElementById('forgot-message');
-    if (forgotPasswordForm && forgotMessage) {
-      forgotPasswordForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const email = document.getElementById('forgot-email').value;
-        // Aquí puedes agregar la lógica para enviar el correo de recuperación
-        console.log('Recuperación de contraseña:', { email });
-        forgotMessage.textContent = 'Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.';
-        forgotMessage.style.color = '#1976d2';
-      });
-    }
-  </script>
+
   <!-- Firebase modular API ya está incluida arriba -->
 
   <div class="floating-scrollbar">

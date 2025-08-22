@@ -164,25 +164,30 @@
     }
   },
   "login": {
-    "welcome_message": "¡Bienvenido!",
+    "title": "Iniciar Sesión",
+    "welcome_message": "¡Bienvenido de nuevo!",
     "access": "Accede a tu cuenta",
     "username": "Usuario",
     "password": "Contraseña",
-    "login_button": "Iniciar Sesión",
+    "login_btn": "Iniciar Sesión",
     "forgot_password": "¿Olvidaste tu contraseña?",
-    "recover_password": "Recuperar contraseña",
-    "registered_email": "Correo electrónico registrado",
-    "send_link": "Enviar enlace",
-    "sign_up": "Registrarse"
+    "signup_title": "¿No tienes una cuenta?",
+    "signup_message": "¡Crea una cuenta para acceder a más funciones!",
+    "signup_switch": "Registrarse"
   },
   "register": {
     "title": "Registro de Usuario",
-    "access": "Crea una nueva cuenta",
+    "welcome_message": "¡Bienvenido a LACS!",
+    "use_social": "Usa tu cuenta de Google o Microsoft para registrarte",
+    "or": "O usa tu correo electrónico",
     "username": "Nombre de usuario",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "butting": "Registrarse",
-    "sign_in": "Inicia sesión"
+    "terms": "Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad.",
+    "register_btn": "Registrarse",
+    "sign_in": "Inicia sesión",
+    "sign_in_title": "¿Ya tienes una cuenta?",
+    "sign_in_message": "Inicia sesión y accede a más contenido"
   },
   "contact": {
     "title": "Contacto",
