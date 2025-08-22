@@ -23,7 +23,8 @@ app = FastAPI()
 
 # Servir archivos estáticos del frontend en /static
 from fastapi.staticfiles import StaticFiles
-app.mount("/static", StaticFiles(directory="public", html=True), name="static")
+public_path = os.path.join(os.path.dirname(__file__), "..", "public")
+app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
 
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
