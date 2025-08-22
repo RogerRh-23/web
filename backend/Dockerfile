@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia el resto del código de la aplicación
 COPY backend /app
+COPY public /app/public
 
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000

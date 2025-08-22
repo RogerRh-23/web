@@ -11,6 +11,10 @@ load_dotenv()
 
 app = FastAPI()
 
+# Servir archivos estáticos del frontend
+from fastapi.staticfiles import StaticFiles
+app.mount("/", StaticFiles(directory="public", html=True), name="static")
+
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
 app.include_router(certificados_router)
