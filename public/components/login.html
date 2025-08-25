@@ -21,17 +21,17 @@
         <div class="login-card">
           <form class="login-form">
             <div class="login-img">
-              <img src="../assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
+              <img src="/static/assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
             </div>
             <h2 class="login-title" data-i18n="login.title"></h2>
             <h3 class="login-welcome" data-i18n="login.welcome_message"></h3>
             <p class="login-access" data-i18n="login.access"></p>
             <div class="social-login">
               <button class="social-btn google" aria-label="Login with Google">
-                <img src="../assets/img/icons/google.svg" alt="Google" />
+                <img src="/static/assets/img/icons/google.svg" alt="Google" />
               </button>
               <button class="social-btn microsoft" aria-label="Login with Microsoft">
-                <img src="../assets/img/icons/microsoft.svg" alt="Microsoft" />
+                <img src="/static/assets/img/icons/microsoft.svg" alt="Microsoft" />
               </button>
             </div>
             <div class="login-input-group">
@@ -54,17 +54,17 @@
           </div>
           <form class="register-form hide-signin">
             <div class="register-img">
-              <img src="../assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
+              <img src="/static/assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
             </div>
             <h2 class="register-title" data-i18n="register.title"></h2>
             <h3 class="register-welcome" data-i18n="register.welcome_message"></h3>
             <p class="register-use-social" data-i18n="register.use_social"></p>
             <div class="register-social-login">
               <button class="register-social-btn google" aria-label="Register with Google">
-                <img src="../assets/img/icons/google.svg" alt="Google" />
+                <img src="/static/assets/img/icons/google.svg" alt="Google" />
               </button>
               <button class="register-social-btn microsoft" aria-label="Register with Microsoft">
-                <img src="../assets/img/icons/microsoft.svg" alt="Microsoft" />
+                <img src="/static/assets/img/icons/microsoft.svg" alt="Microsoft" />
               </button>
             </div>
             <p class="register-or" data-i18n="register.or"></p>
@@ -221,9 +221,9 @@
   </script>
   <!-- Eliminado duplicado de navbar-mobile-placeholder -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="../js/gsap.js"></script>
-  <script src="../js/navbar-dropdown.js"></script>
-  <script src="../js/footer.js"></script>
+  <script src="/static/js/gsap.js"></script>
+  <script src="/static/js/navbar-dropdown.js"></script>
+  <script src="/static/js/footer.js"></script>
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
   <script>
@@ -262,7 +262,7 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('./navbar-mobile.html')
+          fetch('/static/components/navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
@@ -287,7 +287,7 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('./navbar.html')
+          fetch('/static/components/navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
@@ -314,7 +314,7 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
     // Cargar footer
-    fetch('./footer.html')
+    fetch('/static/components/footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
@@ -436,8 +436,8 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
-  <script src="../js/i18n.js"></script>
-  <script src="../js/navbar-mobile-accordion.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/navbar-mobile-accordion.js"></script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

@@ -1,4 +1,4 @@
-from dev_logs import add_log, get_logs
+from backend.dev_logs import add_log, get_logs
 from fastapi import Request
 # --- Límite de intentos de login ---
 from collections import defaultdict

@@ -1,59 +1,57 @@
+# Definir mongo_client globalmente al inicio
+mongo_client = None
 from fastapi import FastAPI
 from auth.routes import router as auth_router
 from drive.routes import router as drive_router
 from certificados.routes import router as certificados_router
-from routes.contacto import router as contacto_router
+from backend.routes.contacto import router as contacto_router
 import os
 from dotenv import load_dotenv
 
-
-load_dotenv()
-
-# Conexión a MongoDB Atlas
-from pymongo import MongoClient
-MONGODB_URI = os.getenv("MONGODB_URI")
-mongo_client = None
-if MONGODB_URI:
-    mongo_client = MongoClient(MONGODB_URI)
-    # Puedes acceder a la base con: db = mongo_client["nombre_db"]
-else:
-    print("MONGODB_URI no está configurada en las variables de entorno.")
+# Cargar .env y mostrar mensaje si se carga correctamente
+env_loaded = load_dotenv()
 
 
 app = FastAPI()
 
-# Ruta de prueba simple para verificar FastAPI
-@app.get("/ping")
+# Endpoints principales definidos antes de los routers para que aparezcan en /docs
+@app.get("/ping", tags=["Debug"])
 def ping():
+    """
+    Endpoint de prueba para verificar que FastAPI responde correctamente.
+    """
     return {"message": "pong"}
 
-# Servir archivos estáticos del frontend en /static
-from fastapi.staticfiles import StaticFiles
-public_path = os.path.join(os.path.dirname(__file__), "..", "public")
-app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
-
-app.include_router(auth_router, prefix="/auth")
-app.include_router(drive_router, prefix="/drive")
-app.include_router(certificados_router)
-app.include_router(contacto_router, prefix="/api")
-
-# Ruta para probar la conexión a MongoDB Atlas
-@app.get("/db-status")
+@app.get("/db-status", tags=["Debug"])
 def db_status():
+    """
+    Verifica la conexión a MongoDB Atlas.
+    Devuelve el estado de la conexión.
+    """
+    global mongo_client
+    global mongo_client
+    print("mongo_client:", mongo_client)
     if mongo_client:
         try:
-            # El comando 'ping' verifica la conexión
             mongo_client.admin.command('ping')
             return {"status": "Conexión exitosa a MongoDB Atlas"}
         except Exception as e:
+            print("Error en ping:", e)
             return {"status": "Error de conexión", "detail": str(e)}
-    else:
-        return {"status": "No se encontró la variable MONGODB_URI"}
+    return {"status": "No se encontró la variable MONGODB_URI"}
 
-@app.get("/")
-def root():
-    return {"message": "API LACS funcionando"}
-
-@app.get("/routes")
+@app.get("/routes", tags=["Debug"])
 def get_routes():
+    """
+    Devuelve la lista de rutas registradas en la aplicación FastAPI.
+    """
     return {"routes": [route.path for route in app.routes]}
+
+# Servir archivos estáticos del frontend en /static
+from fastapi.staticfiles import StaticFiles
+public_path = "public"
+app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
+app.include_router(auth_router, prefix="/auth")
+app.include_router(drive_router, prefix="/drive")
+app.include_router(certificados_router, prefix="/certificados")
+

@@ -64,8 +64,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Certificados</title>
-  <link rel="stylesheet" href="../styles/main.css">
-  <link rel="icon" type="image/png" href="../assets/img/LACS-V.png">
+  <link rel="stylesheet" href="/static/styles/main.css">
+  <link rel="icon" type="image/png" href="/static/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
@@ -132,11 +132,11 @@
   <div id="navbar-mobile-placeholder"></div>
   <div id="navbar-mobile-dropdown-placeholder"></div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="../js/gsap.js"></script>
-  <script src="../js/navbar-dropdown.js"></script>
-  <script src="../js/certificados-cliente.js"></script>
-  <script src="../js/certificados-admin.js"></script>
-  <script src="../js/footer.js"></script>
+  <script src="/static/js/gsap.js"></script>
+  <script src="/static/js/navbar-dropdown.js"></script>
+  <script src="/static/js/certificados-cliente.js"></script>
+  <script src="/static/js/certificados-admin.js"></script>
+  <script src="/static/js/footer.js"></script>
 
   <script>
     function loadNavbars() {
@@ -148,7 +148,7 @@
       navbarMobilePlaceholder.innerHTML = '';
       if (isMobile) {
         // Solo navbar mobile
-        fetch('./navbar-mobile.html')
+        fetch('/static/components/navbar-mobile.html')
           .then(res => res.text())
           .then(html => {
             navbarMobilePlaceholder.innerHTML = html;
@@ -160,7 +160,7 @@
           });
       } else {
         // Solo navbar desktop
-        fetch('./navbar.html')
+        fetch('/static/components/navbar.html')
           .then(res => res.text())
           .then(html => {
             navbarPlaceholder.innerHTML = html;
@@ -185,7 +185,7 @@
       window._wasMobile = isMobile;
     });
     // Cargar footer
-    fetch('./footer.html')
+    fetch('/static/components/footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
@@ -279,8 +279,8 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
-  <script src="../js/i18n.js"></script>
-  <script src="../js/navbar-mobile-accordion.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/navbar-mobile-accordion.js"></script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

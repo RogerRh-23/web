@@ -1,18 +1,21 @@
+
 # Usa una imagen oficial de Python como base
 FROM python:3.11-slim
 
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos de requerimientos
-COPY backend/requirements.txt .
-
-# Instala las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+# Copia e instala dependencias en una sola capa para mejor cacheo
+COPY backend/requirements.txt ./requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copia el resto del código de la aplicación
 COPY backend /app
 COPY public /app/public
+
+# Elimina archivos innecesarios y limpia caché
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000
