@@ -1,3 +1,68 @@
+<script>
+  // Detecta token OAuth en la URL y lo envía al backend
+  document.addEventListener('DOMContentLoaded', function () {
+    function getAccessTokenFromHash() {
+      const hash = window.location.hash;
+      const match = hash.match(/access_token=([^&]+)/);
+      return match ? match[1] : null;
+    }
+
+    async function sendOAuthToken(token, provider) {
+      const endpoint = provider === 'google' ? '/auth/oauth/google' : '/auth/oauth/microsoft';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token })
+        });
+        const data = await res.json();
+        if (data.user) {
+          // Aquí puedes guardar el usuario en localStorage, mostrar mensaje, redirigir, etc.
+          window.snackbarLoginSuccess && window.snackbarLoginSuccess();
+          // Por ejemplo:
+          // localStorage.setItem('user', JSON.stringify(data.user));
+          // window.location.href = '/';
+        } else {
+          window.snackbarLoginError && window.snackbarLoginError();
+        }
+      } catch (err) {
+        window.snackbarLoginError && window.snackbarLoginError();
+      }
+    }
+
+    // Detecta si hay token en la URL
+    const token = getAccessTokenFromHash();
+    if (token) {
+      // Decide el proveedor según la URL previa (puedes mejorar esto si usas redirect_uri diferente)
+      const ref = document.referrer || '';
+      let provider = '';
+      if (ref.includes('accounts.google.com')) provider = 'google';
+      else if (ref.includes('login.microsoftonline.com')) provider = 'microsoft';
+      // Si no hay referrer, puedes guardar el proveedor en localStorage antes de redirigir
+      if (!provider) {
+        provider = localStorage.getItem('oauth_provider');
+        localStorage.removeItem('oauth_provider');
+      }
+      if (provider) {
+        sendOAuthToken(token, provider);
+      }
+    }
+
+    // Antes de redirigir al proveedor, guarda el nombre en localStorage
+    const googleBtn = document.querySelector('.social-btn.google, .register-social-btn.google');
+    const microsoftBtn = document.querySelector('.social-btn.microsoft, .register-social-btn.microsoft');
+    if (googleBtn) {
+      googleBtn.addEventListener('click', function () {
+        localStorage.setItem('oauth_provider', 'google');
+      });
+    }
+    if (microsoftBtn) {
+      microsoftBtn.addEventListener('click', function () {
+        localStorage.setItem('oauth_provider', 'microsoft');
+      });
+    }
+  });
+</script>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -127,6 +192,33 @@
           }
         }
 
+        // Integración snackbar en registro
+        if (registerForm) {
+          registerForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            // Obtén los datos del formulario
+            const username = registerForm["register-username"].value.trim();
+            const email = registerForm["register-email"].value.trim();
+            const password = registerForm["register-password"].value;
+            try {
+              const res = await fetch('/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+              });
+              const data = await res.json();
+              if (res.ok && data.msg) {
+                window.snackbarSignupSuccess && window.snackbarSignupSuccess();
+                registerForm.reset();
+              } else {
+                window.snackbarUsuarioError && window.snackbarUsuarioError();
+              }
+            } catch (err) {
+              window.snackbarUsuarioError && window.snackbarUsuarioError();
+            }
+          });
+        }
+
         function showLogin() {
           if (!cover.classList.contains('cover-move-right')) {
             if (cover.classList.contains('cover-move-left')) {
@@ -161,65 +253,43 @@
 
         signupBtn.addEventListener('click', showRegister);
         coverSwitchBtn.addEventListener('click', showRegister);
+
+        // --- OAuth Google y Microsoft ---
+        const googleBtn = document.querySelector('.social-btn.google, .register-social-btn.google');
+        const microsoftBtn = document.querySelector('.social-btn.microsoft, .register-social-btn.microsoft');
+
+        // Configura tus client_id y redirect_uri
+        const GOOGLE_CLIENT_ID = 'TU_GOOGLE_CLIENT_ID';
+        const GOOGLE_REDIRECT_URI = 'TU_REDIRECT_URI';
+        const MICROSOFT_CLIENT_ID = 'TU_MICROSOFT_CLIENT_ID';
+        const MICROSOFT_REDIRECT_URI = 'TU_REDIRECT_URI';
+
+        function googleOAuth() {
+          const url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=token&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(GOOGLE_REDIRECT_URI)}&scope=profile%20email`;
+          window.location.href = url;
+        }
+
+        function microsoftOAuth() {
+          const url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?response_type=token&client_id=${MICROSOFT_CLIENT_ID}&redirect_uri=${encodeURIComponent(MICROSOFT_REDIRECT_URI)}&scope=openid%20profile%20email`;
+          window.location.href = url;
+        }
+
+        if (googleBtn) {
+          googleBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            googleOAuth();
+          });
+        }
+        if (microsoftBtn) {
+          microsoftBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            microsoftOAuth();
+          });
+        }
       });
     </script>
   </main>
   <div id="footer"></div>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCTUJ85OxrTW3LgxKo7CqLWGk7rOLEa5YM",
-      authDomain: "lacs-55d72.firebaseapp.com",
-      projectId: "lacs-55d72",
-      storageBucket: "lacs-55d72.firebasestorage.app",
-      messagingSenderId: "445529493113",
-      appId: "1:445529493113:web:0161bae1253ddd397f4ea8",
-      measurementId: "G-R41PFTW29N"
-    };
-
-    // Inicializa Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-
-    // Manejo del login con Google
-    document.querySelector('.social-btn.google').addEventListener('click', function (e) {
-      e.preventDefault();
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
-        .then(result => {
-          // Usuario autenticado
-          console.log('Google user:', result.user);
-          window.location.href = '/index.html'; // Cambia la ruta según donde quieras redirigir
-        })
-        .catch(error => {
-          console.error('Error Google login:', error);
-        });
-    });
-  </script>
-  <script>
-    // Inicializa Firebase (ya lo tienes arriba)
-    // Manejo del login con Google
-    document.querySelector('.social-btn.google').addEventListener('click', function (e) {
-      e.preventDefault();
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
-        .then(result => {
-          // Usuario autenticado
-          console.log('Google user:', result.user);
-          // Redirige al usuario después del login exitoso
-          window.location.href = '/'; // Cambia la ruta según donde quieras redirigir
-        })
-        .catch(error => {
-          console.error('Error Google login:', error);
-        });
-    });
-  </script>
-  <!-- Eliminado duplicado de navbar-mobile-placeholder -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="/static/js/gsap.js"></script>
   <script src="/static/js/navbar-dropdown.js"></script>
@@ -252,7 +322,6 @@
         });
       };
     });
-    // ...existing code...
     function isMobile() {
       return window.innerWidth < 992;
     }
@@ -477,7 +546,7 @@
     });
   </script>
 
-  <!-- Firebase modular API ya está incluida arriba -->
+  <!-- Eliminado: Firebase modular API -->
 
   <div class="floating-scrollbar">
     <div class="floating-scrollbar-thumb"></div>

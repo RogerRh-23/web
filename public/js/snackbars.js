@@ -72,7 +72,11 @@ window.snackbarLoginError = function () {
     showSnackbar('error', 'Error al iniciar sesión. Verifica tus credenciales.');
 };
 window.snackbarLoginSuccess = function () {
-    showSnackbar('success', 'Inicio de sesión exitoso!');
+    showSnackbar('login-success', '¡Bienvenido de nuevo!');
+};
+// Snackbar para registro exitoso (sign up)
+window.snackbarSignupSuccess = function () {
+    showSnackbar('signup-success', 'Usuario registrado exitosamente!');
 };
 
 // Casos para dev-panel.html

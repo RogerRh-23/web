@@ -97,7 +97,7 @@
       document.body.appendChild(script);
     }
     function loadNavbar(type) {
-      const url = type === 'mobile' ? './navbar-mobile.html' : './navbar.html';
+      const url = type === 'mobile' ? '/static/navbar-mobile.html' : '/static/navbar.html';
       fetch(url)
         .then(res => res.text())
         .then(html => {
@@ -112,7 +112,7 @@
           });
           if (!window._navbarDropdownLoaded) {
             window._navbarDropdownLoaded = true;
-            loadExternalScript('../../js/navbar-dropdown.js', function () {
+            loadExternalScript('/static/js/navbar-dropdown.js', function () {
               if (typeof window.initDropdowns === 'function') window.initDropdowns();
             });
           } else {
@@ -141,7 +141,7 @@
               link.href = link.href.replace('/components/components/', '/components/');
             }
           });
-          loadExternalScript('../../js/footer.js', function () {
+          loadExternalScript('/static/js/footer.js', function () {
             if (typeof window.initFooter === 'function') window.initFooter();
           });
         });
@@ -385,7 +385,7 @@
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
+                script.src = '/static/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
