@@ -17,10 +17,9 @@
         });
         const data = await res.json();
         if (data.user) {
-          // Aquí puedes guardar el usuario en localStorage, mostrar mensaje, redirigir, etc.
+          // Guarda el usuario y su rol en localStorage para la navbar
+          localStorage.setItem('user', JSON.stringify(data.user));
           window.snackbarLoginSuccess && window.snackbarLoginSuccess();
-          // Por ejemplo:
-          // localStorage.setItem('user', JSON.stringify(data.user));
           // window.location.href = '/';
         } else {
           window.snackbarLoginError && window.snackbarLoginError();
@@ -336,6 +335,7 @@
             .then(html => {
               mobilePlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
+              if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
@@ -361,6 +361,7 @@
             .then(html => {
               desktopPlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
+              if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
