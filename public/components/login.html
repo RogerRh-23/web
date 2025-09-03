@@ -259,8 +259,8 @@
         const microsoftBtn = document.querySelector('.social-btn.microsoft, .register-social-btn.microsoft');
 
         // Configura tus client_id y redirect_uri
-        const GOOGLE_CLIENT_ID = 'TU_GOOGLE_CLIENT_ID';
-        const GOOGLE_REDIRECT_URI = 'TU_REDIRECT_URI';
+        const GOOGLE_CLIENT_ID = '445529493113-a6roseq2n3oebdupp8tr5sis02i11f3f.apps.googleusercontent.com';
+        const GOOGLE_REDIRECT_URI = 'https://lacs-web-production.up.railway.app/static/components/login.html';
         const MICROSOFT_CLIENT_ID = 'TU_MICROSOFT_CLIENT_ID';
         const MICROSOFT_REDIRECT_URI = 'TU_REDIRECT_URI';
 
@@ -506,7 +506,18 @@
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
   <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/snackbars.js"></script>
   <script src="/static/js/navbar-mobile-accordion.js"></script>
+  <script>
+    // Cargar el HTML de snackbars.html dinámicamente en el contenedor
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('/static/components/snackbars.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('snackbars-container').innerHTML = html;
+        });
+    });
+  </script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

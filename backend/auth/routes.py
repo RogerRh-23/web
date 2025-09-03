@@ -6,17 +6,45 @@ from typing import Optional
 from datetime import datetime, timedelta
 import requests
 import os
-
-from fastapi import APIRouter, Request, Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from pydantic import BaseModel
-from jose import JWTError, jwt
-from typing import Optional
-from datetime import datetime, timedelta
-import requests
-import os
 from collections import defaultdict
 import time
+
+router = APIRouter()
+
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI = os.environ.get("GOOGLE_REDIRECT_URI")
+
+# Endpoint para recibir el código de Google OAuth
+@router.get("/google/callback")
+async def google_callback(request: Request):
+    code = request.query_params.get("code")
+    if not code:
+        return {"error": "No se recibió el código de Google"}
+    # Intercambio de código por access_token
+    token_response = requests.post(
+        "https://oauth2.googleapis.com/token",
+        data={
+            "code": code,
+            "client_id": GOOGLE_CLIENT_ID,
+            "client_secret": GOOGLE_CLIENT_SECRET,
+            "redirect_uri": GOOGLE_REDIRECT_URI,
+            "grant_type": "authorization_code"
+        }
+    )
+    token_data = token_response.json()
+    if "access_token" not in token_data:
+        return {"error": "No se pudo obtener el access_token", "details": token_data}
+    # Obtener información del usuario
+    userinfo_response = requests.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        headers={"Authorization": f"Bearer {token_data['access_token']}"}
+    )
+    if userinfo_response.status_code != 200:
+        return {"error": "No se pudo obtener información del usuario"}
+    userinfo = userinfo_response.json()
+    # Aquí puedes crear el usuario en tu base de datos si no existe
+    return {"user": userinfo, "token": token_data}
 try:
     from backend.dev_logs import add_log, get_logs  # Local
 except ModuleNotFoundError:
@@ -81,6 +109,7 @@ async def oauth_microsoft(request: Request):
 SECRET_KEY = os.environ.get("JWT_SECRET", "supersecretkey")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 día
+
 
 try:
     from backend.main import mongo_client  # Local
