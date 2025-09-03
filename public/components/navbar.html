@@ -28,6 +28,8 @@
             </button>
             <a class="btn btn-outline-light" href="/static/components/login.html"><i class="bi bi-person-circle"></i>
               <span data-i18n="navbar.login" data-route="login.html">Iniciar Sesión</span></a>
+            <a id="dev-panel-link" class="btn btn-warning" href="/static/components/dev-panel.html"
+              style="display:none;"><i class="bi bi-tools"></i> Panel Dev</a>
           </li>
         </ul>
       </div>
@@ -42,9 +44,28 @@
     var current = window.i18next.language || 'es';
     btn.innerHTML = '<i class="bi bi-translate"></i> ' + (current === 'en' ? 'ES' : 'EN');
   }
+  function showDevPanelLinkIfDev() {
+    var devLink = document.getElementById('dev-panel-link');
+    try {
+      var user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.role === 'dev') {
+        devLink.style.display = '';
+      } else {
+        devLink.style.display = 'none';
+      }
+    } catch (e) {
+      devLink.style.display = 'none';
+    }
+  }
   if (window.i18next) {
     window.i18next.on('languageChanged', updateLangBtn);
-    document.addEventListener('DOMContentLoaded', updateLangBtn);
-    setTimeout(updateLangBtn, 100); // Por si la navbar se carga dinámicamente
+    document.addEventListener('DOMContentLoaded', function () {
+      updateLangBtn();
+      showDevPanelLinkIfDev();
+    });
+    setTimeout(function () {
+      updateLangBtn();
+      showDevPanelLinkIfDev();
+    }, 100);
   }
 </script>
