@@ -83,7 +83,7 @@
     <label class="login-bg-label" for="login-bg">
       <div class="login-bg">
         <div class="login-card">
-          <form class="login-form">
+          <form class="login-form" id="login-form">
             <div class="login-img">
               <img src="/static/assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
             </div>
@@ -154,6 +154,55 @@
     <script>
       // Animación cover y mostrar textos registro
       document.addEventListener('DOMContentLoaded', function () {
+        // --- LOGIN TRADICIONAL ---
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+          loginForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = loginForm["usuario"].value.trim();
+            const password = loginForm["password"].value;
+            const params = new URLSearchParams();
+            params.append('username', username);
+            params.append('password', password);
+            params.append('grant_type', 'password');
+            params.append('scope', '');
+            try {
+              const res = await fetch('/auth/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params
+              });
+              const data = await res.json();
+              if (res.ok && data.access_token) {
+                // Decodifica el JWT para obtener el rol
+                const payload = JSON.parse(atob(data.access_token.split('.')[1]));
+                localStorage.setItem('user', JSON.stringify({ username, role: payload.role }));
+                localStorage.setItem('token', data.access_token);
+                window.snackbarLoginSuccess && window.snackbarLoginSuccess();
+                // Recarga la página forzando una recarga completa y evitando caché
+                setTimeout(function () {
+                  // Si usas <object> o <iframe> para la navbar, fuerza su recarga:
+                  var navbarObj = document.querySelector('object[data*="navbar.html"], iframe[src*="navbar.html"]');
+                  if (navbarObj) {
+                    var baseSrc = navbarObj.getAttribute('data') || navbarObj.getAttribute('src');
+                    var newSrc = baseSrc.split('?')[0] + '?nocache=' + Date.now();
+                    if (navbarObj.hasAttribute('data')) {
+                      navbarObj.setAttribute('data', newSrc);
+                    } else {
+                      navbarObj.setAttribute('src', newSrc);
+                    }
+                  }
+                  // Además, recarga la página como antes
+                  window.location.href = window.location.pathname + '?nocache=' + Date.now();
+                }, 500);
+              } else {
+                window.snackbarLoginError && window.snackbarLoginError();
+              }
+            } catch (err) {
+              window.snackbarLoginError && window.snackbarLoginError();
+            }
+          });
+        }
         const signupBtn = document.getElementById('showRegister');
         const cover = document.querySelector('.login-signup-cover');
         const signInTexts = document.querySelectorAll('.login-title, .login-welcome, .login-access, .social-login, .login-form');
@@ -557,9 +606,45 @@
       });
     });
   </script>
-
-  <!-- Eliminado: Firebase modular API -->
-
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Login tradicional por usuario/contraseña
+      const loginForm = document.getElementById('login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          const username = loginForm.usuario.value.trim();
+          const password = loginForm.password.value;
+          try {
+            const res = await fetch('/auth/token', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: `grant_type=password&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+            });
+            const data = await res.json();
+            if (res.ok && data.access_token) {
+              // Obtener datos del usuario con el token
+              const userRes = await fetch('/auth/me', {
+                headers: { 'Authorization': 'Bearer ' + data.access_token }
+              });
+              const userData = await userRes.json();
+              if (userRes.ok && userData.user && userData.role) {
+                localStorage.setItem('user', JSON.stringify({ user: userData.user, role: userData.role }));
+                window.snackbarLoginSuccess && window.snackbarLoginSuccess();
+                setTimeout(() => window.location.reload(), 500);
+              } else {
+                window.snackbarLoginError && window.snackbarLoginError();
+              }
+            } else {
+              window.snackbarLoginError && window.snackbarLoginError();
+            }
+          } catch (err) {
+            window.snackbarLoginError && window.snackbarLoginError();
+          }
+        });
+      }
+    });
+  </script>
   <div class="floating-scrollbar">
     <div class="floating-scrollbar-thumb"></div>
   </div>

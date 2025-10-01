@@ -22,14 +22,14 @@
           <li class="nav-item"><a class="nav-link" href="/static/components/contacto.html"><i
                 class="bi bi-envelope"></i> <span data-i18n="navbar.contact"
                 data-route="contacto.html">Contacto</span></a></li>
+          <li id="dev-panel-link" class="nav-item" style="display:none;"><a class="nav-link btn btn-warning text-dark"
+              href="/static/components/dev-panel.html"><i class="bi bi-tools"></i> <span>Panel Dev</span></a></li>
           <li class="nav-item navbar-actions">
             <button id="lang-switcher" class="btn-lang-switcher" type="button" aria-label="Cambiar idioma">
               <i class="bi bi-translate"></i> EN
             </button>
             <a class="btn btn-outline-light" href="/static/components/login.html"><i class="bi bi-person-circle"></i>
               <span data-i18n="navbar.login" data-route="login.html">Iniciar Sesión</span></a>
-            <a id="dev-panel-link" class="btn btn-warning" href="/static/components/dev-panel.html"
-              style="display:none;"><i class="bi bi-tools"></i> Panel Dev</a>
           </li>
         </ul>
       </div>
@@ -48,13 +48,17 @@
     var devLink = document.getElementById('dev-panel-link');
     try {
       var user = JSON.parse(localStorage.getItem('user'));
+      console.log('[Navbar] Detected user:', user);
       if (user && user.role === 'dev') {
         devLink.style.display = '';
+        console.log('[Navbar] Dev panel link shown.');
       } else {
         devLink.style.display = 'none';
+        console.log('[Navbar] Dev panel link hidden.');
       }
     } catch (e) {
       devLink.style.display = 'none';
+      console.log('[Navbar] Error parsing user from localStorage:', e);
     }
   }
   if (window.i18next) {

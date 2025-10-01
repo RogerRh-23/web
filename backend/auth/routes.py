@@ -8,8 +8,36 @@ import requests
 import os
 from collections import defaultdict
 import time
+import bcrypt
 
 router = APIRouter()
+
+def get_current_user(token: str = Depends(OAuth2PasswordBearer(tokenUrl="/auth/token"))):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="No autenticado",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        role: str = payload.get("role")
+        if username is None or role is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    user = users_collection.find_one({"username": username})
+    if user is None:
+        raise credentials_exception
+    return {"username": username, "role": role}
+
+# Endpoint para consultar logs de la colección logs (solo dev)
+@router.get("/logs")
+def get_all_logs(current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "dev":
+        raise HTTPException(status_code=403, detail="Solo dev puede ver logs")
+    logs = list(db["logs"].find({}, {"_id": 0}))
+    return {"logs": logs}
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
@@ -125,21 +153,44 @@ users_collection = db["usuarios"]
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
 @router.post("/token", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), request: Request = None):
     ip = request.client.host if request else 'unknown'
     key = f"{form_data.username}:{ip}"
-    if not is_login_allowed(key):
-        raise HTTPException(status_code=429, detail="Demasiados intentos fallidos. Intenta más tarde.")
+    print(f"[LOGIN] username recibido: '{form_data.username}'")
+    print(f"[LOGIN] password recibido: '{form_data.password}'")
+    print(f"[LOGIN] grant_type recibido: '{getattr(form_data, 'grant_type', None)}'")
+    print(f"[LOGIN] scope recibido: '{getattr(form_data, 'scope', None)}'")
+    if not form_data.username or not form_data.password:
+        print(f"[LOGIN] Faltan campos username o password")
+        raise HTTPException(status_code=400, detail="Faltan campos username o password")
     user = users_collection.find_one({"username": form_data.username})
-    if not user or form_data.password != user.get("hashed_password"):
+    print(f"[LOGIN] usuario encontrado en Mongo: {user}")
+    if not is_login_allowed(key):
+        print(f"[LOGIN] Demasiados intentos para {key}")
+        raise HTTPException(status_code=429, detail="Demasiados intentos fallidos. Intenta más tarde.")
+    if not user:
+        print(f"[LOGIN] Usuario no encontrado: {form_data.username}")
+        register_login_attempt(key)
+        add_log("login_failed", form_data.username, f"IP: {ip}")
+        raise HTTPException(status_code=400, detail="Usuario o contraseña incorrectos")
+    hashed_pw = user.get("hashed_password")
+    if not hashed_pw:
+        print(f"[LOGIN] Usuario sin contraseña registrada")
+        raise HTTPException(status_code=400, detail="Usuario sin contraseña registrada")
+    if not bcrypt.checkpw(form_data.password.encode('utf-8'), hashed_pw.encode('utf-8')):
+        print(f"[LOGIN] Contraseña incorrecta para usuario: {form_data.username}")
         register_login_attempt(key)
         add_log("login_failed", form_data.username, f"IP: {ip}")
         raise HTTPException(status_code=400, detail="Usuario o contraseña incorrectos")
     login_attempts[key] = []
     add_log("login_success", form_data.username, f"IP: {ip}")
     access_token = create_access_token({"sub": user["username"], "role": user["role"]})
+    print(f"[LOGIN] Login exitoso para usuario: {form_data.username}")
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -172,16 +223,42 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 @router.post("/register")
 def register_user(user: UserCreate):
+    log_msg = f"Intentando registrar usuario: {user.username}, email: {user.email}"
+    add_log("register_attempt", user.username, log_msg)
+    if not user.username or not user.email or not user.password:
+        add_log("register_failed", user.username if user.username else "None", "Faltan campos en el registro")
+        raise HTTPException(status_code=400, detail="Faltan campos en el registro")
     if users_collection.find_one({"username": user.username}):
+        add_log("user_register_failed", user.username, f"Intento de registro fallido: usuario ya existe")
+        db["logs"].insert_one({
+            "event": "user_register_failed",
+            "username": user.username,
+            "email": user.email,
+            "timestamp": datetime.utcnow(),
+            "detail": "Intento de registro fallido: usuario ya existe"
+        })
         return {"error": "El usuario ya existe"}
-    users_collection.insert_one({
+    hashed_pw = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    user_doc = {
         "username": user.username,
         "email": user.email,
-        "hashed_password": user.password,  # Hashea en producción
+        "hashed_password": hashed_pw,
         "role": "user"
-    })
-    add_log("user_registered", user.username, f"Nuevo usuario: {user.email}")
-    return {"msg": f"Usuario '{user.username}' registrado"}
+    }
+    result = users_collection.insert_one(user_doc)
+    if result.inserted_id:
+        add_log("user_registered", user.username, f"Nuevo usuario: {user.email}")
+        db["logs"].insert_one({
+            "event": "user_registered",
+            "username": user.username,
+            "email": user.email,
+            "timestamp": datetime.utcnow(),
+            "detail": "Usuario registrado correctamente"
+        })
+        return {"msg": f"Usuario '{user.username}' registrado"}
+    else:
+        add_log("register_failed", user.username, "Error al crear usuario en la base de datos")
+        return {"error": "No se pudo registrar el usuario"}
 # Endpoint para consultar logs (solo dev)
 @router.get("/dev-logs")
 def get_dev_logs(current_user: dict = Depends(get_current_user)):
@@ -193,3 +270,11 @@ def get_dev_logs(current_user: dict = Depends(get_current_user)):
 @router.get("/me")
 def read_users_me(current_user: dict = Depends(get_current_user)):
     return {"user": current_user["username"], "role": current_user["role"]}
+
+# Endpoint para consultar logs de la colección logs (solo dev)
+@router.get("/logs")
+def get_all_logs(current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "dev":
+        raise HTTPException(status_code=403, detail="Solo dev puede ver logs")
+    logs = list(db["logs"].find({}, {"_id": 0}))
+    return {"logs": logs}
