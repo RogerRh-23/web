@@ -20,5 +20,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000
 
-# Comando para iniciar el servidor
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Permite que la plataforma (p.ej. Railway) asigne un puerto mediante la variable PORT
+ENV PORT=8000
+
+# Comando para iniciar el servidor. Usamos la forma shell para que se expanda ${PORT}
+# Si la plataforma no define PORT, se usará 8000 por defecto.
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]

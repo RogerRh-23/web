@@ -1,5 +1,15 @@
 <script>
   // Detecta token OAuth en la URL y lo envía al backend
+
+  // Forzar ejecución de showDevPanelLinkIfDev tras recarga
+  window.addEventListener('DOMContentLoaded', function () {
+    if (typeof showDevPanelLinkIfDev === 'function') {
+      showDevPanelLinkIfDev();
+    }
+    if (typeof window.showDevPanelLinkIfDevMobile === 'function') {
+      window.showDevPanelLinkIfDevMobile();
+    }
+  });
   document.addEventListener('DOMContentLoaded', function () {
     function getAccessTokenFromHash() {
       const hash = window.location.hash;
@@ -385,6 +395,7 @@
               mobilePlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
               if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
+              if (typeof window.runDevPanelMobileCheck === 'function') window.runDevPanelMobileCheck();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';
@@ -411,6 +422,10 @@
               desktopPlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
               if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
+              // Forzar actualización del enlace dev en desktop
+              setTimeout(function () {
+                if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
+              }, 50);
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '../js/navbar-dropdown.js';

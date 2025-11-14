@@ -1,3 +1,28 @@
+// Mostrar el enlace al panel dev si el usuario es dev
+window.showDevPanelLinkIfDevMobile = function () {
+    var devLink = document.getElementById('dev-panel-link-mobile');
+    try {
+        var user = JSON.parse(localStorage.getItem('user'));
+        if (user && (user.role === 'dev' || user.user?.role === 'dev')) {
+            devLink.style.display = '';
+            console.log('[Navbar-Mobile] Dev panel link shown.');
+        } else {
+            devLink.style.display = 'none';
+            console.log('[Navbar-Mobile] Dev panel link hidden.');
+        }
+    } catch (e) {
+        devLink.style.display = 'none';
+        console.log('[Navbar-Mobile] Error parsing user from localStorage:', e);
+    }
+}
+// Ejecutar también cuando el navbar se inserta dinámicamente
+window.runDevPanelMobileCheck = function () {
+    if (typeof window.showDevPanelLinkIfDevMobile === 'function') {
+        window.showDevPanelLinkIfDevMobile();
+    }
+};
+document.addEventListener('DOMContentLoaded', window.runDevPanelMobileCheck);
+// Si el navbar se carga por fetch, llama window.runDevPanelMobileCheck() después de insertar el HTML
 
 (function () {
     // Mostrar/ocultar el menú debajo de los iconos al hacer click en el botón de menú
