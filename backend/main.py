@@ -101,8 +101,24 @@ def get_routes():
 from fastapi.staticfiles import StaticFiles
 import os
 # Ruta relativa desde backend/ hacia public/
-public_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "public")
-app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
+current_file_dir = os.path.dirname(os.path.abspath(__file__))  # backend/
+parent_dir = os.path.dirname(current_file_dir)  # lacs/
+public_path = os.path.join(parent_dir, "public")  # lacs/public/
+print(f"[STATIC] Intentando servir archivos desde: {public_path}")
+print(f"[STATIC] ¿Existe el directorio?: {os.path.exists(public_path)}")
+if os.path.exists(public_path):
+    app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
+    print(f"[STATIC] Archivos estáticos montados correctamente en /static")
+else:
+    print(f"[STATIC] ERROR: No se encontró el directorio {public_path}")
+    # Fallback: buscar public en el directorio actual de trabajo
+    fallback_path = os.path.join(os.getcwd(), "public")
+    print(f"[STATIC] Intentando fallback: {fallback_path}")
+    if os.path.exists(fallback_path):
+        app.mount("/static", StaticFiles(directory=fallback_path, html=True), name="static")
+        print(f"[STATIC] Fallback exitoso: archivos servidos desde {fallback_path}")
+    else:
+        print(f"[STATIC] ERROR CRÍTICO: No se puede encontrar la carpeta public")
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
 app.include_router(certificados_router, prefix="/certificados")

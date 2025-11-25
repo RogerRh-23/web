@@ -232,29 +232,38 @@
                 console.log('[DEBUG] login fetch success', data);
                 // Decodifica el JWT para obtener el rol
                 const payload = JSON.parse(atob(data.access_token.split('.')[1]));
-                localStorage.setItem('user', JSON.stringify({ username, role: payload.role }));
+                const userInfo = { username, role: payload.role };
+                localStorage.setItem('user', JSON.stringify(userInfo));
                 localStorage.setItem('token', data.access_token);
-                window.snackbarLoginSuccess && window.snackbarLoginSuccess();
-                // Actualiza la navbar dinámicamente sin recargar la página
+                console.log('[LOGIN] Usuario guardado:', userInfo);
+                
+                // Mostrar snackbar de éxito
+                if (window.snackbarLoginSuccess) {
+                  window.snackbarLoginSuccess();
+                }
+                
+                // Redirigir a la página principal después del login exitoso
                 setTimeout(function () {
-                  try {
-                    if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
-                    if (typeof showDevPanelLinkIfDev === 'function') showDevPanelLinkIfDev();
-                    if (typeof window.initDropdowns === 'function') window.initDropdowns();
-                    // Por compatibilidad, también intentar inicializar cualquier script de navbar móvil
-                    if (typeof window.initMobileMenuDropdown === 'function') window.initMobileMenuDropdown();
-                  } catch (e) {
-                    // Si algo falla, fallback mínimo: recargar como antes (solo en caso de error)
-                    console.log('[Login] update navbar error, recargando de fallback:', e);
-                    window.location.href = window.location.pathname + '?nocache=' + Date.now();
+                  console.log('[LOGIN] Redirigiendo a página principal...');
+                  // Redirigir dependiendo del rol
+                  if (payload.role === 'dev') {
+                    window.location.href = '/static/components/dev-panel.html';
+                  } else {
+                    window.location.href = '/static/index.html';
                   }
-                }, 250);
+                }, 1500); // Dar tiempo para que se vea el snackbar
               } else {
                 console.log('[DEBUG] login fetch failed response', res.status, data);
-                window.snackbarLoginError && window.snackbarLoginError();
+                console.log('[LOGIN ERROR] Status:', res.status, 'Response:', data);
+                if (window.snackbarLoginError) {
+                  window.snackbarLoginError();
+                }
               }
             } catch (err) {
-              window.snackbarLoginError && window.snackbarLoginError();
+              console.log('[LOGIN ERROR] Exception during login:', err);
+              if (window.snackbarLoginError) {
+                window.snackbarLoginError();
+              }
             }
           });
         }
