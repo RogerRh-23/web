@@ -2,6 +2,11 @@
 // Cada corte vertical sube alternadamente al hacer scroll, mostrando el fondo y el logo dividido
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') {
+    console.warn('[hero-reveal] GSAP o ScrollTrigger no disponibles — deshabilitando hero animations.');
+    return;
+  }
+  const ST = window.ScrollTrigger || null;
   const rects = Array.from(document.querySelectorAll('.hero-rect'));
   const logo = document.querySelector('.hero-reveal-logo-fixed');
   const arrow = document.getElementById('hero-reveal-arrow');
@@ -55,21 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   })
-  .to(logo, {
-    y: '-120vh',
-    ease: 'power2.inOut',
-    duration: logoDuration
-  }, 0)
-  .to(rects, {
-    y: (i) => i % 2 === 0 ? '-120vh' : '-100vh',
-    stagger: {
-      each: 0.05,
-      from: 'edges',
-      ease: 'power2.inOut'
-    },
-    ease: 'power2.inOut',
-    duration: rectDuration
-  }, logoDuration);
+    .to(logo, {
+      y: '-120vh',
+      ease: 'power2.inOut',
+      duration: logoDuration
+    }, 0)
+    .to(rects, {
+      y: (i) => i % 2 === 0 ? '-120vh' : '-100vh',
+      stagger: {
+        each: 0.05,
+        from: 'edges',
+        ease: 'power2.inOut'
+      },
+      ease: 'power2.inOut',
+      duration: rectDuration
+    }, logoDuration);
 
   // Flecha: al hacer click, dispara la animación de logo y rectángulos
   if (arrow) {
@@ -96,10 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
         delay: logoDuration,
         onStart: () => {
           // Solo elimina el ScrollTrigger del hero reveal y refresca los triggers
-          if (window.ScrollTrigger) {
-            const st = ScrollTrigger.getById && ScrollTrigger.getById('hero-reveal-timeline');
+          if (ST) {
+            const st = ST.getById && ST.getById('hero-reveal-timeline');
             if (st) st.kill();
-            if (ScrollTrigger.refresh) ScrollTrigger.refresh();
+            try {
+              if (ST && typeof ST.refresh === 'function') ST.refresh();
+            } catch (e) {
+              console.log('[hero-reveal] ST.refresh error', e);
+            }
           }
         }
       });

@@ -159,33 +159,65 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 @router.post("/token", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), request: Request = None):
-    ip = request.client.host if request else 'unknown'
-    key = f"{form_data.username}:{ip}"
-    print(f"[LOGIN] username recibido: '{form_data.username}'")
-    print(f"[LOGIN] password recibido: '{form_data.password}'")
-    print(f"[LOGIN] grant_type recibido: '{getattr(form_data, 'grant_type', None)}'")
-    print(f"[LOGIN] scope recibido: '{getattr(form_data, 'scope', None)}'")
-    if not form_data.username or not form_data.password:
-        print(f"[LOGIN] Faltan campos username o password")
-        raise HTTPException(status_code=400, detail="Faltan campos username o password")
-    user = users_collection.find_one({"username": form_data.username})
-    print(f"[LOGIN] usuario encontrado en Mongo: {user}")
+    try:
+        ip = request.client.host if request else 'unknown'
+        key = f"{form_data.username}:{ip}"
+        print(f"[LOGIN] username recibido: '{form_data.username}'")
+        print(f"[LOGIN] password recibido: '{form_data.password}'")
+        print(f"[LOGIN] grant_type recibido: '{getattr(form_data, 'grant_type', None)}'")
+        print(f"[LOGIN] scope recibido: '{getattr(form_data, 'scope', None)}'")
+        
+        # Validate required fields
+        if not form_data.username or not form_data.password:
+            print(f"[LOGIN] Faltan campos username o password")
+            add_log("login_error", form_data.username or "unknown", f"Missing fields - IP: {ip}")
+            raise HTTPException(status_code=400, detail="Faltan campos username o password")
+        
+        if not form_data.username.strip() or not form_data.password.strip():
+            print(f"[LOGIN] Campos username o password están vacíos")
+            add_log("login_error", form_data.username or "unknown", f"Empty fields - IP: {ip}")
+            raise HTTPException(status_code=400, detail="Los campos no pueden estar vacíos")
+    except Exception as e:
+        print(f"[LOGIN] Error en validación inicial: {e}")
+        add_log("login_error", "unknown", f"Validation error: {e} - IP: {ip if 'ip' in locals() else 'unknown'}")
+        raise HTTPException(status_code=400, detail=f"Error en validación: {str(e)}")
+    try:
+        user = users_collection.find_one({"username": form_data.username.strip()})
+        print(f"[LOGIN] usuario encontrado en Mongo: {user is not None}")
+        if user:
+            print(f"[LOGIN] usuario data: username={user.get('username')}, role={user.get('role')}, has_password={bool(user.get('hashed_password'))}")
+    except Exception as e:
+        print(f"[LOGIN] Error consultando usuario en Mongo: {e}")
+        add_log("login_error", form_data.username, f"DB error: {e} - IP: {ip}")
+        raise HTTPException(status_code=500, detail="Error interno del servidor")
+        
     if not is_login_allowed(key):
         print(f"[LOGIN] Demasiados intentos para {key}")
+        add_log("login_blocked", form_data.username, f"Rate limit - IP: {ip}")
         raise HTTPException(status_code=429, detail="Demasiados intentos fallidos. Intenta más tarde.")
+        
     if not user:
         print(f"[LOGIN] Usuario no encontrado: {form_data.username}")
         register_login_attempt(key)
-        add_log("login_failed", form_data.username, f"IP: {ip}")
+        add_log("login_failed", form_data.username, f"User not found - IP: {ip}")
         raise HTTPException(status_code=400, detail="Usuario o contraseña incorrectos")
     hashed_pw = user.get("hashed_password")
     if not hashed_pw:
         print(f"[LOGIN] Usuario sin contraseña registrada")
+        add_log("login_error", form_data.username, f"No password set - IP: {ip}")
         raise HTTPException(status_code=400, detail="Usuario sin contraseña registrada")
-    if not bcrypt.checkpw(form_data.password.encode('utf-8'), hashed_pw.encode('utf-8')):
+        
+    try:
+        password_valid = bcrypt.checkpw(form_data.password.encode('utf-8'), hashed_pw.encode('utf-8'))
+    except Exception as e:
+        print(f"[LOGIN] Error verificando contraseña: {e}")
+        add_log("login_error", form_data.username, f"Password check error: {e} - IP: {ip}")
+        raise HTTPException(status_code=500, detail="Error interno del servidor")
+        
+    if not password_valid:
         print(f"[LOGIN] Contraseña incorrecta para usuario: {form_data.username}")
         register_login_attempt(key)
-        add_log("login_failed", form_data.username, f"IP: {ip}")
+        add_log("login_failed", form_data.username, f"Wrong password - IP: {ip}")
         raise HTTPException(status_code=400, detail="Usuario o contraseña incorrectos")
     login_attempts[key] = []
     add_log("login_success", form_data.username, f"IP: {ip}")

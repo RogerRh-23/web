@@ -23,6 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function animateInfoCards(cards) {
   const isMobile = window.innerWidth <= 991;
+  // If GSAP is not available, fallback to simple visible state
+  if (typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') {
+    cards.forEach(card => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateX(0)';
+      card.style.transition = 'none';
+    });
+    return;
+  }
   if (window.updateI18nContent) window.updateI18nContent();
   cards.forEach((card, i) => {
     let xFrom = card.classList.contains('from-left')
@@ -33,48 +42,56 @@ function animateInfoCards(cards) {
     gsap.set(card, { opacity: 0, x: xFrom, scale: isMobile ? 0.98 : 1 });
     const content = card.querySelector('.info-card-content');
     gsap.set(content, { y: 0 });
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top 95%',
-      end: 'bottom 5%',
-      onEnter: () => {
-        gsap.to(card, {
-          x: 0,
-          opacity: 1,
-          scale: 1,
-          duration: durationIn,
-          ease: 'power3.out',
-        });
-      },
-      onLeave: () => {
-        gsap.to(card, {
-          opacity: 0,
-          x: xFrom,
-          scale: isMobile ? 0.98 : 1,
-          duration: durationOut,
-          ease: 'power2.in',
-        });
-      },
-      onEnterBack: () => {
-        gsap.to(card, {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: durationIn,
-          ease: 'power3.out',
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(card, {
-          opacity: 0,
-          x: xFrom,
-          scale: isMobile ? 0.98 : 1,
-          duration: durationOut,
-          ease: 'power2.in',
-        });
-      },
-      scrub: false
-    });
+    if (typeof window.ScrollTrigger !== 'undefined') {
+      ScrollTrigger.create({
+        trigger: card,
+        // Ajustes distintos para mobile vs desktop: en pantallas pequeñas
+        // el viewport es más corto, usar un start/end menos extremos evita
+        // que la tarjeta entre y salga inmediatamente.
+        start: isMobile ? 'top 90%' : 'top 75%',
+        end: isMobile ? 'bottom 15%' : 'bottom 5%',
+        onEnter: () => {
+          gsap.to(card, {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            duration: durationIn,
+            ease: 'power3.out',
+          });
+        },
+        onLeave: () => {
+          gsap.to(card, {
+            opacity: 0,
+            x: xFrom,
+            scale: isMobile ? 0.98 : 1,
+            duration: durationOut,
+            ease: 'power2.in',
+          });
+        },
+        onEnterBack: () => {
+          gsap.to(card, {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: durationIn,
+            ease: 'power3.out',
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(card, {
+            opacity: 0,
+            x: xFrom,
+            scale: isMobile ? 0.98 : 1,
+            duration: durationOut,
+            ease: 'power2.in',
+          });
+        },
+        scrub: false
+      });
+    } else {
+      // fallback: make card visible if ScrollTrigger not present
+      gsap.to(card, { x: 0, opacity: 1, scale: 1, duration: 0.01 });
+    }
   });
 }
 

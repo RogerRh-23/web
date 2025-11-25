@@ -1,4 +1,14 @@
-gsap.registerPlugin(ScrollTrigger);
+try {
+    var hasScrollTrigger = (typeof window !== 'undefined' && window && window.ScrollTrigger) ? true : false;
+    var hasGsap = (typeof window !== 'undefined' && window && window.gsap) ? true : false;
+    if (hasScrollTrigger && hasGsap && typeof window.gsap.registerPlugin === 'function') {
+        window.gsap.registerPlugin(window.ScrollTrigger);
+    } else {
+        console.warn('[gsap] ScrollTrigger plugin not available at init time. Skipping registerPlugin.');
+    }
+} catch (e) {
+    console.warn('[gsap] Error registering ScrollTrigger plugin:', e);
+}
 
 // Forzar inicialización de scrollbar personalizada en desktop
 function forceCustomScrollbar() {

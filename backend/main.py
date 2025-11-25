@@ -33,7 +33,31 @@ load_dotenv()
 
 
 from fastapi.responses import RedirectResponse
+from fastapi import Request
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
+
 app = FastAPI()
+
+# Middleware para redirigir www a no-www
+class WWWRedirectMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        host = request.headers.get("host", "")
+        # Si el host empieza con www., redirigir a la versión sin www
+        if host.startswith("www."):
+            # Construir la nueva URL sin www
+            new_host = host[4:]  # Quitar "www."
+            scheme = "https" if request.url.scheme == "https" else "http"
+            new_url = f"{scheme}://{new_host}{request.url.path}"
+            if request.url.query:
+                new_url += f"?{request.url.query}"
+            return RedirectResponse(url=new_url, status_code=301)
+        
+        response = await call_next(request)
+        return response
+
+# Agregar el middleware
+app.add_middleware(WWWRedirectMiddleware)
 
 # Redirigir la raíz a /static/index.html
 @app.get("/", include_in_schema=False)

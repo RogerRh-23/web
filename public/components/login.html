@@ -7,10 +7,51 @@
       showDevPanelLinkIfDev();
     }
     if (typeof window.showDevPanelLinkIfDevMobile === 'function') {
-      window.showDevPanelLinkIfDevMobile();
+      try {
+        window.showDevPanelLinkIfDevMobile();
+      } catch (e) {
+        console.log('[login] showDevPanelLinkIfDevMobile call failed', e);
+      }
     }
   });
   document.addEventListener('DOMContentLoaded', function () {
+    // DEBUG: detectar navegaciones/recargas inesperadas
+    try {
+      window.addEventListener('beforeunload', function (e) { console.log('[DEBUG] beforeunload fired', e); });
+      window.addEventListener('unload', function () { console.log('[DEBUG] unload fired'); });
+    } catch (e) { console.log('[DEBUG] unload listener error', e); }
+
+    // Global click tracer to diagnose unhandled clicks
+    try {
+      window.addEventListener('click', function (ev) {
+        try {
+          var t = ev.target;
+          var desc = (t && (t.id || t.className || t.tagName)) || String(t);
+          console.log('[DEBUG] global click detected on', desc, ev);
+        } catch (ex) { console.log('[DEBUG] global click log error', ex); }
+      }, true); // capture phase to see events early
+    } catch (e) { console.log('[DEBUG] add global click listener error', e); }
+
+    // Safety bridge: ensure #btn-login always triggers the form submit handler
+    try {
+      var bridgeBtn = document.getElementById('btn-login');
+      if (bridgeBtn) {
+        bridgeBtn.addEventListener('click', function (ev) {
+          try {
+            console.log('[DEBUG] bridge: btn-login clicked', ev);
+            ev.preventDefault(); ev.stopPropagation();
+            var frm = document.getElementById('login-form');
+            if (frm) {
+              var submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+              frm.dispatchEvent(submitEvent);
+            } else {
+              console.log('[DEBUG] bridge: login form not found');
+            }
+          } catch (err) { console.log('[DEBUG] bridge click error', err); }
+        }, true);
+      }
+    } catch (e) { console.log('[DEBUG] add bridge btn-login listener error', e); }
+
     function getAccessTokenFromHash() {
       const hash = window.location.hash;
       const match = hash.match(/access_token=([^&]+)/);
@@ -61,12 +102,14 @@
     const googleBtn = document.querySelector('.social-btn.google, .register-social-btn.google');
     const microsoftBtn = document.querySelector('.social-btn.microsoft, .register-social-btn.microsoft');
     if (googleBtn) {
-      googleBtn.addEventListener('click', function () {
+      googleBtn.addEventListener('click', function (ev) {
+        console.log('[DEBUG] google social button clicked', ev);
         localStorage.setItem('oauth_provider', 'google');
       });
     }
     if (microsoftBtn) {
-      microsoftBtn.addEventListener('click', function () {
+      microsoftBtn.addEventListener('click', function (ev) {
+        console.log('[DEBUG] microsoft social button clicked', ev);
         localStorage.setItem('oauth_provider', 'microsoft');
       });
     }
@@ -93,7 +136,7 @@
     <label class="login-bg-label" for="login-bg">
       <div class="login-bg">
         <div class="login-card">
-          <form class="login-form" id="login-form">
+          <form class="login-form" id="login-form" onsubmit="event.preventDefault();">
             <div class="login-img">
               <img src="/static/assets/img/LACS-V.png" alt="LACS Logo Horizontal" />
             </div>
@@ -101,10 +144,10 @@
             <h3 class="login-welcome" data-i18n="login.welcome_message"></h3>
             <p class="login-access" data-i18n="login.access"></p>
             <div class="social-login">
-              <button class="social-btn google" aria-label="Login with Google">
+              <button type="button" class="social-btn google" aria-label="Login with Google">
                 <img src="/static/assets/img/icons/google.svg" alt="Google" />
               </button>
-              <button class="social-btn microsoft" aria-label="Login with Microsoft">
+              <button type="button" class="social-btn microsoft" aria-label="Login with Microsoft">
                 <img src="/static/assets/img/icons/microsoft.svg" alt="Microsoft" />
               </button>
             </div>
@@ -117,7 +160,7 @@
               <label for="password" data-i18n="login.password"></label>
             </div>
             <a href="#" id="forgot-password-link" data-i18n="login.forgot_password">¿Olvidaste tu contraseña?</a>
-            <button type="submit" class="login-btn" data-i18n="login.login_btn">Iniciar Sesión</button>
+            <button type="button" id="btn-login" class="login-btn" data-i18n="login.login_btn">Iniciar Sesión</button>
           </form>
           <div class="login-signup-cover">
             <div class="login-signup-title">
@@ -134,10 +177,10 @@
             <h3 class="register-welcome" data-i18n="register.welcome_message"></h3>
             <p class="register-use-social" data-i18n="register.use_social"></p>
             <div class="register-social-login">
-              <button class="register-social-btn google" aria-label="Register with Google">
+              <button type="button" class="register-social-btn google" aria-label="Register with Google">
                 <img src="/static/assets/img/icons/google.svg" alt="Google" />
               </button>
-              <button class="register-social-btn microsoft" aria-label="Register with Microsoft">
+              <button type="button" class="register-social-btn microsoft" aria-label="Register with Microsoft">
                 <img src="/static/assets/img/icons/microsoft.svg" alt="Microsoft" />
               </button>
             </div>
@@ -167,8 +210,10 @@
         // --- LOGIN TRADICIONAL ---
         const loginForm = document.getElementById('login-form');
         if (loginForm) {
+          console.log('[DEBUG] login handler attached to #login-form');
           loginForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
+            console.log('[DEBUG] login submit event', e);
+            try { e.preventDefault(); } catch (ex) { console.log('[DEBUG] preventDefault error', ex); }
             const username = loginForm["usuario"].value.trim();
             const password = loginForm["password"].value;
             const params = new URLSearchParams();
@@ -184,28 +229,28 @@
               });
               const data = await res.json();
               if (res.ok && data.access_token) {
+                console.log('[DEBUG] login fetch success', data);
                 // Decodifica el JWT para obtener el rol
                 const payload = JSON.parse(atob(data.access_token.split('.')[1]));
                 localStorage.setItem('user', JSON.stringify({ username, role: payload.role }));
                 localStorage.setItem('token', data.access_token);
                 window.snackbarLoginSuccess && window.snackbarLoginSuccess();
-                // Recarga la página forzando una recarga completa y evitando caché
+                // Actualiza la navbar dinámicamente sin recargar la página
                 setTimeout(function () {
-                  // Si usas <object> o <iframe> para la navbar, fuerza su recarga:
-                  var navbarObj = document.querySelector('object[data*="navbar.html"], iframe[src*="navbar.html"]');
-                  if (navbarObj) {
-                    var baseSrc = navbarObj.getAttribute('data') || navbarObj.getAttribute('src');
-                    var newSrc = baseSrc.split('?')[0] + '?nocache=' + Date.now();
-                    if (navbarObj.hasAttribute('data')) {
-                      navbarObj.setAttribute('data', newSrc);
-                    } else {
-                      navbarObj.setAttribute('src', newSrc);
-                    }
+                  try {
+                    if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+                    if (typeof showDevPanelLinkIfDev === 'function') showDevPanelLinkIfDev();
+                    if (typeof window.initDropdowns === 'function') window.initDropdowns();
+                    // Por compatibilidad, también intentar inicializar cualquier script de navbar móvil
+                    if (typeof window.initMobileMenuDropdown === 'function') window.initMobileMenuDropdown();
+                  } catch (e) {
+                    // Si algo falla, fallback mínimo: recargar como antes (solo en caso de error)
+                    console.log('[Login] update navbar error, recargando de fallback:', e);
+                    window.location.href = window.location.pathname + '?nocache=' + Date.now();
                   }
-                  // Además, recarga la página como antes
-                  window.location.href = window.location.pathname + '?nocache=' + Date.now();
-                }, 500);
+                }, 250);
               } else {
+                console.log('[DEBUG] login fetch failed response', res.status, data);
                 window.snackbarLoginError && window.snackbarLoginError();
               }
             } catch (err) {
@@ -229,6 +274,19 @@
             }
             cover.classList.add('cover-move-left');
           }
+          // Also attach click to the explicit login button to avoid native submit surprises
+          try {
+            var btnLogin = document.getElementById('btn-login');
+            if (btnLogin) {
+              btnLogin.addEventListener('click', function (ev) {
+                console.log('[DEBUG] login button clicked', ev);
+                try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch (err) { console.log('[DEBUG] click prevent error', err); }
+                // dispatch submit event to trigger the existing handler
+                var submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+                loginForm.dispatchEvent(submitEvent);
+              });
+            }
+          } catch (e) { console.log('[DEBUG] attach btn-login error', e); }
           signInTexts.forEach(el => el.classList.add('hide-signin'));
           if (registerForm) {
             registerForm.classList.remove('hide-signin');
@@ -579,7 +637,21 @@
       fetch('/static/components/snackbars.html')
         .then(res => res.text())
         .then(html => {
-          document.getElementById('snackbars-container').innerHTML = html;
+          var container = document.getElementById('snackbars-container');
+          if (container) {
+            container.innerHTML = html;
+          } else {
+            // Si no existe contenedor, insertar el fragmento al final del body
+            try {
+              var tmp = document.createElement('div');
+              tmp.innerHTML = html;
+              // insertar el primer nodo del fragmento (snackbars container)
+              if (tmp.firstElementChild) document.body.appendChild(tmp.firstElementChild);
+              else document.body.insertAdjacentHTML('beforeend', html);
+            } catch (e) {
+              console.warn('[Login] could not inject snackbars HTML safely:', e);
+            }
+          }
         });
     });
   </script>
@@ -646,7 +718,18 @@
               if (userRes.ok && userData.user && userData.role) {
                 localStorage.setItem('user', JSON.stringify({ user: userData.user, role: userData.role }));
                 window.snackbarLoginSuccess && window.snackbarLoginSuccess();
-                setTimeout(() => window.location.reload(), 500);
+                // Actualizar navbar y dropdown dinámicamente sin recargar
+                setTimeout(function () {
+                  try {
+                    if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+                    if (typeof showDevPanelLinkIfDev === 'function') showDevPanelLinkIfDev();
+                    if (typeof window.initDropdowns === 'function') window.initDropdowns();
+                    if (typeof window.initNavbarMobileAccordion === 'function') window.initNavbarMobileAccordion();
+                  } catch (e) {
+                    console.warn('[Login] update navbar error, reloading as fallback', e);
+                    window.location.reload();
+                  }
+                }, 250);
               } else {
                 window.snackbarLoginError && window.snackbarLoginError();
               }

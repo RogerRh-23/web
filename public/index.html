@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+<script>
+  // Redirección del lado cliente como fallback adicional
+  if (window.location.hostname.startsWith('www.')) {
+    const newUrl = window.location.protocol + '//' + window.location.hostname.substring(4) + window.location.pathname + window.location.search + window.location.hash;
+    window.location.replace(newUrl);
+  }
+</script>
 
 <head>
   <meta charset="UTF-8">

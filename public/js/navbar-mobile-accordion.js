@@ -1,24 +1,46 @@
 // Mostrar el enlace al panel dev si el usuario es dev
 window.showDevPanelLinkIfDevMobile = function () {
-    var devLink = document.getElementById('dev-panel-link-mobile');
     try {
-        var user = JSON.parse(localStorage.getItem('user'));
-        if (user && (user.role === 'dev' || user.user?.role === 'dev')) {
-            devLink.style.display = '';
-            console.log('[Navbar-Mobile] Dev panel link shown.');
-        } else {
-            devLink.style.display = 'none';
-            console.log('[Navbar-Mobile] Dev panel link hidden.');
+        var devLink = document.getElementById('dev-panel-link-mobile');
+        if (!devLink) {
+            // Elemento no presente en esta página/plantilla
+            return;
         }
-    } catch (e) {
-        devLink.style.display = 'none';
-        console.log('[Navbar-Mobile] Error parsing user from localStorage:', e);
+        try {
+            var userStr = localStorage.getItem('user');
+            var user = userStr ? JSON.parse(userStr) : null;
+            var isDev = false;
+            if (user) {
+                if (user.role === 'dev') isDev = true;
+                if (user.user && user.user.role === 'dev') isDev = true;
+            }
+            if (devLink && devLink.style) {
+                if (isDev) {
+                    devLink.style.display = '';
+                    console.log('[Navbar-Mobile] Dev panel link shown.');
+                } else {
+                    devLink.style.display = 'none';
+                    console.log('[Navbar-Mobile] Dev panel link hidden.');
+                }
+            }
+        } catch (e) {
+            if (devLink && devLink.style) {
+                devLink.style.display = 'none';
+            }
+            console.log('[Navbar-Mobile] Error parsing user from localStorage:', e);
+        }
+    } catch (outerErr) {
+        console.log('[Navbar-Mobile] showDevPanelLinkIfDevMobile unexpected error:', outerErr);
     }
 }
 // Ejecutar también cuando el navbar se inserta dinámicamente
 window.runDevPanelMobileCheck = function () {
     if (typeof window.showDevPanelLinkIfDevMobile === 'function') {
-        window.showDevPanelLinkIfDevMobile();
+        try {
+            window.showDevPanelLinkIfDevMobile();
+        } catch (e) {
+            console.log('[navbar-mobile] runDevPanelMobileCheck caught error from showDevPanelLinkIfDevMobile', e);
+        }
     }
 };
 document.addEventListener('DOMContentLoaded', window.runDevPanelMobileCheck);
@@ -160,3 +182,23 @@ document.addEventListener('DOMContentLoaded', window.runDevPanelMobileCheck);
     window.addEventListener('resize', setupMobileAccordion);
     window.initNavbarMobileAccordion = setupMobileAccordion;
 })();
+
+// Wrap existing function with a safety wrapper in case older references execute before this file fully loads
+try {
+    if (window && typeof window.showDevPanelLinkIfDevMobile === 'function') {
+        if (!window._safe_showDevPanelLinkIfDevMobile) {
+            window._orig_showDevPanelLinkIfDevMobile = window.showDevPanelLinkIfDevMobile;
+            window.showDevPanelLinkIfDevMobile = function () {
+                try {
+                    return window._orig_showDevPanelLinkIfDevMobile();
+                } catch (e) {
+                    console.log('[navbar-mobile] safe wrapper caught error in showDevPanelLinkIfDevMobile', e);
+                    return;
+                }
+            };
+            window._safe_showDevPanelLinkIfDevMobile = true;
+        }
+    }
+} catch (e) {
+    console.log('[navbar-mobile] error installing safe wrapper for showDevPanelLinkIfDevMobile', e);
+}

@@ -118,6 +118,15 @@
           } else {
             if (typeof window.initDropdowns === 'function') window.initDropdowns();
           }
+          // Cargar init del navbar (gestiona nombre, dropdown y logout)
+          if (!window._navbarInitLoaded) {
+            window._navbarInitLoaded = true;
+            loadExternalScript('/static/js/navbar-init.js', function () {
+              if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+            });
+          } else {
+            if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+          }
         });
     }
     function isMobile() {
@@ -366,6 +375,13 @@
                   }
                 };
                 document.body.appendChild(script);
+                // cargar init del navbar para mobile
+                var scriptInitMobile = document.createElement('script');
+                scriptInitMobile.src = '../js/navbar-init.js';
+                scriptInitMobile.onload = function () {
+                  if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+                };
+                document.body.appendChild(scriptInitMobile);
               } else {
                 if (typeof window.initDropdowns === 'function') {
                   window.initDropdowns();
@@ -393,6 +409,13 @@
                   }
                 };
                 document.body.appendChild(script);
+                // cargar init del navbar para desktop
+                var scriptInit = document.createElement('script');
+                scriptInit.src = '/static/js/navbar-init.js';
+                scriptInit.onload = function () {
+                  if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+                };
+                document.body.appendChild(scriptInit);
               } else {
                 if (typeof window.initDropdowns === 'function') {
                   window.initDropdowns();

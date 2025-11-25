@@ -1,0 +1,22 @@
+# Redirección de www a no-www (Nginx)
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name www.lacs.org.mx;
+    
+    # Redirigir www a no-www con código 301 (permanente)
+    return 301 $scheme://lacs.org.mx$request_uri;
+}
+
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name tlacs.org.mx;
+    
+    # Configuración normal del sitio aquí
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}

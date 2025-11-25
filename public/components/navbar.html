@@ -28,8 +28,15 @@
             <button id="lang-switcher" class="btn-lang-switcher" type="button" aria-label="Cambiar idioma">
               <i class="bi bi-translate"></i> EN
             </button>
-            <a class="btn btn-outline-light" href="/static/components/login.html"><i class="bi bi-person-circle"></i>
-              <span data-i18n="navbar.login" data-route="login.html">Iniciar Sesión</span></a>
+            <div class="auth-wrapper" style="display:inline-block; position:relative;">
+              <a id="auth-btn" class="btn btn-outline-light" href="/static/components/login.html"><i
+                  class="bi bi-person-circle"></i>
+                <span data-i18n="navbar.login" data-route="login.html">Iniciar Sesión</span></a>
+              <div id="auth-dropdown" class="auth-dropdown-menu"
+                style="display:none; position:absolute; min-width:160px; background:#fff; color:#000; box-shadow:0 4px 10px rgba(0,0,0,.12); border-radius:6px; padding:6px 0; z-index:2500;">
+                <!-- Items populated dynamically -->
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -61,15 +68,199 @@
       console.log('[Navbar] Error parsing user from localStorage:', e);
     }
   }
+
+  // Actualiza el texto del botón de autenticación para mostrar el nombre del usuario si está logueado
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function updateAuthButton() {
+    var btn = document.getElementById('auth-btn');
+    if (!btn) return;
+    var authSpan = btn.querySelector('span[data-i18n]');
+    if (authSpan && !authSpan.dataset.defaultText) {
+      authSpan.dataset.defaultText = authSpan.textContent || 'Iniciar Sesión';
+    }
+    try {
+      var user = JSON.parse(localStorage.getItem('user'));
+      if (user && (user.name || user.username || user.email)) {
+        var display = user.name || user.username || user.email || authSpan.dataset.defaultText;
+        // mostrar solo el primer nombre si viene completo
+        if (display.indexOf && display.indexOf(' ') > -1) display = display.split(' ')[0];
+        display = escapeHtml(display);
+        if (authSpan) {
+          authSpan.textContent = display;
+        }
+        btn.setAttribute('aria-label', 'Cuenta de ' + display);
+        // Preparar dropdown para usuarios logueados
+        prepareAuthDropdown(user);
+        // cuando está logueado, evitar navegación al login y abrir dropdown al hacer click
+        btn.setAttribute('href', '#');
+        btn.addEventListener('click', onAuthBtnClick);
+      } else {
+        // Restaurar texto por defecto (permanece compatible con i18n)
+        if (authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
+        btn.setAttribute('aria-label', authSpan.dataset.defaultText || 'Iniciar Sesión');
+        removeAuthBtnBehavior();
+      }
+    } catch (e) {
+      console.log('[Navbar] updateAuthButton error:', e);
+      if (authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
+    }
+  }
+
+  // Escuchar cambios de localStorage desde otras pestañas
+  window.addEventListener('storage', function (e) {
+    if (e.key === 'user') updateAuthButton();
+  });
   if (window.i18next) {
     window.i18next.on('languageChanged', updateLangBtn);
     document.addEventListener('DOMContentLoaded', function () {
       updateLangBtn();
       showDevPanelLinkIfDev();
+      updateAuthButton();
     });
     setTimeout(function () {
       updateLangBtn();
       showDevPanelLinkIfDev();
+      updateAuthButton();
     }, 100);
+  }
+
+  // En caso de que i18next no esté presente, igualmente actualizamos al cargar
+  document.addEventListener('DOMContentLoaded', function () {
+    updateAuthButton();
+    showDevPanelLinkIfDev();
+  });
+  setTimeout(function () {
+    updateAuthButton();
+    showDevPanelLinkIfDev();
+  }, 100);
+
+  // ------------------------------
+  // Dropdown de autenticación
+  // ------------------------------
+  var _authDropdownOpen = false;
+  function clearAuthDropdown() {
+    var dd = document.getElementById('auth-dropdown');
+    if (!dd) return;
+    dd.innerHTML = '';
+  }
+
+  function prepareAuthDropdown(user) {
+    var dd = document.getElementById('auth-dropdown');
+    if (!dd) return;
+    clearAuthDropdown();
+    // Opción Cerrar sesión
+    var logoutItem = document.createElement('button');
+    logoutItem.className = 'dropdown-item';
+    logoutItem.style.cssText = 'display:block;border:none;background:transparent;width:100%;text-align:left;padding:8px 12px;cursor:pointer;';
+    logoutItem.textContent = 'Cerrar sesión';
+    logoutItem.addEventListener('click', function (e) {
+      e.preventDefault();
+      doLogout();
+    });
+    // Añadir opción de DevPanel si rol === 'dev'
+    if (user && user.role === 'dev') {
+      var devItem = document.createElement('a');
+      devItem.className = 'dropdown-item';
+      devItem.style.cssText = 'display:block;padding:8px 12px;color:inherit;text-decoration:none;';
+      devItem.href = '/static/components/dev-panel.html';
+      devItem.textContent = 'Panel Dev';
+      dd.appendChild(devItem);
+    }
+    dd.appendChild(logoutItem);
+  }
+
+  function onAuthBtnClick(e) {
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem('user')); } catch (err) { user = null; }
+    if (!user) return; // dejar la navegación por defecto si no hay usuario
+    e.preventDefault();
+    toggleAuthDropdown();
+  }
+
+  function toggleAuthDropdown() {
+    var dd = document.getElementById('auth-dropdown');
+    var btn = document.getElementById('auth-btn');
+    if (!dd || !btn) return;
+    if (_authDropdownOpen) {
+      dd.style.display = 'none';
+      _authDropdownOpen = false;
+      return;
+    }
+    // posicionar dropdown debajo del botón
+    var rect = btn.getBoundingClientRect();
+    // colocar a la derecha del botón si está muy a la izquierda
+    dd.style.minWidth = Math.max(140, rect.width) + 'px';
+    dd.style.left = (rect.left + window.scrollX) + 'px';
+    dd.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+    dd.style.display = 'block';
+    _authDropdownOpen = true;
+    // cerrar al hacer click fuera
+    setTimeout(function () {
+      window.addEventListener('click', onWindowClickClose);
+      window.addEventListener('resize', closeAuthDropdown);
+      window.addEventListener('scroll', closeAuthDropdown);
+      window.addEventListener('keydown', onKeyDownAuthDropdown);
+    }, 0);
+  }
+
+  function closeAuthDropdown() {
+    var dd = document.getElementById('auth-dropdown');
+    if (!dd) return;
+    dd.style.display = 'none';
+    _authDropdownOpen = false;
+    window.removeEventListener('click', onWindowClickClose);
+    window.removeEventListener('resize', closeAuthDropdown);
+    window.removeEventListener('scroll', closeAuthDropdown);
+    window.removeEventListener('keydown', onKeyDownAuthDropdown);
+  }
+
+  function onWindowClickClose(e) {
+    var dd = document.getElementById('auth-dropdown');
+    var btn = document.getElementById('auth-btn');
+    if (!dd || !btn) return;
+    if (dd.contains(e.target) || btn.contains(e.target)) return;
+    closeAuthDropdown();
+  }
+
+  function onKeyDownAuthDropdown(e) {
+    if (e.key === 'Escape') closeAuthDropdown();
+  }
+
+  function doLogout() {
+    try {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      localStorage.removeItem('dev_token');
+    } catch (e) {
+      console.log('[Navbar] logout error:', e);
+    }
+    closeAuthDropdown();
+    // Actualizar la UI dinámicamente sin recargar
+    try {
+      if (typeof updateAuthButton === 'function') updateAuthButton();
+      if (typeof showDevPanelLinkIfDev === 'function') showDevPanelLinkIfDev();
+      if (typeof window.initDropdowns === 'function') window.initDropdowns();
+    } catch (e) {
+      console.log('[Navbar] error updating UI after logout:', e);
+      // fallback a recarga si algo falla (muy raro)
+      window.location.reload();
+    }
+  }
+
+  function removeAuthBtnBehavior() {
+    var btn = document.getElementById('auth-btn');
+    if (!btn) return;
+    btn.setAttribute('href', '/static/components/login.html');
+    try { btn.removeEventListener('click', onAuthBtnClick); } catch (e) { }
+    closeAuthDropdown();
   }
 </script>
