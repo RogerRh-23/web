@@ -236,12 +236,12 @@
                 localStorage.setItem('user', JSON.stringify(userInfo));
                 localStorage.setItem('token', data.access_token);
                 console.log('[LOGIN] Usuario guardado:', userInfo);
-                
+
                 // Mostrar snackbar de éxito
                 if (window.snackbarLoginSuccess) {
                   window.snackbarLoginSuccess();
                 }
-                
+
                 // Redirigir a la página principal después del login exitoso
                 setTimeout(function () {
                   console.log('[LOGIN] Redirigiendo a página principal...');
