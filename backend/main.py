@@ -99,7 +99,9 @@ def get_routes():
 
 # Servir archivos estáticos del frontend en /static
 from fastapi.staticfiles import StaticFiles
-public_path = "public"
+import os
+# Ruta relativa desde backend/ hacia public/
+public_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "public")
 app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
