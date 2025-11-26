@@ -15,42 +15,11 @@
     }
   });
   document.addEventListener('DOMContentLoaded', function () {
-    // DEBUG: detectar navegaciones/recargas inesperadas
-    try {
-      window.addEventListener('beforeunload', function (e) { console.log('[DEBUG] beforeunload fired', e); });
-      window.addEventListener('unload', function () { console.log('[DEBUG] unload fired'); });
-    } catch (e) { console.log('[DEBUG] unload listener error', e); }
 
-    // Global click tracer to diagnose unhandled clicks
-    try {
-      window.addEventListener('click', function (ev) {
-        try {
-          var t = ev.target;
-          var desc = (t && (t.id || t.className || t.tagName)) || String(t);
-          console.log('[DEBUG] global click detected on', desc, ev);
-        } catch (ex) { console.log('[DEBUG] global click log error', ex); }
-      }, true); // capture phase to see events early
-    } catch (e) { console.log('[DEBUG] add global click listener error', e); }
 
-    // Safety bridge: ensure #btn-login always triggers the form submit handler
-    try {
-      var bridgeBtn = document.getElementById('btn-login');
-      if (bridgeBtn) {
-        bridgeBtn.addEventListener('click', function (ev) {
-          try {
-            console.log('[DEBUG] bridge: btn-login clicked', ev);
-            ev.preventDefault(); ev.stopPropagation();
-            var frm = document.getElementById('login-form');
-            if (frm) {
-              var submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-              frm.dispatchEvent(submitEvent);
-            } else {
-              console.log('[DEBUG] bridge: login form not found');
-            }
-          } catch (err) { console.log('[DEBUG] bridge click error', err); }
-        }, true);
-      }
-    } catch (e) { console.log('[DEBUG] add bridge btn-login listener error', e); }
+
+
+
 
     function getAccessTokenFromHash() {
       const hash = window.location.hash;
@@ -103,13 +72,13 @@
     const microsoftBtn = document.querySelector('.social-btn.microsoft, .register-social-btn.microsoft');
     if (googleBtn) {
       googleBtn.addEventListener('click', function (ev) {
-        console.log('[DEBUG] google social button clicked', ev);
+
         localStorage.setItem('oauth_provider', 'google');
       });
     }
     if (microsoftBtn) {
       microsoftBtn.addEventListener('click', function (ev) {
-        console.log('[DEBUG] microsoft social button clicked', ev);
+
         localStorage.setItem('oauth_provider', 'microsoft');
       });
     }
@@ -210,10 +179,18 @@
         // --- LOGIN TRADICIONAL ---
         const loginForm = document.getElementById('login-form');
         if (loginForm) {
-          console.log('[DEBUG] login handler attached to #login-form');
+          // Add button click handler immediately
+          const btnLogin = document.getElementById('btn-login');
+          if (btnLogin) {
+            btnLogin.addEventListener('click', function (ev) {
+              ev.preventDefault();
+              var submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+              loginForm.dispatchEvent(submitEvent);
+            });
+          }
+          
           loginForm.addEventListener('submit', async function (e) {
-            console.log('[DEBUG] login submit event', e);
-            try { e.preventDefault(); } catch (ex) { console.log('[DEBUG] preventDefault error', ex); }
+            e.preventDefault();
             const username = loginForm["usuario"].value.trim();
             const password = loginForm["password"].value;
             const params = new URLSearchParams();
@@ -229,31 +206,29 @@
               });
               const data = await res.json();
               if (res.ok && data.access_token) {
-                console.log('[DEBUG] login fetch success', data);
                 // Decodifica el JWT para obtener el rol
                 const payload = JSON.parse(atob(data.access_token.split('.')[1]));
                 const userInfo = { username, role: payload.role };
                 localStorage.setItem('user', JSON.stringify(userInfo));
                 localStorage.setItem('token', data.access_token);
-                console.log('[LOGIN] Usuario guardado:', userInfo);
 
                 // Mostrar snackbar de éxito
                 if (window.snackbarLoginSuccess) {
                   window.snackbarLoginSuccess();
                 }
 
-                // Redirigir a la página principal después del login exitoso
+                // Actualizar la navbar dinámicamente sin recargar la página
                 setTimeout(function () {
-                  console.log('[LOGIN] Redirigiendo a página principal...');
-                  // Redirigir dependiendo del rol
-                  if (payload.role === 'dev') {
-                    window.location.href = '/static/components/dev-panel.html';
-                  } else {
-                    window.location.href = '/static/index.html';
+                  try {
+                    if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+                    if (typeof showDevPanelLinkIfDev === 'function') showDevPanelLinkIfDev();
+                    if (typeof window.initDropdowns === 'function') window.initDropdowns();
+                    if (typeof window.initMobileMenuDropdown === 'function') window.initMobileMenuDropdown();
+                  } catch (e) {
+                    console.log('[Login] Error updating navbar:', e);
                   }
-                }, 1500); // Dar tiempo para que se vea el snackbar
+                }, 250);
               } else {
-                console.log('[DEBUG] login fetch failed response', res.status, data);
                 console.log('[LOGIN ERROR] Status:', res.status, 'Response:', data);
                 if (window.snackbarLoginError) {
                   window.snackbarLoginError();
@@ -283,19 +258,7 @@
             }
             cover.classList.add('cover-move-left');
           }
-          // Also attach click to the explicit login button to avoid native submit surprises
-          try {
-            var btnLogin = document.getElementById('btn-login');
-            if (btnLogin) {
-              btnLogin.addEventListener('click', function (ev) {
-                console.log('[DEBUG] login button clicked', ev);
-                try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch (err) { console.log('[DEBUG] click prevent error', err); }
-                // dispatch submit event to trigger the existing handler
-                var submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-                loginForm.dispatchEvent(submitEvent);
-              });
-            }
-          } catch (e) { console.log('[DEBUG] attach btn-login error', e); }
+          // Button handler is now set up during DOM load
           signInTexts.forEach(el => el.classList.add('hide-signin'));
           if (registerForm) {
             registerForm.classList.remove('hide-signin');
@@ -463,19 +426,44 @@
               if (window.updateI18nContent) window.updateI18nContent();
               if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
               if (typeof window.runDevPanelMobileCheck === 'function') window.runDevPanelMobileCheck();
-              if (!window._dropdownScriptLoaded) {
-                const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
-                script.onload = function () {
-                  window._dropdownScriptLoaded = true;
+              // Load navbar-init.js for mobile too
+              if (!window._navbarInitLoaded) {
+                const navbarInitScript = document.createElement('script');
+                navbarInitScript.src = '../js/navbar-init.js';
+                navbarInitScript.onload = function () {
+                  window._navbarInitLoaded = true;
+                  if (!window._dropdownScriptLoaded) {
+                    const script = document.createElement('script');
+                    script.src = '../js/navbar-dropdown.js';
+                    script.onload = function () {
+                      window._dropdownScriptLoaded = true;
+                      if (typeof window.initDropdowns === 'function') {
+                        window.initDropdowns();
+                      }
+                    };
+                    document.body.appendChild(script);
+                  } else {
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  }
+                };
+                document.body.appendChild(navbarInitScript);
+              } else {
+                if (!window._dropdownScriptLoaded) {
+                  const script = document.createElement('script');
+                  script.src = '../js/navbar-dropdown.js';
+                  script.onload = function () {
+                    window._dropdownScriptLoaded = true;
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  };
+                  document.body.appendChild(script);
+                } else {
                   if (typeof window.initDropdowns === 'function') {
                     window.initDropdowns();
                   }
-                };
-                document.body.appendChild(script);
-              } else {
-                if (typeof window.initDropdowns === 'function') {
-                  window.initDropdowns();
                 }
               }
             });
@@ -493,19 +481,46 @@
               setTimeout(function () {
                 if (typeof window.showDevPanelLinkIfDev === 'function') window.showDevPanelLinkIfDev();
               }, 50);
-              if (!window._dropdownScriptLoaded) {
-                const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
-                script.onload = function () {
-                  window._dropdownScriptLoaded = true;
+              // Load navbar-init.js first (contains updateAuthButton)
+              if (!window._navbarInitLoaded) {
+                const navbarInitScript = document.createElement('script');
+                navbarInitScript.src = '../js/navbar-init.js';
+                navbarInitScript.onload = function () {
+                  window._navbarInitLoaded = true;
+                  // Then load dropdown script
+                  if (!window._dropdownScriptLoaded) {
+                    const script = document.createElement('script');
+                    script.src = '../js/navbar-dropdown.js';
+                    script.onload = function () {
+                      window._dropdownScriptLoaded = true;
+                      if (typeof window.initDropdowns === 'function') {
+                        window.initDropdowns();
+                      }
+                    };
+                    document.body.appendChild(script);
+                  } else {
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  }
+                };
+                document.body.appendChild(navbarInitScript);
+              } else {
+                // navbar-init already loaded, just load dropdown if needed
+                if (!window._dropdownScriptLoaded) {
+                  const script = document.createElement('script');
+                  script.src = '../js/navbar-dropdown.js';
+                  script.onload = function () {
+                    window._dropdownScriptLoaded = true;
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  };
+                  document.body.appendChild(script);
+                } else {
                   if (typeof window.initDropdowns === 'function') {
                     window.initDropdowns();
                   }
-                };
-                document.body.appendChild(script);
-              } else {
-                if (typeof window.initDropdowns === 'function') {
-                  window.initDropdowns();
                 }
               }
             });
