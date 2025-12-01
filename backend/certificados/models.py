@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 class Certificado(BaseModel):
@@ -17,6 +17,10 @@ class Certificado(BaseModel):
     sector_iaf: str                       # Sector IAF
     codigo_nace: str                      # Código NACE
     referencia_normativa: str             # Referencia normativa (ISO 9001, etc.)
+    alcance_certificacion: str            # Alcance de la certificación
+    
+    # Instalaciones/Ubicaciones (puede ser múltiples)
+    instalaciones: List[str]              # Lista de ubicaciones/instalaciones
     
     # Enlaces y archivos
     link_iaf: str                         # Link a la página del IAF
@@ -38,6 +42,8 @@ class CertificadoCreate(BaseModel):
     sector_iaf: str
     codigo_nace: str
     referencia_normativa: str
+    alcance_certificacion: str
+    instalaciones: List[str]
     link_iaf: str
 
 class CertificadoUpdate(BaseModel):
@@ -50,4 +56,6 @@ class CertificadoUpdate(BaseModel):
     sector_iaf: Optional[str] = None
     codigo_nace: Optional[str] = None
     referencia_normativa: Optional[str] = None
+    alcance_certificacion: Optional[str] = None
+    instalaciones: Optional[List[str]] = None
     link_iaf: Optional[str] = None

@@ -5,16 +5,16 @@
     <h3 data-i18n="certificates.edit_certificate.title">Editar certificado</h3>
     <form id="formEditarCertificado">
       <input type="hidden" id="edit-certificado-id" name="certificadoId">
-      
+
       <label for="edit-nombreEmpresa">Nombre de la empresa</label>
       <input type="text" id="edit-nombreEmpresa" name="nombreEmpresa" required>
-      
+
       <label for="edit-numeroCertificado">No. de Certificado</label>
       <input type="text" id="edit-numeroCertificado" name="numeroCertificado" required>
-      
+
       <label for="edit-idEmpresa">ID de la empresa</label>
       <input type="text" id="edit-idEmpresa" name="idEmpresa" required>
-      
+
       <label for="edit-estado">Estado/Estatus</label>
       <select id="edit-estado" name="estado" required>
         <option value="Vigente">Vigente</option>
@@ -22,28 +22,40 @@
         <option value="Vencido">Vencido</option>
         <option value="Cancelado">Cancelado</option>
       </select>
-      
+
       <label for="edit-fechaEmision">Fecha de emisión</label>
       <input type="date" id="edit-fechaEmision" name="fechaEmision" required>
-      
+
       <label for="edit-fechaVigencia">Fecha de vigencia</label>
       <input type="date" id="edit-fechaVigencia" name="fechaVigencia" required>
-      
+
       <label for="edit-sectorIaf">Sector IAF</label>
       <input type="text" id="edit-sectorIaf" name="sectorIaf" required>
-      
+
       <label for="edit-codigoNace">Código NACE</label>
       <input type="text" id="edit-codigoNace" name="codigoNace" required>
-      
+
       <label for="edit-referenciaNormativa">Referencia normativa</label>
       <input type="text" id="edit-referenciaNormativa" name="referenciaNormativa" required>
+
+      <label for="edit-alcanceCertificacion">Alcance de la certificación</label>
+      <textarea id="edit-alcanceCertificacion" name="alcanceCertificacion" required rows="3" placeholder="Describa el alcance de la certificación"></textarea>
       
+      <label>Instalaciones/Ubicaciones</label>
+      <div id="edit-instalaciones-container">
+        <div class="instalacion-input-group">
+          <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+          <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+        </div>
+      </div>
+      <button type="button" id="edit-btn-add-instalacion" class="btn-add-instalacion" onclick="addInstalacion('edit')">+ Agregar ubicación</button>
+
       <label for="edit-linkIaf">Link a la página del IAF</label>
       <input type="url" id="edit-linkIaf" name="linkIaf" required>
-      
+
       <label for="edit-archivoPdf">Archivo PDF (opcional)</label>
       <input type="file" id="edit-archivoPdf" name="archivoPdf" accept=".pdf">
-      
+
       <button type="submit" class="btn btn-success">Guardar cambios</button>
     </form>
   </div>
@@ -55,16 +67,16 @@
     <button class="close-modal" id="cerrarModalCertificado" title="Cerrar">&times;</button>
     <h3 data-i18n="certificates.add_certificate.title">Agregar nuevo certificado</h3>
     <form id="formAgregarCertificado">
-      
+
       <label for="nombreEmpresa">Nombre de la empresa</label>
       <input type="text" id="nombreEmpresa" name="nombreEmpresa" required>
-      
+
       <label for="numeroCertificado">No. de Certificado</label>
       <input type="text" id="numeroCertificado" name="numeroCertificado" required>
-      
+
       <label for="idEmpresa">ID de la empresa</label>
       <input type="text" id="idEmpresa" name="idEmpresa" required>
-      
+
       <label for="estado">Estado/Estatus</label>
       <select id="estado" name="estado" required>
         <option value="Vigente">Vigente</option>
@@ -72,28 +84,40 @@
         <option value="Vencido">Vencido</option>
         <option value="Cancelado">Cancelado</option>
       </select>
-      
+
       <label for="fechaEmision">Fecha de emisión</label>
       <input type="date" id="fechaEmision" name="fechaEmision" required>
-      
+
       <label for="fechaVigencia">Fecha de vigencia</label>
       <input type="date" id="fechaVigencia" name="fechaVigencia" required>
-      
+
       <label for="sectorIaf">Sector IAF</label>
       <input type="text" id="sectorIaf" name="sectorIaf" required>
-      
+
       <label for="codigoNace">Código NACE</label>
       <input type="text" id="codigoNace" name="codigoNace" required>
-      
+
       <label for="referenciaNormativa">Referencia normativa</label>
       <input type="text" id="referenciaNormativa" name="referenciaNormativa" required>
+
+      <label for="alcanceCertificacion">Alcance de la certificación</label>
+      <textarea id="alcanceCertificacion" name="alcanceCertificacion" required rows="3" placeholder="Describa el alcance de la certificación"></textarea>
       
+      <label>Instalaciones/Ubicaciones</label>
+      <div id="instalaciones-container">
+        <div class="instalacion-input-group">
+          <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+          <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+        </div>
+      </div>
+      <button type="button" id="btn-add-instalacion" class="btn-add-instalacion" onclick="addInstalacion('add')">+ Agregar ubicación</button>
+
       <label for="linkIaf">Link a la página del IAF</label>
       <input type="url" id="linkIaf" name="linkIaf" required>
-      
+
       <label for="archivoPdf">Archivo PDF</label>
       <input type="file" id="archivoPdf" name="archivoPdf" accept=".pdf" required>
-      
+
       <button type="submit" class="btn btn-success">Agregar certificado</button>
     </form>
   </div>
@@ -136,7 +160,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       z-index: 1000;
     }
 
@@ -239,10 +263,22 @@
       color: white;
     }
 
-    .badge-success { background-color: #28a745; }
-    .badge-warning { background-color: #ffc107; color: #000; }
-    .badge-danger { background-color: #dc3545; }
-    .badge-secondary { background-color: #6c757d; }
+    .badge-success {
+      background-color: #28a745;
+    }
+
+    .badge-warning {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .badge-danger {
+      background-color: #dc3545;
+    }
+
+    .badge-secondary {
+      background-color: #6c757d;
+    }
 
     .table {
       width: 100%;
@@ -262,7 +298,7 @@
       font-weight: 600;
     }
 
-    .certificado-datos > div {
+    .certificado-datos>div {
       margin-bottom: 0.75rem;
       padding: 0.5rem;
       background-color: #f8f9fa;
@@ -284,7 +320,7 @@
 <body>
   <div id="navbar-placeholder"></div>
   <main class="main-content-navbar-padding">
-    <div class="info-box">
+    <div class="certificados-section">
       <form class="certificados-search-form" id="formBuscarCertificado" autocomplete="off" style="margin-bottom: 2rem;">
         <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
           <div class="form-group" style="flex: 1 1 200px;">
@@ -299,13 +335,12 @@
           </div>
           <div class="form-group" style="flex: 1 1 200px;">
             <label for="search-id-empresa">ID de la empresa</label>
-            <input type="text" id="search-id-empresa" name="idEmpresa" class="form-control"
-              placeholder="Ej: EMP-001">
+            <input type="text" id="search-id-empresa" name="idEmpresa" class="form-control" placeholder="Ej: EMP-001">
           </div>
           <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
         </div>
       </form>
-      
+
       <!-- Botones de administración (solo para admin) -->
       <div class="admin-certificados-actions" id="adminActions" style="margin-bottom:2rem; display:none; gap:1rem;">
         <button type="button" id="btnAgregarCertificado" class="btn btn-success">
@@ -315,20 +350,20 @@
           <i class="bi bi-list"></i> Listar Todos
         </button>
       </div>
-      
+
       <!-- Mensajes de estado -->
       <div id="certificadosMensajes" style="margin-bottom: 1rem;"></div>
-      
-      <!-- Resultados de búsqueda y visualización -->
+
+          <!-- Resultados de búsqueda y visualización -->
       <div class="info-box" id="certificadoResultado" style="display:none;">
         <div class="certificado-info">
-          <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+          <div class="certificado-header">
             <h2 class="certificado-titulo">
               <i class="bi bi-patch-check-fill" style="color:#1976a5"></i>
               <span data-i18n="certificates.title">Certificado</span>
             </h2>
             <!-- Botones de edición/eliminación (solo admin) -->
-            <div class="admin-cert-actions" style="display:none; gap: 0.5rem;">
+            <div class="admin-cert-actions" style="display:none;">
               <button type="button" id="btnEditarCertificado" class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil"></i> Editar
               </button>
@@ -343,18 +378,16 @@
           </div>
           
           <!-- Código QR -->
-          <div class="certificado-qr" id="certificadoQR" style="margin-top: 2rem; text-align: center;">
+          <div class="certificado-qr" id="certificadoQR">
             <!-- El QR se mostrará aquí -->
           </div>
           
           <!-- Link al archivo PDF -->
-          <div class="certificado-archivo" id="certificadoArchivo" style="margin-top: 1rem;">
+          <div class="certificado-archivo" id="certificadoArchivo">
             <!-- El link al PDF se mostrará aquí -->
           </div>
         </div>
-      </div>
-      
-      <!-- Lista de certificados (solo admin) -->
+      </div>      <!-- Lista de certificados (solo admin) -->
       <div class="info-box" id="listaCertificados" style="display:none;">
         <h3>Lista de Certificados</h3>
         <div id="tablaCertificados">
@@ -371,6 +404,35 @@
   <script src="/static/js/navbar-dropdown.js"></script>
   <script src="/static/js/certificados-manager.js"></script>
   <script src="/static/js/footer.js"></script>
+
+  <script>
+    // Funciones para manejar instalaciones dinámicas
+    function addInstalacion(type) {
+      const containerId = type === 'edit' ? 'edit-instalaciones-container' : 'instalaciones-container';
+      const container = document.getElementById(containerId);
+      
+      const newGroup = document.createElement('div');
+      newGroup.className = 'instalacion-input-group';
+      newGroup.innerHTML = `
+        <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+        <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+      `;
+      
+      container.appendChild(newGroup);
+    }
+
+    function removeInstalacion(button) {
+      const group = button.parentElement;
+      const container = group.parentElement;
+      
+      // Solo permite eliminar si hay más de una instalación
+      if (container.children.length > 1) {
+        group.remove();
+      } else {
+        alert('Debe tener al menos una instalación/ubicación');
+      }
+    }
+  </script>
 
   <script>
     function loadNavbars() {

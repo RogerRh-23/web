@@ -28,7 +28,7 @@ class CertificadosManager {
             const response = await fetch('/auth/me', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            
+
             if (response.ok) {
                 const data = await response.json();
                 this.currentUser = {
@@ -68,21 +68,21 @@ class CertificadosManager {
         // Botones de administrador
         const btnAgregar = document.getElementById('btnAgregarCertificado');
         const btnListar = document.getElementById('btnListarCertificados');
-        
+
         if (btnAgregar) btnAgregar.addEventListener('click', () => this.mostrarModalAgregar());
         if (btnListar) btnListar.addEventListener('click', () => this.listarCertificados());
 
         // Formularios de agregar y editar
         const formAgregar = document.getElementById('formAgregarCertificado');
         const formEditar = document.getElementById('formEditarCertificado');
-        
+
         if (formAgregar) formAgregar.addEventListener('submit', (e) => this.agregarCertificado(e));
         if (formEditar) formEditar.addEventListener('submit', (e) => this.editarCertificado(e));
 
         // Botones de edición y eliminación
         const btnEditar = document.getElementById('btnEditarCertificado');
         const btnEliminar = document.getElementById('btnEliminarCertificado');
-        
+
         if (btnEditar) btnEditar.addEventListener('click', () => this.mostrarModalEditar());
         if (btnEliminar) btnEliminar.addEventListener('click', () => this.eliminarCertificado());
 
@@ -96,7 +96,7 @@ class CertificadosManager {
     async buscarCertificado(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        
+
         const numeroCertificado = formData.get('numeroCertificado');
         const nombreEmpresa = formData.get('nombreEmpresa');
         const idEmpresa = formData.get('idEmpresa');
@@ -113,7 +113,7 @@ class CertificadosManager {
             if (idEmpresa) params.append('id_empresa', idEmpresa);
 
             const response = await fetch(`${this.baseURL}/buscar/publico?${params}`);
-            
+
             if (response.ok) {
                 const certificado = await response.json();
                 this.mostrarCertificado(certificado);
@@ -135,7 +135,7 @@ class CertificadosManager {
         const datos = document.getElementById('certificadoDatos');
         const qrContainer = document.getElementById('certificadoQR');
         const archivoContainer = document.getElementById('certificadoArchivo');
-        
+
         if (!resultado || !datos) return;
 
         // Llenar datos
@@ -149,6 +149,12 @@ class CertificadosManager {
             <div><strong>Sector IAF:</strong> ${certificado.sector_iaf}</div>
             <div><strong>Código NACE:</strong> ${certificado.codigo_nace}</div>
             <div><strong>Referencia normativa:</strong> ${certificado.referencia_normativa}</div>
+            <div><strong>Alcance de la certificación:</strong> ${certificado.alcance_certificacion}</div>
+            <div><strong>Instalaciones:</strong> 
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                    ${certificado.instalaciones.map(inst => `<li>${inst}</li>`).join('')}
+                </ul>
+            </div>
             <div><strong>Link IAF:</strong> <a href="${certificado.link_iaf}" target="_blank" rel="noopener">${certificado.link_iaf}</a></div>
         `;
 
@@ -182,7 +188,7 @@ class CertificadosManager {
     getStatusClass(estado) {
         const statusMap = {
             'Vigente': 'success',
-            'Suspendido': 'warning', 
+            'Suspendido': 'warning',
             'Vencido': 'danger',
             'Cancelado': 'secondary'
         };
@@ -216,7 +222,7 @@ class CertificadosManager {
     mostrarListaCertificados(certificados) {
         const container = document.getElementById('listaCertificados');
         const tabla = document.getElementById('tablaCertificados');
-        
+
         if (!container || !tabla) return;
 
         let html = `
@@ -256,7 +262,7 @@ class CertificadosManager {
 
         tabla.innerHTML = html;
         container.style.display = 'block';
-        
+
         // Ocultar certificado individual
         this.ocultarCertificado();
     }
@@ -269,10 +275,10 @@ class CertificadosManager {
 
     mostrarModalEditar() {
         if (!this.isAdmin() || !this.currentCertificate) return;
-        
+
         const modal = document.getElementById('modalEditarCertificado');
         const form = document.getElementById('formEditarCertificado');
-        
+
         if (!modal || !form) return;
 
         // Llenar formulario con datos actuales
@@ -287,7 +293,32 @@ class CertificadosManager {
         document.getElementById('edit-sectorIaf').value = cert.sector_iaf || '';
         document.getElementById('edit-codigoNace').value = cert.codigo_nace || '';
         document.getElementById('edit-referenciaNormativa').value = cert.referencia_normativa || '';
+        document.getElementById('edit-alcanceCertificacion').value = cert.alcance_certificacion || '';
         document.getElementById('edit-linkIaf').value = cert.link_iaf || '';
+
+        // Llenar instalaciones
+        const editContainer = document.getElementById('edit-instalaciones-container');
+        editContainer.innerHTML = '';
+        if (cert.instalaciones && cert.instalaciones.length > 0) {
+            cert.instalaciones.forEach(instalacion => {
+                const div = document.createElement('div');
+                div.className = 'instalacion-input-group';
+                div.innerHTML = `
+                    <input type="text" name="instalaciones[]" value="${instalacion}" required>
+                    <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+                `;
+                editContainer.appendChild(div);
+            });
+        } else {
+            // Si no hay instalaciones, agregar una vacía
+            const div = document.createElement('div');
+            div.className = 'instalacion-input-group';
+            div.innerHTML = `
+                <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+                <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+            `;
+            editContainer.appendChild(div);
+        }
 
         modal.style.display = 'block';
     }
@@ -298,6 +329,11 @@ class CertificadosManager {
 
         const formData = new FormData(e.target);
         
+        // Recoger instalaciones del formulario de agregar
+        const instalaciones = Array.from(document.querySelectorAll('#modalAgregarCertificado input[name="instalaciones[]"]'))
+            .map(input => input.value.trim())
+            .filter(value => value.length > 0);
+
         const certificadoData = {
             nombre_empresa: formData.get('nombreEmpresa'),
             numero_certificado: formData.get('numeroCertificado'),
@@ -308,10 +344,10 @@ class CertificadosManager {
             sector_iaf: formData.get('sectorIaf'),
             codigo_nace: formData.get('codigoNace'),
             referencia_normativa: formData.get('referenciaNormativa'),
+            alcance_certificacion: formData.get('alcanceCertificacion'),
+            instalaciones: instalaciones,
             link_iaf: formData.get('linkIaf')
-        };
-
-        try {
+        };        try {
             const response = await fetch(`${this.baseURL}/`, {
                 method: 'POST',
                 headers: {
@@ -343,6 +379,11 @@ class CertificadosManager {
         const formData = new FormData(e.target);
         const certificadoId = formData.get('certificadoId');
         
+        // Recoger instalaciones del formulario de editar
+        const instalaciones = Array.from(document.querySelectorAll('#modalEditarCertificado input[name="instalaciones[]"]'))
+            .map(input => input.value.trim())
+            .filter(value => value.length > 0);
+        
         const certificadoData = {
             nombre_empresa: formData.get('nombreEmpresa'),
             numero_certificado: formData.get('numeroCertificado'),
@@ -353,10 +394,10 @@ class CertificadosManager {
             sector_iaf: formData.get('sectorIaf'),
             codigo_nace: formData.get('codigoNace'),
             referencia_normativa: formData.get('referenciaNormativa'),
+            alcance_certificacion: formData.get('alcanceCertificacion'),
+            instalaciones: instalaciones,
             link_iaf: formData.get('linkIaf')
-        };
-
-        try {
+        };        try {
             const response = await fetch(`${this.baseURL}/${certificadoId}`, {
                 method: 'PUT',
                 headers: {
@@ -369,7 +410,7 @@ class CertificadosManager {
             if (response.ok) {
                 this.mostrarMensaje('Certificado actualizado exitosamente', 'success');
                 this.cerrarModales();
-                
+
                 // Actualizar certificado actual con los nuevos datos
                 Object.assign(this.currentCertificate, certificadoData);
                 this.mostrarCertificado(this.currentCertificate);
@@ -450,7 +491,7 @@ class CertificadosManager {
                 const certificado = await response.json();
                 this.currentCertificate = certificado;
                 this.mostrarCertificado(certificado);
-                
+
                 // Ocultar lista
                 const lista = document.getElementById('listaCertificados');
                 if (lista) lista.style.display = 'none';
