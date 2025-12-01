@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
               updateContent();
               if (window.updateI18nContent) window.updateI18nContent();
               updateLangBtnAll();
+              // Mantener el nombre del usuario después del cambio de idioma
+              setTimeout(function () {
+                if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+              }, 150);
               // Solo recargar si el idioma realmente cambió
               if (i18next.language === lang) {
                 setTimeout(function () {
@@ -72,9 +76,15 @@ document.addEventListener('DOMContentLoaded', function () {
   // Traducir cuando i18next esté listo o cargue recursos (para cards dinámicas)
   i18next.on('initialized', function () {
     if (window.updateI18nContent) window.updateI18nContent();
+    setTimeout(function () {
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+    }, 50);
   });
   i18next.on('loaded', function () {
     if (window.updateI18nContent) window.updateI18nContent();
+    setTimeout(function () {
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+    }, 50);
   });
 
   function updateContent() {
@@ -91,6 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
     if (window.updateI18nContent && window.updateI18nContent !== updateContent) window.updateI18nContent();
+    // Mantener el nombre del usuario después de las traducciones
+    setTimeout(function () {
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+    }, 10);
   }
   // Language switcher (debe estar dentro del DOMContentLoaded)
   var langBtn = document.getElementById('lang-switcher');
@@ -102,6 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnMobile) btnMobile.innerHTML = '<i class="bi bi-translate"></i> ' + nextLang;
     // Forzar traducción en mobile también
     setTimeout(updateContent, 50);
+    // Mantener el nombre del usuario después de cambiar idioma
+    setTimeout(function () {
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+    }, 100);
   }
   updateLangBtnAll();
   function handleLangSwitch() {
@@ -119,6 +137,10 @@ document.addEventListener('DOMContentLoaded', function () {
         updateLangBtnAll();
         // Forzar traducción en mobile tras cambio de idioma
         setTimeout(updateContent, 50);
+        // Mantener el nombre del usuario después del cambio de idioma
+        setTimeout(function () {
+          if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+        }, 150);
       });
       updateContent();
       setTimeout(updateContent, 50);

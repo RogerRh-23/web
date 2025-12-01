@@ -250,19 +250,49 @@
               mobilePlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.initLangSwitchers) window.initLangSwitchers();
-              if (!window._dropdownScriptLoaded) {
-                const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
-                script.onload = function () {
-                  window._dropdownScriptLoaded = true;
+              // Load navbar-init.js first (contains updateAuthButton)
+              if (!window._navbarInitLoaded) {
+                const navbarInitScript = document.createElement('script');
+                navbarInitScript.src = '../js/navbar-init.js';
+                navbarInitScript.onload = function () {
+                  window._navbarInitLoaded = true;
+                  // Update auth button after loading
+                  if (typeof window.updateAuthButton === 'function') {
+                    window.updateAuthButton();
+                  }
+                  // Then load dropdown script
+                  if (!window._dropdownScriptLoaded) {
+                    const script = document.createElement('script');
+                    script.src = '../js/navbar-dropdown.js';
+                    script.onload = function () {
+                      window._dropdownScriptLoaded = true;
+                      if (typeof window.initDropdowns === 'function') {
+                        window.initDropdowns();
+                      }
+                    };
+                    document.body.appendChild(script);
+                  } else {
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  }
+                };
+                document.body.appendChild(navbarInitScript);
+              } else {
+                if (!window._dropdownScriptLoaded) {
+                  const script = document.createElement('script');
+                  script.src = '../js/navbar-dropdown.js';
+                  script.onload = function () {
+                    window._dropdownScriptLoaded = true;
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  };
+                  document.body.appendChild(script);
+                } else {
                   if (typeof window.initDropdowns === 'function') {
                     window.initDropdowns();
                   }
-                };
-                document.body.appendChild(script);
-              } else {
-                if (typeof window.initDropdowns === 'function') {
-                  window.initDropdowns();
                 }
               }
             });
@@ -276,19 +306,49 @@
               desktopPlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.initLangSwitchers) window.initLangSwitchers();
-              if (!window._dropdownScriptLoaded) {
-                const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
-                script.onload = function () {
-                  window._dropdownScriptLoaded = true;
+              // Load navbar-init.js first (contains updateAuthButton)
+              if (!window._navbarInitLoaded) {
+                const navbarInitScript = document.createElement('script');
+                navbarInitScript.src = '../js/navbar-init.js';
+                navbarInitScript.onload = function () {
+                  window._navbarInitLoaded = true;
+                  // Update auth button after loading
+                  if (typeof window.updateAuthButton === 'function') {
+                    window.updateAuthButton();
+                  }
+                  // Then load dropdown script
+                  if (!window._dropdownScriptLoaded) {
+                    const script = document.createElement('script');
+                    script.src = '../js/navbar-dropdown.js';
+                    script.onload = function () {
+                      window._dropdownScriptLoaded = true;
+                      if (typeof window.initDropdowns === 'function') {
+                        window.initDropdowns();
+                      }
+                    };
+                    document.body.appendChild(script);
+                  } else {
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  }
+                };
+                document.body.appendChild(navbarInitScript);
+              } else {
+                if (!window._dropdownScriptLoaded) {
+                  const script = document.createElement('script');
+                  script.src = '../js/navbar-dropdown.js';
+                  script.onload = function () {
+                    window._dropdownScriptLoaded = true;
+                    if (typeof window.initDropdowns === 'function') {
+                      window.initDropdowns();
+                    }
+                  };
+                  document.body.appendChild(script);
+                } else {
                   if (typeof window.initDropdowns === 'function') {
                     window.initDropdowns();
                   }
-                };
-                document.body.appendChild(script);
-              } else {
-                if (typeof window.initDropdowns === 'function') {
-                  window.initDropdowns();
                 }
               }
             });

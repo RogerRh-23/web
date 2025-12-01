@@ -10,7 +10,7 @@
       try {
         window.showDevPanelLinkIfDevMobile();
       } catch (e) {
-        console.log('[login] showDevPanelLinkIfDevMobile call failed', e);
+        // Silently handle mobile navbar errors
       }
     }
   });
@@ -212,6 +212,11 @@
                 localStorage.setItem('user', JSON.stringify(userInfo));
                 localStorage.setItem('token', data.access_token);
 
+                // Si es desarrollador, también guardar como dev_token para el panel dev
+                if (payload.role === 'dev') {
+                  localStorage.setItem('dev_token', data.access_token);
+                }
+
                 // Mostrar snackbar de éxito
                 if (window.snackbarLoginSuccess) {
                   window.snackbarLoginSuccess();
@@ -225,17 +230,15 @@
                     if (typeof window.initDropdowns === 'function') window.initDropdowns();
                     if (typeof window.initMobileMenuDropdown === 'function') window.initMobileMenuDropdown();
                   } catch (e) {
-                    console.log('[Login] Error updating navbar:', e);
+                    // Silently handle navbar update errors
                   }
                 }, 250);
               } else {
-                console.log('[LOGIN ERROR] Status:', res.status, 'Response:', data);
                 if (window.snackbarLoginError) {
                   window.snackbarLoginError();
                 }
               }
             } catch (err) {
-              console.log('[LOGIN ERROR] Exception during login:', err);
               if (window.snackbarLoginError) {
                 window.snackbarLoginError();
               }

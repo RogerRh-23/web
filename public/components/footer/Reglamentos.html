@@ -1,4 +1,4 @@
-<!-- Página: Reglamentos -->
+﻿<!-- Página: Reglamentos -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -46,6 +46,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <script src="/static/js/navbar-init.js"></script>
   <script src="/static/js/gsap.js"></script>
   <script src="/static/js/navbar-dropdown.js"></script>
 
@@ -68,9 +69,11 @@
       const observer = new window.IntersectionObserver(updateNavbar, { threshold: 0.1 });
       observer.observe(hero);
     });
+
     function isMobile() {
       return window.innerWidth < 992;
     }
+
     function loadNavbar() {
       const desktopPlaceholder = document.getElementById('navbar-placeholder');
       const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
@@ -84,6 +87,9 @@
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              setTimeout(function () {
+                if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+              }, 50);
               if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
@@ -112,6 +118,9 @@
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              setTimeout(function () {
+                if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+              }, 50);
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
                 script.src = '/static/js/navbar-dropdown.js';
@@ -131,81 +140,7 @@
         }
       }
     }
-    window.addEventListener('resize', loadNavbar);
-    window.addEventListener('DOMContentLoaded', loadNavbar);
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
-  <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
-  <script src="/static/js/gsap.js"></script>
-  <script src="/static/js/navbar-dropdown.js"></script>
 
-  <script>
-    // Navbar adaptativa: solo carga la versión correspondiente
-    function isMobile() {
-      return window.innerWidth < 992;
-    }
-    function loadNavbar() {
-      const desktopPlaceholder = document.getElementById('navbar-placeholder');
-      const mobilePlaceholder = document.getElementById('navbar-mobile-placeholder');
-      if (isMobile()) {
-        desktopPlaceholder.innerHTML = '';
-        if (!mobilePlaceholder.innerHTML) {
-          fetch('/static/components/navbar-mobile.html')
-            .then(res => res.text())
-            .then(html => {
-              mobilePlaceholder.innerHTML = html;
-              if (!window._dropdownScriptLoaded) {
-                const script = document.createElement('script');
-                script.src = '/static/js/navbar-dropdown.js';
-                script.onload = function () {
-                  window._dropdownScriptLoaded = true;
-                  if (typeof window.initDropdowns === 'function') {
-                    window.initDropdowns();
-                  }
-                  // Forzar listeners de idioma tras cargar navbar
-                  if (window.initLangSwitchers) window.initLangSwitchers();
-                };
-                document.body.appendChild(script);
-              } else {
-                if (typeof window.initDropdowns === 'function') {
-                  window.initDropdowns();
-                }
-                // Forzar listeners de idioma tras cargar navbar
-                if (window.initLangSwitchers) window.initLangSwitchers();
-              }
-            });
-        }
-      } else {
-        mobilePlaceholder.innerHTML = '';
-        if (!desktopPlaceholder.innerHTML) {
-          fetch('/static/components/navbar.html')
-            .then(res => res.text())
-            .then(html => {
-              desktopPlaceholder.innerHTML = html;
-              if (!window._dropdownScriptLoaded) {
-                const script = document.createElement('script');
-                script.src = '/static/js/navbar-dropdown.js';
-                script.onload = function () {
-                  window._dropdownScriptLoaded = true;
-                  if (typeof window.initDropdowns === 'function') {
-                    window.initDropdowns();
-                  }
-                  // Forzar listeners de idioma tras cargar navbar
-                  if (window.initLangSwitchers) window.initLangSwitchers();
-                };
-                document.body.appendChild(script);
-              } else {
-                if (typeof window.initDropdowns === 'function') {
-                  window.initDropdowns();
-                }
-                // Forzar listeners de idioma tras cargar navbar
-                if (window.initLangSwitchers) window.initLangSwitchers();
-              }
-            });
-        }
-      }
-    }
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
 
@@ -223,7 +158,7 @@
         });
         // Cargar script y luego inicializar footer
         var script = document.createElement('script');
-        script.src = '/js/footer.js';
+        script.src = '/static/js/footer.js';
         script.onload = function () {
           if (typeof window.initFooter === 'function') window.initFooter();
         };
@@ -233,6 +168,10 @@
         setTimeout(function () {
           if (window.updateLangBtnAll) window.updateLangBtnAll();
           if (window.updateI18nContent) window.updateI18nContent();
+          // Asegurar que updateAuthButton se ejecute después de i18n
+          setTimeout(function () {
+            if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+          }, 50);
         }, 200);
       });
 
@@ -243,7 +182,7 @@
       function updateThumb() {
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollTop = window.scrollY;
-        const thumbHeight = Math.max(window.innerHeight * (window.innerHeight / document.documentElement.scrollHeight), 40);
+        const thumbHeight = Math.max(window.innerWidth * (window.innerHeight / document.documentElement.scrollHeight), 40);
         const thumbTop = (scrollTop / docHeight) * (window.innerHeight - thumbHeight);
         thumb.style.height = thumbHeight + 'px';
         thumb.style.top = thumbTop + 'px';
@@ -273,6 +212,8 @@
       });
     });
   </script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/navbar-mobile-accordion.js"></script>
   <div class="floating-scrollbar">
     <div class="floating-scrollbar-thumb"></div>
   </div>

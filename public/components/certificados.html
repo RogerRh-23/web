@@ -70,6 +70,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
+  <script src="/static/js/navbar-init.js"></script>
   <style>
     @media (max-width: 991.98px) {
       #footer {
@@ -156,6 +157,7 @@
             setTimeout(function () {
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (window.updateI18nContent) window.updateI18nContent();
+              if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
             }, 200);
           });
       } else {
@@ -168,6 +170,7 @@
             setTimeout(function () {
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (window.updateI18nContent) window.updateI18nContent();
+              if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
             }, 200);
           });
       }
@@ -222,17 +225,20 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('../components/navbar-mobile.html')
+          fetch('/static/components/navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              setTimeout(function () {
+                if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+              }, 100);
               if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
+                script.src = '/static/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -250,16 +256,19 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('../components/navbar.html')
+          fetch('/static/components/navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
               if (window.updateI18nContent) window.updateI18nContent();
               if (window.updateLangBtnAll) window.updateLangBtnAll();
               if (typeof window.initLangSwitchers === 'function') window.initLangSwitchers();
+              setTimeout(function () {
+                if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
+              }, 100);
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '../js/navbar-dropdown.js';
+                script.src = '/static/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {

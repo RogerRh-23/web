@@ -39,6 +39,51 @@ def get_all_logs(current_user: dict = Depends(get_current_user)):
     logs = list(db["logs"].find({}, {"_id": 0}))
     return {"logs": logs}
 
+@router.post("/create-admin")
+def create_admin(user: UserCreate, current_user: dict = Depends(get_current_user)):
+    # Solo los desarrolladores pueden crear administradores
+    if current_user["role"] != "dev":
+        raise HTTPException(status_code=403, detail="Solo desarrolladores pueden crear administradores")
+    
+    log_msg = f"Dev {current_user['username']} intentando crear admin: {user.username}, email: {user.email}"
+    add_log("create_admin_attempt", current_user["username"], log_msg)
+    
+    # Validar campos
+    if not user.username or not user.email or not user.password:
+        add_log("create_admin_failed", current_user["username"], "Faltan campos para crear admin")
+        raise HTTPException(status_code=400, detail="Faltan campos requeridos")
+    
+    # Verificar si el usuario ya existe
+    if users_collection.find_one({"username": user.username}):
+        add_log("create_admin_failed", current_user["username"], f"Admin ya existe: {user.username}")
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
+    
+    # Crear administrador
+    hashed_pw = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    admin_doc = {
+        "username": user.username,
+        "email": user.email,
+        "hashed_password": hashed_pw,
+        "role": "admin"  # Rol específico de administrador
+    }
+    
+    result = users_collection.insert_one(admin_doc)
+    
+    if result.inserted_id:
+        add_log("admin_created", current_user["username"], f"Nuevo admin creado: {user.username} ({user.email})")
+        db["logs"].insert_one({
+            "event": "admin_created",
+            "created_by": current_user["username"],
+            "admin_username": user.username,
+            "admin_email": user.email,
+            "timestamp": datetime.utcnow(),
+            "detail": f"Administrador {user.username} creado por dev {current_user['username']}"
+        })
+        return {"msg": f"Administrador '{user.username}' creado exitosamente"}
+    else:
+        add_log("create_admin_failed", current_user["username"], "Error al crear admin en la base de datos")
+        raise HTTPException(status_code=500, detail="Error al crear el administrador")
+
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 GOOGLE_REDIRECT_URI = os.environ.get("GOOGLE_REDIRECT_URI")
@@ -84,6 +129,12 @@ router = APIRouter()
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+# User creation model
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
 
 # --- Límite de intentos de login ---
 MAX_LOGIN_ATTEMPTS = 5
@@ -228,12 +279,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), request: Request = N
 
 # Endpoint para crear usuario admin, solo accesible por dev
 
-class UserCreate(BaseModel):
-    username: str
-    email: str
-    password: str
-
-
 def get_current_user(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=401,
@@ -302,11 +347,3 @@ def get_dev_logs(current_user: dict = Depends(get_current_user)):
 @router.get("/me")
 def read_users_me(current_user: dict = Depends(get_current_user)):
     return {"user": current_user["username"], "role": current_user["role"]}
-
-# Endpoint para consultar logs de la colección logs (solo dev)
-@router.get("/logs")
-def get_all_logs(current_user: dict = Depends(get_current_user)):
-    if current_user["role"] != "dev":
-        raise HTTPException(status_code=403, detail="Solo dev puede ver logs")
-    logs = list(db["logs"].find({}, {"_id": 0}))
-    return {"logs": logs}

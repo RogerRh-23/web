@@ -59,8 +59,10 @@
         }
         var rect = btn.getBoundingClientRect();
         dd.style.minWidth = Math.max(140, rect.width) + 'px';
-        dd.style.left = (rect.left + window.scrollX) + 'px';
-        dd.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+        dd.style.position = 'fixed';
+        dd.style.left = rect.left + 'px';
+        dd.style.top = (rect.bottom + 6) + 'px';
+        dd.style.zIndex = '9999';
         dd.style.display = 'block';
         _authDropdownOpen = true;
         setTimeout(function () {
@@ -122,34 +124,72 @@
     }
 
     function updateAuthButton() {
+        // Desktop navbar
         var btn = document.getElementById('auth-btn');
-        if (!btn) return;
-        var authSpan = btn.querySelector('span[data-i18n]');
-        if (authSpan && !authSpan.dataset.defaultText) {
-            authSpan.dataset.defaultText = authSpan.textContent || 'Iniciar Sesión';
+        var authSpan = null;
+
+        if (btn) {
+            authSpan = btn.querySelector('span[data-i18n]');
+            if (authSpan && !authSpan.dataset.defaultText) {
+                authSpan.dataset.defaultText = authSpan.textContent || 'Iniciar Sesión';
+            }
         }
+
+        // Mobile navbar
+        var mobileBtn = document.getElementById('navbar-mobile-login-link');
+        var mobileSpan = null;
+
+        if (mobileBtn) {
+            mobileSpan = mobileBtn.querySelector('span[data-i18n]');
+            if (mobileSpan && !mobileSpan.dataset.defaultText) {
+                mobileSpan.dataset.defaultText = mobileSpan.textContent || 'Iniciar sesión';
+            }
+        }
+
         try {
-            var user = JSON.parse(localStorage.getItem('user'));
-            if (user && (user.name || user.username || user.email)) {
-                var display = user.name || user.username || user.email || authSpan.dataset.defaultText;
+            var userStr = localStorage.getItem('user');
+            var user = userStr ? JSON.parse(userStr) : null;
+
+            if (user && (user.name || user.username || user.email || user.firstName || user.user)) {
+                var display = user.name || user.firstName || user.username || user.email || user.user;
                 if (display.indexOf && display.indexOf(' ') > -1) display = display.split(' ')[0];
                 display = escapeHtml(display);
-                if (authSpan) {
+
+                // Update desktop navbar
+                if (btn && authSpan) {
                     authSpan.textContent = display;
+                    btn.setAttribute('aria-label', 'Cuenta de ' + display);
+                    prepareAuthDropdown(user);
+                    btn.setAttribute('href', '#');
+                    removeAuthBtnBehavior();
+                    btn.addEventListener('click', onAuthBtnClick);
                 }
-                btn.setAttribute('aria-label', 'Cuenta de ' + display);
-                prepareAuthDropdown(user);
-                btn.setAttribute('href', '#');
-                removeAuthBtnBehavior();
-                btn.addEventListener('click', onAuthBtnClick);
+
+                // Update mobile navbar
+                if (mobileBtn && mobileSpan) {
+                    mobileSpan.textContent = display;
+                    mobileBtn.setAttribute('aria-label', 'Cuenta de ' + display);
+                    mobileBtn.setAttribute('href', '#');
+                }
             } else {
-                if (authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
-                btn.setAttribute('aria-label', authSpan.dataset.defaultText || 'Iniciar Sesión');
-                removeAuthBtnBehavior();
+                // Desktop navbar reset
+                if (btn && authSpan) {
+                    authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
+                    btn.setAttribute('aria-label', authSpan.dataset.defaultText || 'Iniciar Sesión');
+                    removeAuthBtnBehavior();
+                }
+
+                // Mobile navbar reset
+                if (mobileBtn && mobileSpan) {
+                    mobileSpan.textContent = mobileSpan.dataset.defaultText || 'Iniciar sesión';
+                    mobileBtn.setAttribute('aria-label', mobileSpan.dataset.defaultText || 'Iniciar sesión');
+                    mobileBtn.setAttribute('href', '/static/components/login.html');
+                }
             }
         } catch (e) {
             console.log('[Navbar] updateAuthButton error:', e);
-            if (authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
+            if (btn && authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
+            if (mobileBtn && mobileSpan) mobileSpan.textContent = mobileSpan.dataset.defaultText || 'Iniciar sesión';
         }
     }
 

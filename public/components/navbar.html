@@ -69,51 +69,7 @@
     }
   }
 
-  // Actualiza el texto del botón de autenticación para mostrar el nombre del usuario si está logueado
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  function updateAuthButton() {
-    var btn = document.getElementById('auth-btn');
-    if (!btn) return;
-    var authSpan = btn.querySelector('span[data-i18n]');
-    if (authSpan && !authSpan.dataset.defaultText) {
-      authSpan.dataset.defaultText = authSpan.textContent || 'Iniciar Sesión';
-    }
-    try {
-      var user = JSON.parse(localStorage.getItem('user'));
-      if (user && (user.name || user.username || user.email)) {
-        var display = user.name || user.username || user.email || authSpan.dataset.defaultText;
-        // mostrar solo el primer nombre si viene completo
-        if (display.indexOf && display.indexOf(' ') > -1) display = display.split(' ')[0];
-        display = escapeHtml(display);
-        if (authSpan) {
-          authSpan.textContent = display;
-        }
-        btn.setAttribute('aria-label', 'Cuenta de ' + display);
-        // Preparar dropdown para usuarios logueados
-        prepareAuthDropdown(user);
-        // cuando está logueado, evitar navegación al login y abrir dropdown al hacer click
-        btn.setAttribute('href', '#');
-        btn.addEventListener('click', onAuthBtnClick);
-      } else {
-        // Restaurar texto por defecto (permanece compatible con i18n)
-        if (authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
-        btn.setAttribute('aria-label', authSpan.dataset.defaultText || 'Iniciar Sesión');
-        removeAuthBtnBehavior();
-      }
-    } catch (e) {
-      console.log('[Navbar] updateAuthButton error:', e);
-      if (authSpan) authSpan.textContent = authSpan.dataset.defaultText || 'Iniciar Sesión';
-    }
-  }
+  // La función updateAuthButton está definida en navbar-init.js para evitar duplicación
 
   // Escuchar cambios de localStorage desde otras pestañas
   window.addEventListener('storage', function (e) {
@@ -124,22 +80,22 @@
     document.addEventListener('DOMContentLoaded', function () {
       updateLangBtn();
       showDevPanelLinkIfDev();
-      updateAuthButton();
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
     });
     setTimeout(function () {
       updateLangBtn();
       showDevPanelLinkIfDev();
-      updateAuthButton();
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
     }, 100);
   }
 
   // En caso de que i18next no esté presente, igualmente actualizamos al cargar
   document.addEventListener('DOMContentLoaded', function () {
-    updateAuthButton();
+    if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
     showDevPanelLinkIfDev();
   });
   setTimeout(function () {
-    updateAuthButton();
+    if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
     showDevPanelLinkIfDev();
   }, 100);
 
@@ -246,7 +202,7 @@
     closeAuthDropdown();
     // Actualizar la UI dinámicamente sin recargar
     try {
-      if (typeof updateAuthButton === 'function') updateAuthButton();
+      if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
       if (typeof showDevPanelLinkIfDev === 'function') showDevPanelLinkIfDev();
       if (typeof window.initDropdowns === 'function') window.initDropdowns();
     } catch (e) {
