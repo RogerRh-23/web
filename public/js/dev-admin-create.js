@@ -21,7 +21,7 @@ if (form) {
       return;
     }
     try {
-      const res = await fetch('/auth/register', {
+      const res = await fetch('/auth/create-admin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
