@@ -4,56 +4,97 @@
     <button class="close-modal" id="cerrarModalEditar" title="Cerrar">&times;</button>
     <h3 data-i18n="certificates.edit_certificate.title">Editar certificado</h3>
     <form id="formEditarCertificado">
-      <label for="edit-nombreOrg" data-i18n="certificates.edit_certificate.company_name">Nombre de la
-        organización</label>
-      <input type="text" id="edit-nombreOrg" name="nombreOrg" required>
-      <label for="edit-estandar" data-i18n="certificates.edit_certificate.standard">Estándar</label>
-      <input type="text" id="edit-estandar" name="estandar" required>
-      <label for="edit-estatus" data-i18n="certificates.edit_certificate.status">Estatus</label>
-      <select id="edit-estatus" name="estatus" required>
-        <option value="Vigente" data-i18n="certificates.edit_certificate.status_list.0">Vigente</option>
-        <option value="Vencido" data-i18n="certificates.edit_certificate.status_list.1">Vencido</option>
-      </select>
-      <label for="edit-numeroCertificado" data-i18n="certificates.edit_certificate.certificate_number">No.
-        Certificado</label>
+      <input type="hidden" id="edit-certificado-id" name="certificadoId">
+      
+      <label for="edit-nombreEmpresa">Nombre de la empresa</label>
+      <input type="text" id="edit-nombreEmpresa" name="nombreEmpresa" required>
+      
+      <label for="edit-numeroCertificado">No. de Certificado</label>
       <input type="text" id="edit-numeroCertificado" name="numeroCertificado" required>
-      <label for="edit-fechaInicio" data-i18n="certificates.edit_certificate.start_date">Fecha de inicio</label>
-      <input type="date" id="edit-fechaInicio" name="fechaInicio" required>
-      <label for="edit-fechaFin" data-i18n="certificates.edit_certificate.end_date">Fecha de finalización</label>
-      <input type="date" id="edit-fechaFin" name="fechaFin" required>
-      <label for="archivoCertificado" data-i18n="certificates.edit_certificate.certificate_file">Archivo del certificado
-        (PNG, JPG, JPEG, PDF)</label>
-      <input type="file" id="archivoCertificado" name="archivoCertificado" accept=".png,.jpg,.jpeg,.pdf">
-      <button type="submit" class="btn btn-success" data-i18n="certificates.edit_certificate.save_button">Guardar
-        cambios</button>
+      
+      <label for="edit-idEmpresa">ID de la empresa</label>
+      <input type="text" id="edit-idEmpresa" name="idEmpresa" required>
+      
+      <label for="edit-estado">Estado/Estatus</label>
+      <select id="edit-estado" name="estado" required>
+        <option value="Vigente">Vigente</option>
+        <option value="Suspendido">Suspendido</option>
+        <option value="Vencido">Vencido</option>
+        <option value="Cancelado">Cancelado</option>
+      </select>
+      
+      <label for="edit-fechaEmision">Fecha de emisión</label>
+      <input type="date" id="edit-fechaEmision" name="fechaEmision" required>
+      
+      <label for="edit-fechaVigencia">Fecha de vigencia</label>
+      <input type="date" id="edit-fechaVigencia" name="fechaVigencia" required>
+      
+      <label for="edit-sectorIaf">Sector IAF</label>
+      <input type="text" id="edit-sectorIaf" name="sectorIaf" required>
+      
+      <label for="edit-codigoNace">Código NACE</label>
+      <input type="text" id="edit-codigoNace" name="codigoNace" required>
+      
+      <label for="edit-referenciaNormativa">Referencia normativa</label>
+      <input type="text" id="edit-referenciaNormativa" name="referenciaNormativa" required>
+      
+      <label for="edit-linkIaf">Link a la página del IAF</label>
+      <input type="url" id="edit-linkIaf" name="linkIaf" required>
+      
+      <label for="edit-archivoPdf">Archivo PDF (opcional)</label>
+      <input type="file" id="edit-archivoPdf" name="archivoPdf" accept=".pdf">
+      
+      <button type="submit" class="btn btn-success">Guardar cambios</button>
     </form>
   </div>
 </div>
+
 <!-- Modal para agregar certificado -->
 <div class="certificados-modal" id="modalAgregarCertificado" style="display:none;">
   <div class="certificados-modal-content">
     <button class="close-modal" id="cerrarModalCertificado" title="Cerrar">&times;</button>
     <h3 data-i18n="certificates.add_certificate.title">Agregar nuevo certificado</h3>
     <form id="formAgregarCertificado">
-      <label for="nombreOrg" data-i18n="certificates.add_certificate.company_name">Nombre de la organización</label>
-      <input type="text" id="nombreOrg" name="nombreOrg" required>
-      <label for="estandar" data-i18n="certificates.add_certificate.standard">Estándar</label>
-      <input type="text" id="estandar" name="estandar" required>
-      <label for="estatus" data-i18n="certificates.add_certificate.status">Estatus</label>
-      <select id="estatus" name="estatus" required>
-        <option value="Vigente" data-i18n="certificates.add_certificate.status_list.0">Vigente</option>
-        <option value="Vencido" data-i18n="certificates.add_certificate.status_list.1">Vencido</option>
-      </select>
-      <label for="numeroCertificado" data-i18n="certificates.add_certificate.certificate_number">No. Certificado</label>
+      
+      <label for="nombreEmpresa">Nombre de la empresa</label>
+      <input type="text" id="nombreEmpresa" name="nombreEmpresa" required>
+      
+      <label for="numeroCertificado">No. de Certificado</label>
       <input type="text" id="numeroCertificado" name="numeroCertificado" required>
-      <label for="fechaInicio" data-i18n="certificates.add_certificate.start_date">Fecha de inicio</label>
-      <input type="date" id="fechaInicio" name="fechaInicio" required>
-      <label for="fechaFin" data-i18n="certificates.add_certificate.end_date">Fecha de finalización</label>
-      <input type="date" id="fechaFin" name="fechaFin" required>
-      <label for="archivoCertificado" data-i18n="certificates.add_certificate.certificate_file">Archivo del certificado
-        (PNG, JPG, JPEG, PDF)</label>
-      <input type="file" id="archivoCertificado" name="archivoCertificado" accept=".png,.jpg,.jpeg,.pdf" required>
-      <button type="submit" class="btn btn-success" data-i18n="certificates.add_certificate.add_button">Guardar</button>
+      
+      <label for="idEmpresa">ID de la empresa</label>
+      <input type="text" id="idEmpresa" name="idEmpresa" required>
+      
+      <label for="estado">Estado/Estatus</label>
+      <select id="estado" name="estado" required>
+        <option value="Vigente">Vigente</option>
+        <option value="Suspendido">Suspendido</option>
+        <option value="Vencido">Vencido</option>
+        <option value="Cancelado">Cancelado</option>
+      </select>
+      
+      <label for="fechaEmision">Fecha de emisión</label>
+      <input type="date" id="fechaEmision" name="fechaEmision" required>
+      
+      <label for="fechaVigencia">Fecha de vigencia</label>
+      <input type="date" id="fechaVigencia" name="fechaVigencia" required>
+      
+      <label for="sectorIaf">Sector IAF</label>
+      <input type="text" id="sectorIaf" name="sectorIaf" required>
+      
+      <label for="codigoNace">Código NACE</label>
+      <input type="text" id="codigoNace" name="codigoNace" required>
+      
+      <label for="referenciaNormativa">Referencia normativa</label>
+      <input type="text" id="referenciaNormativa" name="referenciaNormativa" required>
+      
+      <label for="linkIaf">Link a la página del IAF</label>
+      <input type="url" id="linkIaf" name="linkIaf" required>
+      
+      <label for="archivoPdf">Archivo PDF</label>
+      <input type="file" id="archivoPdf" name="archivoPdf" accept=".pdf" required>
+      
+      <button type="submit" class="btn btn-success">Agregar certificado</button>
     </form>
   </div>
 </div>
@@ -87,6 +128,156 @@
         padding-top: 70px;
       }
     }
+
+    /* Estilos para certificados */
+    .certificados-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+
+    .certificados-modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      width: 90%;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .close-modal:hover {
+      color: #000;
+    }
+
+    .certificados-modal-content label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .certificados-modal-content input,
+    .certificados-modal-content select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .alert-success {
+      background-color: #d1edff;
+      color: #0c5460;
+      border: 1px solid #b8daff;
+    }
+
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .alert-warning {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+
+    .alert-info {
+      background-color: #cce7ff;
+      color: #004085;
+      border: 1px solid #97d4ff;
+    }
+
+    .btn-close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25rem;
+      color: white;
+    }
+
+    .badge-success { background-color: #28a745; }
+    .badge-warning { background-color: #ffc107; color: #000; }
+    .badge-danger { background-color: #dc3545; }
+    .badge-secondary { background-color: #6c757d; }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .table th,
+    .table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+      text-align: left;
+    }
+
+    .table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+
+    .certificado-datos > div {
+      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    .admin-cert-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
   </style>
 </head>
 
@@ -94,37 +285,80 @@
   <div id="navbar-placeholder"></div>
   <main class="main-content-navbar-padding">
     <div class="info-box">
-      <form class="certificados-search-form" autocomplete="off" style="margin-bottom: 2rem;">
+      <form class="certificados-search-form" id="formBuscarCertificado" autocomplete="off" style="margin-bottom: 2rem;">
         <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
-          <div class="form-group" style="flex: 1 1 300px;">
-            <label for="search-cert" data-i18n="certificates.search_placeholder">Buscar por Nombre o No. de
-              Certificado</label>
-            <inp ut type="text" id="search-cert" name="search-cert" class="form-control"
-              placeholder="Ej: LACS S.A. de C.V. o 2024-00123">
+          <div class="form-group" style="flex: 1 1 200px;">
+            <label for="search-numero-certificado">No. de Certificado</label>
+            <input type="text" id="search-numero-certificado" name="numeroCertificado" class="form-control"
+              placeholder="Ej: 2024-00123">
+          </div>
+          <div class="form-group" style="flex: 1 1 200px;">
+            <label for="search-nombre-empresa">Nombre de la empresa</label>
+            <input type="text" id="search-nombre-empresa" name="nombreEmpresa" class="form-control"
+              placeholder="Ej: LACS S.A. de C.V.">
+          </div>
+          <div class="form-group" style="flex: 1 1 200px;">
+            <label for="search-id-empresa">ID de la empresa</label>
+            <input type="text" id="search-id-empresa" name="idEmpresa" class="form-control"
+              placeholder="Ej: EMP-001">
           </div>
           <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
         </div>
       </form>
-      <div class="admin-certificados-actions" style="margin-bottom:2rem; display:flex; gap:1rem;"></div>
-      <div class="info-box">
-        <!-- Vista cliente: información del certificado -->
+      
+      <!-- Botones de administración (solo para admin) -->
+      <div class="admin-certificados-actions" id="adminActions" style="margin-bottom:2rem; display:none; gap:1rem;">
+        <button type="button" id="btnAgregarCertificado" class="btn btn-success">
+          <i class="bi bi-plus-circle"></i> Agregar Certificado
+        </button>
+        <button type="button" id="btnListarCertificados" class="btn btn-info">
+          <i class="bi bi-list"></i> Listar Todos
+        </button>
+      </div>
+      
+      <!-- Mensajes de estado -->
+      <div id="certificadosMensajes" style="margin-bottom: 1rem;"></div>
+      
+      <!-- Resultados de búsqueda y visualización -->
+      <div class="info-box" id="certificadoResultado" style="display:none;">
         <div class="certificado-info">
-          <h2 class="certificado-titulo"><i class="bi bi-patch-check-fill" style="color:#1976a5"></i> <span
-              data-i18n="certificates.title">Certificado</span></h2>
-          <div class="certificado-datos">
-            <div><strong data-i18n="certificates.company_name">Nombre de la organización:</strong> <span
-                id="cert-org">LACS S.A. de C.V.</span></div>
-            <div><strong data-i18n="certificates.standard">Estándar:</strong> <span id="cert-estandar">ISO 9001</span>
+          <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+            <h2 class="certificado-titulo">
+              <i class="bi bi-patch-check-fill" style="color:#1976a5"></i>
+              <span data-i18n="certificates.title">Certificado</span>
+            </h2>
+            <!-- Botones de edición/eliminación (solo admin) -->
+            <div class="admin-cert-actions" style="display:none; gap: 0.5rem;">
+              <button type="button" id="btnEditarCertificado" class="btn btn-warning btn-sm">
+                <i class="bi bi-pencil"></i> Editar
+              </button>
+              <button type="button" id="btnEliminarCertificado" class="btn btn-danger btn-sm">
+                <i class="bi bi-trash"></i> Eliminar
+              </button>
             </div>
-            <div><strong data-i18n="certificates.status">Estado/Estatus:</strong> <span id="cert-estado">Vigente</span>
-            </div>
-            <div><strong data-i18n="certificates.certificate_number">No. de certificado:</strong> <span
-                id="cert-num">2024-00123</span></div>
-            <div><strong data-i18n="certificates.start_date">Fecha de inicio:</strong> <span
-                id="cert-inicio">2024-01-01</span></div>
-            <div><strong data-i18n="certificates.end_date">Fecha de finalización:</strong> <span
-                id="cert-fin">2025-01-01</span></div>
           </div>
+          
+          <div class="certificado-datos" id="certificadoDatos">
+            <!-- Los datos se llenarán dinámicamente -->
+          </div>
+          
+          <!-- Código QR -->
+          <div class="certificado-qr" id="certificadoQR" style="margin-top: 2rem; text-align: center;">
+            <!-- El QR se mostrará aquí -->
+          </div>
+          
+          <!-- Link al archivo PDF -->
+          <div class="certificado-archivo" id="certificadoArchivo" style="margin-top: 1rem;">
+            <!-- El link al PDF se mostrará aquí -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Lista de certificados (solo admin) -->
+      <div class="info-box" id="listaCertificados" style="display:none;">
+        <h3>Lista de Certificados</h3>
+        <div id="tablaCertificados">
+          <!-- La tabla se generará dinámicamente -->
         </div>
       </div>
     </div>
@@ -135,8 +369,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="/static/js/gsap.js"></script>
   <script src="/static/js/navbar-dropdown.js"></script>
-  <script src="/static/js/certificados-cliente.js"></script>
-  <script src="/static/js/certificados-admin.js"></script>
+  <script src="/static/js/certificados-manager.js"></script>
   <script src="/static/js/footer.js"></script>
 
   <script>

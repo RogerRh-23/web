@@ -1,28 +1,37 @@
 from .models import Certificado
 from typing import List, Optional
 
-# Simulación de base de datos
+# Simulación de base de datos en memoria (para pruebas locales)
+# Este archivo se mantiene como fallback para desarrollo local
 _certificados = [
-    # Ejemplo de certificado, elimina o reemplaza por integración con base de datos real
+    # Ejemplo de certificado con nueva estructura
     Certificado(
-        org='LACS S.A. de C.V.',
-        estandar='ISO 9001',
-        estado='Vigente',
-        num='2024-0123',
-        inicio='2024-01-01',
-        fin='2025-01-01',
-        archivoNombre='certificado1.pdf',
-        archivoId='driveid1'
+        nombre_empresa="LACS S.A. de C.V.",
+        numero_certificado="2024-00123",
+        id_empresa="EMP-001",
+        estado="Vigente",
+        fecha_emision="2024-01-01",
+        fecha_vigencia="2025-01-01",
+        sector_iaf="IAF 9",
+        codigo_nace="62010",
+        referencia_normativa="ISO 9001:2015",
+        link_iaf="https://iaf.nu/certificate/2024-00123",
+        codigo_qr="data:image/png;base64,example_qr_code",
+        archivo_pdf="certificado_2024_00123.pdf"
     )
 ]
 
 def get_all_certificados() -> List[Certificado]:
     return _certificados
 
-def buscar_certificado(num: Optional[str] = None, org: Optional[str] = None) -> Optional[Certificado]:
+def buscar_certificado(
+    numero_certificado: Optional[str] = None, 
+    nombre_empresa: Optional[str] = None,
+    id_empresa: Optional[str] = None
+) -> Optional[Certificado]:
     for cert in _certificados:
-        if num and cert.num == num:
-            return cert
-        if org and cert.org.lower() == org.lower():
+        if (numero_certificado and numero_certificado in cert.numero_certificado) or \
+           (nombre_empresa and nombre_empresa.lower() in cert.nombre_empresa.lower()) or \
+           (id_empresa and cert.id_empresa == id_empresa):
             return cert
     return None

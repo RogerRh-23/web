@@ -16,4 +16,6 @@ python-dateutil
 python-slugify
 starlette
 itsdangerous
+qrcode[pil]
+pillow
 
