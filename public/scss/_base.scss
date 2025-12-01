@@ -9,8 +9,17 @@ body {
   /* Sin overflow forzado, solo en desktop */
 }
 
-
 html {
   min-height: 100vh;
   /* Sin overflow forzado, solo en desktop */
+}
+
+// Contenido principal con espaciado consistente
+main {
+  min-height: calc(100vh - 200px); // Altura mínima para empujar footer hacia abajo
+  padding-bottom: 3rem; // Espaciado inferior para separar del footer
+  
+  @media (max-width: 991.98px) {
+    padding-bottom: 5rem; // Mayor espaciado en móvil por navbar inferior
+  }
 }

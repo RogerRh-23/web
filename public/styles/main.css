@@ -64,6 +64,16 @@ html {
   /* Sin overflow forzado, solo en desktop */
 }
 
+main {
+  min-height: calc(100vh - 200px);
+  padding-bottom: 3rem;
+}
+@media (max-width: 991.98px) {
+  main {
+    padding-bottom: 5rem;
+  }
+}
+
 .navbar-mobile {
   position: fixed;
   left: 0;
@@ -3185,7 +3195,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   border-radius: 1.6rem;
   box-shadow: 0 8px 32px -8px rgba(20, 30, 60, 0.13);
   padding: 2.5rem 2.2rem 2.2rem 2.2rem;
-  margin: 2.5rem auto 0 auto;
+  margin: 2.5rem auto 4rem auto;
   max-width: 980px;
   width: 100%;
   display: flex;
@@ -3195,6 +3205,7 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   border: 1.5px solid #e0e7ef;
   position: relative;
   z-index: 2;
+  min-height: calc(100vh - 300px);
 }
 
 .certificados-search-form {
