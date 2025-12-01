@@ -2821,11 +2821,13 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   width: 100vw;
   height: 100vh;
   background: rgba(30, 40, 60, 0.18);
-  z-index: 9999;
+  z-index: 1050;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s;
+  padding-top: 80px;
+  box-sizing: border-box;
 }
 
 .certificados-modal-content {
@@ -2841,8 +2843,9 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   flex-direction: column;
   gap: 1.1rem;
   border: 1.5px solid #e0e7ef;
-  max-height: 90vh;
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
+  margin: auto;
 }
 
 .certificados-modal-content h3 {
@@ -3129,7 +3132,8 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   overflow: hidden;
   box-shadow: 0 4px 16px -4px rgba(20, 30, 60, 0.1);
 }
-.table th, .table td {
+.table th,
+.table td {
   padding: 1rem 0.75rem;
   text-align: left;
   border-bottom: 1px solid #e9ecef;
@@ -3167,7 +3171,8 @@ body, main, .hero-reveal, .hero-reveal-rects, .hero-rect, .head-img-container, .
   .table {
     font-size: 0.85rem;
   }
-  .table th, .table td {
+  .table th,
+  .table td {
     padding: 0.5rem 0.4rem;
   }
   .table .btn-sm {

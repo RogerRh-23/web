@@ -65,31 +65,73 @@ class CertificadosManager {
             formBuscar.addEventListener('submit', (e) => this.buscarCertificado(e));
         }
 
-        // Botones de administrador
+        // Botones de administrador - Solo admin/dev
         const btnAgregar = document.getElementById('btnAgregarCertificado');
         const btnListar = document.getElementById('btnListarCertificados');
 
-        if (btnAgregar) btnAgregar.addEventListener('click', () => this.mostrarModalAgregar());
-        if (btnListar) btnListar.addEventListener('click', () => this.listarCertificados());
+        if (btnAgregar) {
+            btnAgregar.addEventListener('click', () => {
+                if (this.isAdmin()) this.mostrarModalAgregar();
+                else this.mostrarMensaje('Solo administradores pueden agregar certificados', 'error');
+            });
+        }
+        if (btnListar) {
+            btnListar.addEventListener('click', () => {
+                if (this.isAdmin()) this.listarCertificados();
+                else this.mostrarMensaje('Solo administradores pueden listar certificados', 'error');
+            });
+        }
 
-        // Formularios de agregar y editar
+        // Formularios de agregar y editar - Solo admin/dev
         const formAgregar = document.getElementById('formAgregarCertificado');
         const formEditar = document.getElementById('formEditarCertificado');
 
-        if (formAgregar) formAgregar.addEventListener('submit', (e) => this.agregarCertificado(e));
-        if (formEditar) formEditar.addEventListener('submit', (e) => this.editarCertificado(e));
+        if (formAgregar) formAgregar.addEventListener('submit', (e) => {
+            if (this.isAdmin()) this.agregarCertificado(e);
+            else {
+                e.preventDefault();
+                this.mostrarMensaje('Solo administradores pueden crear certificados', 'error');
+            }
+        });
+        if (formEditar) formEditar.addEventListener('submit', (e) => {
+            if (this.isAdmin()) this.editarCertificado(e);
+            else {
+                e.preventDefault();
+                this.mostrarMensaje('Solo administradores pueden editar certificados', 'error');
+            }
+        });
 
-        // Botones de edición y eliminación
+        // Botones de edición y eliminación - Solo admin/dev
         const btnEditar = document.getElementById('btnEditarCertificado');
         const btnEliminar = document.getElementById('btnEliminarCertificado');
 
-        if (btnEditar) btnEditar.addEventListener('click', () => this.mostrarModalEditar());
-        if (btnEliminar) btnEliminar.addEventListener('click', () => this.eliminarCertificado());
+        if (btnEditar) {
+            btnEditar.addEventListener('click', () => {
+                if (this.isAdmin()) this.mostrarModalEditar();
+                else this.mostrarMensaje('Solo administradores pueden editar certificados', 'error');
+            });
+        }
+        if (btnEliminar) {
+            btnEliminar.addEventListener('click', () => {
+                if (this.isAdmin()) this.eliminarCertificado();
+                else this.mostrarMensaje('Solo administradores pueden eliminar certificados', 'error');
+            });
+        }
 
-        // Cerrar modales
+        // Cerrar modales con botón X
         const closeButtons = document.querySelectorAll('.close-modal');
         closeButtons.forEach(btn => {
-            btn.addEventListener('click', () => this.cerrarModales());
+            btn.addEventListener('click', () => this.cerrarModalConConfirmacion());
+        });
+
+        // Cerrar modal al hacer clic fuera (con confirmación)
+        const modales = document.querySelectorAll('.certificados-modal');
+        modales.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    this.cerrarModalConConfirmacion();
+                }
+            });
         });
     }
 
@@ -268,13 +310,28 @@ class CertificadosManager {
     }
 
     mostrarModalAgregar() {
-        if (!this.isAdmin()) return;
+        if (!this.isAdmin()) {
+            this.mostrarMensaje('Solo administradores y desarrolladores pueden agregar certificados', 'error');
+            return;
+        }
+        
         const modal = document.getElementById('modalAgregarCertificado');
-        if (modal) modal.style.display = 'block';
+        if (modal) {
+            this.limpiarFormularios();
+            modal.style.display = 'block';
+        }
     }
 
     mostrarModalEditar() {
-        if (!this.isAdmin() || !this.currentCertificate) return;
+        if (!this.isAdmin()) {
+            this.mostrarMensaje('Solo administradores y desarrolladores pueden editar certificados', 'error');
+            return;
+        }
+        
+        if (!this.currentCertificate) {
+            this.mostrarMensaje('Debe seleccionar un certificado para editar', 'warning');
+            return;
+        }
 
         const modal = document.getElementById('modalEditarCertificado');
         const form = document.getElementById('formEditarCertificado');
@@ -328,7 +385,7 @@ class CertificadosManager {
         if (!this.isAdmin()) return;
 
         const formData = new FormData(e.target);
-        
+
         // Recoger instalaciones del formulario de agregar
         const instalaciones = Array.from(document.querySelectorAll('#modalAgregarCertificado input[name="instalaciones[]"]'))
             .map(input => input.value.trim())
@@ -347,7 +404,7 @@ class CertificadosManager {
             alcance_certificacion: formData.get('alcanceCertificacion'),
             instalaciones: instalaciones,
             link_iaf: formData.get('linkIaf')
-        };        try {
+        }; try {
             const response = await fetch(`${this.baseURL}/`, {
                 method: 'POST',
                 headers: {
@@ -378,12 +435,12 @@ class CertificadosManager {
 
         const formData = new FormData(e.target);
         const certificadoId = formData.get('certificadoId');
-        
+
         // Recoger instalaciones del formulario de editar
         const instalaciones = Array.from(document.querySelectorAll('#modalEditarCertificado input[name="instalaciones[]"]'))
             .map(input => input.value.trim())
             .filter(value => value.length > 0);
-        
+
         const certificadoData = {
             nombre_empresa: formData.get('nombreEmpresa'),
             numero_certificado: formData.get('numeroCertificado'),
@@ -397,7 +454,7 @@ class CertificadosManager {
             alcance_certificacion: formData.get('alcanceCertificacion'),
             instalaciones: instalaciones,
             link_iaf: formData.get('linkIaf')
-        };        try {
+        }; try {
             const response = await fetch(`${this.baseURL}/${certificadoId}`, {
                 method: 'PUT',
                 headers: {
@@ -451,6 +508,72 @@ class CertificadosManager {
     cerrarModales() {
         const modales = document.querySelectorAll('.certificados-modal');
         modales.forEach(modal => modal.style.display = 'none');
+    }
+
+    cerrarModalConConfirmacion() {
+        const modalVisible = document.querySelector('.certificados-modal[style*="block"]');
+        if (!modalVisible) return;
+
+        const tieneDatos = this.modalTieneDatos(modalVisible);
+        
+        if (tieneDatos) {
+            if (confirm('¿Estás seguro de que quieres cerrar? Se perderán los datos ingresados.')) {
+                this.cerrarModales();
+                this.limpiarFormularios();
+            }
+        } else {
+            this.cerrarModales();
+        }
+    }
+
+    modalTieneDatos(modal) {
+        const inputs = modal.querySelectorAll('input[type="text"], input[type="date"], input[type="url"], input[type="file"], textarea, select');
+        
+        for (let input of inputs) {
+            if (input.type === 'file') {
+                if (input.files && input.files.length > 0) return true;
+            } else if (input.type === 'select-one') {
+                // Para selects, verificar si no está en la opción por defecto
+                if (input.selectedIndex > 0) return true;
+            } else {
+                if (input.value && input.value.trim() !== '') return true;
+            }
+        }
+        
+        return false;
+    }
+
+    limpiarFormularios() {
+        const formAgregar = document.getElementById('formAgregarCertificado');
+        const formEditar = document.getElementById('formEditarCertificado');
+        
+        if (formAgregar) {
+            formAgregar.reset();
+            // Resetear instalaciones a una sola
+            const container = document.getElementById('instalaciones-container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="instalacion-input-group">
+                        <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+                        <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+                    </div>
+                `;
+            }
+        }
+        
+        if (formEditar) {
+            formEditar.reset();
+            // Resetear instalaciones de edición
+            const editContainer = document.getElementById('edit-instalaciones-container');
+            if (editContainer) {
+                editContainer.innerHTML = `
+                    <div class="instalacion-input-group">
+                        <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+                        <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
+                    </div>
+                `;
+            }
+        }
     }
 
     mostrarMensaje(texto, tipo) {

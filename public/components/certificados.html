@@ -39,16 +39,19 @@
       <input type="text" id="edit-referenciaNormativa" name="referenciaNormativa" required>
 
       <label for="edit-alcanceCertificacion">Alcance de la certificación</label>
-      <textarea id="edit-alcanceCertificacion" name="alcanceCertificacion" required rows="3" placeholder="Describa el alcance de la certificación"></textarea>
-      
+      <textarea id="edit-alcanceCertificacion" name="alcanceCertificacion" required rows="3"
+        placeholder="Describa el alcance de la certificación"></textarea>
+
       <label>Instalaciones/Ubicaciones</label>
       <div id="edit-instalaciones-container">
         <div class="instalacion-input-group">
-          <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+          <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad"
+            required>
           <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
         </div>
       </div>
-      <button type="button" id="edit-btn-add-instalacion" class="btn-add-instalacion" onclick="addInstalacion('edit')">+ Agregar ubicación</button>
+      <button type="button" id="edit-btn-add-instalacion" class="btn-add-instalacion" onclick="addInstalacion('edit')">+
+        Agregar ubicación</button>
 
       <label for="edit-linkIaf">Link a la página del IAF</label>
       <input type="url" id="edit-linkIaf" name="linkIaf" required>
@@ -101,16 +104,19 @@
       <input type="text" id="referenciaNormativa" name="referenciaNormativa" required>
 
       <label for="alcanceCertificacion">Alcance de la certificación</label>
-      <textarea id="alcanceCertificacion" name="alcanceCertificacion" required rows="3" placeholder="Describa el alcance de la certificación"></textarea>
-      
+      <textarea id="alcanceCertificacion" name="alcanceCertificacion" required rows="3"
+        placeholder="Describa el alcance de la certificación"></textarea>
+
       <label>Instalaciones/Ubicaciones</label>
       <div id="instalaciones-container">
         <div class="instalacion-input-group">
-          <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
+          <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad"
+            required>
           <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
         </div>
       </div>
-      <button type="button" id="btn-add-instalacion" class="btn-add-instalacion" onclick="addInstalacion('add')">+ Agregar ubicación</button>
+      <button type="button" id="btn-add-instalacion" class="btn-add-instalacion" onclick="addInstalacion('add')">+
+        Agregar ubicación</button>
 
       <label for="linkIaf">Link a la página del IAF</label>
       <input type="url" id="linkIaf" name="linkIaf" required>
@@ -354,7 +360,7 @@
       <!-- Mensajes de estado -->
       <div id="certificadosMensajes" style="margin-bottom: 1rem;"></div>
 
-          <!-- Resultados de búsqueda y visualización -->
+      <!-- Resultados de búsqueda y visualización -->
       <div class="info-box" id="certificadoResultado" style="display:none;">
         <div class="certificado-info">
           <div class="certificado-header">
@@ -372,22 +378,22 @@
               </button>
             </div>
           </div>
-          
+
           <div class="certificado-datos" id="certificadoDatos">
             <!-- Los datos se llenarán dinámicamente -->
           </div>
-          
+
           <!-- Código QR -->
           <div class="certificado-qr" id="certificadoQR">
             <!-- El QR se mostrará aquí -->
           </div>
-          
+
           <!-- Link al archivo PDF -->
           <div class="certificado-archivo" id="certificadoArchivo">
             <!-- El link al PDF se mostrará aquí -->
           </div>
         </div>
-      </div>      <!-- Lista de certificados (solo admin) -->
+      </div> <!-- Lista de certificados (solo admin) -->
       <div class="info-box" id="listaCertificados" style="display:none;">
         <h3>Lista de Certificados</h3>
         <div id="tablaCertificados">
@@ -410,21 +416,21 @@
     function addInstalacion(type) {
       const containerId = type === 'edit' ? 'edit-instalaciones-container' : 'instalaciones-container';
       const container = document.getElementById(containerId);
-      
+
       const newGroup = document.createElement('div');
       newGroup.className = 'instalacion-input-group';
       newGroup.innerHTML = `
         <input type="text" name="instalaciones[]" placeholder="Ej: Oficina Central - Av. Principal 123, Ciudad" required>
         <button type="button" class="btn-remove-instalacion" onclick="removeInstalacion(this)">×</button>
       `;
-      
+
       container.appendChild(newGroup);
     }
 
     function removeInstalacion(button) {
       const group = button.parentElement;
       const container = group.parentElement;
-      
+
       // Solo permite eliminar si hay más de una instalación
       if (container.children.length > 1) {
         group.remove();
