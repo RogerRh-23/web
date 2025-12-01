@@ -10,9 +10,39 @@ from collections import defaultdict
 import time
 import bcrypt
 
+# Configuración JWT
+SECRET_KEY = os.environ.get("JWT_SECRET", "supersecretkey")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 día
+
+try:
+    from backend.main import mongo_client  # Local
+except ModuleNotFoundError:
+    from main import mongo_client  # Railway/Cloud
+db = mongo_client["lacs"]
+users_collection = db["usuarios"]
+
+try:
+    from backend.dev_logs import add_log, get_logs  # Local
+except ModuleNotFoundError:
+    from dev_logs import add_log, get_logs  # Railway/Cloud
+
 router = APIRouter()
 
-def get_current_user(token: str = Depends(OAuth2PasswordBearer(tokenUrl="/auth/token"))):
+# Token response model
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+# User creation model
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=401,
         detail="No autenticado",
@@ -118,23 +148,6 @@ async def google_callback(request: Request):
     userinfo = userinfo_response.json()
     # Aquí puedes crear el usuario en tu base de datos si no existe
     return {"user": userinfo, "token": token_data}
-try:
-    from backend.dev_logs import add_log, get_logs  # Local
-except ModuleNotFoundError:
-    from dev_logs import add_log, get_logs  # Railway/Cloud
-
-router = APIRouter()
-
-# Token response model
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-# User creation model
-class UserCreate(BaseModel):
-    username: str
-    email: str
-    password: str
 
 # --- Límite de intentos de login ---
 MAX_LOGIN_ATTEMPTS = 5
@@ -183,21 +196,6 @@ async def oauth_microsoft(request: Request):
         # Aquí puedes crear el usuario en tu base de datos si no existe
         return {"user": userinfo}
     return {"error": "Invalid Microsoft token"}
-
-# Configuración JWT
-SECRET_KEY = os.environ.get("JWT_SECRET", "supersecretkey")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 día
-
-
-try:
-    from backend.main import mongo_client  # Local
-except ModuleNotFoundError:
-    from main import mongo_client  # Railway/Cloud
-db = mongo_client["lacs"]
-users_collection = db["usuarios"]
-
-
 
 # El token será username-token, pero para saber el rol, lo buscamos en users_db
 
@@ -278,25 +276,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), request: Request = N
 
 
 # Endpoint para crear usuario admin, solo accesible por dev
-
-def get_current_user(token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=401,
-        detail="No autenticado",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        role: str = payload.get("role")
-        if username is None or role is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
-    user = users_collection.find_one({"username": username})
-    if user is None:
-        raise credentials_exception
-    return {"username": username, "role": role}
 
 @router.post("/register")
 def register_user(user: UserCreate):
