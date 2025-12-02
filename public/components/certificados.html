@@ -320,6 +320,78 @@
       padding: 0.25rem 0.5rem;
       font-size: 0.875rem;
     }
+
+    /* Estilos para la lista de administrador */
+    .admin-certificados-lista {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 1px solid #e9ecef;
+    }
+
+    .admin-certificados-lista h3 {
+      color: #1976a5;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    /* Estilos para información resumida vs detallada */
+    .certificado-resumen {
+      background: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border-left: 4px solid #1976a5;
+      margin-bottom: 1rem;
+    }
+
+    .certificado-resumen .resumen-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .certificado-resumen .resumen-item:last-child {
+      border-bottom: none;
+    }
+
+    .certificado-resumen .resumen-label {
+      font-weight: 600;
+      color: #1976a5;
+    }
+
+    .certificado-resumen .resumen-valor {
+      color: #495057;
+      text-align: right;
+    }
+
+    .certificado-admin-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .certificado-expandir {
+      border-top: 1px solid #e9ecef;
+      padding-top: 1rem;
+    }
+
+    /* Estilos responsive para tabla admin */
+    @media (max-width: 768px) {
+      .admin-certificados-lista {
+        padding: 1rem;
+      }
+      
+      .table {
+        font-size: 0.85rem;
+      }
+      
+      .table th,
+      .table td {
+        padding: 0.5rem 0.25rem;
+      }
+    }
   </style>
 </head>
 
@@ -352,9 +424,17 @@
         <button type="button" id="btnAgregarCertificado" class="btn btn-success">
           <i class="bi bi-plus-circle"></i> Agregar Certificado
         </button>
-        <button type="button" id="btnListarCertificados" class="btn btn-info">
-          <i class="bi bi-list"></i> Listar Todos
+        <button type="button" id="btnRefrescarLista" class="btn btn-info">
+          <i class="bi bi-arrow-clockwise"></i> Refrescar Lista
         </button>
+      </div>
+
+      <!-- Lista automática de certificados (solo para admin) -->
+      <div class="admin-certificados-lista" id="adminListaCertificados" style="display:none; margin-bottom:2rem;">
+        <h3><i class="bi bi-list-check"></i> Gestión de Certificados</h3>
+        <div id="adminTablaCertificados">
+          <!-- La tabla se generará dinámicamente -->
+        </div>
       </div>
 
       <!-- Mensajes de estado -->
@@ -366,10 +446,10 @@
           <div class="certificado-header">
             <h2 class="certificado-titulo">
               <i class="bi bi-patch-check-fill" style="color:#1976a5"></i>
-              <span data-i18n="certificates.title">Certificado</span>
+              <span data-i18n="certificates.title">Certificado Encontrado</span>
             </h2>
-            <!-- Botones de edición/eliminación (solo admin) -->
-            <div class="admin-cert-actions" style="display:none;">
+            <!-- Botones de administración -->
+            <div class="certificado-admin-actions" style="display:none; gap:0.5rem;">
               <button type="button" id="btnEditarCertificado" class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil"></i> Editar
               </button>
@@ -379,25 +459,34 @@
             </div>
           </div>
 
-          <div class="certificado-datos" id="certificadoDatos">
-            <!-- Los datos se llenarán dinámicamente -->
+          <!-- Información resumida (siempre visible) -->
+          <div class="certificado-resumen" id="certificadoResumen">
+            <!-- Información principal se mostrará aquí -->
           </div>
 
-          <!-- Código QR -->
-          <div class="certificado-qr" id="certificadoQR">
-            <!-- El QR se mostrará aquí -->
+          <!-- Botón para expandir detalles -->
+          <div class="certificado-expandir" style="text-align:center; margin:1rem 0;">
+            <button type="button" id="btnExpandirDetalles" class="btn btn-info">
+              <i class="bi bi-chevron-down"></i> Ver información completa
+            </button>
           </div>
 
-          <!-- Link al archivo PDF -->
-          <div class="certificado-archivo" id="certificadoArchivo">
-            <!-- El link al PDF se mostrará aquí -->
+          <!-- Información detallada (expandible) -->
+          <div class="certificado-detalles" id="certificadoDetalles" style="display:none;">
+            <div class="certificado-datos" id="certificadoDatos">
+              <!-- Los datos detallados se llenarán dinámicamente -->
+            </div>
+
+            <!-- Código QR -->
+            <div class="certificado-qr" id="certificadoQR">
+              <!-- El QR se mostrará aquí -->
+            </div>
+
+            <!-- Link al archivo PDF -->
+            <div class="certificado-archivo" id="certificadoArchivo">
+              <!-- El link al PDF se mostrará aquí -->
+            </div>
           </div>
-        </div>
-      </div> <!-- Lista de certificados (solo admin) -->
-      <div class="info-box" id="listaCertificados" style="display:none;">
-        <h3>Lista de Certificados</h3>
-        <div id="tablaCertificados">
-          <!-- La tabla se generará dinámicamente -->
         </div>
       </div>
     </div>

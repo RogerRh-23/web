@@ -45,15 +45,21 @@ class CertificadosManager {
 
     setupUIBasedOnRole() {
         const adminActions = document.getElementById('adminActions');
-        const adminCertActions = document.querySelectorAll('.admin-cert-actions');
+        const adminListaCertificados = document.getElementById('adminListaCertificados');
+        const adminCertActions = document.querySelectorAll('.certificado-admin-actions');
 
         if (this.currentUser && (this.currentUser.role === 'admin' || this.currentUser.role === 'dev')) {
             // Mostrar controles de administrador
             if (adminActions) adminActions.style.display = 'flex';
+            if (adminListaCertificados) adminListaCertificados.style.display = 'block';
             adminCertActions.forEach(el => el.style.display = 'flex');
+            
+            // Cargar automáticamente la lista de certificados para administradores
+            this.cargarListaAdmin();
         } else {
             // Ocultar controles de administrador
             if (adminActions) adminActions.style.display = 'none';
+            if (adminListaCertificados) adminListaCertificados.style.display = 'none';
             adminCertActions.forEach(el => el.style.display = 'none');
         }
     }
@@ -67,7 +73,8 @@ class CertificadosManager {
 
         // Botones de administrador - Solo admin/dev
         const btnAgregar = document.getElementById('btnAgregarCertificado');
-        const btnListar = document.getElementById('btnListarCertificados');
+        const btnRefrescar = document.getElementById('btnRefrescarLista');
+        const btnExpandir = document.getElementById('btnExpandirDetalles');
 
         if (btnAgregar) {
             btnAgregar.addEventListener('click', () => {
@@ -75,11 +82,14 @@ class CertificadosManager {
                 else this.mostrarMensaje('Solo administradores pueden agregar certificados', 'error');
             });
         }
-        if (btnListar) {
-            btnListar.addEventListener('click', () => {
-                if (this.isAdmin()) this.listarCertificados();
-                else this.mostrarMensaje('Solo administradores pueden listar certificados', 'error');
+        if (btnRefrescar) {
+            btnRefrescar.addEventListener('click', () => {
+                if (this.isAdmin()) this.cargarListaAdmin();
+                else this.mostrarMensaje('Solo administradores pueden refrescar la lista', 'error');
             });
+        }
+        if (btnExpandir) {
+            btnExpandir.addEventListener('click', () => this.toggleDetallesCertificado());
         }
 
         // Formularios de agregar y editar - Solo admin/dev
@@ -174,31 +184,54 @@ class CertificadosManager {
 
     mostrarCertificado(certificado) {
         const resultado = document.getElementById('certificadoResultado');
+        const resumen = document.getElementById('certificadoResumen');
         const datos = document.getElementById('certificadoDatos');
         const qrContainer = document.getElementById('certificadoQR');
         const archivoContainer = document.getElementById('certificadoArchivo');
+        const btnExpandir = document.getElementById('btnExpandirDetalles');
 
-        if (!resultado || !datos) return;
+        if (!resultado || !resumen) return;
 
-        // Llenar datos
-        datos.innerHTML = `
-            <div><strong>Nombre de la empresa:</strong> ${certificado.nombre_empresa}</div>
-            <div><strong>No. de certificado:</strong> ${certificado.numero_certificado}</div>
-            <div><strong>ID de la empresa:</strong> ${certificado.id_empresa}</div>
-            <div><strong>Estado:</strong> <span class="badge badge-${this.getStatusClass(certificado.estado)}">${certificado.estado}</span></div>
-            <div><strong>Fecha de emisión:</strong> ${certificado.fecha_emision}</div>
-            <div><strong>Fecha de vigencia:</strong> ${certificado.fecha_vigencia}</div>
-            <div><strong>Sector IAF:</strong> ${certificado.sector_iaf}</div>
-            <div><strong>Código NACE:</strong> ${certificado.codigo_nace}</div>
-            <div><strong>Referencia normativa:</strong> ${certificado.referencia_normativa}</div>
-            <div><strong>Alcance de la certificación:</strong> ${certificado.alcance_certificacion}</div>
-            <div><strong>Instalaciones:</strong> 
-                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                    ${certificado.instalaciones.map(inst => `<li>${inst}</li>`).join('')}
-                </ul>
+        // Llenar información resumida (siempre visible)
+        resumen.innerHTML = `
+            <div class="resumen-item">
+                <span class="resumen-label">Empresa:</span>
+                <span class="resumen-valor">${certificado.nombre_empresa}</span>
             </div>
-            <div><strong>Link IAF:</strong> <a href="${certificado.link_iaf}" target="_blank" rel="noopener">${certificado.link_iaf}</a></div>
+            <div class="resumen-item">
+                <span class="resumen-label">ID Empresa:</span>
+                <span class="resumen-valor">${certificado.id_empresa}</span>
+            </div>
+            <div class="resumen-item">
+                <span class="resumen-label">No. Certificado:</span>
+                <span class="resumen-valor">${certificado.numero_certificado}</span>
+            </div>
+            <div class="resumen-item">
+                <span class="resumen-label">Estado:</span>
+                <span class="resumen-valor"><span class="badge badge-${this.getStatusClass(certificado.estado)}">${certificado.estado}</span></span>
+            </div>
+            <div class="resumen-item">
+                <span class="resumen-label">Fecha de Vigencia:</span>
+                <span class="resumen-valor">${certificado.fecha_vigencia}</span>
+            </div>
         `;
+
+        // Llenar información detallada (expandible)
+        if (datos) {
+            datos.innerHTML = `
+                <div><strong>Fecha de emisión:</strong> ${certificado.fecha_emision}</div>
+                <div><strong>Sector IAF:</strong> ${certificado.sector_iaf}</div>
+                <div><strong>Código NACE:</strong> ${certificado.codigo_nace}</div>
+                <div><strong>Referencia normativa:</strong> ${certificado.referencia_normativa}</div>
+                <div><strong>Alcance de la certificación:</strong> ${certificado.alcance_certificacion}</div>
+                <div><strong>Instalaciones:</strong> 
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        ${certificado.instalaciones.map(inst => `<li>${inst}</li>`).join('')}
+                    </ul>
+                </div>
+                <div><strong>Link IAF:</strong> <a href="${certificado.link_iaf}" target="_blank" rel="noopener">${certificado.link_iaf}</a></div>
+            `;
+        }
 
         // Mostrar código QR si existe
         if (qrContainer && certificado.codigo_qr) {
@@ -215,6 +248,12 @@ class CertificadosManager {
                     <i class="bi bi-file-pdf"></i> Descargar PDF
                 </a>
             `;
+        }
+
+        // Resetear botón de expandir
+        if (btnExpandir) {
+            btnExpandir.innerHTML = '<i class="bi bi-chevron-down"></i> Ver información completa';
+            document.getElementById('certificadoDetalles').style.display = 'none';
         }
 
         resultado.style.display = 'block';
@@ -237,77 +276,7 @@ class CertificadosManager {
         return statusMap[estado] || 'secondary';
     }
 
-    async listarCertificados() {
-        if (!this.isAdmin()) {
-            this.mostrarMensaje('No tienes permisos para esta acción', 'error');
-            return;
-        }
 
-        try {
-            const response = await fetch(`${this.baseURL}/`, {
-                headers: { 'Authorization': `Bearer ${this.currentUser.token}` }
-            });
-
-            if (response.ok) {
-                const certificados = await response.json();
-                this.mostrarListaCertificados(certificados);
-            } else {
-                const error = await response.json();
-                this.mostrarMensaje(error.detail || 'Error al cargar certificados', 'error');
-            }
-        } catch (error) {
-            console.error('Error listando certificados:', error);
-            this.mostrarMensaje('Error de conexión', 'error');
-        }
-    }
-
-    mostrarListaCertificados(certificados) {
-        const container = document.getElementById('listaCertificados');
-        const tabla = document.getElementById('tablaCertificados');
-
-        if (!container || !tabla) return;
-
-        let html = `
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Empresa</th>
-                        <th>No. Certificado</th>
-                        <th>Estado</th>
-                        <th>Vigencia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        certificados.forEach(cert => {
-            html += `
-                <tr>
-                    <td>${cert.nombre_empresa}</td>
-                    <td>${cert.numero_certificado}</td>
-                    <td><span class="badge badge-${this.getStatusClass(cert.estado)}">${cert.estado}</span></td>
-                    <td>${cert.fecha_vigencia}</td>
-                    <td>
-                        <button class="btn btn-sm btn-info" onclick="certificadosManager.verCertificado('${cert._id}')">Ver</button>
-                        <button class="btn btn-sm btn-warning" onclick="certificadosManager.editarCertificadoById('${cert._id}')">Editar</button>
-                        <button class="btn btn-sm btn-danger" onclick="certificadosManager.eliminarCertificadoById('${cert._id}')">Eliminar</button>
-                    </td>
-                </tr>
-            `;
-        });
-
-        html += `
-                </tbody>
-            </table>
-        `;
-
-        tabla.innerHTML = html;
-        container.style.display = 'block';
-
-        // Ocultar certificado individual
-        this.ocultarCertificado();
-    }
 
     mostrarModalAgregar() {
         if (!this.isAdmin()) {
@@ -419,6 +388,11 @@ class CertificadosManager {
                 this.mostrarMensaje('Certificado creado exitosamente', 'success');
                 this.cerrarModales();
                 e.target.reset();
+                
+                // Refrescar lista de administrador
+                if (this.isAdmin()) {
+                    this.cargarListaAdmin();
+                }
             } else {
                 const error = await response.json();
                 this.mostrarMensaje(error.detail || 'Error al crear certificado', 'error');
@@ -471,6 +445,11 @@ class CertificadosManager {
                 // Actualizar certificado actual con los nuevos datos
                 Object.assign(this.currentCertificate, certificadoData);
                 this.mostrarCertificado(this.currentCertificate);
+                
+                // Refrescar lista de administrador si está visible
+                if (this.isAdmin()) {
+                    this.cargarListaAdmin();
+                }
             } else {
                 const error = await response.json();
                 this.mostrarMensaje(error.detail || 'Error al actualizar certificado', 'error');
@@ -495,6 +474,11 @@ class CertificadosManager {
             if (response.ok) {
                 this.mostrarMensaje('Certificado eliminado exitosamente', 'success');
                 this.ocultarCertificado();
+                
+                // Refrescar lista de administrador si está visible
+                if (this.isAdmin()) {
+                    this.cargarListaAdmin();
+                }
             } else {
                 const error = await response.json();
                 this.mostrarMensaje(error.detail || 'Error al eliminar certificado', 'error');
@@ -603,8 +587,104 @@ class CertificadosManager {
         return this.currentUser && (this.currentUser.role === 'admin' || this.currentUser.role === 'dev');
     }
 
+    // Métodos para la lista de administrador
+    async cargarListaAdmin() {
+        if (!this.isAdmin()) return;
+
+        const container = document.getElementById('adminTablaCertificados');
+        if (!container) return;
+
+        container.innerHTML = '<div style="text-align:center; padding:2rem;">Cargando certificados...</div>';
+
+        try {
+            const response = await fetch(`${this.baseURL}/`, {
+                headers: { 'Authorization': `Bearer ${this.currentUser.token}` }
+            });
+
+            if (response.ok) {
+                const certificados = await response.json();
+                this.mostrarListaAdmin(certificados);
+            } else {
+                container.innerHTML = '<div style="text-align:center; padding:2rem; color:#dc3545;">Error al cargar certificados</div>';
+            }
+        } catch (error) {
+            console.error('Error cargando lista admin:', error);
+            container.innerHTML = '<div style="text-align:center; padding:2rem; color:#dc3545;">Error de conexión</div>';
+        }
+    }
+
+    mostrarListaAdmin(certificados) {
+        const container = document.getElementById('adminTablaCertificados');
+        if (!container) return;
+
+        if (certificados.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:2rem; color:#6c757d;">No hay certificados registrados</div>';
+            return;
+        }
+
+        let html = `
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>ID Empresa</th>
+                        <th>No. Certificado</th>
+                        <th>Estado</th>
+                        <th>Vigencia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        certificados.forEach(cert => {
+            html += `
+                <tr>
+                    <td>${cert.nombre_empresa}</td>
+                    <td>${cert.id_empresa}</td>
+                    <td>${cert.numero_certificado}</td>
+                    <td><span class="badge badge-${this.getStatusClass(cert.estado)}">${cert.estado}</span></td>
+                    <td>${cert.fecha_vigencia}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" onclick="certificadosManager.verCertificadoAdmin('${cert._id}')" title="Ver certificado">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-warning" onclick="certificadosManager.editarCertificadoById('${cert._id}')" title="Editar">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="certificadosManager.eliminarCertificadoById('${cert._id}')" title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    toggleDetallesCertificado() {
+        const detalles = document.getElementById('certificadoDetalles');
+        const btnExpandir = document.getElementById('btnExpandirDetalles');
+        
+        if (!detalles || !btnExpandir) return;
+
+        if (detalles.style.display === 'none' || detalles.style.display === '') {
+            detalles.style.display = 'block';
+            btnExpandir.innerHTML = '<i class="bi bi-chevron-up"></i> Ocultar información completa';
+        } else {
+            detalles.style.display = 'none';
+            btnExpandir.innerHTML = '<i class="bi bi-chevron-down"></i> Ver información completa';
+        }
+    }
+
     // Métodos auxiliares para la tabla
-    async verCertificado(id) {
+    async verCertificadoAdmin(id) {
         try {
             const response = await fetch(`${this.baseURL}/${id}`, {
                 headers: { 'Authorization': `Bearer ${this.currentUser.token}` }
@@ -614,10 +694,6 @@ class CertificadosManager {
                 const certificado = await response.json();
                 this.currentCertificate = certificado;
                 this.mostrarCertificado(certificado);
-
-                // Ocultar lista
-                const lista = document.getElementById('listaCertificados');
-                if (lista) lista.style.display = 'none';
             }
         } catch (error) {
             console.error('Error obteniendo certificado:', error);
@@ -629,10 +705,10 @@ class CertificadosManager {
         this.mostrarModalEditar();
     }
 
-    async eliminarCertificadoById(id) {
+        async eliminarCertificadoById(id) {
         this.currentCertificate = { _id: id };
         await this.eliminarCertificado();
-        this.listarCertificados(); // Refrescar lista
+        this.cargarListaAdmin(); // Refrescar lista
     }
 }
 
