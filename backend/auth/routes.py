@@ -278,9 +278,13 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), request: Request = N
 # Endpoint para crear usuario admin, solo accesible por dev
 
 @router.post("/register")
-def register_user(user: UserCreate):
-    log_msg = f"Intentando registrar usuario: {user.username}, email: {user.email}"
-    add_log("register_attempt", user.username, log_msg)
+def register_user(user: UserCreate, current_user: dict = Depends(get_current_user)):
+    # Solo los desarrolladores pueden usar este endpoint
+    if current_user["role"] != "dev":
+        raise HTTPException(status_code=403, detail="Solo desarrolladores pueden registrar usuarios")
+    
+    log_msg = f"Dev {current_user['username']} intentando registrar usuario: {user.username}, email: {user.email}"
+    add_log("register_attempt", current_user["username"], log_msg)
     if not user.username or not user.email or not user.password:
         add_log("register_failed", user.username if user.username else "None", "Faltan campos en el registro")
         raise HTTPException(status_code=400, detail="Faltan campos en el registro")
