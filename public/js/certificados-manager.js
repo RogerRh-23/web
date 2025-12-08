@@ -320,6 +320,9 @@ class CertificadosManager {
             return;
         }
 
+        // Cerrar todos los modales antes de abrir el modal de agregar
+        this.cerrarModales();
+
         const modal = document.getElementById('modalAgregarCertificado');
         if (modal) {
             this.limpiarFormularios();
@@ -337,6 +340,9 @@ class CertificadosManager {
             this.mostrarMensaje('Debe seleccionar un certificado para editar', 'warning');
             return;
         }
+
+        // Cerrar todos los modales antes de abrir el modal de edición
+        this.cerrarModales();
 
         const modal = document.getElementById('modalEditarCertificado');
         const form = document.getElementById('formEditarCertificado');
@@ -382,6 +388,8 @@ class CertificadosManager {
             editContainer.appendChild(div);
         }
 
+        // Bloquear scroll del body y mostrar modal
+        document.body.classList.add('modal-open');
         modal.style.display = 'block';
     }
 
@@ -539,6 +547,8 @@ class CertificadosManager {
     cerrarModales() {
         const modales = document.querySelectorAll('.certificados-modal');
         modales.forEach(modal => modal.style.display = 'none');
+        // Limpiar el bloqueo de scroll del body
+        document.body.classList.remove('modal-open');
     }
 
     cerrarModalConConfirmacion() {
@@ -857,13 +867,13 @@ class CertificadosManager {
                     <td><span class="badge badge-${this.getStatusClass(cert.estado)}">${cert.estado || 'N/A'}</span></td>
                     <td>${cert.fecha_vigencia || 'N/A'}</td>
                     <td>
-                        <button class="btn btn-sm btn-info" onclick="window.certificadosManager.verCertificadoAdmin('${certId}')" title="Ver certificado">
+                        <button class="btn btn-sm btn-info" onclick="event.preventDefault(); event.stopPropagation(); window.certificadosManager.verCertificadoAdmin('${certId}')" title="Ver certificado">
                             <i class="bi bi-eye"></i>
                         </button>
-                        <button class="btn btn-sm btn-warning" onclick="window.certificadosManager.editarCertificadoById('${certId}')" title="Editar">
+                        <button class="btn btn-sm btn-warning" onclick="event.preventDefault(); event.stopPropagation(); window.certificadosManager.editarCertificadoById('${certId}')" title="Editar">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-sm btn-danger" onclick="window.certificadosManager.eliminarCertificadoById('${certId}')" title="Eliminar">
+                        <button class="btn btn-sm btn-danger" onclick="event.preventDefault(); event.stopPropagation(); window.certificadosManager.eliminarCertificadoById('${certId}')" title="Eliminar">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
@@ -917,6 +927,9 @@ class CertificadosManager {
     }
 
     mostrarModalVerCertificado(certificado) {
+        // Cerrar todos los modales antes de abrir el modal de visualización
+        this.cerrarModales();
+
         const modal = document.getElementById('modalVerCertificado');
         if (!modal) return;
 
@@ -957,8 +970,43 @@ class CertificadosManager {
             linkIaf.removeAttribute('href');
         }
 
-        // Mostrar el modal
+        // Configurar botón de descarga PDF
+        const btnDescargarPdf = document.getElementById('btnDescargarPdf');
+        if (certificado.archivo_pdf && certificado.archivo_pdf.url) {
+            btnDescargarPdf.style.display = 'inline-flex';
+            btnDescargarPdf.onclick = () => this.descargarPdf(certificado);
+        } else {
+            btnDescargarPdf.style.display = 'none';
+        }
+
+        // Bloquear scroll del body y mostrar el modal
+        document.body.classList.add('modal-open');
         modal.style.display = 'block';
+    }
+
+    async descargarPdf(certificado) {
+        if (!certificado.archivo_pdf || !certificado.archivo_pdf.url) {
+            this.mostrarMensaje('No hay archivo PDF disponible para descargar', 'warning');
+            return;
+        }
+
+        try {
+            // Crear enlace temporal para descargar
+            const link = document.createElement('a');
+            link.href = certificado.archivo_pdf.url;
+            link.download = `certificado_${certificado.numero_certificado}.pdf`;
+            link.target = '_blank';
+            
+            // Agregar al DOM temporalmente y hacer clic
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            this.mostrarMensaje('Descarga iniciada', 'success');
+        } catch (error) {
+            console.error('Error al descargar PDF:', error);
+            this.mostrarMensaje('Error al descargar el archivo PDF', 'error');
+        }
     }
 
     async editarCertificadoById(id) {

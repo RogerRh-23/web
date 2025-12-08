@@ -82,6 +82,7 @@
     <button class="close-modal" id="cerrarModalVer" title="Cerrar">&times;</button>
     <h3><i class="bi bi-eye"></i> Información del Certificado</h3>
     <div class="certificado-view-content">
+      <!-- Columna 1 -->
       <div class="certificado-view-section">
         <h4>Información de la Empresa</h4>
         <div class="view-field">
@@ -94,6 +95,7 @@
         </div>
       </div>
 
+      <!-- Columna 2 -->
       <div class="certificado-view-section">
         <h4>Información del Certificado</h4>
         <div class="view-field">
@@ -114,6 +116,7 @@
         </div>
       </div>
 
+      <!-- Columna 1 -->
       <div class="certificado-view-section">
         <h4>Detalles Técnicos</h4>
         <div class="view-field">
@@ -128,17 +131,9 @@
           <label>Referencia normativa:</label>
           <span id="view-referenciaNormativa">-</span>
         </div>
-        <div class="view-field">
-          <label>Alcance de la certificación:</label>
-          <span id="view-alcanceCertificacion">-</span>
-        </div>
       </div>
 
-      <div class="certificado-view-section">
-        <h4>Instalaciones</h4>
-        <div id="view-instalaciones">-</div>
-      </div>
-
+      <!-- Columna 2 -->
       <div class="certificado-view-section">
         <h4>Enlaces</h4>
         <div class="view-field">
@@ -146,6 +141,27 @@
           <a id="view-linkIaf" href="#" target="_blank" rel="noopener">-</a>
         </div>
       </div>
+
+      <!-- Span completo - Alcance -->
+      <div class="certificado-view-section certificado-view-content-full">
+        <h4>Alcance de la Certificación</h4>
+        <div class="view-field">
+          <span id="view-alcanceCertificacion">-</span>
+        </div>
+      </div>
+
+      <!-- Span completo - Instalaciones -->
+      <div class="certificado-view-section certificado-view-content-full">
+        <h4>Instalaciones</h4>
+        <div id="view-instalaciones">-</div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="certificado-actions">
+      <button type="button" id="btnDescargarPdf" class="btn btn-primary" style="display:none;">
+        <i class="bi bi-download"></i> Descargar PDF
+      </button>
     </div>
   </div>
 </div>
