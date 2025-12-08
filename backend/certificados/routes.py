@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, UploadFile, File
 from fastapi.security import OAuth2PasswordBearer
 from typing import List, Optional
-from .models import Certificado, CertificadoCreate, CertificadoUpdate
+from .models import Certificado, CertificadoCreate, CertificadoUpdate, CertificadoSimple
 from .mongo_storage import (
     get_all_certificados_mongo, 
     buscar_certificado_mongo,
     crear_certificado_mongo,
+    crear_certificado_simple_mongo,
     actualizar_certificado_mongo,
     eliminar_certificado_mongo,
     get_certificado_by_id_mongo
@@ -22,19 +23,28 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 # ====== ENDPOINTS PARA ADMINISTRADORES ======
 
 @router.get("/", response_model=List[Certificado])
+@router.get("/listar", response_model=List[Certificado])  # Alias para compatibilidad
 def listar_certificados(current_user: dict = Depends(get_current_user)):
     """Lista todos los certificados - Solo admin"""
     if current_user["role"] not in ["admin", "dev"]:
         raise HTTPException(status_code=403, detail="Solo administradores pueden ver todos los certificados")
     
     try:
-        return get_all_certificados_mongo()
+        # Verificar conexión de MongoDB
+        from main import mongo_client
+        if not mongo_client:
+            raise HTTPException(status_code=500, detail="No hay conexión a la base de datos")
+            
+        certificados = get_all_certificados_mongo()
+        return certificados
     except Exception as e:
+        print(f"Error en listar_certificados: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error al obtener certificados: {str(e)}")
 
 @router.post("/", response_model=dict)
+@router.post("/crear", response_model=dict)  # Alias para compatibilidad
 def crear_certificado(
-    certificado: CertificadoCreate, 
+    certificado_data: dict,  # Cambiar a dict para mayor flexibilidad
     current_user: dict = Depends(get_current_user)
 ):
     """Crea un nuevo certificado - Solo admin"""
@@ -42,9 +52,22 @@ def crear_certificado(
         raise HTTPException(status_code=403, detail="Solo administradores pueden crear certificados")
     
     try:
-        certificado_id = crear_certificado_mongo(certificado)
+        # Detectar si es un certificado simple (tiene campos como nombre_completo, cedula, curso)
+        campos_simples = ['nombre_completo', 'cedula', 'curso', 'modalidad', 'horas']
+        es_certificado_simple = any(campo in certificado_data for campo in campos_simples)
+        
+        if es_certificado_simple:
+            print(f"Creando certificado simple con datos: {certificado_data}")
+            certificado_id = crear_certificado_simple_mongo(certificado_data)
+        else:
+            # Validar como CertificadoCreate
+            from .models import CertificadoCreate
+            certificado = CertificadoCreate(**certificado_data)
+            certificado_id = crear_certificado_mongo(certificado)
+        
         return {"id": certificado_id, "message": "Certificado creado exitosamente"}
     except Exception as e:
+        print(f"Error al crear certificado: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error al crear certificado: {str(e)}")
 
 @router.get("/{certificado_id}", response_model=Certificado)
@@ -56,11 +79,15 @@ def obtener_certificado(
     if current_user["role"] not in ["admin", "dev"]:
         raise HTTPException(status_code=403, detail="No autorizado")
     
-    certificado = get_certificado_by_id_mongo(certificado_id)
-    if not certificado:
-        raise HTTPException(status_code=404, detail="Certificado no encontrado")
-    
-    return certificado
+    try:
+        certificado = get_certificado_by_id_mongo(certificado_id)
+        if not certificado:
+            raise HTTPException(status_code=404, detail="Certificado no encontrado")
+        
+        return certificado
+    except Exception as e:
+        print(f"Error en obtener_certificado: {e}")
+        raise HTTPException(status_code=500, detail=f"Error al obtener certificado: {str(e)}")
 
 @router.put("/{certificado_id}", response_model=dict)
 def actualizar_certificado(

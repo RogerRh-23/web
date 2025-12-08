@@ -5,70 +5,207 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30, 40, 60, 0.18);
+  background: rgba(30, 40, 60, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s;
+  transition: all 0.4s ease;
+  animation: modalFadeIn 0.4s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
 }
 
 .admin-certificados-modal-content {
-  background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px rgba(20, 30, 60, 0.18);
-  padding: 2.2rem 2rem 1.5rem 2rem;
-  min-width: 340px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 1.8rem;
+  box-shadow: 0 16px 48px rgba(20, 30, 60, 0.2), 0 8px 24px rgba(25, 118, 165, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2.5rem 2.2rem 2rem 2.2rem;
+  min-width: 360px;
   max-width: 95vw;
-  width: 420px;
+  max-height: 85vh;
+  width: 450px;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 1.3rem;
+  transform: scale(0.9);
+  animation: modalSlideIn 0.4s ease-out forwards;
+  overflow-y: auto;
+
+  // Scrollbar personalizada igual que la página
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(240, 248, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #1976a5, #45b7d1);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(25, 118, 165, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #45b7d1, #5ec6e7);
+    box-shadow: 0 4px 8px rgba(25, 118, 165, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(135deg, #1565c0, #1976a5);
+  }
+
+  // Firefox scrollbar
+  scrollbar-width: thin;
+  scrollbar-color: #1976a5 rgba(240, 248, 255, 0.3);
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 .admin-certificados-modal-content h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1976a5;
-  margin-bottom: 0.7rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(25, 118, 165, 0.1);
+  background: linear-gradient(135deg, #1976a5, #45b7d1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .admin-certificados-modal-content .close-modal {
   position: absolute;
-  top: 1.1rem;
-  right: 1.1rem;
-  background: none;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(25, 118, 165, 0.1);
   border: none;
-  font-size: 1.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
   color: #1976a5;
   cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+
+  &:hover {
+    background: rgba(25, 118, 165, 0.2);
+    transform: scale(1.1) rotate(90deg);
+  }
 }
 
 .admin-certificados-modal-content form {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
 }
 
 .admin-certificados-modal-content label {
   font-weight: 600;
-  color: #234;
-  margin-bottom: 0.2rem;
+  color: #2c3e50;
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .admin-certificados-modal-content input,
 .admin-certificados-modal-content select {
-  padding: 0.5rem 0.7rem;
-  border-radius: 0.4rem;
-  border: 1px solid #cbe7f6;
+  padding: 0.8rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(203, 231, 246, 0.5);
   font-size: 1rem;
-  background: #f7fbfd;
+  background: rgba(247, 251, 253, 0.8);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #1976a5;
+    box-shadow: 0 0 0 3px rgba(25, 118, 165, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+  }
 }
 
 .admin-certificados-modal-content .btn {
-  margin-top: 1.1rem;
+  margin-top: 1.5rem;
   align-self: flex-end;
+  padding: 0.8rem 2rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+// Scrollbar personalizada para todos los modales de certificados
+.certificados-modal {
+  .certificados-modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+
+    // Scrollbar personalizada igual que la página
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(240, 248, 255, 0.3);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #1976a5, #45b7d1);
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(25, 118, 165, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #45b7d1, #5ec6e7);
+      box-shadow: 0 4px 8px rgba(25, 118, 165, 0.3);
+    }
+
+    &::-webkit-scrollbar-thumb:active {
+      background: linear-gradient(135deg, #1565c0, #1976a5);
+    }
+
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: #1976a5 rgba(240, 248, 255, 0.3);
+  }
 }
 
 // certificados-admin.scss
@@ -76,107 +213,210 @@
 
 .admin-certificados-header {
   display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin-bottom: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(25, 118, 165, 0.3), transparent);
+  }
 
   h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: #1976a5;
-    margin-bottom: 0.5rem;
+    margin: 0;
     text-align: left;
     letter-spacing: 0.02em;
+    text-shadow: 0 2px 4px rgba(25, 118, 165, 0.1);
+    background: linear-gradient(135deg, #1976a5, #45b7d1, #5ec6e7);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease-in-out infinite;
 
     i {
-      margin-right: 0.5rem;
+      margin-right: 0.8rem;
+      color: #1976a5;
+      filter: drop-shadow(0 2px 4px rgba(25, 118, 165, 0.2));
     }
+  }
+}
+
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }
 
 .admin-certificados-actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  padding: 1.5rem 0;
 }
 
 .admin-certificados-actions .btn {
   font-weight: 700;
-  font-size: 0.95rem;
-  border-radius: 0.5rem;
-  padding: 0.45rem 1.1rem;
-  box-shadow: 0 2px 8px rgba(20, 30, 60, 0.10);
-  transition: box-shadow 0.25s, background 0.25s, transform 0.18s;
+  font-size: 1.05rem;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 8px 20px rgba(25, 118, 165, 0.15), 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8rem;
   border: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
 }
 
 .admin-certificados-actions .btn-success {
-  background: linear-gradient(90deg, #1976a5 0%, #5ec6e7 100%);
+  background: linear-gradient(135deg, #1976a5 0%, #45b7d1 50%, #5ec6e7 100%);
   color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .admin-certificados-actions .btn-success:hover {
-  background: linear-gradient(90deg, #5ec6e7 0%, #1976a5 100%);
-  box-shadow: 0 4px 16px rgba(20, 30, 60, 0.13);
-  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #5ec6e7 0%, #45b7d1 50%, #1976a5 100%);
+  box-shadow: 0 12px 28px rgba(25, 118, 165, 0.25), 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .admin-certificados-actions .btn-warning {
-  background: linear-gradient(90deg, #f7b731 0%, #f5e6a2 100%);
-  color: #234;
+  background: linear-gradient(135deg, #f39c12 0%, #f7b731 50%, #f5e6a2 100%);
+  color: #2c3e50;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .admin-certificados-actions .btn-warning:hover {
-  background: linear-gradient(90deg, #f5e6a2 0%, #f7b731 100%);
-  box-shadow: 0 4px 16px rgba(247, 183, 49, 0.13);
-  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #f5e6a2 0%, #f7b731 50%, #f39c12 100%);
+  box-shadow: 0 12px 28px rgba(243, 156, 18, 0.25), 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .admin-certificados-actions .btn-danger {
-  background: linear-gradient(90deg, #e74c3c 0%, #f7b7a3 100%);
+  background: linear-gradient(135deg, #e74c3c 0%, #ec7063 50%, #f7b7a3 100%);
   color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .admin-certificados-actions .btn-danger:hover {
-  background: linear-gradient(90deg, #f7b7a3 0%, #e74c3c 100%);
-  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.13);
-  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #f7b7a3 0%, #ec7063 50%, #e74c3c 100%);
+  box-shadow: 0 12px 28px rgba(231, 76, 60, 0.25), 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .admin-certificados-actions i {
-  margin-right: 0.5rem;
-  font-size: 1.2em;
+  font-size: 1.3em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.admin-certificados-actions .btn:hover i {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .admin-certificados-list {
-  background: #fff;
-  border-radius: 1.1rem;
-  box-shadow: 0 4px 16px -4px rgba(20, 30, 60, 0.10);
-  padding: 1.5rem 1.2rem;
-  border: 1px solid #cbe7f6;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(20, 30, 60, 0.12), 0 4px 16px rgba(25, 118, 165, 0.08);
+  padding: 2rem 1.8rem;
+  border: 1px solid rgba(203, 231, 246, 0.3);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1976a5, #5ec6e7, #45b7d1);
+    opacity: 0.8;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(20, 30, 60, 0.15), 0 6px 20px rgba(25, 118, 165, 0.12);
+    background: rgba(255, 255, 255, 0.9);
+  }
 
   table {
     width: 100%;
     border-collapse: collapse;
-
-    th,
-    td {
-      padding: 0.7rem 0.5rem;
-      text-align: left;
-      font-size: 1rem;
-      border-bottom: 1px solid #e0e7ef;
-    }
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 
     th {
-      background: #eaf6fb;
+      background: linear-gradient(135deg, rgba(234, 246, 251, 0.95), rgba(203, 231, 246, 0.95));
       color: #1976a5;
       font-weight: 700;
+      padding: 1.2rem 0.8rem;
+      text-align: left;
+      font-size: 0.95rem;
+      border-bottom: 2px solid rgba(25, 118, 165, 0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(25, 118, 165, 0.1);
+    }
+
+    td {
+      padding: 1.2rem 0.8rem;
+      text-align: left;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(224, 231, 239, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: rgba(25, 118, 165, 0.05);
+      transform: scale(1.01);
     }
 
     tr:last-child td {
@@ -185,29 +425,202 @@
 
     input[type="radio"] {
       accent-color: #1976a5;
-      transform: scale(1.2);
+      transform: scale(1.3);
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.4);
+      }
     }
   }
 }
 
-@include media('(max-width: 700px)') {
+// Estilos para la lista de administrador
+.admin-certificados-lista {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(25, 118, 165, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 2.5rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1976a5, #5ec6e7, #45b7d1);
+    opacity: 0.8;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(25, 118, 165, 0.12);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  h3 {
+    color: #1976a5;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(25, 118, 165, 0.1);
+    background: linear-gradient(135deg, #1976a5, #45b7d1);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+// Estilos para acciones administrativas en certificados individuales
+.admin-cert-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.certificado-admin-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.certificado-admin-actions .btn {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.certificado-admin-actions .btn-sm {
+  background: linear-gradient(135deg, #6c757d, #8a939b);
+  color: white;
+  border: none;
+}
+
+.certificado-admin-actions .btn-sm:hover {
+  background: linear-gradient(135deg, #8a939b, #6c757d);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(108, 117, 125, 0.2);
+}
+
+.certificado-admin-actions .btn-danger {
+  background: linear-gradient(135deg, #dc3545, #e86370);
+  border: none;
+}
+
+.certificado-admin-actions .btn-danger:hover {
+  background: linear-gradient(135deg, #e86370, #dc3545);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.25);
+}
+
+.certificado-admin-actions i {
+  font-size: 1rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+.certificado-admin-actions .btn:hover i {
+  transform: scale(1.15);
+}
+
+.certificado-admin-actions .btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+// Responsive para tablet
+@media (max-width: 1024px) {
+  .admin-certificados-actions {
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .admin-certificados-actions .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+// Responsive para mobile
+@media (max-width: 768px) {
   .admin-certificados-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .admin-certificados-actions {
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+  }
+
+  .admin-certificados-actions .btn {
+    font-size: 0.95rem;
+    padding: 0.8rem 1.2rem;
+    flex: 1;
+    min-width: 140px;
+    max-width: 180px;
   }
 
   .admin-certificados-list {
-    padding: 1rem 0.5rem;
-    border-radius: 0.7rem;
+    padding: 1.5rem 1rem;
+    border-radius: 1.2rem;
 
     table th,
     table td {
-      font-size: 0.95rem;
-      padding: 0.5rem 0.3rem;
+      font-size: 0.9rem;
+      padding: 0.8rem 0.4rem;
     }
   }
 
-  .admin-certificados-actions button {
-    font-size: 0.95rem;
-    padding: 0.5rem 1rem;
+  .admin-certificados-lista {
+    padding: 1.5rem 1rem;
+    border-radius: 1.2rem;
+  }
+
+  .certificado-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .certificado-admin-actions {
+    width: 100%;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-certificados-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-certificados-actions .btn {
+    width: 100%;
+    max-width: none;
+    justify-content: center;
   }
 }

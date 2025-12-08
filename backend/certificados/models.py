@@ -46,6 +46,19 @@ class CertificadoCreate(BaseModel):
     instalaciones: List[str]
     link_iaf: str
 
+class CertificadoSimple(BaseModel):
+    """Modelo simplificado para certificados de prueba"""
+    numero_certificado: str
+    nombre_completo: str
+    cedula: str
+    curso: str
+    modalidad: str = "Virtual"
+    horas: int = 40
+    fecha_expedicion: str
+    fecha_vencimiento: str
+    organizacion_emisora: str = "LACS"
+    estado: str = "vigente"
+
 class CertificadoUpdate(BaseModel):
     nombre_empresa: Optional[str] = None
     numero_certificado: Optional[str] = None

@@ -78,35 +78,129 @@ def crear_certificado_mongo(certificado_data: CertificadoCreate) -> str:
     result = collection.insert_one(cert_dict)
     return str(result.inserted_id)
 
+def crear_certificado_simple_mongo(certificado_data) -> str:
+    """Crea un certificado simple (para pruebas)"""
+    from .models import CertificadoSimple
+    
+    # Si es un dict, convertir a modelo
+    if isinstance(certificado_data, dict):
+        # Convertir campos de fecha si es necesario
+        cert_dict = certificado_data.copy()
+    else:
+        cert_dict = certificado_data.dict()
+    
+    # Agregar metadatos
+    cert_dict['fecha_creacion'] = datetime.utcnow()
+    cert_dict['fecha_actualizacion'] = datetime.utcnow()
+    
+    # Generar link IAF ficticio para certificados de prueba
+    cert_dict['link_iaf'] = f"https://lacs.org/certificado/{cert_dict['numero_certificado']}"
+    
+    # Generar código QR
+    cert_dict['codigo_qr'] = generar_codigo_qr(cert_dict['link_iaf'])
+    
+    # Convertir a formato del modelo completo para compatibilidad
+    cert_completo = {
+        'nombre_empresa': cert_dict.get('organizacion_emisora', 'LACS'),
+        'numero_certificado': cert_dict['numero_certificado'],
+        'id_empresa': cert_dict.get('cedula', 'N/A'),
+        'estado': cert_dict.get('estado', 'vigente'),
+        'fecha_emision': cert_dict.get('fecha_expedicion', ''),
+        'fecha_vigencia': cert_dict.get('fecha_vencimiento', ''),
+        'sector_iaf': 'Educación y Capacitación',
+        'codigo_nace': '85.59',
+        'referencia_normativa': cert_dict.get('curso', 'Curso General'),
+        'alcance_certificacion': f"{cert_dict.get('curso', 'Curso')} - {cert_dict.get('modalidad', 'Virtual')}",
+        'instalaciones': [cert_dict.get('organizacion_emisora', 'LACS')],
+        'link_iaf': cert_dict['link_iaf'],
+        'codigo_qr': cert_dict['codigo_qr'],
+        'fecha_creacion': cert_dict['fecha_creacion'],
+        'fecha_actualizacion': cert_dict['fecha_actualizacion'],
+        # Campos específicos del certificado simple
+        'nombre_completo': cert_dict.get('nombre_completo', ''),
+        'cedula': cert_dict.get('cedula', ''),
+        'curso': cert_dict.get('curso', ''),
+        'modalidad': cert_dict.get('modalidad', 'Virtual'),
+        'horas': cert_dict.get('horas', 40),
+        'fecha_expedicion': cert_dict.get('fecha_expedicion', ''),
+        'fecha_vencimiento': cert_dict.get('fecha_vencimiento', ''),
+        'organizacion_emisora': cert_dict.get('organizacion_emisora', 'LACS')
+    }
+    
+    result = collection.insert_one(cert_completo)
+    return str(result.inserted_id)
+
 def actualizar_certificado_mongo(certificado_id: str, certificado_data: CertificadoUpdate) -> bool:
     """Actualiza un certificado existente"""
-    # Filtrar campos None
-    update_data = {k: v for k, v in certificado_data.dict().items() if v is not None}
-    
-    if not update_data:
-        return False
+    try:
+        # Filtrar campos None
+        update_data = {k: v for k, v in certificado_data.dict().items() if v is not None}
         
-    update_data['fecha_actualizacion'] = datetime.utcnow()
-    
-    # Regenerar QR si se actualiza el link IAF
-    if 'link_iaf' in update_data:
-        update_data['codigo_qr'] = generar_codigo_qr(update_data['link_iaf'])
-    
-    result = collection.update_one(
-        {"_id": ObjectId(certificado_id)}, 
-        {"$set": update_data}
-    )
-    return result.modified_count > 0
+        if not update_data:
+            return False
+            
+        update_data['fecha_actualizacion'] = datetime.utcnow()
+        
+        # Regenerar QR si se actualiza el link IAF
+        if 'link_iaf' in update_data:
+            update_data['codigo_qr'] = generar_codigo_qr(update_data['link_iaf'])
+        
+        # Determinar el filtro según el tipo de ID
+        if ObjectId.is_valid(certificado_id):
+            filter_query = {"_id": ObjectId(certificado_id)}
+        else:
+            filter_query = {
+                "$or": [
+                    {"numero_certificado": certificado_id},
+                    {"id_empresa": certificado_id}
+                ]
+            }
+        
+        result = collection.update_one(filter_query, {"$set": update_data})
+        return result.modified_count > 0
+    except Exception as e:
+        print(f"Error en actualizar_certificado_mongo: {e}")
+        return False
 
 def eliminar_certificado_mongo(certificado_id: str) -> bool:
     """Elimina un certificado"""
-    result = collection.delete_one({"_id": ObjectId(certificado_id)})
-    return result.deleted_count > 0
+    try:
+        # Determinar el filtro según el tipo de ID
+        if ObjectId.is_valid(certificado_id):
+            filter_query = {"_id": ObjectId(certificado_id)}
+        else:
+            filter_query = {
+                "$or": [
+                    {"numero_certificado": certificado_id},
+                    {"id_empresa": certificado_id}
+                ]
+            }
+        
+        result = collection.delete_one(filter_query)
+        return result.deleted_count > 0
+    except Exception as e:
+        print(f"Error en eliminar_certificado_mongo: {e}")
+        return False
 
 def get_certificado_by_id_mongo(certificado_id: str) -> Optional[Certificado]:
     """Obtiene un certificado por ID"""
-    doc = collection.find_one({"_id": ObjectId(certificado_id)})
-    if doc:
-        doc['_id'] = str(doc['_id'])
-        return Certificado(**doc)
-    return None
+    try:
+        # Intentar convertir a ObjectId si es posible
+        if ObjectId.is_valid(certificado_id):
+            doc = collection.find_one({"_id": ObjectId(certificado_id)})
+        else:
+            # Si no es un ObjectId válido, buscar por otros campos
+            doc = collection.find_one({
+                "$or": [
+                    {"numero_certificado": certificado_id},
+                    {"id_empresa": certificado_id}
+                ]
+            })
+        
+        if doc:
+            doc['_id'] = str(doc['_id'])
+            return Certificado(**doc)
+        return None
+    except Exception as e:
+        print(f"Error en get_certificado_by_id_mongo: {e}")
+        return None

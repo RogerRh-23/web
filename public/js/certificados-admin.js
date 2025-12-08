@@ -190,13 +190,17 @@ document.addEventListener('DOMContentLoaded', function () {
       formEditar.appendChild(archivoLabel);
     }
     archivoLabel.textContent = cert.archivoNombre ? `Documento cargado: ${cert.archivoNombre}` : 'No hay documento cargado';
+    document.body.classList.add('modal-open'); // Bloquear scroll del body
     modalEditar.style.display = 'flex';
     setTimeout(() => { modalEditar.style.opacity = '1'; }, 10);
   }
   function ocultarModalEditar() {
     if (modalEditar) {
       modalEditar.style.opacity = '0';
-      setTimeout(() => { modalEditar.style.display = 'none'; }, 300);
+      setTimeout(() => {
+        modalEditar.style.display = 'none';
+        document.body.classList.remove('modal-open'); // Restaurar scroll del body
+      }, 300);
     }
     if (formEditar) formEditar.reset();
     editIdx = null;
@@ -270,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function mostrarModal() {
     if (modal) {
+      document.body.classList.add('modal-open'); // Bloquear scroll del body
       modal.style.display = 'flex';
       setTimeout(() => { modal.style.opacity = '1'; }, 10);
     }
@@ -277,7 +282,10 @@ document.addEventListener('DOMContentLoaded', function () {
   function ocultarModal() {
     if (modal) {
       modal.style.opacity = '0';
-      setTimeout(() => { modal.style.display = 'none'; }, 300);
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open'); // Restaurar scroll del body
+      }, 300);
     }
     if (formAgregar) formAgregar.reset();
   }
@@ -333,4 +341,296 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+});
+
+// ================== FUNCIONES DE DIAGNÓSTICO Y GESTIÓN ==================
+
+// Variable global para la URL del backend
+const BACKEND_URL = localStorage.getItem('backend_url') || 'http://localhost:8000';
+
+// Función para probar autenticación
+async function probarAutenticacion() {
+  try {
+    console.log('🔐 Probando autenticación...');
+
+    const token = localStorage.getItem('admin_token');
+    if (!token) {
+      console.log('❌ No hay token guardado');
+      return { success: false, message: 'No hay token' };
+    }
+
+    console.log('🎫 Token encontrado:', token.substring(0, 20) + '...');
+
+    const response = await fetch(`${BACKEND_URL}/certificados/listar`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('📡 Respuesta de autenticación:', response.status, response.statusText);
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('✅ Autenticación exitosa. Certificados encontrados:', data.length);
+      return { success: true, data: data };
+    } else {
+      const error = await response.text();
+      console.error('❌ Error de autenticación:', error);
+      return { success: false, message: error };
+    }
+  } catch (error) {
+    console.error('❌ Error al probar autenticación:', error);
+    return { success: false, message: error.message };
+  }
+}
+
+// Función para crear token de admin (modo desarrollo)
+async function crearTokenAdmin() {
+  try {
+    console.log('🔑 Creando token de administrador...');
+
+    const credenciales = {
+      username: "admin",
+      password: "admin123"
+    };
+
+    const response = await fetch(`${BACKEND_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credenciales)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem('admin_token', data.access_token);
+      console.log('✅ Token de admin creado y guardado');
+      mostrarSnackbar('Token de administrador creado exitosamente', 'success');
+      return data.access_token;
+    } else {
+      const error = await response.text();
+      console.error('❌ Error al crear token:', error);
+      mostrarSnackbar('Error al crear token: ' + error, 'error');
+      return null;
+    }
+  } catch (error) {
+    console.error('❌ Error en crearTokenAdmin:', error);
+    mostrarSnackbar('Error al crear token: ' + error.message, 'error');
+    return null;
+  }
+}
+
+// Función para cargar certificados reales desde el backend
+async function cargarCertificadosReales() {
+  try {
+    console.log('📋 Cargando certificados desde el backend...');
+
+    const authResult = await probarAutenticacion();
+
+    if (authResult.success) {
+      const certificados = authResult.data;
+
+      if (certificados.length === 0) {
+        console.log('📝 No hay certificados en la base de datos');
+        mostrarSnackbar('Base de datos vacía. Haga clic en "Crear Certificado de Prueba" para agregar datos.', 'info');
+
+        // Mostrar botón para crear certificado de prueba
+        const container = document.querySelector('.certificados-lista') || document.body;
+        if (!document.getElementById('boton-crear-prueba')) {
+          const botonPrueba = document.createElement('button');
+          botonPrueba.id = 'boton-crear-prueba';
+          botonPrueba.className = 'btn btn-primary';
+          botonPrueba.innerHTML = '🧪 Crear Certificado de Prueba';
+          botonPrueba.onclick = crearCertificadoPrueba;
+          botonPrueba.style.margin = '10px';
+          container.appendChild(botonPrueba);
+        }
+      } else {
+        console.log('✅ Certificados cargados exitosamente:', certificados.length);
+
+        // Remover el botón de crear prueba si existe
+        const botonPrueba = document.getElementById('boton-crear-prueba');
+        if (botonPrueba) {
+          botonPrueba.remove();
+        }
+
+        // Aquí puedes actualizar la interfaz con los certificados reales
+        // por ejemplo: actualizarListaCertificados(certificados);
+      }
+
+      return certificados;
+    } else {
+      console.error('❌ Error de autenticación:', authResult.message);
+      mostrarSnackbar('Error de autenticación: ' + authResult.message, 'error');
+      return [];
+    }
+  } catch (error) {
+    console.error('❌ Error al cargar certificados:', error);
+    mostrarSnackbar('Error al cargar certificados: ' + error.message, 'error');
+    return [];
+  }
+}
+
+// Función para crear un certificado de prueba
+async function crearCertificadoPrueba() {
+  try {
+    console.log('🧪 Creando certificado de prueba...');
+
+    // Verificar autenticación primero
+    const authResult = await probarAutenticacion();
+    if (!authResult.success) {
+      console.error('❌ No se pudo autenticar para crear certificado');
+      mostrarSnackbar('Error de autenticación. Generando nuevo token...', 'warning');
+      await crearTokenAdmin();
+
+      // Reintentar autenticación
+      const retryAuth = await probarAutenticacion();
+      if (!retryAuth.success) {
+        mostrarSnackbar('No se pudo autenticar. Verifique las credenciales.', 'error');
+        return null;
+      }
+    }
+
+    const certificadoData = {
+      numero_certificado: `LACS-TEST-${Date.now()}`,
+      nombre_completo: "Juan Pérez García",
+      cedula: "12345678901",
+      curso: "Curso de Manipulación de Alimentos",
+      modalidad: "Virtual",
+      horas: 40,
+      fecha_expedicion: new Date().toISOString().split('T')[0],
+      fecha_vencimiento: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 año después
+      organizacion_emisora: "LACS - Laboratorio de Análisis y Control Sanitario",
+      estado: "vigente"
+    };
+
+    console.log('📤 Enviando datos del certificado:', certificadoData);
+
+    const response = await fetch(`${BACKEND_URL}/certificados/crear`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      },
+      body: JSON.stringify(certificadoData)
+    });
+
+    console.log('📡 Respuesta del servidor:', response.status, response.statusText);
+
+    if (response.ok) {
+      const resultado = await response.json();
+      console.log('✅ Certificado de prueba creado:', resultado);
+      mostrarSnackbar('Certificado de prueba creado exitosamente', 'success');
+
+      // Recargar la lista de certificados
+      await cargarCertificadosReales();
+
+      return resultado;
+    } else {
+      const error = await response.text();
+      console.error('❌ Error al crear certificado de prueba:', response.status, error);
+      mostrarSnackbar(`Error al crear certificado de prueba (${response.status}): ${error}`, 'error');
+      return null;
+    }
+  } catch (error) {
+    console.error('❌ Error en crearCertificadoPrueba:', error);
+    mostrarSnackbar('Error al crear certificado de prueba: ' + error.message, 'error');
+    return null;
+  }
+}
+
+// Función para diagnosticar el sistema completo
+async function diagnosticarSistema() {
+  console.log('🔍 DIAGNÓSTICO COMPLETO DEL SISTEMA');
+  console.log('=====================================');
+
+  // 1. Verificar conexión con backend
+  try {
+    const response = await fetch(`${BACKEND_URL}/`);
+    console.log('✅ Backend conectado:', response.status);
+  } catch (error) {
+    console.log('❌ Backend no disponible:', error.message);
+    return;
+  }
+
+  // 2. Probar autenticación
+  const auth = await probarAutenticacion();
+  if (!auth.success) {
+    console.log('⚠️ Intentando crear nuevo token...');
+    await crearTokenAdmin();
+    await probarAutenticacion();
+  }
+
+  // 3. Cargar certificados
+  await cargarCertificadosReales();
+
+  console.log('🎯 Diagnóstico completo');
+}
+
+// Función auxiliar para mostrar mensajes (snackbar)
+function mostrarSnackbar(mensaje, tipo = 'info') {
+  // Si existe una función global de snackbar, usarla
+  if (typeof window.showSnackbar === 'function') {
+    window.showSnackbar(mensaje, tipo);
+    return;
+  }
+
+  // Fallback: usar console y alert simple
+  console.log(`${tipo.toUpperCase()}: ${mensaje}`);
+
+  // Crear snackbar simple si no existe
+  const snackbar = document.createElement('div');
+  snackbar.className = `snackbar snackbar-${tipo}`;
+  snackbar.textContent = mensaje;
+  snackbar.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${tipo === 'error' ? '#f44336' : tipo === 'warning' ? '#ff9800' : tipo === 'success' ? '#4caf50' : '#2196f3'};
+        color: white;
+        padding: 12px 24px;
+        border-radius: 4px;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s;
+    `;
+
+  document.body.appendChild(snackbar);
+
+  // Animar entrada
+  setTimeout(() => {
+    snackbar.style.opacity = '1';
+  }, 100);
+
+  // Remover después de 3 segundos
+  setTimeout(() => {
+    snackbar.style.opacity = '0';
+    setTimeout(() => {
+      if (snackbar.parentNode) {
+        snackbar.parentNode.removeChild(snackbar);
+      }
+    }, 300);
+  }, 3000);
+}
+
+// Exponer funciones globalmente para depuración
+window.diagnosticarSistema = diagnosticarSistema;
+window.probarAutenticacion = probarAutenticacion;
+window.crearTokenAdmin = crearTokenAdmin;
+window.cargarCertificadosReales = cargarCertificadosReales;
+window.crearCertificadoPrueba = crearCertificadoPrueba;
+
+// Auto-inicialización cuando se carga la página
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('🚀 Sistema de certificados cargado');
+
+  // Realizar diagnóstico inicial después de un breve delay
+  setTimeout(() => {
+    console.log('🔄 Ejecutando diagnóstico inicial...');
+    cargarCertificadosReales();
+  }, 1000);
 });

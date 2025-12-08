@@ -3,19 +3,29 @@ mongo_client = None
 from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
+import logging
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
+
+logger.info(f"MONGODB_URI configurado: {'Sí' if MONGODB_URI else 'No'}")
+
 if MONGODB_URI:
     from pymongo.mongo_client import MongoClient
     from pymongo.server_api import ServerApi
-    mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))
     try:
+        mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))
         mongo_client.admin.command('ping')
-        print("Pinged your deployment. You successfully connected to MongoDB!")
+        logger.info("✅ Conexión exitosa a MongoDB Atlas!")
     except Exception as e:
-        print("Error al conectar a MongoDB Atlas:", e)
+        logger.error(f"❌ Error al conectar a MongoDB Atlas: {e}")
+        mongo_client = None
 else:
-    print("MONGODB_URI no está configurada en las variables de entorno.")
+    logger.error("❌ MONGODB_URI no está configurada en las variables de entorno.")
 try:
     from auth.routes import router as auth_router
     from drive.routes import router as drive_router
@@ -122,4 +132,42 @@ else:
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
 app.include_router(certificados_router, prefix="/certificados")
+
+@app.post("/init-admin")
+def init_admin():
+    """Inicializa el sistema con un usuario administrador por defecto - Solo para desarrollo"""
+    try:
+        from auth.routes import db
+        import bcrypt
+        
+        # Verificar si ya existe un admin
+        users_collection = db["users"]
+        existing_admin = users_collection.find_one({"role": "admin"})
+        
+        if existing_admin:
+            return {"message": "Ya existe un administrador en el sistema", "admin_exists": True}
+        
+        # Crear administrador por defecto
+        hashed_pw = bcrypt.hashpw("admin123".encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        admin_doc = {
+            "username": "admin",
+            "email": "admin@lacs.org",
+            "hashed_password": hashed_pw,
+            "role": "admin"
+        }
+        
+        result = users_collection.insert_one(admin_doc)
+        
+        if result.inserted_id:
+            return {
+                "message": "Administrador creado exitosamente", 
+                "username": "admin",
+                "password": "admin123",
+                "admin_created": True
+            }
+        else:
+            return {"error": "No se pudo crear el administrador", "admin_created": False}
+            
+    except Exception as e:
+        return {"error": f"Error al crear administrador: {str(e)}", "admin_created": False}
 
