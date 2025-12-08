@@ -996,12 +996,12 @@ class CertificadosManager {
             link.href = certificado.archivo_pdf.url;
             link.download = `certificado_${certificado.numero_certificado}.pdf`;
             link.target = '_blank';
-            
+
             // Agregar al DOM temporalmente y hacer clic
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
+
             this.mostrarMensaje('Descarga iniciada', 'success');
         } catch (error) {
             console.error('Error al descargar PDF:', error);
