@@ -78,6 +78,12 @@ class WWWRedirectMiddleware(BaseHTTPMiddleware):
 
 app.add_middleware(WWWRedirectMiddleware)
 
+# Ruta raíz explícita - DEBE SER ANTES del mount de "/"
+@app.get("/", include_in_schema=False)
+async def root():
+    """Redirige la raíz a index.html"""
+    return RedirectResponse(url="/index.html")
+
 # Rutas raíz (específicas)
 @app.get("/ping", tags=["Debug"])
 def ping():
