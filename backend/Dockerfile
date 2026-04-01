@@ -9,8 +9,8 @@ WORKDIR /app
 
 # Copia e instala dependencias Python
 COPY backend/requirements.txt ./requirements.txt
-RUN pip3 install --upgrade pip --no-cache-dir && \
-    pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --upgrade pip --no-cache-dir --break-system-packages && \
+    pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
 # Copia el código de la aplicación
 COPY backend/ /app/
