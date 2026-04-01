@@ -2,10 +2,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "public",
-  build: {
-    outDir: ".",
-    emptyOutDir: false,
-  },
+
   server: {
     proxy: {
       "/api": {
