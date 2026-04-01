@@ -118,17 +118,13 @@ public_path = "/public"  # Ruta absoluta en el contenedor
 print(f"[STATIC] Intentando servir archivos desde: {public_path}")
 print(f"[STATIC] ¿Existe el directorio?: {os.path.exists(public_path)}")
 
+app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
 if os.path.exists(public_path):
-    app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
     print(f"[STATIC] Archivos estáticos montados correctamente en /")
 else:
-    print(f"[STATIC] ERROR: No se encontró el directorio {public_path}")
-    print(f"[STATIC] Intentando fallback: {fallback_path}")
-    if os.path.exists(fallback_path):
-        app.mount("/static", StaticFiles(directory=fallback_path, html=True), name="static")
-        print(f"[STATIC] Fallback exitoso: archivos servidos desde {fallback_path}")
-    else:
-        print(f"[STATIC] ERROR CRÍTICO: No se puede encontrar la carpeta public")
+    print(f"[STATIC] WARNING: Directorio {public_path} no encontrado, pero montando de todas formas")
+
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
 app.include_router(certificados_router, prefix="/certificados")
+app.include_router(contacto_router, prefix="/contacto")
