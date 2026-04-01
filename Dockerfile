@@ -1,41 +1,46 @@
-# Usa una imagen oficial de Python como base
 FROM python:3.11-slim
 
-# Invalidar caché con timestamp único - FUERZA REBUILD
-# Build timestamp: 2026-04-01T03:52:00Z
-ARG BUILD_DATE=2026-04-01-v2
+# ============================================================
+# FORCE FULL REBUILD - Railway caché invalidation
+# ============================================================
+# Changed strategy completely to avoid Railway caching issues
+# Timestamp: 2026-04-01T03:55:00Z
 
-# Actualizar el sistema y instalar dependencias básicas
-RUN apt-get update && apt-get install -y build-essential && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y build-essential && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia e instala dependencias Python
-COPY backend/requirements.txt ./requirements.txt
-RUN pip install --upgrade pip --no-cache-dir && \
-    pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies FIRST (separate layer)
+COPY backend/requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip --no-cache-dir && pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Copia el código de la aplicación
+# Copy application code
 COPY backend/ /app/
-
-# Copiar archivos estáticos públicos
 COPY public/ /public/
 
-# Copiar script de entrypoint
-COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Create entrypoint script that CANNOT be overridden
+RUN mkdir -p /usr/local/bin && cat > /usr/local/bin/start-app << 'EOF'
+#!/bin/sh
+set -e
+cd /app
+exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
+EOF
+RUN chmod +x /usr/local/bin/start-app
 
-# TRUCO: Crear un fake 'npm' que ejecuta uvicorn si existe npm en el PATH
-# Esto previene que Railway ejecute npm start
-RUN echo '#!/bin/sh\n# Intercepted npm command - redirecting to uvicorn\ncd /app\nexec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}' > /usr/local/bin/npm && chmod +x /usr/local/bin/npm
+# CRITICAL: Override npm completely so Railway cannot use it
+RUN rm -f /usr/bin/npm /usr/local/bin/npm 2>/dev/null || true
+RUN cat > /usr/local/bin/npm << 'EOF'
+#!/bin/sh
+echo "npm is not available - starting application with uvicorn"
+exec /usr/local/bin/start-app "$@"
+EOF
+RUN chmod +x /usr/local/bin/npm
 
-# Expone el puerto en el que correrá FastAPI
+# Make sure bash also cannot find npm
+RUN echo 'alias npm=/usr/local/bin/npm' >> /etc/profile
+
 EXPOSE 8000
-
-# Permite que la plataforma (p.ej. Railway) asigne un puerto mediante la variable PORT
 ENV PORT=8000
 
-# Usar ENTRYPOINT en lugar de CMD para que sea muy difícil de anular
-ENTRYPOINT ["/entrypoint.sh"]
+# Use shell form to ensure env var expansion
+CMD ["/bin/sh", "-c", "exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
