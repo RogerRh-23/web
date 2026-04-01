@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Panel Dev</title>
-  <link rel="stylesheet" href="/static/styles/main.css">
-  <link rel="icon" type="image/png" href="/static/assets/img/LACS-V.png">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="icon" type="image/png" href="/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
@@ -243,10 +243,10 @@
     </section>
   </main>
   <div id="footer"></div>
-  <script src="/static/js/dev-admin-create.js"></script>
-  <script src="/static/js/gsap.js"></script>
-  <script src="/static/js/navbar-dropdown.js"></script>
-  <script src="/static/js/footer.js"></script>
+  <script src="/js/dev-admin-create.js"></script>
+  <script src="/js/gsap.js"></script>
+  <script src="/js/navbar-dropdown.js"></script>
+  <script src="/js/footer.js"></script>
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
   <script>
@@ -261,7 +261,7 @@
       document.body.appendChild(script);
     }
     function loadNavbar(type) {
-      const url = type === 'mobile' ? '/static/components/navbar-mobile.html' : '/static/components/navbar.html';
+      const url = type === 'mobile' ? '/components/navbar-mobile.html' : '/components/navbar.html';
       fetch(url)
         .then(res => res.text())
         .then(html => {
@@ -275,7 +275,7 @@
           });
           if (!window._navbarDropdownLoaded) {
             window._navbarDropdownLoaded = true;
-            loadExternalScript('/static/js/navbar-dropdown.js', function () {
+            loadExternalScript('/js/navbar-dropdown.js', function () {
               if (typeof window.initDropdowns === 'function') window.initDropdowns();
             });
           } else {
@@ -284,7 +284,7 @@
           // Cargar init del navbar (gestiona nombre, dropdown y logout)
           if (!window._navbarInitLoaded) {
             window._navbarInitLoaded = true;
-            loadExternalScript('/static/js/navbar-init.js', function () {
+            loadExternalScript('/js/navbar-init.js', function () {
               if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
             });
           } else {
@@ -302,7 +302,7 @@
     window.addEventListener('DOMContentLoaded', function () {
       if (isMobile()) loadNavbar('mobile');
       else loadNavbar('desktop');
-      fetch('/static/components/footer.html')
+      fetch('/components/footer.html')
         .then(res => res.text())
         .then(html => {
           html = html.replace(/src=(['"])(\.{0,2}\/)?assets\/img\//g, 'src=$1/src/assets/img/');
@@ -313,7 +313,7 @@
               link.href = link.href.replace('/components/components/', '/components/');
             }
           });
-          loadExternalScript('/static/js/footer.js', function () {
+          loadExternalScript('/js/footer.js', function () {
             if (typeof window.initFooter === 'function') window.initFooter();
           });
         });
@@ -482,7 +482,7 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('/static/components/navbar-mobile.html')
+          fetch('/components/navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
@@ -495,7 +495,7 @@
               if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '/static/js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -505,7 +505,7 @@
                 document.body.appendChild(script);
                 // cargar init del navbar para mobile
                 var scriptInitMobile = document.createElement('script');
-                scriptInitMobile.src = '/static/js/navbar-init.js';
+                scriptInitMobile.src = '/js/navbar-init.js';
                 scriptInitMobile.onload = function () {
                   if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
                 };
@@ -520,7 +520,7 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('/static/components/navbar.html')
+          fetch('/components/navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
@@ -532,7 +532,7 @@
               }, 50);
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '/static/js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -542,7 +542,7 @@
                 document.body.appendChild(script);
                 // cargar init del navbar para desktop
                 var scriptInit = document.createElement('script');
-                scriptInit.src = '/static/js/navbar-init.js';
+                scriptInit.src = '/js/navbar-init.js';
                 scriptInit.onload = function () {
                   if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
                 };
@@ -559,8 +559,8 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
-  <script src="/static/js/i18n.js"></script>
-  <script src="/static/js/navbar-mobile-accordion.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/navbar-mobile-accordion.js"></script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

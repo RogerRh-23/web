@@ -59,7 +59,7 @@
       <label for="edit-archivoPdf">Archivo PDF (opcional)</label>
       <div class="file-drop-zone" data-input="edit-archivoPdf">
         <div class="drop-zone-content">
-          <img src="/static/assets/img/icons/add-file.svg" alt="Agregar archivo" class="drop-zone-icon">
+          <img src="/assets/img/icons/add-file.svg" alt="Agregar archivo" class="drop-zone-icon">
           <p class="drop-zone-text">Arrastra tu archivo PDF aquí<br><span class="drop-zone-subtext">o haz clic para
               seleccionar</span></p>
           <div class="file-info" id="edit-file-info" style="display:none;">
@@ -226,7 +226,7 @@
       <label for="archivoPdf">Archivo PDF</label>
       <div class="file-drop-zone" data-input="archivoPdf">
         <div class="drop-zone-content">
-          <img src="/static/assets/img/icons/add-file.svg" alt="Agregar archivo" class="drop-zone-icon">
+          <img src="/assets/img/icons/add-file.svg" alt="Agregar archivo" class="drop-zone-icon">
           <p class="drop-zone-text">Arrastra tu archivo PDF aquí<br><span class="drop-zone-subtext">o haz clic para
               seleccionar</span></p>
           <div class="file-info" id="add-file-info" style="display:none;">
@@ -249,13 +249,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Latin America Certification & Systems | Certificados</title>
-  <link rel="stylesheet" href="/static/styles/main.css">
-  <link rel="icon" type="image/png" href="/static/assets/img/LACS-V.png">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="icon" type="image/png" href="/assets/img/LACS-V.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
   <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
-  <script src="/static/js/navbar-init.js"></script>
+  <script src="/js/navbar-init.js"></script>
 
 </head>
 
@@ -359,10 +359,10 @@
   <div id="navbar-mobile-placeholder"></div>
   <div id="navbar-mobile-dropdown-placeholder"></div>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="/static/js/gsap.js"></script>
-  <script src="/static/js/navbar-dropdown.js"></script>
-  <script src="/static/js/certificados-manager.js"></script>
-  <script src="/static/js/footer.js"></script>
+  <script src="/js/gsap.js"></script>
+  <script src="/js/navbar-dropdown.js"></script>
+  <script src="/js/certificados-manager.js"></script>
+  <script src="/js/footer.js"></script>
 
   <script>
     // Las funciones addInstalacion y removeInstalacion ahora están en certificados-manager.js
@@ -379,7 +379,7 @@
       navbarMobilePlaceholder.innerHTML = '';
       if (isMobile) {
         // Solo navbar mobile
-        fetch('/static/components/navbar-mobile.html')
+        fetch('/components/navbar-mobile.html')
           .then(res => res.text())
           .then(html => {
             navbarMobilePlaceholder.innerHTML = html;
@@ -392,7 +392,7 @@
           });
       } else {
         // Solo navbar desktop
-        fetch('/static/components/navbar.html')
+        fetch('/components/navbar.html')
           .then(res => res.text())
           .then(html => {
             navbarPlaceholder.innerHTML = html;
@@ -418,7 +418,7 @@
       window._wasMobile = isMobile;
     });
     // Cargar footer
-    fetch('/static/components/footer.html')
+    fetch('/components/footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
@@ -455,7 +455,7 @@
       if (isMobile()) {
         desktopPlaceholder.innerHTML = '';
         if (!mobilePlaceholder.innerHTML) {
-          fetch('/static/components/navbar-mobile.html')
+          fetch('/components/navbar-mobile.html')
             .then(res => res.text())
             .then(html => {
               mobilePlaceholder.innerHTML = html;
@@ -468,7 +468,7 @@
               if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '/static/js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -486,7 +486,7 @@
       } else {
         mobilePlaceholder.innerHTML = '';
         if (!desktopPlaceholder.innerHTML) {
-          fetch('/static/components/navbar.html')
+          fetch('/components/navbar.html')
             .then(res => res.text())
             .then(html => {
               desktopPlaceholder.innerHTML = html;
@@ -498,7 +498,7 @@
               }, 100);
               if (!window._dropdownScriptLoaded) {
                 const script = document.createElement('script');
-                script.src = '/static/js/navbar-dropdown.js';
+                script.src = '/js/navbar-dropdown.js';
                 script.onload = function () {
                   window._dropdownScriptLoaded = true;
                   if (typeof window.initDropdowns === 'function') {
@@ -518,8 +518,8 @@
     window.addEventListener('resize', loadNavbar);
     window.addEventListener('DOMContentLoaded', loadNavbar);
   </script>
-  <script src="/static/js/i18n.js"></script>
-  <script src="/static/js/navbar-mobile-accordion.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/navbar-mobile-accordion.js"></script>
   <script>
     // Scrollbar flotante funcional
     document.addEventListener('DOMContentLoaded', () => {

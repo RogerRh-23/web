@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latin America Certification & Systems | Webinars</title>
-    <link rel="stylesheet" href="/static/styles/main.css">
-    <link rel="icon" type="image/png" href="/static/assets/img/LACS-V.png">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="icon" type="image/png" href="/assets/img/LACS-V.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -36,7 +36,7 @@
         <div class="section-content">
             <div class="error-container">
                 <h1 data-i18n="maintenance.title"></h1>
-                <img src="/static/assets/img/LACS-V.png" alt="Mantenimiento" class="maintenance-image" />
+                <img src="/assets/img/LACS-V.png" alt="Mantenimiento" class="maintenance-image" />
                 <p class="maintenance-text" data-i18n="maintenance.desc">
                 </p>
             </div>
@@ -47,12 +47,12 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/i18next@23.11.5/dist/umd/i18next.min.js"></script>
     <script src="https://unpkg.com/i18next-xhr-backend@3.2.2/i18nextXHRBackend.min.js"></script>
-    <script src="/static/js/navbar-init.js"></script>
-    <script src="/static/js/gsap.js"></script>
-    <script src="/static/js/navbar-dropdown.js"></script>
-    <script src="/static/js/footer.js"></script>
+    <script src="/js/navbar-init.js"></script>
+    <script src="/js/gsap.js"></script>
+    <script src="/js/navbar-dropdown.js"></script>
+    <script src="/js/footer.js"></script>
     <script>
-        // Navbar adaptativa: solo carga la versión correspondiente
+        // Navbar adaptativa: solo carga la versi�n correspondiente
         function isMobile() {
             return window.innerWidth < 992;
         }
@@ -62,7 +62,7 @@
             if (isMobile()) {
                 desktopPlaceholder.innerHTML = '';
                 if (!mobilePlaceholder.innerHTML) {
-                    fetch('/static/components/navbar-mobile.html')
+                    fetch('/components/navbar-mobile.html')
                         .then(res => res.text())
                         .then(html => {
                             mobilePlaceholder.innerHTML = html;
@@ -73,7 +73,7 @@
                             if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
                             if (!window._dropdownScriptLoaded) {
                                 const script = document.createElement('script');
-                                script.src = '/static/js/navbar-dropdown.js';
+                                script.src = '/js/navbar-dropdown.js';
                                 script.onload = function () {
                                     window._dropdownScriptLoaded = true;
                                     if (typeof window.initDropdowns === 'function') {
@@ -91,7 +91,7 @@
             } else {
                 mobilePlaceholder.innerHTML = '';
                 if (!desktopPlaceholder.innerHTML) {
-                    fetch('/static/components/navbar.html')
+                    fetch('/components/navbar.html')
                         .then(res => res.text())
                         .then(html => {
                             desktopPlaceholder.innerHTML = html;
@@ -101,7 +101,7 @@
                             if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
                             if (!window._dropdownScriptLoaded) {
                                 const script = document.createElement('script');
-                                script.src = '/static/js/navbar-dropdown.js';
+                                script.src = '/js/navbar-dropdown.js';
                                 script.onload = function () {
                                     window._dropdownScriptLoaded = true;
                                     if (typeof window.initDropdowns === 'function') {
@@ -121,7 +121,7 @@
         window.addEventListener('resize', loadNavbar);
         window.addEventListener('DOMContentLoaded', loadNavbar);
         // Cargar footer
-        fetch('/static/components/footer.html')
+        fetch('/components/footer.html')
             .then(res => res.text())
             .then(html => {
                 document.getElementById('footer').innerHTML = html;
@@ -156,7 +156,7 @@
             if (isMobile()) {
                 desktopPlaceholder.innerHTML = '';
                 if (!mobilePlaceholder.innerHTML) {
-                    fetch('/static/components/navbar-mobile.html')
+                    fetch('/components/navbar-mobile.html')
                         .then(res => res.text())
                         .then(html => {
                             mobilePlaceholder.innerHTML = html;
@@ -167,7 +167,7 @@
                             if (window.initMobileMenuDropdown) window.initMobileMenuDropdown();
                             if (!window._dropdownScriptLoaded) {
                                 const script = document.createElement('script');
-                                script.src = '/static/js/navbar-dropdown.js';
+                                script.src = '/js/navbar-dropdown.js';
                                 script.onload = function () {
                                     window._dropdownScriptLoaded = true;
                                     if (typeof window.initDropdowns === 'function') {
@@ -185,7 +185,7 @@
             } else {
                 mobilePlaceholder.innerHTML = '';
                 if (!desktopPlaceholder.innerHTML) {
-                    fetch('/static/components/navbar.html')
+                    fetch('/components/navbar.html')
                         .then(res => res.text())
                         .then(html => {
                             desktopPlaceholder.innerHTML = html;
@@ -195,7 +195,7 @@
                             if (typeof window.updateAuthButton === 'function') window.updateAuthButton();
                             if (!window._dropdownScriptLoaded) {
                                 const script = document.createElement('script');
-                                script.src = '/static/js/navbar-dropdown.js';
+                                script.src = '/js/navbar-dropdown.js';
                                 script.onload = function () {
                                     window._dropdownScriptLoaded = true;
                                     if (typeof window.initDropdowns === 'function') {
@@ -215,8 +215,8 @@
         window.addEventListener('resize', loadNavbar);
         window.addEventListener('DOMContentLoaded', loadNavbar);
     </script>
-    <script src="/static/js/i18n.js"></script>
-    <script src="/static/js/navbar-mobile-accordion.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/navbar-mobile-accordion.js"></script>
     <script>
         // Scrollbar flotante funcional
         document.addEventListener('DOMContentLoaded', () => {

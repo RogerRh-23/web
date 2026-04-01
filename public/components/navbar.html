@@ -2,11 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container-fluid">
       <span class="navbar-brand">
-        <img src="/static/assets/img/LACS.png" alt="LACS Logo" />
+        <img src="/assets/img/LACS.png" alt="LACS Logo" />
       </span>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="/static/index.html"><i
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="/index.html"><i
                 class="bi bi-house-door"></i> <span data-i18n="navbar.home">Inicio</span></a></li>
           <li class="nav-item"><a class="nav-link" data-dropdown="services"><i class="bi bi-briefcase"></i> <span
                 data-i18n="navbar.services" data-route="Servicios/">Servicios</span></a></li>
@@ -15,21 +15,21 @@
           <li class="nav-item"><a class="nav-link" data-dropdown="training"><i class="bi bi-mortarboard"></i>
               <span data-i18n="navbar.training" data-route="CentroFormacion/">Centro de formación</span></a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="/static/components/certificados.html"><i
+          <li class="nav-item"><a class="nav-link" href="/components/certificados.html"><i
                 class="bi bi-award"></i>
               <span data-i18n="navbar.certificates" data-route="certificados.html">Certificados</span></a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="/static/components/contacto.html"><i
+          <li class="nav-item"><a class="nav-link" href="/components/contacto.html"><i
                 class="bi bi-envelope"></i> <span data-i18n="navbar.contact"
                 data-route="contacto.html">Contacto</span></a></li>
           <li id="dev-panel-link" class="nav-item" style="display:none;"><a class="nav-link btn btn-warning text-dark"
-              href="/static/components/dev-panel.html"><i class="bi bi-tools"></i> <span>Panel Dev</span></a></li>
+              href="/components/dev-panel.html"><i class="bi bi-tools"></i> <span>Panel Dev</span></a></li>
           <li class="nav-item navbar-actions">
             <button id="lang-switcher" class="btn-lang-switcher" type="button" aria-label="Cambiar idioma">
               <i class="bi bi-translate"></i> EN
             </button>
             <div class="auth-wrapper" style="display:inline-block; position:relative;">
-              <a id="auth-btn" class="btn btn-outline-light" href="/static/components/login.html"><i
+              <a id="auth-btn" class="btn btn-outline-light" href="/components/login.html"><i
                   class="bi bi-person-circle"></i>
                 <span data-i18n="navbar.login" data-route="login.html">Iniciar Sesión</span></a>
               <div id="auth-dropdown" class="auth-dropdown-menu"
@@ -127,7 +127,7 @@
       var devItem = document.createElement('a');
       devItem.className = 'dropdown-item';
       devItem.style.cssText = 'display:block;padding:8px 12px;color:inherit;text-decoration:none;';
-      devItem.href = '/static/components/dev-panel.html';
+      devItem.href = '/components/dev-panel.html';
       devItem.textContent = 'Panel Dev';
       dd.appendChild(devItem);
     }
@@ -215,7 +215,7 @@
   function removeAuthBtnBehavior() {
     var btn = document.getElementById('auth-btn');
     if (!btn) return;
-    btn.setAttribute('href', '/static/components/login.html');
+    btn.setAttribute('href', '/components/login.html');
     try { btn.removeEventListener('click', onAuthBtnClick); } catch (e) { }
     closeAuthDropdown();
   }
