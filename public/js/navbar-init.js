@@ -33,7 +33,7 @@
             var devItem = document.createElement('a');
             devItem.className = 'dropdown-item';
             devItem.style.cssText = 'display:block;padding:8px 12px;color:inherit;text-decoration:none;';
-            devItem.href = '/static/components/dev-panel.html';
+            devItem.href = '/components/dev-panel.html';
             devItem.textContent = 'Panel Dev';
             dd.appendChild(devItem);
         }
@@ -118,7 +118,7 @@
     function removeAuthBtnBehavior() {
         var btn = document.getElementById('auth-btn');
         if (!btn) return;
-        btn.setAttribute('href', '/static/components/login.html');
+        btn.setAttribute('href', '/components/login.html');
         try { btn.removeEventListener('click', onAuthBtnClick); } catch (e) { }
         closeAuthDropdown();
     }
@@ -183,7 +183,7 @@
                 if (mobileBtn && mobileSpan) {
                     mobileSpan.textContent = mobileSpan.dataset.defaultText || 'Iniciar sesión';
                     mobileBtn.setAttribute('aria-label', mobileSpan.dataset.defaultText || 'Iniciar sesión');
-                    mobileBtn.setAttribute('href', '/static/components/login.html');
+                    mobileBtn.setAttribute('href', '/components/login.html');
                 }
             }
         } catch (e) {

@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     debug: false,
     backend: {
       // Ruta absoluta desde la raíz pública para evitar problemas de subcarpetas
-      loadPath: '/static/locales/{{lng}}.json'
+      loadPath: '/locales/{{lng}}.json'
     },
     interpolation: {
       escapeValue: false // Permite HTML y símbolos

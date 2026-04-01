@@ -16,25 +16,25 @@ function getDropdownConfig() {
       key: 'services',
       label: t('dropdown.services.label'),
       items: [
-        { name: t('dropdown.services.items.0'), path: 'Servicios/Certificación de Sistemas de Gestión.html', route: '/static/components/Servicios/CertificacionSistemas.html' },
-        { name: t('dropdown.services.items.1'), path: 'Servicios/Sorteo y Retrabajo.html', route: '/static/components/Servicios/SorteoRetrabajo.html' }
+        { name: t('dropdown.services.items.0'), path: 'Servicios/Certificación de Sistemas de Gestión.html', route: '/components/Servicios/CertificacionSistemas.html' },
+        { name: t('dropdown.services.items.1'), path: 'Servicios/Sorteo y Retrabajo.html', route: '/components/Servicios/SorteoRetrabajo.html' }
       ]
     },
     {
       key: 'processes',
       label: t('dropdown.processes.label'),
       items: [
-        { name: t('dropdown.processes.items.0'), path: 'Procesos/Proceso de Certificación.html', route: '/static/components/Procesos/ProcesoCertificacion.html' },
-        { name: t('dropdown.processes.items.1'), path: 'Procesos/Vigencia de la Certificación.html', route: '/static/components/Procesos/VigenciaCertificacion.html' },
-        { name: t('dropdown.processes.items.2'), path: 'Procesos/Procedimiento de atención de quejas.html', route: '/static/components/Procesos/ProcedimientoQuejas.html' }
+        { name: t('dropdown.processes.items.0'), path: 'Procesos/Proceso de Certificación.html', route: '/components/Procesos/ProcesoCertificacion.html' },
+        { name: t('dropdown.processes.items.1'), path: 'Procesos/Vigencia de la Certificación.html', route: '/components/Procesos/VigenciaCertificacion.html' },
+        { name: t('dropdown.processes.items.2'), path: 'Procesos/Procedimiento de atención de quejas.html', route: '/components/Procesos/ProcedimientoQuejas.html' }
       ]
     },
     {
       key: 'training',
       label: t('dropdown.training.label'),
       items: [
-        { name: t('dropdown.training.items.0'), path: 'Centro de formación/cursos.html', route: '/static/components/CentroFormacion/cursos.html' },
-        { name: t('dropdown.training.items.1'), path: 'Centro de formación/webinars.html', route: '/static/components/CentroFormacion/webinars.html' }
+        { name: t('dropdown.training.items.0'), path: 'Centro de formación/cursos.html', route: '/components/CentroFormacion/cursos.html' },
+        { name: t('dropdown.training.items.1'), path: 'Centro de formación/webinars.html', route: '/components/CentroFormacion/webinars.html' }
       ]
     }
   ];
@@ -47,7 +47,7 @@ function initNavbarDynamicRoutes() {
       // Solo navegar si el data-route termina en .html (es un archivo), no si es una carpeta
       var route = el.getAttribute('data-route');
       if (route && route.endsWith('.html')) {
-        window.location.href = '/static/components/' + route.replace(/^components\//, '');
+        window.location.href = '/components/' + route.replace(/^components\//, '');
         e.preventDefault();
       }
       // Si es una carpeta (como 'Procesos/'), solo mostrar el menú, no navegar
