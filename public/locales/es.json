@@ -226,7 +226,10 @@
       "company_name": "Nombre de la organización",
       "standard": "Estándar",
       "status": "Estatus",
-      "status_list": ["Vigente", "Vencido"],
+      "status_list": [
+        "Vigente",
+        "Vencido"
+      ],
       "certificate_number": "Número de Certificado",
       "start_date": "Fecha de Inicio",
       "end_date": "Fecha de Finalización",
@@ -238,7 +241,10 @@
       "company_name": "Nombre de la organización",
       "standard": "Estándar",
       "status": "Estatus",
-      "status_list": ["Vigente", "Vencido"],
+      "status_list": [
+        "Vigente",
+        "Vencido"
+      ],
       "certificate_number": "Número de Certificado",
       "start_date": "Fecha de Inicio",
       "end_date": "Fecha de Finalización",
@@ -249,7 +255,10 @@
   "dropdown": {
     "services": {
       "label": "Servicios",
-      "items": ["Certificación de Sistemas de Gestión", "Sorteo y Retrabajo"]
+      "items": [
+        "Certificación de Sistemas de Gestión",
+        "Sorteo y Retrabajo"
+      ]
     },
     "processes": {
       "label": "Procesos",
@@ -261,7 +270,10 @@
     },
     "training": {
       "label": "Centro de formación",
-      "items": ["Cursos", "Webinars"]
+      "items": [
+        "Cursos",
+        "Webinars"
+      ]
     }
   },
   "snackbar": {
@@ -349,7 +361,8 @@
     "step2": "Se confirma la recepción de la apelación y/o quejas e inicia su atención.",
     "step3": "Se analiza la solicitud para determinar su procedencia. En caso de aceptarse se conforma grupo de análisis",
     "step4": "Se analiza la situación por el grupo de análisis y de requerirse más información se solicita al grupo auditor o cliente. Se emite una resolución",
-    "step5": "La resolución es comunicada al cliente y al personal operativo de LACS."
+    "step5": "La resolución es comunicada al cliente y al personal operativo de LACS.",
+    "downloadPdf": "Descargar Pdf"
   },
   "certs": {
     "title": "Certificación de Sistemas de Gestión",

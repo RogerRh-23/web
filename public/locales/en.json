@@ -363,7 +363,8 @@
     "step2": "Receipt of the appeal is confirmed and its handling begins.",
     "step3": "The request is analyzed to determine its validity. If accepted, an analysis group is formed.",
     "step4": "The situation is analyzed by the group and, if more information is required, it is requested from the audit group or client. A resolution is issued.",
-    "step5": "The resolution is communicated to the client and LACS operational staff."
+    "step5": "The resolution is communicated to the client and LACS operational staff.",
+    "downloadPdf": "Download PDF"
   },
   "certs": {
     "title": "Management System Certification",
