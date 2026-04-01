@@ -2,8 +2,8 @@
 FROM python:3.11-slim
 
 # Invalidar caché con timestamp único - FUERZA REBUILD
-# Build timestamp: 2026-04-01T03:50:00Z
-ARG BUILD_DATE=2026-04-01
+# Build timestamp: 2026-04-01T03:52:00Z
+ARG BUILD_DATE=2026-04-01-v2
 
 # Actualizar el sistema y instalar dependencias básicas
 RUN apt-get update && apt-get install -y build-essential && \
