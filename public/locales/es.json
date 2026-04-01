@@ -346,7 +346,7 @@
   "appeal": {
     "title": "Procedimiento de atención de quejas y apelaciones",
     "step1": "Cliente ingresa solicitud de apelación y/o quejas con la información de soporte al correo <br><b>info@lacs.org.mx</b>",
-    "step2": "Se confirma la recepción de la apelación y/o que e inicia su atención.",
+    "step2": "Se confirma la recepción de la apelación y/o quejas e inicia su atención.",
     "step3": "Se analiza la solicitud para determinar su procedencia. En caso de aceptarse se conforma grupo de análisis",
     "step4": "Se analiza la situación por el grupo de análisis y de requerirse más información se solicita al grupo auditor o cliente. Se emite una resolución",
     "step5": "La resolución es comunicada al cliente y al personal operativo de LACS."
