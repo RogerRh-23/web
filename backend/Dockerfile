@@ -27,5 +27,5 @@ EXPOSE 8000
 # Permite que la plataforma (p.ej. Railway) asigne un puerto mediante la variable PORT
 ENV PORT=8000
 
-# Comando para iniciar el servidor
-CMD ["python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Comando para iniciar el servidor - usa sh -c para expandir variables
+CMD ["sh", "-c", "python3 -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
