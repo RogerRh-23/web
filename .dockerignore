@@ -1,0 +1,17 @@
+node_modules/
+npm-debug.log
+.git
+.gitignore
+.env.local
+.vscode
+.DS_Store
+README.md
+*.md
+.next
+dist
+build
+.cache
+.idea
+venv/
+__pycache__
+*.pyc
