@@ -1,0 +1,10 @@
+{
+  "name": "lacs-web",
+  "version": "1.0.0",
+  "description": "LACS Web Application",
+  "scripts": {
+    "start": "cd backend && python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}",
+    "dev": "vite",
+    "build": "echo 'Build skipped - using Docker'"
+  }
+}
