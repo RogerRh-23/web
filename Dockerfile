@@ -1,6 +1,10 @@
 # Usa una imagen oficial de Python como base
 FROM python:3.11-slim
 
+# Invalidar caché con timestamp único - FUERZA REBUILD
+# Build timestamp: 2026-04-01T03:50:00Z
+ARG BUILD_DATE=2026-04-01
+
 # Actualizar el sistema y instalar dependencias básicas
 RUN apt-get update && apt-get install -y build-essential && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -22,6 +26,10 @@ COPY public/ /public/
 # Copiar script de entrypoint
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# TRUCO: Crear un fake 'npm' que ejecuta uvicorn si existe npm en el PATH
+# Esto previene que Railway ejecute npm start
+RUN echo '#!/bin/sh\n# Intercepted npm command - redirecting to uvicorn\ncd /app\nexec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}' > /usr/local/bin/npm && chmod +x /usr/local/bin/npm
 
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000
