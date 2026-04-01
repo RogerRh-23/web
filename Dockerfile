@@ -19,12 +19,15 @@ COPY backend/ /app/
 # Copiar archivos estáticos públicos
 COPY public/ /public/
 
+# Copiar script de entrypoint
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000
 
 # Permite que la plataforma (p.ej. Railway) asigne un puerto mediante la variable PORT
 ENV PORT=8000
 
-# Comando para iniciar el servidor. Usamos la forma shell para que se expanda ${PORT}
-# Si la plataforma no define PORT, se usará 8000 por defecto.
-CMD ["sh", "-c", "cd /app && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Usar ENTRYPOINT en lugar de CMD para que sea muy difícil de anular
+ENTRYPOINT ["/entrypoint.sh"]
