@@ -1,130 +1,102 @@
-# Definir mongo_client globalmente al inicio
-mongo_client = None
-from fastapi import FastAPI
 import os
-from dotenv import load_dotenv
 import logging
+from dotenv import load_dotenv
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from starlette.middleware.base import BaseHTTPMiddleware
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Cargar variables de entorno
 load_dotenv()
+
+# Inicializar MongoDB
+mongo_client = None
 MONGODB_URI = os.getenv("MONGODB_URI")
 
 logger.info(f"MONGODB_URI configurado: {'Sí' if MONGODB_URI else 'No'}")
 
 if MONGODB_URI:
-    from pymongo.mongo_client import MongoClient
-    from pymongo.server_api import ServerApi
     try:
+        from pymongo.mongo_client import MongoClient
+        from pymongo.server_api import ServerApi
         mongo_client = MongoClient(MONGODB_URI, server_api=ServerApi('1'))
         mongo_client.admin.command('ping')
         logger.info("✅ Conexión exitosa a MongoDB Atlas!")
     except Exception as e:
         logger.error(f"❌ Error al conectar a MongoDB Atlas: {e}")
         mongo_client = None
-else:
-    logger.error("❌ MONGODB_URI no está configurada en las variables de entorno.")
+
+# Importar routers
 try:
     from auth.routes import router as auth_router
     from drive.routes import router as drive_router
     from certificados.routes import router as certificados_router
-    from backend.routes.contacto import router as contacto_router  # Local
-except ModuleNotFoundError:
-    from auth.routes import router as auth_router
-    from drive.routes import router as drive_router
-    from certificados.routes import router as certificados_router
-    from routes.contacto import router as contacto_router  # Railway/Cloud
-import os
-from dotenv import load_dotenv
-load_dotenv()
+    from routes.contacto import router as contacto_router
+except ImportError as e:
+    logger.error(f"Error importing routers: {e}")
+    raise
 
-
-
-from fastapi.responses import RedirectResponse
-from fastapi import Request
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import Response
-
+# Crear aplicación FastAPI
 app = FastAPI()
 
 # Middleware para redirigir www a no-www
 class WWWRedirectMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         host = request.headers.get("host", "")
-        # Si el host empieza con www., redirigir a la versión sin www
         if host.startswith("www."):
-            # Construir la nueva URL sin www
-            new_host = host[4:]  # Quitar "www."
+            new_host = host[4:]
             scheme = "https" if request.url.scheme == "https" else "http"
             new_url = f"{scheme}://{new_host}{request.url.path}"
             if request.url.query:
                 new_url += f"?{request.url.query}"
             return RedirectResponse(url=new_url, status_code=301)
-        
-        response = await call_next(request)
-        return response
+        return await call_next(request)
 
-# Agregar el middleware
 app.add_middleware(WWWRedirectMiddleware)
 
-# Redirigir la raíz a /index.html
+# Rutas raíz
 @app.get("/", include_in_schema=False)
 def root():
     return RedirectResponse(url="/index.html")
 
-# Endpoints principales definidos antes de los routers para que aparezcan en /docs
 @app.get("/ping", tags=["Debug"])
 def ping():
-    """
-    Endpoint de prueba para verificar que FastAPI responde correctamente.
-    """
     return {"message": "pong"}
 
 @app.get("/db-status", tags=["Debug"])
 def db_status():
-    """
-    Verifica la conexión a MongoDB Atlas.
-    Devuelve el estado de la conexión.
-    """
     global mongo_client
-    global mongo_client
-    print("mongo_client:", mongo_client)
     if mongo_client:
         try:
             mongo_client.admin.command('ping')
             return {"status": "Conexión exitosa a MongoDB Atlas"}
         except Exception as e:
-            print("Error en ping:", e)
             return {"status": "Error de conexión", "detail": str(e)}
-    return {"status": "No se encontró la variable MONGODB_URI"}
+    return {"status": "MongoDB no está conectado"}
 
 @app.get("/routes", tags=["Debug"])
 def get_routes():
-    """
-    Devuelve la lista de rutas registradas en la aplicación FastAPI.
-    """
     return {"routes": [route.path for route in app.routes]}
 
-# Servir archivos estáticos del frontend en /
-from fastapi.staticfiles import StaticFiles
-import os
-# Ruta relativa desde backend/ hacia public/
-current_file_dir = os.path.dirname(os.path.abspath(__file__))  # backend/
-parent_dir = os.path.dirname(current_file_dir)  # lacs-web/
-public_path = "/public"  # Ruta absoluta en el contenedor
+# Servir archivos estáticos del frontend
+public_path = "/public"
+logger.info(f"Intentando servir archivos estáticos desde: {public_path}")
+logger.info(f"Directorio existe: {os.path.exists(public_path)}")
 
-print(f"[STATIC] Intentando servir archivos desde: {public_path}")
-print(f"[STATIC] ¿Existe el directorio?: {os.path.exists(public_path)}")
-
-app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
 if os.path.exists(public_path):
-    print(f"[STATIC] Archivos estáticos montados correctamente en /")
+    app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
+    logger.info("✅ Archivos estáticos montados en /")
 else:
-    print(f"[STATIC] WARNING: Directorio {public_path} no encontrado, pero montando de todas formas")
+    logger.warning(f"⚠️ Directorio {public_path} no encontrado, pero montando de todas formas")
 
+# Incluir routers
 app.include_router(auth_router, prefix="/auth")
 app.include_router(drive_router, prefix="/drive")
 app.include_router(certificados_router, prefix="/certificados")
 app.include_router(contacto_router, prefix="/contacto")
+
+logger.info("✅ Aplicación FastAPI inicializada correctamente")
