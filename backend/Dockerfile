@@ -18,6 +18,9 @@ COPY backend/ /app/
 # Copiar archivos estáticos públicos
 COPY public/ /public/
 
+# Copiar package.json para que npm start pueda encontrarlo
+COPY package.json ./package.json
+
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000
 
