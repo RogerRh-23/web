@@ -107,22 +107,22 @@ def get_routes():
     """
     return {"routes": [route.path for route in app.routes]}
 
-# Servir archivos estáticos del frontend en /static
+# Servir archivos estáticos del frontend en /
 from fastapi.staticfiles import StaticFiles
 import os
 # Ruta relativa desde backend/ hacia public/
 current_file_dir = os.path.dirname(os.path.abspath(__file__))  # backend/
-parent_dir = os.path.dirname(current_file_dir)  # lacs/
-public_path = os.path.join(parent_dir, "public")  # lacs/public/
+parent_dir = os.path.dirname(current_file_dir)  # lacs-web/
+public_path = "/public"  # Ruta absoluta en el contenedor
+
 print(f"[STATIC] Intentando servir archivos desde: {public_path}")
 print(f"[STATIC] ¿Existe el directorio?: {os.path.exists(public_path)}")
+
 if os.path.exists(public_path):
-    app.mount("/static", StaticFiles(directory=public_path, html=True), name="static")
-    print(f"[STATIC] Archivos estáticos montados correctamente en /static")
+    app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
+    print(f"[STATIC] Archivos estáticos montados correctamente en /")
 else:
     print(f"[STATIC] ERROR: No se encontró el directorio {public_path}")
-    # Fallback: buscar public en el directorio actual de trabajo
-    fallback_path = os.path.join(os.getcwd(), "public")
     print(f"[STATIC] Intentando fallback: {fallback_path}")
     if os.path.exists(fallback_path):
         app.mount("/static", StaticFiles(directory=fallback_path, html=True), name="static")

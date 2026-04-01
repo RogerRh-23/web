@@ -19,12 +19,6 @@ COPY vite.config.js ./
 COPY public/ ./public/
 RUN npm run build
 
-# Copiar componentes, locales y JS que no están importados al dist
-RUN cp -r ./public/components ./public/dist/ && \
-    cp -r ./public/locales ./public/dist/ && \
-    cp -r ./public/js ./public/dist/ && \
-    cp -r ./public/styles ./public/dist/styles
-
 # Etapa 2: Runtime con Python
 FROM python:3.11-slim
 
@@ -44,7 +38,7 @@ RUN pip install --upgrade pip --no-cache-dir && \
 COPY backend/ /app/
 
 # Copiar archivos compilados de Vite desde la etapa anterior
-COPY --from=builder /build/public/dist /public/dist
+COPY --from=builder /build/public /public
 
 # Expone el puerto en el que correrá FastAPI
 EXPOSE 8000
