@@ -28,4 +28,4 @@ ENV PORT=8000
 
 # Comando para iniciar el servidor. Usamos la forma shell para que se expanda ${PORT}
 # Si la plataforma no define PORT, se usará 8000 por defecto.
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "cd /app && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]

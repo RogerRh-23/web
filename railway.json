@@ -3,5 +3,9 @@
   "build": {
     "builder": "dockerfile",
     "dockerfilePath": "./backend/Dockerfile"
+  },
+  "deploy": {
+    "restartPolicyMaxRetries": 5,
+    "restartPolicyWindowSecs": 600
   }
 }
