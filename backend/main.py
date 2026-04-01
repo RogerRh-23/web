@@ -69,10 +69,10 @@ class WWWRedirectMiddleware(BaseHTTPMiddleware):
 # Agregar el middleware
 app.add_middleware(WWWRedirectMiddleware)
 
-# Redirigir la raíz a /static/index.html
+# Redirigir la raíz a /index.html
 @app.get("/", include_in_schema=False)
 def root():
-    return RedirectResponse(url="/static/index.html")
+    return RedirectResponse(url="/index.html")
 
 # Endpoints principales definidos antes de los routers para que aparezcan en /docs
 @app.get("/ping", tags=["Debug"])
