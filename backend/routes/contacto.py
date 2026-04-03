@@ -27,15 +27,18 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
 
     msg = EmailMessage()
     msg["Subject"] = f"Nuevo mensaje de contacto: {data.asunto or 'Sin asunto'}"
-    msg["From"] = data.email
+    msg["From"] = SMTP_USER  # Usar el correo intermediario verificado
     msg["To"] = DEST_EMAIL
+    msg["Reply-To"] = data.email  # Las respuestas van al usuario del formulario
     body = f"""
     Nombre: {data.nombre}
-    Email: {data.email}
+    Email (responder a): {data.email}
     Teléfono: {data.telefono}
     Empresa: {data.empresa}
     Asunto: {data.asunto}
-    Mensaje:\n{data.mensaje}
+    
+    Mensaje:
+    {data.mensaje}
     """
     msg.set_content(body)
 
