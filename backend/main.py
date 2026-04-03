@@ -3,6 +3,7 @@ import logging
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
@@ -72,19 +73,6 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos los headers
 )
 
-# Middleware para forzar HTTPS
-class HTTPSRedirectMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        # En Railway, X-Forwarded-Proto contiene el protocolo original
-        forwarded_proto = request.headers.get("x-forwarded-proto", "http")
-        if forwarded_proto == "http" and not request.url.hostname == "localhost":
-            # Redirigir a HTTPS
-            new_url = request.url.replace(scheme="https")
-            return RedirectResponse(url=new_url, status_code=301)
-        return await call_next(request)
-
-app.add_middleware(HTTPSRedirectMiddleware)
-
 # Middleware para redirigir www a no-www
 class WWWRedirectMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -135,33 +123,30 @@ if certificados_router:
     app.include_router(certificados_router, prefix="/api/certificados")
 if contacto_router:
     app.include_router(contacto_router, prefix="/api/contacto")
-    logger.info(f"✅ contacto_router incluído con las siguientes rutas: {[route.path for route in contacto_router.routes]}")
 
-# Servir archivos estáticos del frontend - Middleware en lugar de mount
-class StaticFileMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        # NUNCA interceptar /api
-        if request.url.path.startswith("/api"):
-            return await call_next(request)
-        
-        # GET requests desde /
-        if request.method == "GET":
-            path = request.url.path.lstrip("/")
-            file_path = os.path.join("/public", path)
-            
-            # Si existe el archivo, servirlo
-            if os.path.isfile(file_path):
-                return FileResponse(file_path)
-            
-            # Si es un request sin extensión (ruta SPA), servir index.html
-            if "." not in path.split("/")[-1] or path == "":
-                index_path = "/public/index.html"
-                if os.path.isfile(index_path):
-                    return FileResponse(index_path)
-        
-        # Para todo lo demás, pasar al siguiente middleware/router
+# Middleware SIMPLE para servir archivos estáticos sin interferir con /api
+@app.middleware("http")
+async def serve_static_files(request: Request, call_next):
+    # Dejar /api pasar directamente a los routers
+    if request.url.path.startswith("/api"):
         return await call_next(request)
-
-app.add_middleware(StaticFileMiddleware)
+    
+    # Para GETs, intentar servir archivo estático
+    if request.method == "GET":
+        path = request.url.path.lstrip("/") or "index.html"
+        file_path = os.path.join("/public", path)
+        
+        # Si el archivo existe, servirlo
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+        
+        # Si es una ruta sin extensión, servir index.html para SPA routing
+        if "." not in path.split("/")[-1]:
+            index_file = "/public/index.html"
+            if os.path.isfile(index_file):
+                return FileResponse(index_file)
+    
+    # Para todo lo demás, pasar al siguiente handler
+    return await call_next(request)
 
 logger.info("✅ Aplicación FastAPI inicializada correctamente")
