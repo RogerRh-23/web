@@ -227,10 +227,7 @@
       "company_name": "Nombre de la organización",
       "standard": "Estándar",
       "status": "Estatus",
-      "status_list": [
-        "Vigente",
-        "Vencido"
-      ],
+      "status_list": ["Vigente", "Vencido"],
       "certificate_number": "Número de Certificado",
       "start_date": "Fecha de Inicio",
       "end_date": "Fecha de Finalización",
@@ -242,10 +239,7 @@
       "company_name": "Nombre de la organización",
       "standard": "Estándar",
       "status": "Estatus",
-      "status_list": [
-        "Vigente",
-        "Vencido"
-      ],
+      "status_list": ["Vigente", "Vencido"],
       "certificate_number": "Número de Certificado",
       "start_date": "Fecha de Inicio",
       "end_date": "Fecha de Finalización",
@@ -256,10 +250,7 @@
   "dropdown": {
     "services": {
       "label": "Servicios",
-      "items": [
-        "Certificación de Sistemas de Gestión",
-        "Sorteo y Retrabajo"
-      ]
+      "items": ["Certificación de Sistemas de Gestión", "Sorteo y Retrabajo"]
     },
     "processes": {
       "label": "Procesos",
@@ -271,10 +262,7 @@
     },
     "training": {
       "label": "Centro de formación",
-      "items": [
-        "Cursos",
-        "Webinars"
-      ]
+      "items": ["Cursos", "Webinars"]
     }
   },
   "snackbar": {
