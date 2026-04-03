@@ -2,8 +2,7 @@ import os
 import logging
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
-from fastapi.responses import RedirectResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
@@ -136,19 +135,33 @@ if certificados_router:
     app.include_router(certificados_router, prefix="/api/certificados")
 if contacto_router:
     app.include_router(contacto_router, prefix="/api/contacto")
+    logger.info(f"✅ contacto_router incluído con las siguientes rutas: {[route.path for route in contacto_router.routes]}")
 
-# Servir archivos estáticos del frontend - DEBE SER LO ÚLTIMO
-public_path = "/public"
-logger.info(f"Intentando servir archivos estáticos desde: {public_path}")
-logger.info(f"Directorio existe: {os.path.exists(public_path)}")
+# Servir archivos estáticos del frontend - Middleware en lugar de mount
+class StaticFileMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # NUNCA interceptar /api
+        if request.url.path.startswith("/api"):
+            return await call_next(request)
+        
+        # GET requests desde /
+        if request.method == "GET":
+            path = request.url.path.lstrip("/")
+            file_path = os.path.join("/public", path)
+            
+            # Si existe el archivo, servirlo
+            if os.path.isfile(file_path):
+                return FileResponse(file_path)
+            
+            # Si es un request sin extensión (ruta SPA), servir index.html
+            if "." not in path.split("/")[-1] or path == "":
+                index_path = "/public/index.html"
+                if os.path.isfile(index_path):
+                    return FileResponse(index_path)
+        
+        # Para todo lo demás, pasar al siguiente middleware/router
+        return await call_next(request)
 
-try:
-    app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
-    if os.path.exists(public_path):
-        logger.info("✅ Archivos estáticos montados en /")
-    else:
-        logger.warning(f"⚠️ Directorio {public_path} no existe, pero StaticFiles está configurado")
-except Exception as e:
-    logger.error(f"❌ Error montando archivos estáticos: {e}")
+app.add_middleware(StaticFileMiddleware)
 
 logger.info("✅ Aplicación FastAPI inicializada correctamente")
