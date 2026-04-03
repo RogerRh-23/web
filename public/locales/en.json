@@ -43,7 +43,8 @@
     "impartiality": "Impartiality policy",
     "copyright": "© {{year}} Latin America Certification & Systems. All rights reserved.",
     "contact": "Contact",
-    "mail": "Email: info@lacs.org.mx"
+    "mail": "Email: info@lacs.org.mx",
+    "legal": "Issued by the Mexican Accreditation Entity."
   },
   "ema": {
     "title": "EMA Accreditations",
@@ -230,10 +231,7 @@
       "company_name": "Company Name",
       "standard": "Standard",
       "status": "Status",
-      "status_list": [
-        "Valid",
-        "Expired"
-      ],
+      "status_list": ["Valid", "Expired"],
       "certificate_number": "Certificate Number",
       "start_date": "Start Date",
       "end_date": "End Date",
@@ -245,10 +243,7 @@
       "company_name": "Company Name",
       "standard": "Standard",
       "status": "Status",
-      "status_list": [
-        "Valid",
-        "Expired"
-      ],
+      "status_list": ["Valid", "Expired"],
       "certificate_number": "Certificate Number",
       "start_date": "Start Date",
       "end_date": "End Date",
@@ -259,10 +254,7 @@
   "dropdown": {
     "services": {
       "label": "Services",
-      "items": [
-        "Management System Certification",
-        "Sorting and Rework"
-      ]
+      "items": ["Management System Certification", "Sorting and Rework"]
     },
     "processes": {
       "label": "Processes",
@@ -274,10 +266,7 @@
     },
     "training": {
       "label": "Training Center",
-      "items": [
-        "Courses",
-        "Webinars"
-      ]
+      "items": ["Courses", "Webinars"]
     }
   },
   "snackbar": {
