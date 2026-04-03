@@ -37,7 +37,7 @@ class CertificadosManager {
         }
 
         try {
-            const response = await fetch(this.backendBaseURL + '/auth/me', {
+            const response = await fetch(this.backendBaseURL + '/api/auth/me', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -267,7 +267,7 @@ class CertificadosManager {
         // Mostrar link al PDF si existe
         if (archivoContainer && certificado.archivo_pdf) {
             archivoContainer.innerHTML = `
-                <a href="/certificados/download/${certificado._id}" target="_blank" class="btn btn-primary">
+                <a href="/api/certificados/download/${certificado._id}" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-pdf"></i> Descargar PDF
                 </a>
             `;
@@ -1786,7 +1786,7 @@ window.diagnosticErrors = function () {
 
     // 3. Probar /auth/me (para 401/403)
     console.log('🔄 Probando /auth/me...');
-    fetch(manager.backendBaseURL + '/auth/me', {
+    fetch(manager.backendBaseURL + '/api/auth/me', {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
         .then(response => {
@@ -1809,7 +1809,7 @@ window.diagnosticErrors = function () {
 
     // 4. Probar endpoint de certificados
     console.log('🔄 Probando /certificados...');
-    fetch(manager.backendBaseURL + '/certificados/', {
+    fetch(manager.backendBaseURL + '/api/certificados/', {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
         .then(response => {
