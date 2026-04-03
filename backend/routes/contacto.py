@@ -16,7 +16,7 @@ class ContactoRequest(BaseModel):
     empresa: str = ""
     mensaje: str = ""
 
-@router.post("/contacto", status_code=status.HTTP_200_OK)
+@router.post("/", status_code=status.HTTP_200_OK)
 async def enviar_contacto(data: ContactoRequest, request: Request):
     print("Recibida petición de contacto:", data)
     SMTP_HOST = os.getenv("SMTP_HOST", "smtp.example.com")
