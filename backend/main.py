@@ -98,6 +98,47 @@ def db_status():
 def get_routes():
     return {"routes": [route.path for route in app.routes]}
 
+@app.get("/network-test", tags=["Debug"])
+async def network_test():
+    """Test si el contenedor puede conectarse a internet"""
+    import socket
+    results = {}
+    
+    # Test DNS
+    try:
+        socket.gethostbyname("smtp.gmail.com")
+        results["dns_resolve"] = "✅ OK"
+    except Exception as e:
+        results["dns_resolve"] = f"❌ {str(e)}"
+    
+    # Test conexión a puerto 465
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(3)
+        result = sock.connect_ex(("smtp.gmail.com", 465))
+        sock.close()
+        if result == 0:
+            results["smtp_465"] = "✅ OK"
+        else:
+            results["smtp_465"] = f"❌ Connection refused (code: {result})"
+    except Exception as e:
+        results["smtp_465"] = f"❌ {str(e)}"
+    
+    # Test conexión a puerto 587
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(3)
+        result = sock.connect_ex(("smtp.gmail.com", 587))
+        sock.close()
+        if result == 0:
+            results["smtp_587"] = "✅ OK"
+        else:
+            results["smtp_587"] = f"❌ Connection refused (code: {result})"
+    except Exception as e:
+        results["smtp_587"] = f"❌ {str(e)}"
+    
+    return results
+
 # Incluir routers ANTES del mount de "/"
 if auth_router:
     app.include_router(auth_router, prefix="/api/auth")
