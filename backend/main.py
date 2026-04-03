@@ -106,13 +106,13 @@ def get_routes():
 
 # Incluir routers ANTES del mount de "/"
 if auth_router:
-    app.include_router(auth_router, prefix="/auth")
+    app.include_router(auth_router, prefix="/api/auth")
 if drive_router:
-    app.include_router(drive_router, prefix="/drive")
+    app.include_router(drive_router, prefix="/api/drive")
 if certificados_router:
-    app.include_router(certificados_router, prefix="/certificados")
+    app.include_router(certificados_router, prefix="/api/certificados")
 if contacto_router:
-    app.include_router(contacto_router, prefix="/contacto")
+    app.include_router(contacto_router, prefix="/api/contacto")
 
 # Servir archivos estáticos del frontend - DEBE SER LO ÚLTIMO
 public_path = "/public"
