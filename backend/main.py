@@ -73,6 +73,19 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos los headers
 )
 
+# Middleware para forzar HTTPS
+class HTTPSRedirectMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # En Railway, X-Forwarded-Proto contiene el protocolo original
+        forwarded_proto = request.headers.get("x-forwarded-proto", "http")
+        if forwarded_proto == "http" and not request.url.hostname == "localhost":
+            # Redirigir a HTTPS
+            new_url = request.url.replace(scheme="https")
+            return RedirectResponse(url=new_url, status_code=301)
+        return await call_next(request)
+
+app.add_middleware(HTTPSRedirectMiddleware)
+
 # Middleware para redirigir www a no-www
 class WWWRedirectMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
