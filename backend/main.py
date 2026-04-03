@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
 # Configurar logging
@@ -62,6 +63,15 @@ except ImportError as e:
 
 # Crear aplicación FastAPI
 app = FastAPI()
+
+# Configurar CORS para permitir POST desde el frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite cualquier origen
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Permite todos los headers
+)
 
 # Middleware para redirigir www a no-www
 class WWWRedirectMiddleware(BaseHTTPMiddleware):
