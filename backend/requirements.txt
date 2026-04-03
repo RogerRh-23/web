@@ -13,6 +13,7 @@ python-magic
 requests
 httpx
 python-dateutil
+sendgrid
 python-slugify
 starlette
 itsdangerous

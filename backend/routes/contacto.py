@@ -2,9 +2,8 @@ from fastapi import APIRouter, status, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 import os
-import smtplib
-import ssl
-from email.message import EmailMessage
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 import traceback
 
 router = APIRouter()
@@ -21,52 +20,53 @@ class ContactoRequest(BaseModel):
 @router.post("", status_code=status.HTTP_200_OK)
 async def enviar_contacto(data: ContactoRequest, request: Request):
     print("Recibida petición de contacto:", data)
-    SMTP_HOST = os.getenv("SMTP_HOST", "smtp.example.com")
-    SMTP_PORT = int(os.getenv("SMTP_PORT", 465))  # Puerto 465 para SMTPS
-    SMTP_USER = os.getenv("SMTP_USER", "usuario@example.com")
-    SMTP_PASS = os.getenv("SMTP_PASS", "password")
-    DEST_EMAIL = os.getenv("CONTACTO_DEST_EMAIL", SMTP_USER)
     
-    print(f"🔍 DEBUG SMTP - HOST: {SMTP_HOST}, PORT: {SMTP_PORT}, USER: {SMTP_USER}")
-    print(f"🔍 DEBUG DEST_EMAIL: {DEST_EMAIL}")
-
-
-    msg = EmailMessage()
-    msg["Subject"] = f"Nuevo mensaje de contacto: {data.asunto or 'Sin asunto'}"
-    msg["From"] = SMTP_USER  # Usar el correo intermediario verificado
-    msg["To"] = DEST_EMAIL
-    msg["Reply-To"] = data.email  # Las respuestas van al usuario del formulario
-    body = f"""
-    Nombre: {data.nombre}
-    Email (responder a): {data.email}
-    Teléfono: {data.telefono}
-    Empresa: {data.empresa}
-    Asunto: {data.asunto}
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+    FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", "noreply@lacs.org.mx")  # Debe ser verificado en SendGrid
+    TO_EMAIL = os.getenv("CONTACTO_DEST_EMAIL", "contacto@lacs.org.mx")
     
-    Mensaje:
-    {data.mensaje}
+    print(f"🔍 DEBUG SendGrid - API_KEY presente: {'Sí' if SENDGRID_API_KEY else 'No'}")
+    print(f"🔍 DEBUG - FROM: {FROM_EMAIL}, TO: {TO_EMAIL}")
+    
+    if not SENDGRID_API_KEY:
+        return JSONResponse(
+            status_code=500, 
+            content={"ok": False, "msg": "SendGrid API key no configurada"}
+        )
+    
+    body_content = f"""
+    <h2>Nuevo mensaje de contacto</h2>
+    <p><strong>Nombre:</strong> {data.nombre}</p>
+    <p><strong>Email:</strong> {data.email}</p>
+    <p><strong>Teléfono:</strong> {data.telefono}</p>
+    <p><strong>Empresa:</strong> {data.empresa}</p>
+    <p><strong>Asunto:</strong> {data.asunto}</p>
+    <p><strong>Mensaje:</strong></p>
+    <p>{data.mensaje}</p>
+    <hr>
+    <p><em>Para responder, escribir a: {data.email}</em></p>
     """
-    msg.set_content(body)
-
+    
     try:
-        print(f"Intentando conectar a {SMTP_HOST}:{SMTP_PORT} con SSL...")
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
-            print("✅ Conexión SMTP_SSL establecida")
-            server.login(SMTP_USER, SMTP_PASS)
-            print("✅ Login exitoso")
-            server.send_message(msg)
-        print("✅ Correo enviado correctamente")
-        return {"ok": True, "msg": "Correo enviado"}
-    except smtplib.SMTPException as e:
-        print(f"❌ Error SMTP: {e}")
-        traceback.print_exc()
-        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error SMTP: {str(e)}"})
-    except OSError as e:
-        print(f"❌ Error de red/conexión: {e}")
-        traceback.print_exc()
-        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error de conexión: {str(e)}"})
+        message = Mail(
+            from_email=FROM_EMAIL,
+            to_emails=TO_EMAIL,
+            subject=f"Nuevo mensaje de contacto: {data.asunto or 'Sin asunto'}",
+            html_content=body_content,
+            reply_to=data.email  # Las respuestas van al usuario del formulario
+        )
+        
+        print(f"Enviando correo con SendGrid...")
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        
+        print(f"✅ Correo enviado - Status: {response.status_code}")
+        return {"ok": True, "msg": "Correo enviado exitosamente"}
+        
     except Exception as e:
-        print(f"❌ Error general: {e}")
+        print(f"❌ Error enviando correo: {e}")
         traceback.print_exc()
-        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error: {str(e)}"})
+        return JSONResponse(
+            status_code=500, 
+            content={"ok": False, "msg": f"Error enviando correo: {str(e)}"}
+        )
