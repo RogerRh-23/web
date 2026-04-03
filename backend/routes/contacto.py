@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 import os
 import smtplib
+import ssl
 from email.message import EmailMessage
 import traceback
 
@@ -21,7 +22,7 @@ class ContactoRequest(BaseModel):
 async def enviar_contacto(data: ContactoRequest, request: Request):
     print("Recibida petición de contacto:", data)
     SMTP_HOST = os.getenv("SMTP_HOST", "smtp.example.com")
-    SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
+    SMTP_PORT = int(os.getenv("SMTP_PORT", 465))  # Puerto 465 para SMTPS
     SMTP_USER = os.getenv("SMTP_USER", "usuario@example.com")
     SMTP_PASS = os.getenv("SMTP_PASS", "password")
     DEST_EMAIL = os.getenv("CONTACTO_DEST_EMAIL", SMTP_USER)
@@ -48,11 +49,10 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
     msg.set_content(body)
 
     try:
-        print(f"Intentando conectar a {SMTP_HOST}:{SMTP_PORT}...")
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-            print("✅ Conexión SMTP establecida")
-            server.starttls()
-            print("✅ STARTTLS completado")
+        print(f"Intentando conectar a {SMTP_HOST}:{SMTP_PORT} con SSL...")
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
+            print("✅ Conexión SMTP_SSL establecida")
             server.login(SMTP_USER, SMTP_PASS)
             print("✅ Login exitoso")
             server.send_message(msg)
