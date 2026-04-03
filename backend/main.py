@@ -125,35 +125,17 @@ if contacto_router:
     app.include_router(contacto_router, prefix="/api/contacto")
 
 # Servir archivos estáticos del frontend - DEBE SER LO ÚLTIMO
-# Middleware para servir archivos estáticos y redirigir a index.html para rutas no encontradas
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import FileResponse
-import mimetypes
+public_path = "/public"
+logger.info(f"Intentando servir archivos estáticos desde: {public_path}")
+logger.info(f"Directorio existe: {os.path.exists(public_path)}")
 
-class StaticFilesMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        # Solo procesar GETs
-        if request.method != "GET":
-            return await call_next(request)
-        
-        path = request.url.path
-        
-        # Si es /api, dejar que los routers lo manejen
-        if path.startswith("/api"):
-            return await call_next(request)
-        
-        # Si existe el archivo, servirlo
-        file_path = f"/public{path}"
-        if os.path.isfile(file_path):
-            return FileResponse(file_path)
-        
-        # Si es un directorio o no existe, servir index.html para SPA routing
-        if not "." in path.split("/")[-1]:  # Sin extensión = ruta SPA
-            if os.path.isfile("/public/index.html"):
-                return FileResponse("/public/index.html")
-        
-        return await call_next(request)
-
-app.add_middleware(StaticFilesMiddleware)
+try:
+    app.mount("/", StaticFiles(directory=public_path, html=True), name="static")
+    if os.path.exists(public_path):
+        logger.info("✅ Archivos estáticos montados en /")
+    else:
+        logger.warning(f"⚠️ Directorio {public_path} no existe, pero StaticFiles está configurado")
+except Exception as e:
+    logger.error(f"❌ Error montando archivos estáticos: {e}")
 
 logger.info("✅ Aplicación FastAPI inicializada correctamente")
