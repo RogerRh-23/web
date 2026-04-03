@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 import os
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, ReplyToEmail
+from sendgrid.helpers.mail import Mail, Email
 import traceback
 
 router = APIRouter()
@@ -55,8 +55,8 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
             html_content=body_content
         )
         
-        # Agregar reply_to después del constructor
-        message.reply_to = ReplyToEmail(data.email)
+        # Agregar reply_to como atributo
+        message.reply_to = Email(data.email)
         
         print(f"Enviando correo con SendGrid...")
         sg = SendGridAPIClient(SENDGRID_API_KEY)
