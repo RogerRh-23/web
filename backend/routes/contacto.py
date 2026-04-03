@@ -25,6 +25,10 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
     SMTP_USER = os.getenv("SMTP_USER", "usuario@example.com")
     SMTP_PASS = os.getenv("SMTP_PASS", "password")
     DEST_EMAIL = os.getenv("CONTACTO_DEST_EMAIL", SMTP_USER)
+    
+    print(f"🔍 DEBUG SMTP - HOST: {SMTP_HOST}, PORT: {SMTP_PORT}, USER: {SMTP_USER}")
+    print(f"🔍 DEBUG DEST_EMAIL: {DEST_EMAIL}")
+
 
     msg = EmailMessage()
     msg["Subject"] = f"Nuevo mensaje de contacto: {data.asunto or 'Sin asunto'}"
@@ -44,13 +48,25 @@ async def enviar_contacto(data: ContactoRequest, request: Request):
     msg.set_content(body)
 
     try:
+        print(f"Intentando conectar a {SMTP_HOST}:{SMTP_PORT}...")
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+            print("✅ Conexión SMTP establecida")
             server.starttls()
+            print("✅ STARTTLS completado")
             server.login(SMTP_USER, SMTP_PASS)
+            print("✅ Login exitoso")
             server.send_message(msg)
-        print("Correo enviado correctamente")
+        print("✅ Correo enviado correctamente")
         return {"ok": True, "msg": "Correo enviado"}
-    except Exception as e:
-        print("Error enviando correo:", e)
+    except smtplib.SMTPException as e:
+        print(f"❌ Error SMTP: {e}")
         traceback.print_exc()
-        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error enviando correo: {str(e)}"})
+        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error SMTP: {str(e)}"})
+    except OSError as e:
+        print(f"❌ Error de red/conexión: {e}")
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error de conexión: {str(e)}"})
+    except Exception as e:
+        print(f"❌ Error general: {e}")
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"ok": False, "msg": f"Error: {str(e)}"})
