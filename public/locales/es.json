@@ -38,7 +38,7 @@
     "certified_company": "Reglamento de empresa certificada",
     "policies": "Politicas",
     "privacy": "Aviso de privacidad",
-    "confidentiality": "Política de confidencialidad",
+    "confidentiality": "Compromioso de confidencialidad",
     "impartiality": "Política de Imparcialidad",
     "copyright": "© {{year}} Latin America Certification & Systems. Todos los derechos reservados.",
     "contact": "Contacto",
@@ -82,7 +82,7 @@
     "27001_systems": "Acreditacion ISO 27001 como Organismo de Certificacion de Sistemas de Gestión de Seguridad de la Información",
     "27001_2022": "Acreditacion ISO 27001:2022 Sistemas de Gestión de Seguridad de la Información",
     "37001_systems": "Acreditacion ISO 37001 como Organismo de Certificacion de Sistemas de Gestión Antisoborno",
-    "sgsi_diploma": "Diplomado en Sistemas de Gestión de Seguridad de la Información",
+    "sgsi_diploma": "Acreditacion en Sistemas de Gestión de Seguridad de la Información",
     "consulta_title": "Consulta de Acreditaciones",
     "consulta_desc": "Para consultar nuestras acreditaciones, puedes visitar el sitio web de IAF o escanear el código QR.",
     "consulta_link": "Consulta de Acreditaciones LACS"
@@ -92,7 +92,7 @@
   },
   "footer_politicas": {
     "privacy": "Aviso de privacidad",
-    "confidentiality": "Política de confidencialidad",
+    "confidentiality": "Compromiso de confidencialidad",
     "impartiality": "Política de Imparcialidad"
   },
   "cards": {
