@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
       }
-      fetch(`/api/certificados/${certEditado.num}`, {
+      fetch(`/certificados/${certEditado.num}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Por favor selecciona un archivo de certificado.');
         return;
       }
-      fetch('/api/certificados', {
+      fetch('/certificados', {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer admin-token'

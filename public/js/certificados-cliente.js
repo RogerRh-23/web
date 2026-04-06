@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchValue = document.getElementById('search-cert').value.trim();
     if (!searchValue) return;
 
-    fetch(`/api/certificados/buscar?num=${encodeURIComponent(searchValue)}`)
+    fetch(`/certificados/buscar?num=${encodeURIComponent(searchValue)}`)
       .then(res => {
         if (!res.ok) throw new Error('Certificado no encontrado');
         return res.json();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
           </div>
         `;
         if (window.gsap) {
-          gsap.from('.certificado-info', {opacity: 0, y: 40, duration: 0.7, ease: 'power2.out'});
+          gsap.from('.certificado-info', { opacity: 0, y: 40, duration: 0.7, ease: 'power2.out' });
         }
       })
       .catch(err => {
