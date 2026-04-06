@@ -263,7 +263,12 @@
   <div id="navbar-placeholder"></div>
   <main class="main-content-navbar-padding">
     <div class="certificados-section">
-      <form class="certificados-search-form" id="formBuscarCertificado" autocomplete="off" style="margin-bottom: 2rem;">
+      <!-- BÚSQUEDA DE CERTIFICADOS (Pública - visible para todos) -->
+      <div style="margin-bottom:2rem; padding:1.5rem; background-color:#f0f7ff; border-radius:8px;">
+        <h2 style="margin-bottom:1.5rem; color:#1976a5;">
+          <i class="bi bi-search"></i> Buscar Certificado
+        </h2>
+        <form class="certificados-search-form" id="formBuscarCertificado" autocomplete="off">
         <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
           <div class="form-group" style="flex: 1 1 200px;">
             <label for="search-numero-certificado">No. de Certificado</label>
@@ -282,22 +287,30 @@
           <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
         </div>
       </form>
-
-      <!-- Botones de administración (solo para admin) -->
-      <div class="admin-certificados-actions" id="adminActions" style="margin-bottom:2rem; display:none; gap:1rem;">
-        <button type="button" id="btnAgregarCertificado" class="btn btn-success">
-          <i class="bi bi-plus-circle"></i> Agregar Certificado
-        </button>
-        <button type="button" id="btnRefrescarLista" class="btn btn-info">
-          <i class="bi bi-arrow-clockwise"></i> Refrescar Lista
-        </button>
       </div>
 
-      <!-- Lista automática de certificados (solo para admin) -->
-      <div class="admin-certificados-lista" id="adminListaCertificados" style="display:none; margin-bottom:2rem;">
-        <h3><i class="bi bi-list-check"></i> Gestión de Certificados</h3>
-        <div id="adminTablaCertificados">
-          <!-- La tabla se generará dinámicamente -->
+      <!-- PANEL DE ADMINISTRADOR (Solo admin) -->
+      <div id="adminPanel" style="display:none; margin-bottom:2.5rem; padding:1.5rem; background-color:#e8f4f8; border-radius:8px; border-left:4px solid #1976a5;">
+        <h2 style="margin-bottom:1.5rem; color:#1976a5;">
+          <i class="bi bi-shield-check"></i> Panel de Administración
+        </h2>
+
+        <!-- Botones de administración -->
+        <div class="admin-certificados-actions" id="adminActions" style="display:flex; gap:1rem; margin-bottom:1.5rem;">
+          <button type="button" id="btnAgregarCertificado" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Agregar Certificado
+          </button>
+          <button type="button" id="btnRefrescarLista" class="btn btn-info">
+            <i class="bi bi-arrow-clockwise"></i> Refrescar Lista
+          </button>
+        </div>
+
+        <!-- Lista automática de certificados (solo para admin) -->
+        <div class="admin-certificados-lista" id="adminListaCertificados">
+          <h4 style="margin-bottom:1rem;"><i class="bi bi-list-check"></i> Certificados Registrados</h4>
+          <div id="adminTablaCertificados" style="overflow-x: auto;">
+            <!-- La tabla se generará dinámicamente -->
+          </div>
         </div>
       </div>
 
