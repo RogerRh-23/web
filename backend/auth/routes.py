@@ -275,29 +275,18 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), request: Request = N
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-# Endpoint para crear usuario admin, solo accesible por dev
+# Endpoint para registrarse públicamente (sin autenticación)
 
 @router.post("/register")
-def register_user(user: UserCreate, current_user: dict = Depends(get_current_user)):
-    # Solo los desarrolladores pueden usar este endpoint
-    if current_user["role"] != "dev":
-        raise HTTPException(status_code=403, detail="Solo desarrolladores pueden registrar usuarios")
-    
-    log_msg = f"Dev {current_user['username']} intentando registrar usuario: {user.username}, email: {user.email}"
-    add_log("register_attempt", current_user["username"], log_msg)
+def register_user(user: UserCreate):
+    log_msg = f"Intento de registro de nuevo usuario: {user.username}, email: {user.email}"
+    add_log("register_attempt", user.username or "unknown", log_msg)
     if not user.username or not user.email or not user.password:
         add_log("register_failed", user.username if user.username else "None", "Faltan campos en el registro")
         raise HTTPException(status_code=400, detail="Faltan campos en el registro")
     if users_collection.find_one({"username": user.username}):
         add_log("user_register_failed", user.username, f"Intento de registro fallido: usuario ya existe")
-        db["logs"].insert_one({
-            "event": "user_register_failed",
-            "username": user.username,
-            "email": user.email,
-            "timestamp": datetime.utcnow(),
-            "detail": "Intento de registro fallido: usuario ya existe"
-        })
-        return {"error": "El usuario ya existe"}
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
     hashed_pw = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     user_doc = {
         "username": user.username,
@@ -315,10 +304,10 @@ def register_user(user: UserCreate, current_user: dict = Depends(get_current_use
             "timestamp": datetime.utcnow(),
             "detail": "Usuario registrado correctamente"
         })
-        return {"msg": f"Usuario '{user.username}' registrado"}
+        return {"msg": f"Usuario '{user.username}' registrado exitosamente"}
     else:
         add_log("register_failed", user.username, "Error al crear usuario en la base de datos")
-        return {"error": "No se pudo registrar el usuario"}
+        raise HTTPException(status_code=500, detail="Error al registrar el usuario")
 # Endpoint para consultar logs (solo dev)
 @router.get("/dev-logs")
 def get_dev_logs(current_user: dict = Depends(get_current_user)):
