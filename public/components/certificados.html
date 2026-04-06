@@ -269,28 +269,29 @@
           <i class="bi bi-search"></i> Buscar Certificado
         </h2>
         <form class="certificados-search-form" id="formBuscarCertificado" autocomplete="off">
-        <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
-          <div class="form-group" style="flex: 1 1 200px;">
-            <label for="search-numero-certificado">No. de Certificado</label>
-            <input type="text" id="search-numero-certificado" name="numeroCertificado" class="form-control"
-              placeholder="Ej: 2024-00123">
+          <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-end;">
+            <div class="form-group" style="flex: 1 1 200px;">
+              <label for="search-numero-certificado">No. de Certificado</label>
+              <input type="text" id="search-numero-certificado" name="numeroCertificado" class="form-control"
+                placeholder="Ej: 2024-00123">
+            </div>
+            <div class="form-group" style="flex: 1 1 200px;">
+              <label for="search-nombre-empresa">Nombre de la empresa</label>
+              <input type="text" id="search-nombre-empresa" name="nombreEmpresa" class="form-control"
+                placeholder="Ej: LACS S.A. de C.V.">
+            </div>
+            <div class="form-group" style="flex: 1 1 200px;">
+              <label for="search-id-empresa">ID de la empresa</label>
+              <input type="text" id="search-id-empresa" name="idEmpresa" class="form-control" placeholder="Ej: EMP-001">
+            </div>
+            <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
           </div>
-          <div class="form-group" style="flex: 1 1 200px;">
-            <label for="search-nombre-empresa">Nombre de la empresa</label>
-            <input type="text" id="search-nombre-empresa" name="nombreEmpresa" class="form-control"
-              placeholder="Ej: LACS S.A. de C.V.">
-          </div>
-          <div class="form-group" style="flex: 1 1 200px;">
-            <label for="search-id-empresa">ID de la empresa</label>
-            <input type="text" id="search-id-empresa" name="idEmpresa" class="form-control" placeholder="Ej: EMP-001">
-          </div>
-          <button type="submit" class="btn btn-primary" data-i18n="certificates.search_button">Buscar</button>
-        </div>
-      </form>
+        </form>
       </div>
 
       <!-- PANEL DE ADMINISTRADOR (Solo admin) -->
-      <div id="adminPanel" style="display:none; margin-bottom:2.5rem; padding:1.5rem; background-color:#e8f4f8; border-radius:8px; border-left:4px solid #1976a5;">
+      <div id="adminPanel"
+        style="display:none; margin-bottom:2.5rem; padding:1.5rem; background-color:#e8f4f8; border-radius:8px; border-left:4px solid #1976a5;">
         <h2 style="margin-bottom:1.5rem; color:#1976a5;">
           <i class="bi bi-shield-check"></i> Panel de Administración
         </h2>
