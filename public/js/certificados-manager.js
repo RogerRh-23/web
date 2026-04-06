@@ -14,24 +14,36 @@ class CertificadosManager {
     }
 
     async init() {
+        console.log('🚀 Inicializando CertificadosManager...');
         await this.checkUserRole();
+        console.log('✅ Rol verificado. currentUser:', this.currentUser);
+
         this.setupEventListeners();
         this.setupUIBasedOnRole();
 
         if (this.isAdmin()) {
+            console.log('👨‍💼 Activando modo administrador...');
             setTimeout(() => {
                 this.activateAdminModeAutomatically();
                 this.cargarListaAdmin();
             }, 500);
+        } else {
+            console.log('👤 Modo usuario normal activado');
         }
     }
 
 
 
     async checkUserRole() {
-        const token = localStorage.getItem('token') || localStorage.getItem('admin_token');
+        // Buscar token en varios lugares
+        const token = localStorage.getItem('token') ||
+            localStorage.getItem('admin_token') ||
+            localStorage.getItem('dev_token');
+
+        console.log('🔐 checkUserRole() - token encontrado:', !!token);
 
         if (!token) {
+            console.log('❌ No hay token, usuario anónimo');
             this.currentUser = null;
             return;
         }
@@ -41,23 +53,27 @@ class CertificadosManager {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
+            console.log('📡 Respuesta de /auth/me:', response.status);
+
             if (response.ok) {
                 const data = await response.json();
+                console.log('👤 Data recibida:', data);
+
                 this.currentUser = {
                     username: data.user || data.username,
                     role: data.role,
                     token: token
                 };
+
+                console.log('✅ CurrentUser establecido:', this.currentUser);
             } else {
+                console.log('❌ Error en /auth/me:', response.status);
                 this.currentUser = null;
             }
         } catch (error) {
-            // Si hay error de conexión, activar modo admin temporal
-            this.currentUser = {
-                username: 'admin',
-                role: 'admin',
-                token: token
-            };
+            console.log('⚠️ Error de conexión en checkUserRole:', error);
+            // Si hay error de conexión, mostrar usuario anónimo en lugar de admin
+            this.currentUser = null;
         }
     }
 
@@ -67,25 +83,42 @@ class CertificadosManager {
         const adminListaCertificados = document.getElementById('adminListaCertificados');
         const certificadoAdminActions = document.querySelector('.certificado-admin-actions');
 
+        console.log('🎨 setupUIBasedOnRole() - isAdmin():', this.isAdmin());
+        console.log('🎨 setupUIBasedOnRole() - currentUser:', this.currentUser);
+
         if (this.isAdmin()) {
+            console.log('✅ Mostrando UI de administrador');
             // Mostrar panel completo de administración
             if (adminPanel) {
                 adminPanel.style.display = 'block';
                 adminPanel.style.visibility = 'visible';
+                console.log('✅ adminPanel visible');
             }
             if (adminActions) {
                 adminActions.style.display = 'flex';
                 adminActions.style.visibility = 'visible';
+                console.log('✅ adminActions visible');
             }
             if (adminListaCertificados) {
                 adminListaCertificados.style.display = 'block';
                 adminListaCertificados.style.visibility = 'visible';
+                console.log('✅ adminListaCertificados visible');
             }
         } else {
+            console.log('❌ Usuario normal - ocultando UI de administrador');
             // Ocultar panel de administración para usuarios normales
-            if (adminPanel) adminPanel.style.display = 'none';
-            if (adminActions) adminActions.style.display = 'none';
-            if (adminListaCertificados) adminListaCertificados.style.display = 'none';
+            if (adminPanel) {
+                adminPanel.style.display = 'none';
+                console.log('⛔ adminPanel ocultado');
+            }
+            if (adminActions) {
+                adminActions.style.display = 'none';
+                console.log('⛔ adminActions ocultado');
+            }
+            if (adminListaCertificados) {
+                adminListaCertificados.style.display = 'none';
+                console.log('⛔ adminListaCertificados ocultado');
+            }
         }
     } setupEventListeners() {
         // Búsqueda de certificados
