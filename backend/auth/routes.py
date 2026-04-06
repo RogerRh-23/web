@@ -69,6 +69,48 @@ def get_all_logs(current_user: dict = Depends(get_current_user)):
     logs = list(db["logs"].find({}, {"_id": 0}))
     return {"logs": logs}
 
+# Endpoint para crear un usuario dev (con contraseña especial)
+@router.post("/create-dev")
+def create_dev(user: UserCreate):
+    """Crear un usuario dev - requiere contraseña especial"""
+    # La contraseña "dev_secret_2024" actúa como clave de creación
+    if user.password != "dev_secret_2024":
+        add_log("create_dev_failed", user.username or "unknown", "Contraseña dev incorrecta")
+        raise HTTPException(status_code=403, detail="Contraseña inválida para crear dev")
+    
+    log_msg = f"Intento de crear dev: {user.username}, email: {user.email}"
+    add_log("create_dev_attempt", user.username or "unknown", log_msg)
+    
+    if not user.username or not user.email:
+        add_log("create_dev_failed", user.username if user.username else "None", "Faltan campos")
+        raise HTTPException(status_code=400, detail="Faltan campos requeridos")
+    
+    if users_collection.find_one({"username": user.username}):
+        add_log("create_dev_failed", user.username, "Usuario ya existe")
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
+    
+    # Crear dev con una contraseña fuerte (diferente a la contraseña especial)
+    hashed_pw = bcrypt.hashpw("dev_password_2024".encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    dev_doc = {
+        "username": user.username,
+        "email": user.email,
+        "hashed_password": hashed_pw,
+        "role": "dev"
+    }
+    
+    result = users_collection.insert_one(dev_doc)
+    if result.inserted_id:
+        add_log("dev_created", user.username, f"Nuevo dev creado: {user.email}")
+        return {
+            "msg": f"Desarrollador '{user.username}' creado exitosamente",
+            "username": user.username,
+            "password": "dev_password_2024",
+            "note": "Usa estas credenciales para iniciar sesión"
+        }
+    else:
+        add_log("create_dev_failed", user.username, "Error en base de datos")
+        raise HTTPException(status_code=500, detail="Error al crear desarrollador")
+
 @router.post("/create-admin")
 def create_admin(user: UserCreate, current_user: dict = Depends(get_current_user)):
     # Solo los desarrolladores pueden crear administradores
