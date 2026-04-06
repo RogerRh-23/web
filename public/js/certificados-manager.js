@@ -1859,7 +1859,7 @@ window.diagnosticErrors = function () {
 
     // 3. Probar /auth/me (para 401/403)
     console.log('🔄 Probando /auth/me...');
-    fetch(manager.backendBaseURL + '/api/auth/me', {
+    fetch(manager.backendBaseURL + '/auth/me', {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
         .then(response => {
@@ -1882,7 +1882,7 @@ window.diagnosticErrors = function () {
 
     // 4. Probar endpoint de certificados
     console.log('🔄 Probando /certificados...');
-    fetch(manager.backendBaseURL + '/api/certificados/', {
+    fetch(manager.backendBaseURL + '/certificados/', {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
         .then(response => {
