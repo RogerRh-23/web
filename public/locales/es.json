@@ -6,12 +6,12 @@
     "training": "Centro de formación",
     "certificates": "Certificados",
     "contact": "Contacto",
-    "login": "Iniciar Sesión"
+    "login": "Ingresa"
   },
   "navbar_mobile": {
     "menu_button": "Menú",
     "home_button": "Inicio",
-    "login_button": "Iniciar Sesión",
+    "login_button": "Ingresa",
     "services": "Servicios",
     "services_certification": "Certificación de Sistemas de Gestión",
     "services_training": "Capacitación",
@@ -166,12 +166,12 @@
     }
   },
   "login": {
-    "title": "Iniciar Sesión",
+    "title": "Ingresa",
     "welcome_message": "¡Bienvenido de nuevo!",
     "access": "Accede a tu cuenta",
     "username": "Usuario",
     "password": "Contraseña",
-    "login_btn": "Iniciar Sesión",
+    "login_btn": "Ingresa",
     "forgot_password": "¿Olvidaste tu contraseña?",
     "signup_title": "¿No tienes una cuenta?",
     "signup_message": "¡Crea una cuenta para acceder a más funciones!",
