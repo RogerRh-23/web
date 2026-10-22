@@ -204,7 +204,7 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: params
               });
-              const data = await res.json();
+              const data = await res.json().catch(() => ({}));
               if (res.ok && data.access_token) {
                 // Decodifica el JWT para obtener el rol
                 const payload = JSON.parse(atob(data.access_token.split('.')[1]));
@@ -234,13 +234,17 @@
                   }
                 }, 250);
               } else {
-                if (window.snackbarLoginError) {
-                  window.snackbarLoginError();
+                const detail = String(data.detail || data.error || data.msg || '').toLowerCase();
+                const isInvalidPassword = detail.includes('contraseña') || detail.includes('password') || detail.includes('incorrect');
+                if (isInvalidPassword && window.snackbarPasswordIncorrect) {
+                  window.snackbarPasswordIncorrect();
+                } else if (window.snackbarLoginError) {
+                  window.snackbarLoginError(data.detail || data.error || 'Error al iniciar sesión.');
                 }
               }
             } catch (err) {
               if (window.snackbarLoginError) {
-                window.snackbarLoginError();
+                window.snackbarLoginError('No se pudo conectar con el servidor. Intenta de nuevo.');
               }
             }
           });
@@ -735,7 +739,7 @@
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
               body: `grant_type=password&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
             });
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
             if (res.ok && data.access_token) {
               // Obtener datos del usuario con el token
               const userRes = await fetch('/auth/me', {
@@ -758,13 +762,19 @@
                   }
                 }, 250);
               } else {
-                window.snackbarLoginError && window.snackbarLoginError();
+                window.snackbarLoginError && window.snackbarLoginError('No se pudo recuperar la información del usuario.');
               }
             } else {
-              window.snackbarLoginError && window.snackbarLoginError();
+              const detail = String(data.detail || data.error || data.msg || '').toLowerCase();
+              const isInvalidPassword = detail.includes('contraseña') || detail.includes('password') || detail.includes('incorrect');
+              if (isInvalidPassword && window.snackbarPasswordIncorrect) {
+                window.snackbarPasswordIncorrect();
+              } else {
+                window.snackbarLoginError && window.snackbarLoginError(data.detail || data.error || 'Error al iniciar sesión.');
+              }
             }
           } catch (err) {
-            window.snackbarLoginError && window.snackbarLoginError();
+            window.snackbarLoginError && window.snackbarLoginError('No se pudo conectar con el servidor. Intenta de nuevo.');
           }
         });
       }

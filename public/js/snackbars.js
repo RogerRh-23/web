@@ -68,11 +68,14 @@ window.snackbarArchivoError = function () {
 };
 
 // Casos para login.html
-window.snackbarLoginError = function () {
-    showSnackbar('error', 'Error al iniciar sesión. Verifica tus credenciales.');
+window.snackbarLoginError = function (customMessage) {
+    showSnackbar('error', customMessage || 'Error al iniciar sesión. Verifica tus credenciales.');
 };
 window.snackbarLoginSuccess = function () {
     showSnackbar('login-success', '¡Bienvenido de nuevo!');
+};
+window.snackbarPasswordIncorrect = function () {
+    showSnackbar('error', 'Contraseña incorrecta. Intenta nuevamente.');
 };
 // Snackbar para registro exitoso (sign up)
 window.snackbarSignupSuccess = function () {
