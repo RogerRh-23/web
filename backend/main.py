@@ -141,13 +141,13 @@ async def network_test():
 
 # Incluir routers ANTES del mount de "/"
 if auth_router:
-    app.include_router(auth_router, prefix="/api/auth")
+    app.include_router(auth_router, prefix="/auth")
 if drive_router:
-    app.include_router(drive_router, prefix="/api/drive")
+    app.include_router(drive_router, prefix="/drive")
 if certificados_router:
-    app.include_router(certificados_router, prefix="/api/certificados")
+    app.include_router(certificados_router, prefix="/certificados")
 if contacto_router:
-    app.include_router(contacto_router, prefix="/api/contacto")
+    app.include_router(contacto_router, prefix="/contacto")
 
 # Servir archivos estáticos - DEBE SER EL ÚLTIMO
 if os.path.exists("/public"):

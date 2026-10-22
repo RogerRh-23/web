@@ -1,6 +1,0 @@
-Firebase
-Vercel
-Netlify
-Render
-Railway
-Hostinger

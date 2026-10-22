@@ -991,3 +991,107 @@ body.modal-open {
     padding: 1.2rem 1rem;
   }
 }
+
+// Estilos para el panel de administración
+#adminPanel {
+  background: linear-gradient(135deg, #e8f4f8 0%, #f0fafb 100%);
+  border-left: 5px solid #1976a5;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #1976a5;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// Estilos para tabla de certificados admin
+#adminListaCertificados {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(25, 118, 165, 0.1);
+
+  h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 600;
+
+    i {
+      color: #1976a5;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background: linear-gradient(135deg, #1976a5 0%, #5ec6e7 100%);
+      color: white;
+    }
+
+    th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid rgba(25, 118, 165, 0.2);
+    }
+
+    td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      vertical-align: middle;
+    }
+
+    tbody tr {
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: rgba(25, 118, 165, 0.05);
+      }
+    }
+
+    .btn-sm {
+      margin-right: 0.3rem;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Estilos para botones de acción admin
+.admin-certificados-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  .btn {
+    flex: 0 1 auto;
+    white-space: nowrap;
+  }
+}
+
+// Estilos para bucles de resumen mejorado
+.resumen-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  i {
+    color: #1976a5;
+    margin-right: 0.3rem;
+  }
+}

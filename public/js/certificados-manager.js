@@ -14,75 +14,111 @@ class CertificadosManager {
     }
 
     async init() {
+        console.log('🚀 Inicializando CertificadosManager...');
         await this.checkUserRole();
+        console.log('✅ Rol verificado. currentUser:', this.currentUser);
+
         this.setupEventListeners();
         this.setupUIBasedOnRole();
 
         if (this.isAdmin()) {
+            console.log('👨‍💼 Activando modo administrador...');
             setTimeout(() => {
                 this.activateAdminModeAutomatically();
                 this.cargarListaAdmin();
             }, 500);
+        } else {
+            console.log('👤 Modo usuario normal activado');
         }
     }
 
 
 
     async checkUserRole() {
-        const token = localStorage.getItem('token') || localStorage.getItem('admin_token');
+        // Buscar token en varios lugares
+        const token = localStorage.getItem('token') ||
+            localStorage.getItem('admin_token') ||
+            localStorage.getItem('dev_token');
+
+        console.log('🔐 checkUserRole() - token encontrado:', !!token);
 
         if (!token) {
+            console.log('❌ No hay token, usuario anónimo');
             this.currentUser = null;
             return;
         }
 
         try {
-            const response = await fetch(this.backendBaseURL + '/api/auth/me', {
+            const response = await fetch(this.backendBaseURL + '/auth/me', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
+            console.log('📡 Respuesta de /auth/me:', response.status);
+
             if (response.ok) {
                 const data = await response.json();
+                console.log('👤 Data recibida:', data);
+
                 this.currentUser = {
                     username: data.user || data.username,
                     role: data.role,
                     token: token
                 };
+
+                console.log('✅ CurrentUser establecido:', this.currentUser);
             } else {
+                console.log('❌ Error en /auth/me:', response.status);
                 this.currentUser = null;
             }
         } catch (error) {
-            // Si hay error de conexión, activar modo admin temporal
-            this.currentUser = {
-                username: 'admin',
-                role: 'admin',
-                token: token
-            };
+            console.log('⚠️ Error de conexión en checkUserRole:', error);
+            // Si hay error de conexión, mostrar usuario anónimo en lugar de admin
+            this.currentUser = null;
         }
     }
 
     setupUIBasedOnRole() {
+        const adminPanel = document.getElementById('adminPanel');
         const adminActions = document.getElementById('adminActions');
         const adminListaCertificados = document.getElementById('adminListaCertificados');
         const certificadoAdminActions = document.querySelector('.certificado-admin-actions');
 
+        console.log('🎨 setupUIBasedOnRole() - isAdmin():', this.isAdmin());
+        console.log('🎨 setupUIBasedOnRole() - currentUser:', this.currentUser);
+
         if (this.isAdmin()) {
+            console.log('✅ Mostrando UI de administrador');
+            // Mostrar panel completo de administración
+            if (adminPanel) {
+                adminPanel.style.display = 'block';
+                adminPanel.style.visibility = 'visible';
+                console.log('✅ adminPanel visible');
+            }
             if (adminActions) {
                 adminActions.style.display = 'flex';
                 adminActions.style.visibility = 'visible';
+                console.log('✅ adminActions visible');
             }
             if (adminListaCertificados) {
                 adminListaCertificados.style.display = 'block';
                 adminListaCertificados.style.visibility = 'visible';
-            }
-            if (certificadoAdminActions) {
-                certificadoAdminActions.style.display = 'flex';
-                certificadoAdminActions.style.visibility = 'visible';
+                console.log('✅ adminListaCertificados visible');
             }
         } else {
-            if (adminActions) adminActions.style.display = 'none';
-            if (adminListaCertificados) adminListaCertificados.style.display = 'none';
-            if (certificadoAdminActions) certificadoAdminActions.style.display = 'none';
+            console.log('❌ Usuario normal - ocultando UI de administrador');
+            // Ocultar panel de administración para usuarios normales
+            if (adminPanel) {
+                adminPanel.style.display = 'none';
+                console.log('⛔ adminPanel ocultado');
+            }
+            if (adminActions) {
+                adminActions.style.display = 'none';
+                console.log('⛔ adminActions ocultado');
+            }
+            if (adminListaCertificados) {
+                adminListaCertificados.style.display = 'none';
+                console.log('⛔ adminListaCertificados ocultado');
+            }
         }
     } setupEventListeners() {
         // Búsqueda de certificados
@@ -212,88 +248,124 @@ class CertificadosManager {
         const qrContainer = document.getElementById('certificadoQR');
         const archivoContainer = document.getElementById('certificadoArchivo');
         const btnExpandir = document.getElementById('btnExpandirDetalles');
+        const adminActions = document.querySelector('.certificado-admin-actions');
+        const certificadoDetalles = document.getElementById('certificadoDetalles');
 
         if (!resultado || !resumen) return;
 
-        // Llenar información resumida (siempre visible)
-        resumen.innerHTML = `
+        // ============== INFORMACIÓN RESUMIDA (Visible para todos) ==============
+        const resumenHTML = `
             <div class="resumen-item">
-                <span class="resumen-label">Empresa:</span>
+                <span class="resumen-label"><i class="bi bi-building"></i> Empresa:</span>
                 <span class="resumen-valor">${certificado.nombre_empresa}</span>
             </div>
             <div class="resumen-item">
-                <span class="resumen-label">ID Empresa:</span>
+                <span class="resumen-label"><i class="bi bi-hash"></i> ID Empresa:</span>
                 <span class="resumen-valor">${certificado.id_empresa}</span>
             </div>
             <div class="resumen-item">
-                <span class="resumen-label">No. Certificado:</span>
+                <span class="resumen-label"><i class="bi bi-file-earmark-check"></i> No. Certificado:</span>
                 <span class="resumen-valor">${certificado.numero_certificado}</span>
             </div>
             <div class="resumen-item">
-                <span class="resumen-label">Estado:</span>
+                <span class="resumen-label"><i class="bi bi-circle-fill"></i> Estado:</span>
                 <span class="resumen-valor"><span class="badge badge-${this.getStatusClass(certificado.estado)}">${certificado.estado}</span></span>
             </div>
             <div class="resumen-item">
-                <span class="resumen-label">Fecha de Vigencia:</span>
+                <span class="resumen-label"><i class="bi bi-calendar-check"></i> Vigencia:</span>
                 <span class="resumen-valor">${certificado.fecha_vigencia}</span>
+            </div>
+            <div class="resumen-item">
+                <span class="resumen-label"><i class="bi bi-link"></i> Emisión:</span>
+                <span class="resumen-valor">${certificado.fecha_emision}</span>
             </div>
         `;
 
-        // Llenar información detallada (expandible)
+        resumen.innerHTML = resumenHTML;
+
+        // ============== INFORMACIÓN DETALLADA (Expandible) ==============
         if (datos) {
-            datos.innerHTML = `
-                <div><strong>Fecha de emisión:</strong> ${certificado.fecha_emision}</div>
-                <div><strong>Sector IAF:</strong> ${certificado.sector_iaf}</div>
-                <div><strong>Código NACE:</strong> ${certificado.codigo_nace}</div>
-                <div><strong>Referencia normativa:</strong> ${certificado.referencia_normativa}</div>
-                <div><strong>Alcance de la certificación:</strong> ${certificado.alcance_certificacion}</div>
-                <div><strong>Instalaciones:</strong> 
-                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+            const detallesHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div><strong><i class="bi bi-building"></i> Empresa:</strong> ${certificado.nombre_empresa}</div>
+                    <div><strong><i class="bi bi-hash"></i> ID Empresa:</strong> ${certificado.id_empresa}</div>
+                    <div><strong><i class="bi bi-file-earmark"></i> No. Certificado:</strong> ${certificado.numero_certificado}</div>
+                    <div><strong><i class="bi bi-circle-fill"></i> Estado:</strong> <span class="badge badge-${this.getStatusClass(certificado.estado)}">${certificado.estado}</span></div>
+                    <div><strong><i class="bi bi-calendar"></i> Fecha Emisión:</strong> ${certificado.fecha_emision}</div>
+                    <div><strong><i class="bi bi-calendar-check"></i> Fecha Vigencia:</strong> ${certificado.fecha_vigencia}</div>
+                    <div><strong><i class="bi bi-tag"></i> Sector IAF:</strong> ${certificado.sector_iaf}</div>
+                    <div><strong><i class="bi bi-code"></i> Código NACE:</strong> ${certificado.codigo_nace}</div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <div><strong><i class="bi bi-file-text"></i> Referencia Normativa:</strong> ${certificado.referencia_normativa}</div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <div><strong><i class="bi bi-list-check"></i> Alcance:</strong></div>
+                    <p style="margin: 0.5rem 0; padding-left: 2rem;">${certificado.alcance_certificacion}</p>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <div><strong><i class="bi bi-geo-alt"></i> Instalaciones:</strong></div>
+                    <ul style="margin: 0.5rem 0; padding-left: 2rem;">
                         ${certificado.instalaciones.map(inst => `<li>${inst}</li>`).join('')}
                     </ul>
                 </div>
-                <div><strong>Link IAF:</strong> <a href="${certificado.link_iaf}" target="_blank" rel="noopener">${certificado.link_iaf}</a></div>
+                <div style="margin-top: 1rem;">
+                    <div><strong><i class="bi bi-link-45deg"></i> Link IAF:</strong> 
+                        <a href="${certificado.link_iaf}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-box-arrow-up-right"></i> Abrir
+                        </a>
+                    </div>
+                </div>
             `;
+            datos.innerHTML = detallesHTML;
         }
 
-        // Mostrar código QR si existe
+        // ============== CÓDIGO QR (si existe) ==============
         if (qrContainer && certificado.codigo_qr) {
             qrContainer.innerHTML = `
-                <h4>Código QR</h4>
-                <img src="${certificado.codigo_qr}" alt="Código QR" style="max-width: 200px;">
+                <div style="text-align: center; padding: 1rem; background-color: #f8f9fa; border-radius: 8px;">
+                    <h5><i class="bi bi-qr-code"></i> Código QR</h5>
+                    <img src="${certificado.codigo_qr}" alt="Código QR" style="max-width: 200px; margin-top: 0.5rem;">
+                </div>
             `;
+            qrContainer.style.display = 'block';
+        } else {
+            qrContainer.style.display = 'none';
         }
 
-        // Mostrar link al PDF si existe
-        if (archivoContainer && certificado.archivo_pdf) {
-            archivoContainer.innerHTML = `
-                <a href="/api/certificados/download/${certificado._id}" target="_blank" class="btn btn-primary">
-                    <i class="bi bi-file-pdf"></i> Descargar PDF
-                </a>
-            `;
+        // ============== ARCHIVO PDF (Visible para todos) ==============
+        if (archivoContainer) {
+            if (certificado.archivo_pdf) {
+                archivoContainer.innerHTML = `
+                    <a href="/certificados/download/${certificado._id}" target="_blank" class="btn btn-lg btn-primary" style="display: inline-flex; gap: 0.5rem; align-items: center;">
+                        <i class="bi bi-file-pdf" style="font-size: 1.5rem;"></i>
+                        <span>Descargar PDF</span>
+                    </a>
+                `;
+            } else {
+                archivoContainer.innerHTML = '<p style="color: #6c757d;"><i class="bi bi-exclamation-circle"></i> PDF no disponible</p>';
+            }
         }
 
-        // Resetear botón de expandir
+        // ============== BOTONES DE EXPANDIR/CONTRAER ==============
         if (btnExpandir) {
+            btnExpandir.style.display = 'block';
             btnExpandir.innerHTML = '<i class="bi bi-chevron-down"></i> Ver información completa';
-            document.getElementById('certificadoDetalles').style.display = 'none';
+            certificadoDetalles.style.display = 'none';
         }
 
-        resultado.style.display = 'block';
-
-        // Mostrar botones de administrador si aplica
-        setTimeout(() => {
-            const adminActions = document.querySelector('.certificado-admin-actions');
-            if (adminActions && this.isAdmin()) {
+        // ============== BOTONES DE ADMINISTRACIÓN (Solo visible para admins) ==============
+        if (adminActions) {
+            if (this.isAdmin()) {
                 adminActions.style.display = 'flex';
                 adminActions.style.visibility = 'visible';
                 adminActions.style.opacity = '1';
-                // Forzar repaint
-                adminActions.offsetHeight;
+            } else {
+                adminActions.style.display = 'none';
             }
-        }, 100);
+        }
 
-        this.setupUIBasedOnRole();
+        resultado.style.display = 'block';
     }
 
     ocultarCertificado() {
@@ -675,6 +747,7 @@ class CertificadosManager {
     // Método para forzar mostrar elementos de admin
     forceShowAdminElements() {
         const elements = {
+            adminPanel: document.getElementById('adminPanel'),
             adminActions: document.getElementById('adminActions'),
             adminListaCertificados: document.getElementById('adminListaCertificados'),
             certificadoAdminActions: document.querySelector('.certificado-admin-actions')
@@ -1786,7 +1859,7 @@ window.diagnosticErrors = function () {
 
     // 3. Probar /auth/me (para 401/403)
     console.log('🔄 Probando /auth/me...');
-    fetch(manager.backendBaseURL + '/api/auth/me', {
+    fetch(manager.backendBaseURL + '/auth/me', {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
         .then(response => {
@@ -1809,7 +1882,7 @@ window.diagnosticErrors = function () {
 
     // 4. Probar endpoint de certificados
     console.log('🔄 Probando /certificados...');
-    fetch(manager.backendBaseURL + '/api/certificados/', {
+    fetch(manager.backendBaseURL + '/certificados/', {
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
     })
         .then(response => {
